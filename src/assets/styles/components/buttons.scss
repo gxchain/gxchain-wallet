@@ -1,0 +1,50 @@
+.button-gxb{
+  font-size: .85rem;
+  color:$THEME_BUTTON_TEXT_COLOR;
+  border-color:$THEME_BUTTON_BG_COLOR;
+  background: $THEME_BUTTON_BG_COLOR;
+  padding:0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2.2rem;
+  height:2.2rem;
+  &:active{
+    color: $THEME_BUTTON_TEXT_COLOR;
+    background: darken($THEME_BUTTON_BG_COLOR,2%);
+  }
+  &.disabled{
+    color:#fff !important;
+    background:#c8c9cb;
+  }
+}
+
+.button-gxb-secondary{
+  font-size: .85rem;
+  color:$THEME_BUTTON_TEXT_COLOR;
+  border-color:$THEME_BUTTON_SECONDARY_BG_COLOR;
+  background: $THEME_BUTTON_SECONDARY_BG_COLOR;
+  padding:0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2.2rem;
+  height:2.2rem;
+  &:active{
+    color: $THEME_BUTTON_SECONDARY_BG_COLOR;
+    background: darken($THEME_BUTTON_SECONDARY_BG_COLOR,2%);
+  }
+  &.disabled{
+    color:#fff !important;
+    background:#c8c9cb;
+  }
+}
+
+.container-button{
+
+}
+
+.buttons-tab .button.active {
+  color: $THEME_BUTTON_BG_COLOR;
+  border-color: $THEME_BUTTON_BG_COLOR;
+}

@@ -1,0 +1,33 @@
+.pull-to-refresh-layer {
+  position: absolute;
+  .preloader {
+    animation: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .line-scale {
+      display: none;
+      >div{
+        width:2px;
+        height:17.5px;
+      }
+    }
+    &:after {
+      background: none;
+    }
+  }
+}
+
+.refreshing {
+  .pull-to-refresh-layer {
+    .preloader {
+      .line-scale {
+        display: flex;
+      }
+    }
+  }
+}
+
+.pull-to-refresh-content.refreshing {
+  transform: translate3d(0, .1px, 0);
+}

@@ -1,0 +1,68 @@
+@font-face {
+  font-family: 'gxb';
+  src:  url('fonts/gxb.eot?7m93d1');
+  src:  url('fonts/gxb.eot?7m93d1#iefix') format('embedded-opentype'),
+    url('fonts/gxb.ttf?7m93d1') format('truetype'),
+    url('fonts/gxb.woff?7m93d1') format('woff'),
+    url('fonts/gxb.svg?7m93d1#gxb') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="gxicon-"], [class*=" gxicon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'gxb' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.gxicon-bind:before {
+  content: "\e900";
+}
+.gxicon-collect:before {
+  content: "\e901";
+}
+.gxicon-dashboard:before {
+  content: "\e902";
+}
+.gxicon-discover:before {
+  content: "\e903";
+}
+.gxicon-import:before {
+  content: "\e904";
+}
+.gxicon-language:before {
+  content: "\e905";
+}
+.gxicon-record:before {
+  content: "\e906";
+}
+.gxicon-scan:before {
+  content: "\e907";
+}
+.gxicon-success:before {
+  content: "\e908";
+}
+.gxicon-transfer:before {
+  content: "\e909";
+}
+.gxicon-user:before {
+  content: "\e90a";
+}
+.gxicon-users:before {
+  content: "\e90b";
+}
+.gxicon-wallet-star:before {
+  content: "\e90c";
+}
+.gxicon-wallet:before {
+  content: "\e90d";
+}
