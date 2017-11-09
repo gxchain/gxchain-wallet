@@ -2,7 +2,7 @@
   <div class="page-group">
     <div class="page" id="page-wallet-create-step-2">
       <header class="bar bar-nav">
-        <h3 class="title">钱包创建</h3>
+        <h3 class="title">{{$t('wallet_create.step2.title')}}</h3>
         <router-link :to="{path:'/wallet-create-step-1'}" replace class="icon icon-left"></router-link>
       </header>
       <div class="content">
@@ -15,9 +15,10 @@
             <li>
               <div class="item-content">
                 <div class="item-inner">
-                  <div class="item-title label">输入密码</div>
+                  <div class="item-title label">{{$t('wallet_create.step2.label.password')}}</div>
                   <div class="item-input">
-                    <input v-model="pwd1" type="password" maxlength="30" placeholder="6位以上字符">
+                    <input v-model="pwd1" type="password" maxlength="30"
+                           :placeholder="$t('wallet_create.step2.placeholder.password')">
                   </div>
                 </div>
               </div>
@@ -25,7 +26,7 @@
             <li>
               <div class="item-content">
                 <div class="item-inner">
-                  <div class="item-title label">确认密码</div>
+                  <div class="item-title label">{{$t('wallet_create.step2.label.confirm')}}</div>
                   <div class="item-input">
                     <input v-model="pwd2" type="password" maxlength="30">
                   </div>
@@ -42,7 +43,7 @@
         <div class="content-block button-block">
           <p>
             <a href="javascript:;" @click="onSubmit" class="button button-gxb"
-               :class="{disabled:!isCommitEnable}">完成</a>
+               :class="{disabled:!isCommitEnable}">{{$t('wallet_create.step2.done')}}</a>
           </p>
         </div>
       </div>
@@ -69,7 +70,7 @@
       },
       validate() {
         if (this.pwd1 != this.pwd2) {
-          this.error = '两次输入密码不一致';
+          this.error = this.$t('wallet_create.step2.error.password_not_equal');
           return false;
         }
         return true;
@@ -78,7 +79,7 @@
         if (!this.isCommitEnable || !this.validate()) {
           return;
         }
-        $.showPreloader('正在创建账户');
+        $.showPreloader(this.$t('wallet_create.step2.creating'));
         create_account(this.$route.query.account, this.pwd1).then((wallet) => {
           $.hidePreloader();
           if (wallet.account) {
@@ -88,25 +89,20 @@
               path: `/wallet-create-success?${$.param(query)}`
             });
           }
-          else{
-            $.toast('创建钱包失败');
+          else {
+            $.toast(this.$t('wallet_create.step2.error.account_create_failed'));
           }
         }).catch(ex => {
           $.hidePreloader();
-          if(ex.data&&ex.data.error&&ex.data.error.base&&ex.data.error.base[0].indexOf('current_account_itr')>-1){
-            $.alert('账号已经被注册,请重新填写账号','提示',()=>{
-              if(this.isNative){
-                cordova.exec(null,null,'Controller','pop',[]);
-              }
-              else{
-                this.$router.replace({
-                  path:this.$route.query.from||'/wallet-create-step-1'
-                });
-              }
+          if (ex.data && ex.data.error && ex.data.error.base && ex.data.error.base[0].indexOf('current_account_itr') > -1) {
+            $.alert(this.$t('wallet_create.step2.error.account_has_been_registered'), this.$t('wallet_create.step2.notice'), () => {
+              this.$router.replace({
+                path: this.$route.query.from || '/wallet-create-step-1'
+              });
             });
           }
-          else{
-            errorHandler(ex, '创建账户失败');
+          else {
+            errorHandler(ex, this.$t('wallet_create.step2.error.account_create_failed'));
           }
         });
       }

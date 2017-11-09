@@ -263,6 +263,5 @@
 
   .list-block .item-title.label {
     width: 4.5rem;
-    color: lighten(#3d3d3b, 20%)
   }
 </style>

@@ -169,3 +169,8 @@ body.with-panel-right-cover .panel-overlay {
   color: $THEME_COLOR_DANGER !important;
 }
 
+
+.list-block .item-title.label {
+  width: 4.5rem;
+  color: lighten($THEME_TINT_COLOR, 20%)
+}

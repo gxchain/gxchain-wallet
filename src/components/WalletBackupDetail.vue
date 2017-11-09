@@ -2,33 +2,35 @@
   <div class="page-group">
     <div class="page" id="page-wallet-backup-detail">
       <header class="bar bar-nav">
-        <h3 class="title">钱包备份</h3>
-        <router-link :to="{path:$route.query.from||'/wallet-backup'}" replace class="icon icon-left"></router-link>
+        <h3 class="title">{{$t('wallet_backup.detail.title')}}</h3>
+        <router-link :to="linkBack" replace class="icon icon-left"></router-link>
       </header>
       <div class="content">
         <div class="tip-info">
-          为方便备份，我们将钱包账户加密为以下英文字母组成的密钥， 备份该密钥即可恢复钱包。
+          {{$t('wallet_backup.detail.tip')}}
         </div>
         <div class="content-block">
-          <div class="tip-success">
-            <div class="text-right">
-              <a v-if="!wifKey" @click="unlock">解锁</a>
-            </div>
-            {{wifKey||'****************************'}}
+          <div class="tip-success" :class="{'text-center':!wifKey}">
+            {{wifKey || '****************************'}}
           </div>
+          <p class="tip-error text-center" v-if="error.common">{{error.common}}</p>
+          <p>
+            <a class="button-gxb" v-if="!wifKey" @click="unlock">{{$t('wallet_backup.detail.unlock')}}</a>
+          </p>
         </div>
         <ul class="tips">
           <li>
-            按顺序将密钥复制或抄录在纸上，并妥善保存
+            {{$t('wallet_backup.detail.tip1')}}
+
           </li>
           <li>
-            任何人获得你的密钥信息即可操作你的钱包资金
+            {{$t('wallet_backup.detail.tip2')}}
           </li>
         </ul>
         <div class="button-block">
           <p v-if="isNative&&wifKey">
             <a @click="copyKey()" class="button button-gxb"
-               :class="{disabled:keyCopied}">{{keyCopied ? '已复制' : '复制私钥'}}</a>
+               :class="{disabled:keyCopied}">{{keyCopied ? $t('wallet_backup.detail.copy') : $t('wallet_backup.detail.copied')}}</a>
           </p>
         </div>
       </div>
@@ -37,43 +39,47 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
-  import {unlock_wallet,update_wallet} from '@/services/WalletService'
+  import {unlock_wallet, update_wallet} from '@/services/WalletService'
 
   export default {
     data() {
       return {
         wifKey: '',
-        keyCopied:false
+        keyCopied: false,
+        error: {
+          common: ''
+        }
       }
     },
-    methods:{
-      unlock(){
-        let self= this;
+    methods: {
+      unlock() {
+        let self = this;
+        this.error.common = '';
         $.modal({
-          title:'',
-          text:'请输入密码',
-          afterText:'<input placeholder="密码" class="modal-text-input" id="pwd" type="password"/>',
-          buttons:[{
-            text:'取消',
-            onClick(){
+          title: '',
+          text: self.$t('wallet_backup.detail.tip_password'),
+          afterText: `<input placeholder="${self.$t('wallet_backup.detail.placeholder.password')}" class="modal-text-input" id="pwd" type="password"/>`,
+          buttons: [{
+            text: self.$t('wallet_backup.detail.cancel'),
+            onClick() {
 
             }
-          },{
-            text:'确定',
-            onClick(){
-              unlock_wallet(self.$route.query.account,$('#pwd').val()).then((info)=>{
-                self.wifKey=info.wifKey;
+          }, {
+            text: self.$t('wallet_backup.detail.ok'),
+            onClick() {
+              unlock_wallet(self.$route.query.account, $('#pwd').val()).then((info) => {
+                self.wifKey = info.wifKey;
                 let wallet = info.wallet;
-                wallet.backup_date=new Date().getTime()
+                wallet.backup_date = new Date().getTime()
                 update_wallet(wallet);
-              }).catch((ex)=>{
-                $.toast('解锁失败');
+              }).catch((ex) => {
+                self.error.common = self.$t('wallet_backup.detail.error.invalid_password')
               })
             }
           }]
         })
       },
-      copyKey(){
+      copyKey() {
         cordova.exec(() => {
           this.keyCopied = true;
           setTimeout(() => {
@@ -88,7 +94,11 @@
     computed: {
       ...mapGetters({
         isNative: 'isNative'
-      })
+      }),
+      linkBack() {
+        let query = this.$route.query;
+        return query.from || `/wallet-backup?${$.param(query)}`
+      }
     }
   }
 </script>
@@ -98,18 +108,25 @@
       background-color: #ccc;
     }
   }
-  .text-right{
+
+  .text-right {
     text-align: right;
   }
-  .tips{
-    font-size:.6rem;
-    padding-left:1.5rem;
-    li{
-      padding-left:0
+
+  .tip-info {
+    word-break: break-word;
+  }
+
+  .tips {
+    font-size: .6rem;
+    padding-left: 1.5rem;
+    li {
+      padding-left: 0
     }
   }
-  .button-block{
-    margin-top:4rem;
+
+  .button-block {
+    margin-top: 4rem;
   }
 </style>
 

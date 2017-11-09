@@ -14,7 +14,7 @@
           <div class="content-block">
             <p v-if="isNative">
               <a @click="copyAccount()" class="button button-gxb"
-                 :class="{disabled:accountCopied}">{{accountCopied ? '已复制' : '复制账户'}}</a>
+                 :class="{disabled:accountCopied}">{{accountCopied ? $t('index.copy'):$t('index.copied')}}</a>
             </p>
           </div>
         </div>

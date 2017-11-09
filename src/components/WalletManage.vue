@@ -2,7 +2,7 @@
   <div class="page-group">
     <div class="page" id="page-wallet-manage">
       <header class="bar bar-nav">
-        <h3 class="title">管理钱包</h3>
+        <h3 class="title">{{$t('wallet_manage.title')}}</h3>
         <router-link :to="{path:'/'}" replace class="icon icon-left"></router-link>
       </header>
       <div class="content pull-to-refresh-content">
@@ -29,14 +29,15 @@
                   <div class="item-title">
                     {{wallet.account}}
                   </div>
-                  <div class="item-after color-danger" v-if="!wallet.backup_date">请备份</div>
+                  <small class="item-after color-danger" v-if="!wallet.backup_date">{{$t('wallet_manage.tip_backup')}}
+                  </small>
                 </div>
               </router-link>
             </li>
             <li class="item-content price-info">
               <div class="item-inner">
                 <div class="item-title"></div>
-                <div class="item-after"><span class="color-primary price">1982.00</span>&nbsp;GXS</div>
+                <div class="item-after"><span class="color-primary price">{{wallet.balance}}</span>&nbsp;<small>GXS</small></div>
               </div>
             </li>
           </ul>
@@ -46,12 +47,12 @@
         <router-link class="tab-item external" :to="linkImport">
           <span class="gxicon gxicon-import"></span>
           &nbsp;
-          <span class="tab-label">导入钱包</span>
+          <span class="tab-label">{{$t('wallet_manage.button_import')}}</span>
         </router-link>
         <router-link class="tab-item external" :to="linkCreate">
           <span class="gxicon gxicon-wallet"></span>
           &nbsp;
-          <span class="tab-label">创建钱包</span>
+          <span class="tab-label">{{$t('wallet_manage.button_create')}}</span>
         </router-link>
       </nav>
     </div>
@@ -59,29 +60,63 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
-  import {get_wallets} from '@/services/WalletService'
+  import {get_wallets,fetch_account_balance} from '@/services/WalletService'
   import AccountImage from './sub/AccountImage.vue'
 
   export default {
     data() {
+      let wallets = get_wallets();
+      wallets = wallets.map((w) => {
+        w.balance = this.$t('index.balance_loading');
+        return w;
+      });
       return {
-        wallets: []
+        wallets: wallets
       }
     },
     methods: {
       loadWallets() {
-        this.wallets = get_wallets();
         if (this.wallets.length == 0) {
           let query = this.$route.query;
-          query.nativeHook = 0;
           this.$router.replace({
             path: `/wallet-create?${$.param(query)}`
+          });
+        }
+        else {
+          this.wallets.forEach((wallet) => {
+            this.loadBalance(wallet);
           })
         }
         setTimeout(() => {
           $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
         }, 500)
-      }
+      },
+      loadBalance(wallet) {
+        if (wallet.account) {
+          fetch_account_balance(wallet.account).then(function (balance) {
+            wallet.balance = balance.amount / 100000;
+          }).catch(ex => {
+            console.error(ex);
+          })
+        }
+      },
+//      loadWallets() {
+//        let wallets = get_wallets();
+//        wallets.forEach((wallet) => {
+//          wallet.balance = '**';
+//        })
+//        this.wallets = wallets;
+//        if (this.wallets.length == 0) {
+//          let query = this.$route.query;
+//          query.nativeHook = 0;
+//          this.$router.replace({
+//            path: `/wallet-create?${$.param(query)}`
+//          })
+//        }
+//        setTimeout(() => {
+//          $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
+//        }, 500)
+//      }
     },
     mounted() {
       $.init();
@@ -119,13 +154,13 @@
 
   .pull-to-refresh-layer {
     .line-scale > div {
-      background-color: #ccc;
+      background-color: #3d3d3b;
     }
   }
 
   .wallets {
-    margin-top: 2.3rem;
-    margin-bottom: 2.8rem;
+    margin-top: 2rem;
+    margin-bottom: 3.8rem;
     .wallet-info {
       .item-media {
         padding-bottom: .65rem;
@@ -141,7 +176,7 @@
     }
     .price-info {
       .item-after {
-        align-items: center;
+        align-items: baseline;
         .price {
           font-size: 1rem;
           font-weight: bold;

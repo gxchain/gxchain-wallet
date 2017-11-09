@@ -2,21 +2,21 @@
   <div class="page-group">
     <div class="page" id="page-wallet-create-success">
       <header class="bar bar-nav">
-        <h3 class="title">创建成功</h3>
+        <h3 class="title">{{$t('wallet_create.success.title')}}</h3>
         <router-link to="/" replace class="icon icon-left"></router-link>
       </header>
       <div class="content">
         <div class="center-content">
           <div class="content-block">
             <success-check-mark></success-check-mark>
-            <p class="text-center text-success">钱包创建成功</p>
-            <p class="tip-alert text-center">强烈建议您在使用前备份钱包，一旦丢失不可找回</p>
+            <p class="text-center text-success">{{$t('wallet_create.success.tip1')}}</p>
+            <p class="tip-alert text-center">{{$t('wallet_create.success.tip2')}}</p>
             <div class="content-block block-button">
               <p>
-                <router-link :to="linkBackup" replace class="button button-gxb">备份钱包</router-link>
+                <router-link :to="linkBackup" replace class="button button-gxb">{{$t('wallet_create.success.backup_wallet')}}</router-link>
               </p>
               <p class="text-center">
-                <a class="link-green" herf="javascript:;" @click="goWalletIndex">查看钱包详情</a>
+                <a class="link-green" herf="javascript:;" @click="goWalletIndex">{{$t('wallet_create.success.detail')}}</a>
               </p>
             </div>
           </div>

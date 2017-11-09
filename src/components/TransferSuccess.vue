@@ -2,21 +2,21 @@
   <div class="page-group">
     <div class="page" id="page-wallet-create-success">
       <header class="bar bar-nav">
-        <h3 class="title">转账成功</h3>
-        <router-link :to="$route.query.from||'/transfer'" replace class="icon icon-left"></router-link>
+        <h3 class="title">{{$t('transfer.success.title')}}</h3>
+        <router-link :to="linkBack" replace class="icon icon-left"></router-link>
       </header>
       <div class="content">
         <div class="center-content">
           <div class="content-block">
             <success-check-mark></success-check-mark>
-            <p class="text-center text-success">转账成功</p>
-            <p class="text-center"><span>{{$route.query.account}}</span>&nbsp;已收到转账</p>
-            <p class="text-center"><span class="asset">{{$route.query.amount |asset(2)}}</span>&nbsp;GXS</p>
+            <p class="text-center text-success">{{$t('transfer.success.tip1')}}</p>
+            <p class="text-center"><span>{{$route.query.account}}</span>&nbsp;{{$t('transfer.success.tip2')}}</p>
+            <p class="text-center"><span class="asset">{{$route.query.amount | asset(2)}}</span>&nbsp;GXS</p>
           </div>
         </div>
         <div class="content-block button-block">
           <p>
-            <router-link to="/" replace class="button button-gxb">完成</router-link>
+            <router-link :to="linkBack" replace class="button button-gxb">{{$t('transfer.success.done')}}</router-link>
           </p>
         </div>
       </div>
@@ -37,6 +37,10 @@
         let query = this.$route.query;
         query.nativeHook = false;
         return `/wallet-backup?${$.param(query)}`;
+      },
+      linkBack() {
+        let query = this.$route.query;
+        return query.from || `/transfer?${$.param(query)}`
       }
     },
     methods: {
@@ -84,8 +88,8 @@
     letter-spacing: normal;
   }
 
-  .asset{
-    color:#6699ff;
+  .asset {
+    color: #6699ff;
     font-family: bebas;
     font-size: 1.1rem;
   }

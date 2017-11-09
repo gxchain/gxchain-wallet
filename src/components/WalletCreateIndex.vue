@@ -3,22 +3,24 @@
     <div class="page" id="page-wallet-empty">
       <div class="content">
         <header class="bar bar-nav">
-          <h3 class="title">钱包</h3>
+          <h3 class="title">{{$t('wallet_create.index.title')}}</h3>
+          <a @click="switchLanguage" class="pull-right icon"><img width="25px" :src="imgFlag"></a>
         </header>
         <div class="center-content">
           <div class="content-block">
             <p><i class="gxicon gxicon-bind"></i></p>
-            <p class="text-bind">暂未绑定公信股钱包</p>
+            <p class="text-bind">{{$t('wallet_create.index.tip_empty')}}</p>
           </div>
           <div class="content-block block-button">
             <p>
-              <router-link :to="linkCreate" class="button button-gxb">创建钱包</router-link>
+              <router-link :to="linkCreate" class="button button-gxb">
+                {{$t('wallet_create.index.button_create')}}
+              </router-link>
             </p>
             <p>
-              <router-link :to="linkImport" class="button button-gxb-secondary">导入钱包</router-link>
-            </p>
-            <p>
-              <a>如何导入钱包？</a>
+              <router-link :to="linkImport" class="button button-gxb-secondary">
+                {{$t('wallet_create.index.button_import')}}
+              </router-link>
             </p>
           </div>
         </div>
@@ -28,24 +30,43 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
-  import {get_wallets} from '@/services/WalletService'
+  import {get_wallets, get_disclaimer_accepted} from '@/services/WalletService'
+  import {set_item} from '@/services/CommonService'
+
   export default {
     methods: {
       loadWallets() {
-        if (get_wallets().length>0) {
+        if (get_wallets().length > 0) {
           let query = this.$route.query;
           query.nativeHook = 0;
           this.$router.replace({
             path: `/?${$.param(query)}`
           })
         }
+        else {
+          if (!get_disclaimer_accepted()) {
+            let query = $.extend({}, this.$route.query, {from: this.$route.fullPath});
+            this.$router.push({
+              path: `/disclaimer?${$.param(query)}`
+            })
+          }
+        }
+      },
+      switchLanguage() {
+        if (this.$i18n.locale == 'zh') {
+          this.$i18n.locale = 'en';
+        }
+        else {
+          this.$i18n.locale = 'zh';
+        }
+        set_item('locale', this.$i18n.locale);
+
       }
     },
     mounted() {
       $.init();
       this.loadWallets();
       if (this.isNative) {
-//        cordova.exec(null, null, 'statusBar', 'styleDefault', []);
         window.webview = {
           reload: () => {
             this.loadWallets();
@@ -68,6 +89,16 @@
         query.from = this.$route.fullPath;
         delete query.nativeHook;
         return `/wallet-create-step-1?${$.param(query)}`;
+      },
+      imgFlag() {
+        let locale = this._i18n.locale;
+        if (locale == 'zh') {
+          locale = 'cn';
+        }
+        if (locale == 'en') {
+          locale = 'us';
+        }
+        return `/static/img/${locale.toUpperCase()}.png`;
       }
     }
   }
@@ -96,7 +127,7 @@
       margin-top: 1.5rem;
     }
     .block-button {
-      padding:0 2rem;
+      padding: 0 2rem;
       margin-top: 1rem;
     }
   }

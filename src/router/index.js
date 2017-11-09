@@ -15,7 +15,8 @@ import WalletBackupDetail from '@/components/WalletBackupDetail'
 import TradeHistory from '@/components/TradeHistory'
 import Transfer from '@/components/Transfer'
 import TransferSuccess from '@/components/TransferSuccess'
-import store from '../vuex/store'
+import Disclaimer from '@/components/Disclaimer'
+import store from '@/vuex/store'
 import connect from '@/common/connect'
 import cordovaLoader from '@/common/cordovaLoader'
 import {get_wallets} from '@/services/WalletService'
@@ -35,7 +36,8 @@ let router = new Router({
     {
       path: '/wallet-create',
       meta: {
-        title: '钱包'
+        title: '钱包',
+        whiteList: true
       },
       name: 'WalletCreateIndex',
       component: WalletCreateIndex
@@ -43,7 +45,8 @@ let router = new Router({
     {
       path: '/wallet-create-step-1',
       meta: {
-        title: '创建钱包'
+        title: '创建钱包',
+        whiteList: true
       },
       name: 'WalletCreateStep1',
       component: WalletCreateStep1
@@ -51,7 +54,8 @@ let router = new Router({
     {
       path: '/wallet-create-step-2',
       meta: {
-        title: '设置密码'
+        title: '设置密码',
+        whiteList: true
       },
       name: 'WalletCreateStep2',
       component: WalletCreateStep2
@@ -59,7 +63,8 @@ let router = new Router({
     {
       path: '/wallet-create-success',
       meta: {
-        title: '创建成功'
+        title: '创建成功',
+        whiteList: true
       },
       name: 'WalletCreateSuccess',
       component: WalletCreateSuccess
@@ -67,7 +72,8 @@ let router = new Router({
     {
       path: '/wallet-import',
       meta: {
-        title: '钱包导入'
+        title: '钱包导入',
+        whiteList: true
       },
       name: 'WalletImport',
       component: WalletImport
@@ -75,7 +81,8 @@ let router = new Router({
     {
       path: '/wallet-import-success',
       meta: {
-        title: '导入成功'
+        title: '导入成功',
+        whiteList: true
       },
       name: 'WalletImportSuccess',
       component: WalletImportSuccess
@@ -95,6 +102,15 @@ let router = new Router({
       },
       name: 'About',
       component: About
+    },
+    {
+      path: '/disclaimer',
+      meta: {
+        title: '免责声明',
+        whiteList: true
+      },
+      name: 'Disclaimer',
+      component: Disclaimer
     },
     {
       path: '/language-setting',
@@ -147,6 +163,10 @@ let router = new Router({
   ]
 })
 
+const inWhiteList = (component) => {
+  return !!component.meta.whiteList;
+}
+
 router.beforeEach((to, from, next) => {
   let platform = (from.name ? from.query.platform : to.query.platform) || 'browser';
   to.query.platform = platform;
@@ -160,7 +180,7 @@ router.beforeEach((to, from, next) => {
     // }
     // else {
     connect(() => {
-      if ((!get_wallets() || get_wallets().length == 0) && to.path.indexOf('wallet-create') == -1) {
+      if ((!get_wallets() || get_wallets().length == 0) && !inWhiteList(to)) {
         let query = $.extend({platform: platform}, to.query);
         router.replace({
           path: `/wallet-create?${$.param(query)}`

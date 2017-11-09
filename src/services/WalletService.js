@@ -41,14 +41,28 @@ const get_wallets = () => {
   return wallets;
 }
 
+
+/**
+ * save wallets into local storage
+ * @param wallets
+ */
+const set_wallets = (wallets) => {
+  localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(wallets));
+}
+
 /**
  * get index of current wallet
  * @returns {number}
  */
 const get_wallet_index = () => {
+  let wallets = get_wallets();
   let index = localStorage.getItem(`gxb_wallet_index_${Apis.instance().chain_id}`);
   if (!index) {
     return 0;
+  }
+  if ((index + 1) > wallets.length) {
+    set_wallet_index(wallets.length - 1);
+    return wallets.length - 1;
   }
   return index;
 }
@@ -62,13 +76,29 @@ const set_wallet_index = (index) => {
   localStorage.setItem(`gxb_wallet_index_${Apis.instance().chain_id}`, Math.min(wallets.length - 1, index));
 }
 
+
 /**
- * save wallets into local storage
- * @param wallets
+ * get disclaimer accepted
+ * @returns {boolean}
  */
-const set_wallets = (wallets) => {
-  localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(wallets));
+const get_disclaimer_accepted = () => {
+  let result = localStorage.getItem(`gxb_disclaimer_accepted_${Apis.instance().chain_id}`);
+  return !!Number(result);
 }
+
+/**
+ * set disclaimer accepted
+ * @param accepted
+ */
+const set_disclaimer_accepted = (accepted) => {
+  if (accepted) {
+    localStorage.setItem(`gxb_disclaimer_accepted_${Apis.instance().chain_id}`, accepted ? 1 : 0);
+  }
+  else {
+    localStorage.removeItem(`gxb_disclaimer_accepted_${Apis.instance().chain_id}`)
+  }
+}
+
 
 /**
  * update wallet in local storage
@@ -140,7 +170,7 @@ const import_account = (wifKey, password) => {
         return uniq(resp[0]);
       }
       else {
-        throw new Error(i18n.t('account_import.error.account_not_found'))
+        throw new Error(i18n.t('wallet_import.error.account_not_found'))
       }
     }).then((account_ids) => {
       return Apis.instance().db_api().exec('get_objects', [account_ids]).then((accounts) => {
@@ -161,7 +191,6 @@ const import_account = (wifKey, password) => {
                 return wallet.account == account.name;
               });
               if (!alreadyExist) {
-                console.log('account:', account.name, 'already exist');
                 let wallet = {
                   account: account.name,
                   password_pubkey,
@@ -173,6 +202,7 @@ const import_account = (wifKey, password) => {
                 imported.push(wallet);
               }
               else {
+                console.log('account:', account.name, 'already exist');
                 exist.push({
                   account: account.name
                 });
@@ -188,7 +218,7 @@ const import_account = (wifKey, password) => {
           };
         }
         else {
-          throw new Error(i18n.t('account_import.error.account_not_found'))
+          throw new Error(i18n.t('wallet_import.error.account_not_found'))
         }
       })
     }))
@@ -358,5 +388,7 @@ export {
   fetch_account,
   import_account,
   create_account,
-  fetch_account_balance
+  fetch_account_balance,
+  set_disclaimer_accepted,
+  get_disclaimer_accepted
 }

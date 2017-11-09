@@ -2,12 +2,12 @@
   <div class="page-group">
     <div class="page">
       <header class="bar bar-nav">
-        <h3 class="title">钱包备份</h3>
+        <h3 class="title">{{$t('wallet_backup.index.title')}}</h3>
         <router-link :to="{path:$route.query.from||'/'}" replace class="icon icon-left"></router-link>
       </header>
       <div class="content">
         <div class="tip-info">
-          当APP被删或在其他手机上使用钱包时，需导入当前钱包备份信 息，否则可能永久丢失钱包资产。请务必备份好钱包，并妥善保管备份信息
+          {{$t('wallet_backup.index.tip')}}
         </div>
         <div class="content-block text-center">
           <account-image :size="30" :account="$route.query.account"></account-image>
@@ -18,7 +18,7 @@
             <li class="item-content">
               <div class="item-inner">
                 <div class="item-title">
-                  钱包账号
+                  {{$t('wallet_backup.index.label.account')}}
                 </div>
                 <div class="item-after">
                   {{$route.query.account}}
@@ -28,10 +28,10 @@
             <li class="item-content">
               <div class="item-inner">
                 <div class="item-title">
-                  钱包资产（GXS）
+                  {{$t('wallet_backup.index.label.asset')}}
                 </div>
                 <div class="item-after">
-                  1890.00
+                  {{balance | asset(2)}}
                 </div>
               </div>
             </li>
@@ -39,7 +39,7 @@
               <router-link :to="linkBackupKey" class="item-content item-link">
                 <div class="item-inner">
                   <div class="item-title">
-                    私钥
+                    {{$t('wallet_backup.index.label.private_key')}}
                   </div>
                 </div>
               </router-link>
@@ -48,10 +48,11 @@
         </div>
         <div class="content-block button-block">
           <p>
-            <router-link :to="linkBackupKey" class="button button-gxb">备份钱包</router-link>
+            <router-link :to="linkBackupKey" class="button button-gxb">{{$t('wallet_backup.index.button_backup')}}
+            </router-link>
           </p>
           <p>
-            <a href="javascript:;" class="button button-gxb disabled">删除钱包</a>
+            <a href="javascript:;" class="button button-gxb disabled">{{$t('wallet_backup.index.button_remove')}}</a>
           </p>
         </div>
       </div>
@@ -61,10 +62,28 @@
 <script>
   import {mapGetters} from 'vuex'
   import AccountImage from './sub/AccountImage.vue'
+  import {fetch_account_balance} from '@/services/WalletService'
+  import filters from '@/filters'
 
   export default {
+    filters,
     mounted() {
       $.init();
+      this.loadBalance();
+    },
+    data() {
+      return {
+        balance: '**'
+      }
+    },
+    methods: {
+      loadBalance() {
+        fetch_account_balance(this.$route.query.account).then((balance) => {
+          this.balance = balance.amount / 100000;
+        }).catch(ex => {
+          console.error(ex);
+        })
+      }
     },
     computed: {
       ...mapGetters({
@@ -86,6 +105,9 @@
 <style scoped lang="scss">
   .button-block {
     margin-top: 4rem;
+  }
+  .tip-info{
+    word-break:break-word;
   }
 </style>
 

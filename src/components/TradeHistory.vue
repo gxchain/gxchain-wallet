@@ -2,7 +2,7 @@
   <div class="page-group">
     <div class="page" id="page-trade-history">
       <header class="bar bar-nav">
-        <h3 class="title">交易记录</h3>
+        <h3 class="title">{{$t('trade_history.title')}}</h3>
         <router-link :to="{path:'/'}" replace class="icon icon-left"></router-link>
       </header>
       <div class="content pull-to-refresh-content">

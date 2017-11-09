@@ -2,7 +2,7 @@
   <div class="page-group">
     <div class="page" id="page-wallet-create-step-1">
       <header class="bar bar-nav">
-        <h3 class="title">钱包创建</h3>
+        <h3 class="title">{{$t('wallet_create.step1.title')}}</h3>
         <router-link :to="{path:$route.query.from||'/'}" replace class="icon icon-left"></router-link>
       </header>
       <div class="content">
@@ -11,10 +11,10 @@
             <li>
               <div class="item-content">
                 <div class="item-inner">
-                  <div class="item-title label">账户名</div>
+                  <div class="item-title label">{{$t('wallet_create.step1.label.account')}}</div>
                   <div class="item-input">
                     <input class="input-account" @change="validate" v-model="account" type="text" maxlength="30"
-                           placeholder="输入字母加数字的组合">
+                           :placeholder="$t('wallet_create.step1.placeholder.account')">
                   </div>
                 </div>
               </div>
@@ -28,7 +28,7 @@
         </div>
         <div class="content-block button-block">
           <p>
-            <a href="javascript:;" @click="onSubmit" class="button button-gxb" :class="{disabled:!submitEnable}">确定</a>
+            <a href="javascript:;" @click="onSubmit" class="button button-gxb" :class="{disabled:!submitEnable}">{{$t('wallet_create.step1.next')}}</a>
           </p>
         </div>
       </div>
@@ -93,12 +93,12 @@
       },
       validate() {
         if (!this.is_cheap_name()) {
-          this.error = this.$t('account_create.premium_name');
+          this.error = this.$t('wallet_create.step1.error.premium_name');
           return false;
         }
         let account_name_error = this.is_account_name_error();
         if (account_name_error) {
-          this.error = this.$t(`account_create.${account_name_error}`);
+          this.error = this.$t(`wallet_create.step1.error.${account_name_error}`);
           return false;
         }
         return true;
@@ -118,13 +118,13 @@
         this.checkAccountName();
       },
       checkAccountName() {
-        $.showPreloader('正在检查账户名');
+        $.showPreloader(this.$t('wallet_create.step1.query_account_name'));
         fetch_account(this.account).then((account) => {
           this.submitting = false;
           setTimeout(() => {
             $.hidePreloader();
             if (account) {
-              this.error = '账户已存在';
+              this.error = this.$t('wallet_create.step1.error.account_already_exist');
             }
             else {
               let query = this.$route.query;
@@ -138,7 +138,7 @@
 
         }).catch(() => {
           this.submitting = false;
-          $.toast('查询账户失败，请重试');
+          $.toast(this.$t('wallet_create.step1.error.query_account_failed.'));
           setTimeout(() => {
             $.hidePreloader();
           }, 500);

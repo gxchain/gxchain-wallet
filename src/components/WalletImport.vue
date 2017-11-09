@@ -2,7 +2,7 @@
   <div class="page-group">
     <div class="page" id="page-wallet-import">
       <header class="bar bar-nav">
-        <h3 class="title">钱包导入</h3>
+        <h3 class="title">{{$t('wallet_import.title')}}</h3>
         <router-link :to="{path:$route.query.from||'/'}" replace class="icon icon-left"></router-link>
       </header>
       <div class="content">
@@ -18,7 +18,7 @@
               <div class="item-content">
                 <div class="item-inner">
                   <div class="item-input">
-                    <textarea v-model="wifKey" placeholder="在此填入账户活跃权限私钥"></textarea>
+                    <textarea v-model="wifKey" :placeholder="$t('wallet_import.placeholder.key')"></textarea>
                   </div>
                 </div>
               </div>
@@ -26,9 +26,10 @@
             <li>
               <div class="item-content">
                 <div class="item-inner">
-                  <div class="item-title label">输入密码</div>
+                  <div class="item-title label">{{$t('wallet_import.label.password')}}</div>
                   <div class="item-input">
-                    <input v-model="pwd1" type="password" maxlength="30" placeholder="6位以上字符">
+                    <input v-model="pwd1" type="password" maxlength="30"
+                           :placeholder="$t('wallet_import.placeholder.password')">
                   </div>
                 </div>
               </div>
@@ -36,7 +37,7 @@
             <li>
               <div class="item-content">
                 <div class="item-inner">
-                  <div class="item-title label">确认密码</div>
+                  <div class="item-title label">{{$t('wallet_import.label.confirm')}}</div>
                   <div class="item-input">
                     <input v-model="pwd2" type="password" maxlength="30">
                   </div>
@@ -46,14 +47,14 @@
           </ul>
         </div>
         <div class="content-block block-tip">
-          <div class="tip-error" v-if="error.wifKey">
-            {{error.wifKey}}
+          <div class="tip-error" v-if="error.common">
+            {{error.common}}
           </div>
         </div>
         <div class="content-block block-button">
           <p class="content-block">
             <a @click="onSubmit" href="javascript:;" class="button button-gxb"
-               :class="{disabled:!isCommitEnable}">确认导入</a>
+               :class="{disabled:!isCommitEnable}">{{$t('wallet_import.confirm')}}</a>
           </p>
         </div>
       </div>
@@ -74,28 +75,28 @@
         pwd1: '',
         pwd2: '',
         error: {
-          wifKey: ''
+          common: ''
         }
       }
     },
     watch: {
       tabIndex() {
         this.error = {
-          wifKey: ''
+          common: ''
         }
       },
       pwd1() {
         this.error = {
-          wifKey: ''
+          common: ''
         }
       },
       pwd2() {
         this.error = {
-          wifKey: ''
+          common: ''
         }
       },
       wifKey() {
-        this.error.wifKey = ''
+        this.error.common = ''
       }
     },
     computed: {
@@ -138,11 +139,11 @@
       },
       validate() {
         if (!this.isEqual) {
-          this.error.wifKey = '两次输入密码不一致';
+          this.error.common = this.$t('wallet_import.error.password_not_equal');
           return false;
         }
         if (!this.isValidWifKey(this.wifKey)) {
-          this.error.wifKey = '私钥无效';
+          this.error.common = this.$t('wallet_import.error.invalid_key');
           return false;
         }
         return true;
@@ -169,18 +170,18 @@
             $.hidePreloader();
             if (info.imported.length > 0) {
               let query = this.$route.query;
-              query.nativeHook=0;
-              query.account=info.imported[0].account;
+              query.nativeHook = 0;
+              query.account = info.imported[0].account;
               this.$router.replace({
                 path: `/wallet-import-success?${$.param(query)}`,
               });
             } else {
-              $.toast('账户已存在, 请勿重复导入');
+              this.error.common = this.$t('wallet_import.error.account_already_exist');
             }
           }).catch((ex) => {
             this.submitting = false;
             $.hidePreloader();
-            $.toast('导入失败, 私钥对应账户不存在，请检查是否为活跃权限私钥');
+            this.error.common = this.$t('wallet_import.error.no_reference_account');
           });
         }, 500);
       }

@@ -3,7 +3,7 @@
     <div class="page" id="page-transfer">
       <header class="bar bar-nav">
         <h3 class="title">{{$t('transfer.title')}}</h3>
-        <router-link :to="{path:'/'}" replace class="icon icon-left"></router-link>
+        <router-link :to="linkBack" replace class="icon icon-left"></router-link>
         <a v-if="isNative" href="javascript:;" class="icon gxicon gxicon-scan pull-right" @click="openQRScaner">
           <input ref="qrfile" @change="onFileUpload" v-if="!isNative" type="file" class="file-selector"/>
         </a>
@@ -192,6 +192,7 @@
         }
         if (this.currentWallet.account == this.account) {
           this.error.account = this.$t('transfer.error.account.cannot_send_to_yourself');
+          return false;
         }
         else {
           this.error.account = ''
@@ -279,6 +280,10 @@
       },
       submitEnable() {
         return this.account && this.amount;
+      },
+      linkBack(){
+        let query = this.$route.query;
+        return query.from || `/?${$.param(query)}`
       }
     },
     components: {
@@ -295,13 +300,12 @@
     }
   }
 
-  .tip-error{
+  .tip-error,.tip-alert{
     word-break: break-word;
   }
 
   .list-block .item-title.label {
     width: 4.5rem;
-    color: lighten(#3d3d3b, 20%)
   }
 
   .color-gray {

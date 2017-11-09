@@ -2,36 +2,29 @@
   <div class="page-group">
     <div class="page" id="page-about">
       <header class="bar bar-nav">
-        <h3 class="title">关于我们</h3>
-        <router-link :to="{path:'/'}" replace class="icon icon-left"></router-link>
+        <h3 class="title">{{$t('about.title')}}</h3>
+        <router-link :to="linkBack" replace class="icon icon-left"></router-link>
       </header>
       <div class="content">
         <div class="center-content">
           <div class="row-logo">
             <span class="gxicon gxicon-wallet logo"></span>
           </div>
-          <p>当前版本V0.0.1(Beta)</p>
+          <p>{{$t('about.version')}}</p>
           <div class="app-intro text-center">
-            <p>公信宝钱包是一款移动端轻钱包APP，</p>
-            <p>通过它能实现公信股的转账、收款和钱包管理，</p>
-            <p>并及时掌握公信宝的最新动态。</p>
+            <p>{{$t('about.desc.line1')}}</p>
+            <p>{{$t('about.desc.line2')}}</p>
+            <p>{{$t('about.desc.line3')}}</p>
           </div>
         </div>
         <div class="list-block">
           <ul>
             <li>
-              <a href="javascript:;" class="item-content item-link">
+              <router-link :to="linkDisclaimer" class="item-content item-link">
                 <div class="item-inner">
-                  <div class="item-title">使用协议</div>
+                  <div class="item-title">{{$t('about.disclaimer')}}</div>
                 </div>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:;" class="item-content item-link">
-                <div class="item-inner">
-                  <div class="item-title">隐私条款</div>
-                </div>
-              </a>
+              </router-link>
             </li>
           </ul>
         </div>
@@ -53,7 +46,14 @@
     computed:{
       ...mapGetters({
         isNative:'isNative'
-      })
+      }),
+      linkBack(){
+        return `/?${$.param(this.$route.query)}`;
+      },
+      linkDisclaimer(){
+        let query = $.extend({},this.$route.query,{from:this.$route.fullPath});
+        return `/disclaimer?${$.param(query)}`;
+      }
     }
   }
 </script>
