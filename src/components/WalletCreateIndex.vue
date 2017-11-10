@@ -1,11 +1,11 @@
 <template>
   <div class="page-group">
     <div class="page" id="page-wallet-empty">
+      <header class="bar bar-nav">
+        <h3 class="title">{{$t('wallet_create.index.title')}}</h3>
+        <a @click="switchLanguage" class="pull-right icon"><img width="25px" :src="imgFlag"></a>
+      </header>
       <div class="content">
-        <header class="bar bar-nav">
-          <h3 class="title">{{$t('wallet_create.index.title')}}</h3>
-          <a @click="switchLanguage" class="pull-right icon"><img width="25px" :src="imgFlag"></a>
-        </header>
         <div class="center-content">
           <div class="content-block">
             <p><i class="gxicon gxicon-bind"></i></p>

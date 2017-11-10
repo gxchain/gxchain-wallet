@@ -3,7 +3,7 @@
     <div class="page" id="page-about">
       <header class="bar bar-nav">
         <h3 class="title">{{$t('about.title')}}</h3>
-        <router-link :to="linkBack" replace class="icon icon-left"></router-link>
+        <router-link :to="link('/')" replace class="icon icon-left"></router-link>
       </header>
       <div class="content">
         <div class="center-content">
@@ -47,9 +47,6 @@
       ...mapGetters({
         isNative:'isNative'
       }),
-      linkBack(){
-        return `/?${$.param(this.$route.query)}`;
-      },
       linkDisclaimer(){
         let query = $.extend({},this.$route.query,{from:this.$route.fullPath});
         return `/disclaimer?${$.param(query)}`;

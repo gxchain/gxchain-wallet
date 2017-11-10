@@ -3,7 +3,7 @@
     <div class="page" id="page-transfer">
       <header class="bar bar-nav">
         <h3 class="title">{{$t('transfer.title')}}</h3>
-        <router-link :to="linkBack" replace class="icon icon-left"></router-link>
+        <router-link :to="link('/')" replace class="icon icon-left"></router-link>
         <a v-if="isNative" href="javascript:;" class="icon gxicon gxicon-scan pull-right" @click="openQRScaner">
           <input ref="qrfile" @change="onFileUpload" v-if="!isNative" type="file" class="file-selector"/>
         </a>
@@ -280,10 +280,6 @@
       },
       submitEnable() {
         return this.account && this.amount;
-      },
-      linkBack(){
-        let query = this.$route.query;
-        return query.from || `/?${$.param(query)}`
       }
     },
     components: {
@@ -293,12 +289,6 @@
   }
 </script>
 <style scoped lang="scss">
-  .pull-to-refresh-layer {
-    top: -0.5rem;
-    .line-scale > div {
-      background-color: #3d3d3b;
-    }
-  }
 
   .tip-error,.tip-alert{
     word-break: break-word;

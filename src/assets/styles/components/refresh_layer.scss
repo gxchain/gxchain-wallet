@@ -1,5 +1,4 @@
 .pull-to-refresh-layer {
-  position: absolute;
   .preloader {
     animation: none;
     display: flex;
@@ -8,6 +7,7 @@
     .line-scale {
       display: none;
       >div{
+        background-color: #3d3d3b;
         width:2px;
         height:17.5px;
       }

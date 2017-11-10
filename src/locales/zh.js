@@ -214,7 +214,10 @@ const locale = {
     }
   },
   trade_history: {
-    title: '交易记录'
+    title: '交易记录',
+    switch:'切换',
+    currentAccount:'当前账户: {account}',
+    empty:'无交易记录'
   }
 }
 

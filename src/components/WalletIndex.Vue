@@ -67,7 +67,7 @@
         </div>
         <!--function entries-->
         <div class="row-operation">
-          <router-link to="/transfer" class="item" href="javascript:;">
+          <router-link :to="link('/transfer')" class="item" href="javascript:;">
             <span class="gxicon x2 gxicon-transfer"></span><span class="item-text">{{$t('index.transfer')}}</span>
           </router-link>
           <div class="sep"></div>
@@ -520,7 +520,11 @@
   }
 
   .pull-to-refresh-layer {
+    position: absolute;
     top: 1rem;
+    .line-scale > div {
+      background-color:#fff !important;
+    }
   }
 
   .swiper-slide {

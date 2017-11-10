@@ -3,7 +3,7 @@
     <div class="page" id="page-wallet-backup-detail">
       <header class="bar bar-nav">
         <h3 class="title">{{$t('wallet_backup.detail.title')}}</h3>
-        <router-link :to="linkBack" replace class="icon icon-left"></router-link>
+        <router-link :to="link('/wallet-backup')" replace class="icon icon-left"></router-link>
       </header>
       <div class="content">
         <div class="tip-info">
@@ -94,11 +94,7 @@
     computed: {
       ...mapGetters({
         isNative: 'isNative'
-      }),
-      linkBack() {
-        let query = this.$route.query;
-        return query.from || `/wallet-backup?${$.param(query)}`
-      }
+      })
     }
   }
 </script>

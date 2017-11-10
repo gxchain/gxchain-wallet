@@ -3,7 +3,7 @@
     <div class="page" id="page-wallet-create-success">
       <header class="bar bar-nav">
         <h3 class="title">{{$t('transfer.success.title')}}</h3>
-        <router-link :to="linkBack" replace class="icon icon-left"></router-link>
+        <router-link :to="link('/transfer')" replace class="icon icon-left"></router-link>
       </header>
       <div class="content">
         <div class="center-content">
@@ -16,7 +16,7 @@
         </div>
         <div class="content-block button-block">
           <p>
-            <router-link :to="linkBack" replace class="button button-gxb">{{$t('transfer.success.done')}}</router-link>
+            <router-link :to="link('/transfer')" replace class="button button-gxb">{{$t('transfer.success.done')}}</router-link>
           </p>
         </div>
       </div>
@@ -37,10 +37,6 @@
         let query = this.$route.query;
         query.nativeHook = false;
         return `/wallet-backup?${$.param(query)}`;
-      },
-      linkBack() {
-        let query = this.$route.query;
-        return query.from || `/transfer?${$.param(query)}`
       }
     },
     methods: {

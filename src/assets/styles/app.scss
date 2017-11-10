@@ -52,10 +52,6 @@
   }
 }
 
-.bar-nav ~ .pull-to-refresh-content {
-  top: 2.2rem;
-}
-
 .bar-tab {
   background: #f2f2f2;
   .tab-item {
@@ -80,7 +76,10 @@
     top: 3.2rem;
   }
   .bar-nav ~ .pull-to-refresh-content {
-    top: 3.2rem;
+    top: 0;
+  }
+  .pull-to-refresh-layer {
+    top: 1rem;
   }
 }
 
@@ -168,7 +167,6 @@ body.with-panel-right-cover .panel-overlay {
 .color-danger {
   color: $THEME_COLOR_DANGER !important;
 }
-
 
 .list-block .item-title.label {
   width: 4.5rem;

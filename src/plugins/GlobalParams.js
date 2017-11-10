@@ -8,7 +8,10 @@ export default {
         })
       },
       methods:{
-
+        link(path){
+          let query = this.$route.query;
+          return this.$route.query.from||`${path||'/'}?${$.param(query)}`;
+        }
       }
     })
   }

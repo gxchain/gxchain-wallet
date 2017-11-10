@@ -3,7 +3,7 @@
     <div class="page" id="page-wallet-manage">
       <header class="bar bar-nav">
         <h3 class="title">{{$t('wallet_manage.title')}}</h3>
-        <router-link :to="{path:'/'}" replace class="icon icon-left"></router-link>
+        <router-link :to="link('/')" replace class="icon icon-left"></router-link>
       </header>
       <div class="content pull-to-refresh-content">
         <div class="pull-to-refresh-layer">

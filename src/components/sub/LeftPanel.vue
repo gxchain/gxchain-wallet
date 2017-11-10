@@ -9,7 +9,7 @@
       <div class="list-block">
         <ul>
           <li>
-            <router-link to="/wallet-import" class="item-content">
+            <router-link :to="link('/wallet-import')" class="item-content">
               <div class="item-media"><i class="gxicon gxicon-import"></i></div>
               <div class="item-inner">
                 <div class="item-title">{{$t('left_panel.import_wallet')}}</div>
@@ -17,7 +17,7 @@
             </router-link>
           </li>
           <li>
-            <router-link to="/wallet-create-step-1" class="item-content">
+            <router-link :to="link('/wallet-create-step-1')" class="item-content">
               <div class="item-media"><i class="gxicon gxicon-wallet"></i></div>
               <div class="item-inner">
                 <div class="item-title">{{$t('left_panel.create_wallet')}}</div>
@@ -27,7 +27,7 @@
         </ul>
         <ul>
           <li>
-            <router-link to="/wallet-manage" class="item-content">
+            <router-link :to="link('/wallet-manage')" class="item-content">
               <div class="item-media"><i class="gxicon gxicon-dashboard"></i></div>
               <div class="item-inner">
                 <div class="item-title">{{$t('left_panel.manage_wallets')}}</div>
@@ -35,7 +35,7 @@
             </router-link>
           </li>
           <li>
-            <router-link to="/trade-history" class="item-content">
+            <router-link :to="link('/trade-history')" class="item-content">
               <div class="item-media"><i class="gxicon gxicon-record"></i></div>
               <div class="item-inner">
                 <div class="item-title">{{$t('left_panel.history')}}</div>
@@ -45,7 +45,7 @@
         </ul>
         <ul class="last">
           <li>
-            <router-link to="/language-setting" class="item-content">
+            <router-link :to="link('/language-setting')" class="item-content">
               <div class="item-media"><i class="gxicon gxicon-language"></i></div>
               <div class="item-inner">
                 <div class="item-title">{{$t('left_panel.language')}}</div>
@@ -53,7 +53,7 @@
             </router-link>
           </li>
           <li>
-            <router-link to="/about" class="item-content">
+            <router-link :to="link('/about')" class="item-content">
               <div class="item-media"><i class="gxicon gxicon-users"></i></div>
               <div class="item-inner">
                 <div class="item-title">{{$t('left_panel.about')}}</div>

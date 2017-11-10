@@ -3,7 +3,11 @@
     <div class="page" id="page-trade-history">
       <header class="bar bar-nav">
         <h3 class="title">{{$t('trade_history.title')}}</h3>
-        <router-link :to="{path:'/'}" replace class="icon icon-left"></router-link>
+        <router-link :to="link('/')" replace class="icon icon-left"></router-link>
+        <a class="pull-right icon account-switch">
+          {{$t('trade_history.switch')}}
+          <select></select>
+        </a>
       </header>
       <div class="content pull-to-refresh-content">
         <div class="pull-to-refresh-layer">
@@ -17,9 +21,12 @@
             </div>
           </div>
         </div>
-        <div class="list-block">
+        <div class="tip-info text-center">
+          {{$t('trade_history.currentAccount', {account: currentWallet.account})}}
+        </div>
+        <div class="list-block" v-if="histories.length>0">
           <ul>
-            <li>
+            <li v-for="history in histories">
               <a class="item-content item-link">
                 <div class="item-inner">
                   <div class="item-title label"></div>
@@ -28,17 +35,25 @@
             </li>
           </ul>
         </div>
+        <p class="tip-warning text-center">{{$t('trade_history.empty')}}</p>
       </div>
     </div>
   </div>
 </template>
 <script>
 
-  import {fetch_account_histroy} from '@/services/WalletService'
+  import {fetch_account_histroy, get_wallets, get_wallet_index} from '@/services/WalletService'
 
   export default {
+    data() {
+      return {
+        currentWallet: get_wallets()[get_wallet_index()],
+        histories:[]
+      }
+    },
     methods: {
       loadHistory() {
+
         setTimeout(() => {
           $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
         }, 500)
@@ -54,9 +69,13 @@
 </script>
 <style scoped lang="scss">
 
-  .pull-to-refresh-layer {
-    .line-scale > div {
-      background-color: #ccc;
+  .account-switch{
+    select{
+      font-size:.75rem;
+      position: absolute;
+      left: 0;
+      top:0;
+      opacity: 0;
     }
   }
 </style>

@@ -2,7 +2,7 @@
   <div class="page-group">
     <div class="page" id="page-disclaimer">
       <header class="bar bar-nav">
-        <router-link :to="linkBack" replace class="pull-left icon icon-left"></router-link>
+        <router-link :to="link('/')" replace class="pull-left icon icon-left"></router-link>
         <h3 class="title">{{$t('disclaimer.title')}}</h3>
         <a @click="switchLanguage" class="pull-right icon"><img width="25px" :src="imgFlag"></a>
       </header>
@@ -32,7 +32,7 @@
         }
         else {
           this.$router.replace({
-            path: this.linkBack
+            path: this.link('/')
           });
         }
       },
@@ -58,9 +58,6 @@
         else {
           return 'page'
         }
-      },
-      linkBack() {
-        return this.$route.query.from || `/?${$.param(this.$route.query)}`
       },
       imgFlag() {
         let locale = this._i18n.locale;

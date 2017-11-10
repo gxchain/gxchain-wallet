@@ -3,7 +3,7 @@
     <div class="page" id="page-wallet-create-success">
       <header class="bar bar-nav">
         <h3 class="title">{{$t('wallet_create.success.title')}}</h3>
-        <router-link to="/" replace class="icon icon-left"></router-link>
+        <router-link :to="link('/')" replace class="icon icon-left"></router-link>
       </header>
       <div class="content">
         <div class="center-content">

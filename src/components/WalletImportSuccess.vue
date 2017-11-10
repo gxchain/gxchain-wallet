@@ -3,7 +3,7 @@
     <div class="page" id="page-wallet-import-success">
       <header class="bar bar-nav">
         <h3 class="title">{{$t('wallet_import.success.title')}}</h3>
-        <router-link :to="{path:$route.query.from||'/'}" replace class="icon icon-left"></router-link>
+        <router-link :to="link('/')" replace class="icon icon-left"></router-link>
       </header>
       <div class="content">
         <div class="center-content">

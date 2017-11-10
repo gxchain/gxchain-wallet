@@ -214,7 +214,10 @@ const locale = {
     }
   },
   trade_history: {
-    title: 'Trade History'
+    title: 'Trade History',
+    switch:'Switch',
+    currentAccount:'Current Account: {account}',
+    empty:'No trade record'
   }
 }
 

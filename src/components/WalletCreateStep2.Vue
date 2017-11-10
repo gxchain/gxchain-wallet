@@ -3,7 +3,7 @@
     <div class="page" id="page-wallet-create-step-2">
       <header class="bar bar-nav">
         <h3 class="title">{{$t('wallet_create.step2.title')}}</h3>
-        <router-link :to="{path:'/wallet-create-step-1'}" replace class="icon icon-left"></router-link>
+        <router-link :to="link('/wallet-create-step-1')" replace class="icon icon-left"></router-link>
       </header>
       <div class="content">
         <div class="content-block text-center">
