@@ -60,6 +60,7 @@ const get_wallet_index = () => {
   if (!index) {
     return 0;
   }
+  index = Number(index);
   if ((index + 1) > wallets.length) {
     set_wallet_index(wallets.length - 1);
     return wallets.length - 1;
@@ -72,6 +73,7 @@ const get_wallet_index = () => {
  * @param index
  */
 const set_wallet_index = (index) => {
+  index = Number(index);
   let wallets = get_wallets();
   localStorage.setItem(`gxb_wallet_index_${Apis.instance().chain_id}`, Math.min(wallets.length - 1, index));
 }

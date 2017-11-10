@@ -265,9 +265,13 @@
       fetch_balance() {
         fetch_account_balance(this.currentWallet.account).then((balance) => {
           this.balance = balance.amount / 100000;
-          $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
+          setTimeout(() => {
+            $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
+          }, 500)
         }).catch(ex => {
-          $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
+          setTimeout(() => {
+            $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
+          }, 500)
         })
       }
     },
@@ -290,7 +294,7 @@
 </script>
 <style scoped lang="scss">
 
-  .tip-error,.tip-alert{
+  .tip-error, .tip-alert {
     word-break: break-word;
   }
 
