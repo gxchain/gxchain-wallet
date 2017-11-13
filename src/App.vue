@@ -3,7 +3,9 @@
     <div class="view" v-if="loading">
       <loading-layer></loading-layer>
     </div>
-    <router-view class="view" :class="{hide:loading}"></router-view>
+    <transition :name="isNative?'fadeIn':''" mode="in-out">
+      <router-view class="view" :class="{hide:loading}"></router-view>
+    </transition>
   </div>
 </template>
 
@@ -17,8 +19,12 @@
     name: 'app',
     computed: {
       ...mapGetters({
-        loading: 'loading'
+        loading: 'loading',
+        isNative: 'isNative'
       })
+    },
+    methods: {
+
     },
     components: {
       LoadingLayer
