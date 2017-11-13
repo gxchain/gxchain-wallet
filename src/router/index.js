@@ -13,9 +13,12 @@ import LanguageSetting from '@/components/LanguageSetting'
 import WalletBackupIndex from '@/components/WalletBackupIndex'
 import WalletBackupDetail from '@/components/WalletBackupDetail'
 import TradeHistory from '@/components/TradeHistory'
+import TradeDetail from '@/components/TradeDetail'
 import Transfer from '@/components/Transfer'
 import TransferSuccess from '@/components/TransferSuccess'
 import Disclaimer from '@/components/Disclaimer'
+import LoyaltyProgram from '@/components/LoyaltyProgram'
+import LoyaltyProgramDetail from '@/components/LoyaltyProgramDetail'
 import store from '@/vuex/store'
 import connect from '@/common/connect'
 import cordovaLoader from '@/common/cordovaLoader'
@@ -129,6 +132,14 @@ let router = new Router({
       component: TradeHistory
     },
     {
+      path: '/trade/:id',
+      meta: {
+        title: '记录详情'
+      },
+      name: 'TradeDetail',
+      component: TradeDetail
+    },
+    {
       path: '/transfer',
       meta: {
         title: '转账'
@@ -159,6 +170,22 @@ let router = new Router({
       },
       name: 'BackupDetail',
       component: WalletBackupDetail
+    },
+    {
+      path: '/loyalty-program',
+      meta: {
+        title: '忠诚者计划'
+      },
+      name: 'LoyaltyProgram',
+      component: LoyaltyProgram
+    },
+    {
+      path: '/loyalty-program/:id',
+      meta: {
+        title: '计划详情'
+      },
+      name: 'LoyaltyProgramDetail',
+      component: LoyaltyProgramDetail
     }
   ]
 })

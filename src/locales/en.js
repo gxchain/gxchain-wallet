@@ -9,7 +9,8 @@ const locale = {
     wallet: 'Wallet',
     account_name: 'Account',
     copy: 'Copy',
-    copied: 'Copied'
+    copied: 'Copied',
+    join_loyalty_program:'Loyalty Program'
   },
   left_panel: {
     import_wallet: 'Import Wallet',
@@ -165,7 +166,15 @@ const locale = {
   },
   unlock: {
     account_not_found: 'Account not found in current wallet',
-    wrong_password: 'Wrong password'
+    cancel: 'Cancel',
+    ok: 'OK',
+    tip_password: 'Unlock your wallet',
+    placeholder: {
+      password: 'Please enter your password'
+    },
+    error: {
+      invalid_password: 'Invalid password'
+    }
   },
   transfer: {
     title: 'Send',
@@ -220,6 +229,68 @@ const locale = {
     empty: 'No more record',
     received: 'Received',
     sent: 'Sent'
+  },
+  trade:{
+    title:'Trade Detail',
+    sent:'Send to',
+    receive:'Receive from',
+    label:{
+      from:'Send Account',
+      to:'Receive Account',
+      timestamp:'Timestamp',
+      fee:'Fee(GXS)',
+      memo:'Memo'
+    }
+  },
+  loyalty_program:{
+    title:'Loyalty Program',
+    tip1:'Grow with GXB',
+    tip2:'Benefit for value investors, extra bonus for long-run holders',
+    tip3:'GXB\'s Loyalty Program is a benefit program designed for investors to lock up certain amount of GXS (GX Share). During the lockup period, the capital is frozen, meanwhile investors are entitled to extra bonus. For example, lock up 10,000 GXS for 9 months; calculating by 6% annualized return,  you may get 450 GXS for bonus on the due date. GXS would like our investors to join the Loyalty Program and enjoy the long-term benefits brought by GXB\'s growth in the future.',
+    term:'Lockup Term',
+    bonus:'Annualized Bonus',
+    expected_bonus:'Expected bonus',
+    month:'{month} month|months',
+    day:'{day} day|days',
+    due:'Due Date',
+    amount:'Lockup Amount',
+    available:'<span>{amount}</span> GXS Available',
+    join:'Setup',
+    history:'History',
+    no_record:'No record',
+    locked_at:'Locked At',
+    locked_amount:'Locked Amount(GXS)',
+    button_join:'Earn <span class="asset">{percent}</span>% by joining our Loyalty Program',
+    placeholder:{
+      amount:'Amount to lock'
+    },
+    modal:{
+      message:'The amount subscribed to the Loyalty Program will be locked up and unable to sell. This operation is irrevocable. Are you sure to join the program?',
+      cancel:'Cancel',
+      confirm:'Confirm',
+      placeholder:'Please enter your password'
+    },
+    error:{
+      insufficient_balance:'Insufficient balance',
+      invalid_amount:'Invalid amount',
+      too_less:'At least 1 GXS'
+    },
+    status:{
+      title:'Status',
+      locked:'Locked',
+      can_unlock:'Manually unlock'
+    },
+    success:{
+      title:'Success',
+      message:'Congratulations,{amount} GXS were locked for join loyalty program'
+    },
+    detail:{
+      title:'Program Details',
+      success:{
+        title:'Success',
+        message:'Congratulations,{amount} GXS were unlocked.'
+      }
+    }
   }
 }
 

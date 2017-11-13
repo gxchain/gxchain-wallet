@@ -8,11 +8,23 @@ import i18n from '@/locales'
 
 
 /**
+ * get objects by id
+ * @param ids
+ */
+const get_objects = (ids) => {
+  return Apis.instance().db_api().exec('get_objects', [ids])
+}
+
+/**
  * get account information by name
  * @param account_name
  */
 const fetch_account = (account_name) => {
   return Apis.instance().db_api().exec('get_account_by_name', [account_name])
+}
+
+const fetch_full_account = (account) => {
+  return Apis.instance().db_api().exec('get_full_accounts', [[account], true])
 }
 
 /**
@@ -130,6 +142,12 @@ const update_wallet = (wallet) => {
   set_wallets(wallets);
 }
 
+/**
+ * unlock wallet
+ * @param account
+ * @param password
+ * @returns {bluebird}
+ */
 const unlock_wallet = (account, password) => {
   return new Promise((resolve, reject) => {
     let wallets = get_wallets();
@@ -142,7 +160,7 @@ const unlock_wallet = (account, password) => {
       reject(new Error(i18n.t('unlock.account_not_found')));
     }
     else if (password_pubkey != wallet.password_pubkey) {
-      reject(new Error(i18n.t('unlock.wrong_password')));
+      reject(new Error(i18n.t('unlock.error.invalid_password')));
     }
     else {
       let password_aes = Aes.fromSeed(password)
@@ -366,6 +384,70 @@ const transfer = (from, to, amount, memo, password, broadcast = true) => {
 }
 
 /**
+ * lock balance to join loyalty program
+ * @param program_id
+ * @param account_id
+ * @param amount
+ * @param rate
+ * @param lock_days
+ * @param memo
+ * @param password
+ * @param broadcast
+ * @returns {Promise.<TResult>|*}
+ */
+const lock_balance = (program_id, account, amount, rate, lock_days, memo = '', password, broadcast) => {
+  return Promise.all([
+    get_objects(["2.1.0"]),
+    fetch_account(account)
+  ]).then(function (resp) {
+    let time = resp[0][0].time;
+    if (!/Z$/.test(time)) {
+      time += 'Z'
+    }
+    let tr = new TransactionBuilder();
+    tr.add_operation(tr.get_type_operation('balance_lock', {
+      fee: {
+        amount: 0,
+        asset_id: '1.3.1'
+      },
+      account: resp[1].id,
+      lock_days: lock_days,
+      create_date_time: new Date(time),
+      program_id: program_id,
+      amount: {
+        amount: amount,
+        asset_id: '1.3.1'
+      },
+      interest_rate: rate,
+      memo: memo,
+    }))
+    return process_transaction(tr, account, password, broadcast)
+  });
+}
+
+
+/**
+ * unlock account balance for loyalty program
+ * @param lock_id
+ * @param account
+ * @returns {Promise.<TResult>|*}
+ */
+const unlock_balance = (lock_id, account, password, broadcast) => {
+  return fetch_account(account).then(acc => {
+    let tr = new TransactionBuilder();
+    tr.add_operation(tr.get_type_operation('balance_unlock', {
+      fee: {
+        amount: 0,
+        asset_id: '1.3.1'
+      },
+      account: acc.id,
+      lock_id: lock_id
+    }))
+    return process_transaction(tr, account, password, broadcast)
+  })
+}
+
+/**
  * process transaction
  * @param tr
  * @param account
@@ -390,7 +472,16 @@ const process_transaction = (tr, account, password, broadcast) => {
   })
 }
 
+/**
+ * fetch block info
+ * @param block_num
+ */
+const fetch_block = (block_num) => {
+  return Apis.instance().db_api().exec('get_block', [block_num]);
+}
+
 export {
+  get_objects,
   transfer,
   fetch_dictionary,
   get_wallets,
@@ -399,10 +490,14 @@ export {
   unlock_wallet,
   update_wallet,
   fetch_account,
+  fetch_full_account,
   import_account,
   create_account,
   fetch_account_balance,
   set_disclaimer_accepted,
   get_disclaimer_accepted,
-  fetch_account_histroy
+  fetch_account_histroy,
+  fetch_block,
+  lock_balance,
+  unlock_balance
 }

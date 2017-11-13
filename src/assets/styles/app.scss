@@ -120,9 +120,6 @@
     top: 3.2rem;
   }
   .bar-nav ~ .pull-to-refresh-content {
-    top: 0;
-  }
-  .pull-to-refresh-layer {
     top: 1rem;
   }
 }
@@ -202,6 +199,14 @@ body.with-panel-right-cover .panel-overlay {
   width: 310px;
   margin-left: -155px !important;
   padding: .4rem .4rem;
+}
+
+.color-positive {
+  color: #076f8a;
+}
+
+.color-negative {
+  color: #d63932;
 }
 
 .color-primary {

@@ -129,6 +129,7 @@
     },
     mounted() {
       $.init();
+      $.initPullToRefresh(this.$el);
       this.account = this.$route.query.to || '';
       this.memo = this.$route.query.memo || '';
       this.fetch_balance();
@@ -269,6 +270,7 @@
             $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
           }, 500)
         }).catch(ex => {
+          console.error(ex);
           setTimeout(() => {
             $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
           }, 500)

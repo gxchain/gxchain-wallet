@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'gxb';
-  src:  url('fonts/gxb.eot?7m93d1');
-  src:  url('fonts/gxb.eot?7m93d1#iefix') format('embedded-opentype'),
-    url('fonts/gxb.ttf?7m93d1') format('truetype'),
-    url('fonts/gxb.woff?7m93d1') format('woff'),
-    url('fonts/gxb.svg?7m93d1#gxb') format('svg');
+  src:  url('fonts/gxb.eot?uililq');
+  src:  url('fonts/gxb.eot?uililq#iefix') format('embedded-opentype'),
+    url('fonts/gxb.ttf?uililq') format('truetype'),
+    url('fonts/gxb.woff?uililq') format('woff'),
+    url('fonts/gxb.svg?uililq#gxb') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.gxicon-lock:before {
+  content: "\e90e";
+}
 .gxicon-bind:before {
   content: "\e900";
 }

@@ -171,7 +171,7 @@
       },
       onPasswordConfirm() {
         if (!this.password.trim()) {
-          this.error.password = this.$t('unlock.wrong_password');
+          this.error.password = this.$t('unlock.error.invalid_password');
           return;
         }
         else {

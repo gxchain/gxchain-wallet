@@ -9,7 +9,8 @@ const locale = {
     wallet: '钱包账户',
     account_name: '账户名',
     copy: '复制',
-    copied: '已复制'
+    copied: '已复制',
+    join_loyalty_program:'参与忠诚者计划'
   },
   left_panel: {
     import_wallet: '导入钱包',
@@ -165,7 +166,15 @@ const locale = {
   },
   unlock: {
     account_not_found: '钱包内没有此账户',
-    wrong_password: '密码错误'
+    cancel: '取消',
+    ok: '确定',
+    tip_password: '解锁你的钱包',
+    placeholder: {
+      password: '请输入密码'
+    },
+    error: {
+      invalid_password: '密码错误'
+    }
   },
   transfer: {
     title: '发送',
@@ -220,6 +229,68 @@ const locale = {
     empty:'无更多记录',
     received:'接收',
     send:'发送'
+  },
+  trade:{
+    title:'记录详情',
+    sent:'转到以下账户',
+    receive:'来自以下账户',
+    label:{
+      from:'发送账号',
+      to:'接收账号',
+      timestamp:'操作时间',
+      fee:'手续费(GXS)',
+      memo:'备注消息'
+    }
+  },
+  loyalty_program:{
+    title:'忠诚计划',
+    tip1:'与公信宝一起成长',
+    tip2:'价值投资者的福利，长线持有还送奖励',
+    tip3:'忠诚计划是公信宝推出的一项福利计划，投资者可锁定一定额度的公信股，锁定期间金额冻结，同时享受对应的奖励。如锁定1万公信股9个月，按年化6%，到期后可获得450个公信股的奖励。公信宝希望投资者通过忠诚计划，享受未来公信宝发展所带来的长期效益！',
+    term:'锁定期限',
+    bonus:'年化奖励',
+    expected_bonus:'到期奖励',
+    month:'{month}月 | {month}月',
+    day:'{day}日 | {day}日',
+    due:'到期时间',
+    amount:'锁定金额',
+    available:'可用GXS: <span class="color-danger">{amount}</span>',
+    join:'设置计划',
+    history:'锁定记录',
+    no_record:'无记录',
+    locked_at:'锁定时间',
+    locked_amount:'锁定金额(GXS)',
+    button_join:'加入忠诚计划 赚 <span class="big">{bonus}</span>%',
+    placeholder:{
+      amount:'填写锁定金额'
+    },
+    modal:{
+      message:'加入忠诚计划的金额将被锁定，期间不可卖出，此操作不可撤销，确定加入吗？',
+      cancel:'取消',
+      confirm:'确认',
+      placeholder:'请输入密码'
+    },
+    error:{
+      insufficient_balance:'余额不足',
+      invalid_amount:'金额错误',
+      too_less:'最少锁仓金额为1GXS'
+    },
+    status:{
+      title:'状态',
+      locked:'已锁定',
+      can_unlock:'手动解锁'
+    },
+    success:{
+      title:'参与成功',
+      message:'成功锁定 {amount} GXS'
+    },
+    detail:{
+      title:'锁定详情',
+      success:{
+        title:'提示',
+        message:'恭喜，成功解锁 {amount} GXS'
+      }
+    }
   }
 }
 

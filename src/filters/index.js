@@ -26,6 +26,9 @@ export default {
     }
     value = value + '';
     precision = value.indexOf('.') > -1 && value.split('.')[1].length || precision;
+    if (precision > 5) {
+      precision = 5;
+    }
     value = parseFloat(value.replace(/[^\d\.-]/g, "")).toFixed(precision) + "";
     var l = value.split(".")[0].split("").reverse(),
       r = value.split(".")[1];

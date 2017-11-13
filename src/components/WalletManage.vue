@@ -120,6 +120,7 @@
     },
     mounted() {
       $.init();
+      $.initPullToRefresh(this.$el);
       this.loadWallets();
       $(this.$el).on('refresh', '.pull-to-refresh-content', (e) => {
         this.loadWallets();
