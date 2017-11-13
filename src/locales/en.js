@@ -8,8 +8,8 @@ const locale = {
     receive: 'Receive',
     wallet: 'Wallet',
     account_name: 'Account',
-    copy:'Copy',
-    copied:'Copied'
+    copy: 'Copy',
+    copied: 'Copied'
   },
   left_panel: {
     import_wallet: 'Import Wallet',
@@ -215,9 +215,11 @@ const locale = {
   },
   trade_history: {
     title: 'Trade History',
-    switch:'Switch',
-    currentAccount:'Current Account: {account}',
-    empty:'No record'
+    switch: 'Switch',
+    currentAccount: 'Current Account: {account}',
+    empty: 'No more record',
+    received: 'Received',
+    sent: 'Sent'
   }
 }
 

@@ -16,6 +16,17 @@ const fetch_account = (account_name) => {
 }
 
 /**
+ * fetch account histories by account name
+ * @param account_name
+ * @returns {Promise.<TResult>|*}
+ */
+const fetch_account_histroy = (account_name) => {
+  return fetch_account(account_name).then((account) => {
+    return Apis.instance().history_api().exec('get_account_history', [account.id, "1.11.0", 100, "1.11.0"])
+  })
+}
+
+/**
  * fetch brain key dictionary
  * @returns {bluebird}
  */
@@ -392,5 +403,6 @@ export {
   create_account,
   fetch_account_balance,
   set_disclaimer_accepted,
-  get_disclaimer_accepted
+  get_disclaimer_accepted,
+  fetch_account_histroy
 }

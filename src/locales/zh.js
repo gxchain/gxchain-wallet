@@ -217,7 +217,9 @@ const locale = {
     title: '交易记录',
     switch:'切换',
     currentAccount:'当前账户: {account}',
-    empty:'无交易记录'
+    empty:'无更多记录',
+    received:'接收',
+    send:'发送'
   }
 }
 
