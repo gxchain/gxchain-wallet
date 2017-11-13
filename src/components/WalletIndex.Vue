@@ -64,7 +64,9 @@
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
           </swiper>
-          <router-link :to="link('/loyalty-program')" class="link-loyalty-program">{{$t('index.join_loyalty_program')}}</router-link>
+          <router-link :to="link('/loyalty-program')" class="link-loyalty-program">
+            {{$t('index.join_loyalty_program')}}
+          </router-link>
         </div>
         <!--function entries-->
         <div class="row-operation">
@@ -145,6 +147,7 @@
         exchanges: [],
         swiperOption: {
           pagination: '.swiper-pagination',
+          keyboardControl: true,
           paginationClickable: true,
           initialSlide: wallet_index,
           onSlideChangeEnd: function (s) {
@@ -249,13 +252,12 @@
     },
     destroyed() {
       $.allowPanelOpen = true;
-//      $(this.$el).off('refresh');
-//      $(this.$refs.content).off('scroll').off($.touchEvents.move).off($.touchEvents.end);
+      $(this.$el).off('refresh');
+      $(this.$refs.content).off('scroll').off('touchmove').off('touchend');
       this.stopFetchingMarket = true;
     },
     mounted() {
       $.init();
-      $.initPullToRefresh(this.$el);
       this.loadWallets();
       this.stopFetchingMarket = false;
       this.loadMarketInfo();
@@ -267,9 +269,14 @@
         }
         cordova.exec(null, null, 'statusBar', 'styleLightContent', []);
       }
-      $(this.$el).on('refresh', '.pull-to-refresh-content', (e) => {
-        this.loadWallets();
-      })
+      if ($.support.touch) {
+        $(this.$el).on('refresh', '.pull-to-refresh-content', (e) => {
+          this.loadWallets();
+        })
+      }
+      else {
+        $.destroyPullToRefresh(this.$el);
+      }
 
       $(this.$refs.content).on('scroll', () => {
         let offset = $(this.$el).find('.row-top').offset().top;
@@ -280,21 +287,20 @@
         else {
           $(this.$refs.bar).css({background: 'rgba(37, 40, 113, 0)'});
         }
-      }).on($.touchEvents.move, (e) => {
+      }).on('touchmove', (e) => {
         $(this.$refs.bg).css({
           height: Math.max($(this.$refs.top).height() + $(this.$refs.top).offset().top, $(this.$refs.top).height()),
           transition: 'none',
           webkitTransition: 'none'
         })
         return true;
-      }).on($.touchEvents.end, () => {
+      }).on('touchend', () => {
         const end = () => {
           $(this.$refs.bg).attr('style', '');
           clearTimeout(timer);
         }
         let timer = setTimeout(end, 1000);
       });
-
       this.swiper.update();
     },
 
@@ -524,7 +530,7 @@
     position: absolute;
     top: 1rem;
     .line-scale > div {
-      background-color:#fff !important;
+      background-color: #fff !important;
     }
   }
 
@@ -532,25 +538,25 @@
     overflow: hidden;
   }
 
-  .link-loyalty-program{
-    z-index:2;
+  .link-loyalty-program {
+    z-index: 2;
     position: absolute;
-    right:0;
-    font-size:.6rem;
-    height:1.2rem;
+    right: 0;
+    font-size: .6rem;
+    height: 1.2rem;
     background: #fff;
-    padding:0 .2rem;
+    padding: 0 .2rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    &:before{
-      content:'';
-      position:absolute;
-      border:.6rem solid #fff;
-      left:-.6rem;
+    &:before {
+      content: '';
+      position: absolute;
+      border: .6rem solid #fff;
+      left: -.6rem;
       border-top-color: transparent;
       border-bottom-color: transparent;
-      border-left:0;
+      border-left: 0;
     }
   }
 
