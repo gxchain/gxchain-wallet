@@ -8,6 +8,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+var FaviconWebpackPlugin = require('favicons-webpack-plugin')
 
 var env = config.build.env
 
@@ -34,6 +35,21 @@ var webpackConfig = merge(baseWebpackConfig, {
                 warnings: false
             },
             sourceMap: true
+        }),
+        new FaviconWebpackPlugin({
+          logo:path.resolve(__dirname,'../static/logo1024.png'),
+          icons: {
+            android: true,
+            appleIcon: true,
+            appleStartup: false,
+            coast: false,
+            favicons: true,
+            firefox: true,
+            opengraph: false,
+            twitter: false,
+            yandex: false,
+            windows: false
+          }
         }),
         // extract css into its own file
         new ExtractTextPlugin({
