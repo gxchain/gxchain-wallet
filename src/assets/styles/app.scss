@@ -221,3 +221,16 @@ body.with-panel-right-cover .panel-overlay {
   width: 4.5rem;
   color: lighten($THEME_TINT_COLOR, 20%)
 }
+
+::-webkit-input-placeholder { /* WebKit browsers */
+  color: lighten($THEME_TINT_COLOR, 50%)
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color: lighten($THEME_TINT_COLOR, 50%)
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: lighten($THEME_TINT_COLOR, 50%)
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color: lighten($THEME_TINT_COLOR, 50%)
+}
