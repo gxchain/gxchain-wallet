@@ -253,7 +253,7 @@
     destroyed() {
       $.allowPanelOpen = true;
       $(this.$el).off('refresh');
-      $(this.$refs.content).off('scroll').off('touchmove').off('touchend');
+//      $(this.$refs.content).off('scroll').off('touchmove').off('touchend');
       this.stopFetchingMarket = true;
     },
     mounted() {
@@ -269,14 +269,10 @@
         }
         cordova.exec(null, null, 'statusBar', 'styleLightContent', []);
       }
-      if ($.support.touch) {
-        $(this.$el).on('refresh', '.pull-to-refresh-content', (e) => {
-          this.loadWallets();
-        })
-      }
-      else {
-        $.destroyPullToRefresh(this.$el);
-      }
+      $(this.$el).on('refresh', '.pull-to-refresh-content', (e) => {
+        this.loadWallets();
+      })
+
 
       $(this.$refs.content).on('scroll', () => {
         let offset = $(this.$el).find('.row-top').offset().top;

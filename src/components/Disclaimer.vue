@@ -2,7 +2,7 @@
   <div class="page-group">
     <div class="page" id="page-disclaimer">
       <header class="bar bar-nav">
-        <router-link :to="link('/')" replace class="pull-left icon icon-left"></router-link>
+        <router-link :to="link('/')" replace class="pull-left icon icon-left" v-if="canGoBack"></router-link>
         <h3 class="title">{{$t('disclaimer.title')}}</h3>
         <a @click="switchLanguage" class="pull-right icon"><img width="25px" :src="imgFlag"></a>
       </header>
@@ -19,7 +19,7 @@
   </div>
 </template>
 <script>
-  import {set_disclaimer_accepted} from '@/services/WalletService'
+  import {set_disclaimer_accepted,get_disclaimer_accepted} from '@/services/WalletService'
   import {set_item} from '@/services/CommonService'
 
   export default {
@@ -51,6 +51,9 @@
       $.init();
     },
     computed: {
+      canGoBack(){
+        return get_disclaimer_accepted();
+      },
       pageClass() {
         if (this.isPopup) {
           return 'popup popup-disclaimer';
