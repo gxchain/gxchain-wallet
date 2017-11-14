@@ -64,7 +64,7 @@
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
           </swiper>
-          <router-link :to="link('/loyalty-program')" class="link-loyalty-program">
+          <router-link :to="`/loyalty-program?platform=${$route.query.platform||'browser'}`" class="link-loyalty-program">
             {{$t('index.join_loyalty_program')}}
           </router-link>
         </div>
