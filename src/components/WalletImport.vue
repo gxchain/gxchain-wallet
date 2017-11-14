@@ -17,7 +17,8 @@
             <li class="align-top">
               <div class="item-content">
                 <div class="item-inner">
-                  <div class="item-input">
+                  <div class="item-input item-required">
+                    <span>*</span>
                     <textarea v-model="wifKey" :placeholder="$t('wallet_import.placeholder.key')"></textarea>
                   </div>
                 </div>
@@ -220,6 +221,18 @@
     .tip-error {
       text-align: center;
     }
+  }
+
+
+  .item-required span{
+    color:red;
+    position: absolute;
+    top: 10px;
+    font-weight: bold;
+  }
+
+  .item-required textarea{
+    padding-left: 0.5rem;
   }
 
 </style>
