@@ -226,13 +226,6 @@
   }
 </script>
 <style lang="scss" scoped>
-  .line-scale-pulse-out > div {
-    background-color: #fff;
-    width: 3px;
-    height: 18px;
-    margin: -1px;
-  }
-
   .asset {
     font-family: bebas;
     font-size: 1.1rem;

@@ -157,7 +157,7 @@
     },
     computed: {
       submittingHTML() {
-        return `<div class="line-scale-pulse-out" v-if="submitting">
+        return `<div class="button-loading line-scale-pulse-out">
                   <div></div>
                   <div></div>
                   <div></div>
@@ -321,14 +321,7 @@
     }
   }
 </script>
-<style scoped lang="scss">
-
-  .line-scale-pulse-out > div {
-    background-color: #fff;
-    width: 3px;
-    height: 18px;
-    margin: -1px;
-  }
+<style lang="scss" scoped>
 
   .tip-info, .tip-alert, .tip-success {
     padding-left: .75rem;

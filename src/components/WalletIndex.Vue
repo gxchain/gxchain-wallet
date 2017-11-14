@@ -70,7 +70,7 @@
         </div>
         <!--function entries-->
         <div class="row-operation">
-          <router-link :to="link('/transfer')" class="item" href="javascript:;">
+          <router-link :to="`/transfer?platform=${$route.query.platform||'browser'}`" class="item" href="javascript:;">
             <span class="gxicon x2 gxicon-transfer"></span><span class="item-text">{{$t('index.transfer')}}</span>
           </router-link>
           <div class="sep"></div>
@@ -83,7 +83,7 @@
           <div class="list-block media-list">
             <ul>
               <li v-for="exchange in exchanges">
-                <a href="javascript:;" class="item-link item-content item-exchange">
+                <a href="javascript:;" class="item-content item-exchange">
                   <div class="item-inner">
                     <div class="title-ex-name">
                       <div>{{$t('index.asset_name')}}</div>

@@ -150,7 +150,6 @@
 </script>
 <style scoped lang="scss">
   .page, .content {
-    background: #fff;
   }
 
   .pull-to-refresh-layer {
@@ -160,7 +159,7 @@
   }
 
   .wallets {
-    margin-top: 2rem;
+    margin-top:0;
     margin-bottom: 3.8rem;
     .wallet-info {
       .item-media {
@@ -173,7 +172,7 @@
     }
     ul {
       margin-top: .2rem;
-      background: #f0f5f6;
+      /*background: #f0f5f6;*/
     }
     .price-info {
       .item-after {

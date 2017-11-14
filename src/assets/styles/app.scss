@@ -35,7 +35,7 @@
 }
 
 .fadeIn-enter-active header .title{
-  animation: bounce-in 0.5s;
+  animation: bounce-in 0.5s ease;
 }
 
 .fadeIn-enter-active .content{
@@ -59,14 +59,14 @@
     opacity: 0;
     transform-origin: 50% 50%;
     transform: scale(2, 2);
-    filter: blur(90px);
+    //filter: blur(90px);
   }
 
   100% {
     opacity: 1;
     transform-origin: 50% 50%;
     transform: scale(1, 1);
-    filter: blur(0px);
+    //filter: blur(0px);
   }
 }
 
