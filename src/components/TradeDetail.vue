@@ -86,7 +86,6 @@
         wallet_index: get_wallet_index(),
         amount: '',
         timestamp: '',
-        memo: '',
         fee: '',
         from: '',
         to: '',

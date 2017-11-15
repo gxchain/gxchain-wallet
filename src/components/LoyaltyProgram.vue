@@ -91,7 +91,7 @@
           <div class="list-block" v-if="histories.length>0">
             <ul>
               <li v-for="history in histories" class="history">
-                <router-link :to="`/loyalty-program/${history.id}`" class="item-content item-link">
+                <router-link :to="`/loyalty-program/${history.id}`" class="item-content">
                   <div class="item-inner">
                     <div class="item-title-row">
                       <div class="item-title">{{history.amount | asset(2)}} GXS</div>

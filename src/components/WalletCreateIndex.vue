@@ -13,12 +13,12 @@
           </div>
           <div class="content-block block-button">
             <p>
-              <router-link :to="linkCreate" class="button button-gxb">
+              <router-link :to="link('/wallet-create-step-1',{from:$route.fullPath})" class="button button-gxb">
                 {{$t('wallet_create.index.button_create')}}
               </router-link>
             </p>
             <p>
-              <router-link :to="linkImport" class="button button-gxb-secondary">
+              <router-link :to="link('/wallet-import',{from:$route.fullPath})" class="button button-gxb-secondary">
                 {{$t('wallet_create.index.button_import')}}
               </router-link>
             </p>
@@ -38,7 +38,7 @@
       loadWallets() {
         if (get_wallets().length > 0) {
           this.$router.replace({
-            path: this.link(`/`)
+            path: this.link(`/wallet-create-step-1`)
           })
         }
         else {
@@ -76,18 +76,6 @@
       ...mapGetters({
         isNative: 'isNative'
       }),
-      linkImport() {
-        let query = this.$route.query;
-        query.from = this.$route.fullPath;
-        delete query.nativeHook;
-        return `/wallet-import?${$.param(query)}`;
-      },
-      linkCreate() {
-        let query = this.$route.query;
-        query.from = this.$route.fullPath;
-        delete query.nativeHook;
-        return `/wallet-create-step-1?${$.param(query)}`;
-      },
       imgFlag() {
         let locale = this._i18n.locale;
         if (locale == 'zh') {

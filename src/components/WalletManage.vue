@@ -55,7 +55,7 @@
           <span class="tab-label">{{$t('wallet_manage.button_import')}}</span>
         </router-link>
         <router-link class="tab-item"
-                     :to="link('/wallet-create',{from:$route.fullPath})">
+                     :to="link('/wallet-create-step-1',{from:$route.fullPath})">
           <span class="gxicon gxicon-wallet"></span>
           &nbsp;
           <span class="tab-label">{{$t('wallet_manage.button_create')}}</span>

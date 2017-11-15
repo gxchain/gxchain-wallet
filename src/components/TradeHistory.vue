@@ -29,7 +29,7 @@
       <div class="list-block history" v-if="histories.length>0">
         <ul>
           <li v-for="history in histories">
-            <router-link :to="`/trade/${history.id}`" class="item-content item-link">
+            <router-link :to="`/trade/${history.id}`" class="item-content">
               <div class="item-inner">
                 <div class="item-title-row">
                   <account-image class="image" :size="20"
@@ -37,7 +37,7 @@
                   <div>
                     <div>{{formatted_account(history.account)}}</div>
                     <div>
-                      <small color="color-light-gray">{{$t(`trade_history.${history.type}`)}}</small>
+                      <small class="color-light-gray">{{$t(`trade_history.${history.type}`)}}</small>
                     </div>
                   </div>
                 </div>
@@ -48,7 +48,7 @@
                     <small>GXS</small>
                   </div>
                   <div>
-                    <small color="color-light-gray">{{history.timestamp}}</small>
+                    <small class="color-light-gray">{{history.timestamp}}</small>
                   </div>
                 </div>
               </div>
@@ -103,15 +103,15 @@
           histories = histories.map((hist) => {
             let type = hist.op[1].to == account.id ? "received" : "sent";
             let acc = type == 'received' ? hist.op[1].from : hist.op[1].to;
-            let result={
+            let result = {
               id: hist.id,
               type: type,
               account: acc,
               amount: hist.op[1].amount.amount / 100000,
               timestamp: ''
             }
-            fetch_block(hist.block_num).then((block)=>{
-              result.timestamp=new Date(block.timestamp+'Z').toLocaleString();
+            fetch_block(hist.block_num).then((block) => {
+              result.timestamp = new Date(block.timestamp + 'Z').toLocaleString();
             })
             return result;
           });
@@ -184,7 +184,7 @@
 
   .history {
     margin-top: 0;
-    .item-inner{
+    .item-inner {
       align-items: flex-start;
       .item-title-row {
         flex-direction: row;
@@ -195,7 +195,7 @@
           margin-right: 1rem;
         }
       }
-      .item-after{
+      .item-after {
         flex-direction: column;
         display: flex;
         align-items: flex-end;

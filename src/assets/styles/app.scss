@@ -153,8 +153,8 @@
 
 a {
   color: #6699ff;
-  &.icon {
-    color: $THEME_TINT_COLOR;
+  &.icon,&.item-content{
+    color: #3d4145;
   }
 }
 
