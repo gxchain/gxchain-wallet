@@ -30,7 +30,7 @@
         <div class="button-block">
           <p v-if="isNative&&wifKey">
             <a @click="copyKey()" class="button button-gxb"
-               :class="{disabled:keyCopied}">{{keyCopied ? $t('wallet_backup.detail.copy') : $t('wallet_backup.detail.copied')}}</a>
+               :class="{disabled:keyCopied}">{{keyCopied ? $t('wallet_backup.detail.copied') : $t('wallet_backup.detail.copy')}}</a>
           </p>
         </div>
       </div>

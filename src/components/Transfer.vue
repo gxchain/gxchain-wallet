@@ -254,10 +254,13 @@
         let self = this;
         if (this.isNative) {
           cordova.exec(function (result) {
-            if (/^qr:\/\/transfer/.test(result)) {
-              var query = util.query2Obj(result.replace(/^qr:\/\/transfer/, ''));
+            if (result.indexOf('qr://transfer') == 0) {
+              let query = util.query2Obj(result.replace('qr://transfer', ''));
               self.account = query.account || '';
               self.memo = query.memo || '';
+            }
+            else {
+              self.account = result;
             }
             //qr://transfer?to=gxb123&memo=
           }, null, 'QRCode', 'scan', []);

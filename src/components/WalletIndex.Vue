@@ -64,13 +64,13 @@
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
           </swiper>
-          <router-link :to="`/loyalty-program?platform=${$route.query.platform||'browser'}`" class="link-loyalty-program">
+          <router-link :to="link('/loyalty-program',{platform:$route.query.platform||'browser'})" class="link-loyalty-program">
             {{$t('index.join_loyalty_program')}}
           </router-link>
         </div>
         <!--function entries-->
         <div class="row-operation">
-          <router-link :to="`/transfer?platform=${$route.query.platform||'browser'}`" class="item" href="javascript:;">
+          <router-link :to="link('/transfer',{platform:$route.query.platform||'browser'})" class="item" href="javascript:;">
             <span class="gxicon x2 gxicon-transfer"></span><span class="item-text">{{$t('index.transfer')}}</span>
           </router-link>
           <div class="sep"></div>
@@ -226,6 +226,15 @@
               let query = util.query2Obj(result.replace('qr://transfer', ''));
               if (self.$route.platform) {
                 query.platform = self.$route.platform
+              }
+              self.$router.push({
+                path: `/transfer?${$.param(query)}`
+              })
+            }
+            else{
+              let query ={
+                platform:self.$route.platform,
+                amount:result
               }
               self.$router.push({
                 path: `/transfer?${$.param(query)}`
