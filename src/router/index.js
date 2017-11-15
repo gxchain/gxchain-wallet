@@ -213,15 +213,8 @@ router.beforeEach((to, from, next) => {
 
   let platform = (from.name ? from.query.platform : to.query.platform) || 'browser';
   to.query.platform = platform;
-  // let nativeHook = typeof to.query.nativeHook == undefined ? true : to.query.nativeHook;
   let isNative = platform == 'ios' || platform == 'android';
   const goNext = () => {
-    // let title = to.matched[0].meta.title;
-    // let hideNav = to.matched[0].meta.hideNav;
-    // if (!nativeHook && from.name && isNative) {
-    //   cordova.exec(null, null, 'Controller', 'push', ['url', `${process.env.__HOST__}${to.path}?${$.param($.extend(from.query, to.query))}`, title,'',0,hideNav]);
-    // }
-    // else {
     connect(() => {
       if ((!get_wallets() || get_wallets().length == 0) && !inWhiteList(to)) {
         let query = $.extend({platform: platform}, to.query);
@@ -232,11 +225,7 @@ router.beforeEach((to, from, next) => {
       else {
         next();
       }
-      // if (isNative) {
-      //   cordova.exec(null, null, 'NavBar', 'setTitle', [title]);
-      // }
     })
-    // }
   }
   $.hidePreloader();
   $.closePanel();
