@@ -15,7 +15,7 @@ const messages = {
 const numberFormats = {
   'en': {
     currency: {
-      style: 'currency', currency: 'USD',currencyDisplay: 'symbol'
+      style: 'currency', currency: 'USD', currencyDisplay: 'symbol'
     }
   },
   'zh': {
@@ -28,20 +28,20 @@ const numberFormats = {
 const dateTimeFormats = {
   'en': {
     short: {
-      year: 'numeric', month: 'short', day: 'numeric'
+      year: 'numeric', month: 'short', day: 'numeric', hour12: true
     },
     long: {
       year: 'numeric', month: 'short', day: 'numeric',
-      weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: true
+      hour: 'numeric', minute: 'numeric', hour12: true
     }
   },
   'zh': {
     short: {
-      year: 'numeric', month: 'short', day: 'numeric'
+      year: 'numeric', month: 'short', day: 'numeric', hour12: false
     },
     long: {
       year: 'numeric', month: 'short', day: 'numeric',
-      weekday: 'short', hour: 'numeric', minute: 'numeric'
+      hour: 'numeric', minute: 'numeric', hour12: false
     }
   }
 }

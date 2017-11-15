@@ -168,8 +168,4 @@
   .list-block .item-title.label {
     width: 4rem;
   }
-
-  .button-block {
-    margin-top: 3.5rem;
-  }
 </style>

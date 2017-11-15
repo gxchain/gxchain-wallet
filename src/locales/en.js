@@ -147,11 +147,11 @@ const locale = {
   },
   about: {
     title: 'About us',
-    version: 'V0.0.1(Beta)',
+    version: 'V0.0.1',
     desc: {
-      line1: 'GXB wallet is a lite mobile wallet APP ',
+      line1: 'GXS Wallet is a lite mobile wallet APP ',
       line2: 'to facilitate GXS transfer, collection, wallet management',
-      line3: 'and review of updates on GXB at any time.'
+      line3: 'and review of updates on GXS at any time.'
     },
     disclaimer: 'Disclaimer'
   },
@@ -251,8 +251,8 @@ const locale = {
     term:'Lockup Term',
     bonus:'Annualized Bonus',
     expected_bonus:'Expected bonus',
-    month:'{month} month|months',
-    day:'{day} day|days',
+    month:'{month} month|{month} months',
+    day:'{day} day|{day} days',
     due:'Due Date',
     amount:'Lockup Amount',
     available:'<span>{amount}</span> GXS Available',

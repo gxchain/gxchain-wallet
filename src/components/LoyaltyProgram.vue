@@ -31,7 +31,7 @@
       </div>
       <div class="tabs">
         <div class="tab" :class="{active:tabIndex==0}">
-          <div class="list-block">
+          <div class="list-block history">
             <ul>
               <li class="item-content item-link">
                 <div class="item-inner">
@@ -47,7 +47,7 @@
                 <div class="item-inner">
                   <div class="item-title label auto-width">{{$t('loyalty_program.bonus')}}</div>
                   <div class="item-after">
-                    <span class="color-danger">{{rate|number(1)}}</span>%
+                    <span class="color-danger">{{rate | number(1)}}</span>%
                     <span v-if="bonus">/{{bonus}}&nbsp;GXS</span>
                   </div>
                 </div>
@@ -56,7 +56,7 @@
                 <div class="item-inner">
                   <div class="item-title label">{{$t('loyalty_program.due')}}</div>
                   <div class="item-after">
-                    {{due}}
+                    {{$d(due,'short')}}
                   </div>
                 </div>
               </li>
@@ -88,17 +88,17 @@
           </div>
         </div>
         <div class="tab" :class="{active:tabIndex==1}">
-          <div class="list-block" v-if="histories.length>0">
+          <div class="list-block history" v-if="histories.length>0">
             <ul>
-              <li v-for="history in histories" class="history">
+              <li v-for="history in histories">
                 <router-link :to="`/loyalty-program/${history.id}`" class="item-content">
                   <div class="item-inner">
                     <div class="item-title-row">
                       <div class="item-title">{{history.amount | asset(2)}} GXS</div>
-                      <div class="item-subtitle">{{history.created_at}}</div>
+                      <div class="item-subtitle">{{$d(history.created_at,'long')}}</div>
                     </div>
                     <div class="item-after">
-                      <small :class="{'color-success':history.status=='can_unlock'}">
+                      <small :class="{'color-primary':history.status=='can_unlock'}">
                         {{$t(`loyalty_program.status.${history.status}`)}}
                       </small>
                     </div>
@@ -174,7 +174,7 @@
         }
         let date = new Date();
         date.setDate(date.getDate() + Number(this.term.lock_days));
-        return date.toLocaleDateString()
+        return date;
       },
       bonus() {
         if (!this.amount || isNaN(Number(this.amount)) || !this.rate) {
@@ -246,8 +246,8 @@
                 interest_rate: param[1].interest_rate / 100
               }
             })
-            if(this.terms.length>0){
-              this.term = this.terms[this.terms.length-1];
+            if (this.terms.length > 0) {
+              this.term = this.terms[this.terms.length - 1];
             }
           }
         })
@@ -264,7 +264,7 @@
             }
             return {
               id: history.id,
-              created_at: created_at.toLocaleString(),
+              created_at: created_at,
               amount: history.amount.amount / 100000,
               status
             }
@@ -336,6 +336,7 @@
   }
 
   .list-block {
+    margin:.75rem 0;
     .item-title {
       width: 6.5rem;
       font-size: .8rem;

@@ -11,7 +11,7 @@
             <li class="item-content">
               <div class="item-inner">
                 <div class="item-title">{{$t('loyalty_program.locked_at')}}</div>
-                <div class="item-after">{{locked_at.toLocaleString()}}</div>
+                <div class="item-after">{{$d(locked_at, 'long')}}</div>
               </div>
             </li>
             <li class="item-content">
@@ -45,7 +45,7 @@
             <li class="item-content">
               <div class="item-inner">
                 <div class="item-title">{{$t('loyalty_program.due')}}</div>
-                <div class="item-after">{{due}}</div>
+                <div class="item-after">{{$d(due, 'long')}}</div>
               </div>
             </li>
             <li class="item-content" v-if="status=='locked'">
@@ -54,11 +54,12 @@
                 <div class="item-after">{{$t(`loyalty_program.status.locked`)}}</div>
               </div>
             </li>
-            <li @click="unlock_balance" class="item-content" :class="{'item-link':!submitting}" v-if="status=='can_unlock'">
+            <li @click="unlock_balance" class="item-content" :class="{'item-link':!submitting}"
+                v-if="status=='can_unlock'">
               <div class="item-inner">
                 <div class="item-title">{{$t('loyalty_program.status.title')}}</div>
                 <div class="item-after">
-                  <span class="color-success" v-if="!submitting">
+                  <span class="color-primary" v-if="!submitting">
                   {{$t(`loyalty_program.status.can_unlock`)}}
                   </span>
                   <div class="line-scale-pulse-out" v-if="submitting">
@@ -107,13 +108,13 @@
       this.loadLockedBalance();
     },
     computed: {
-      due(){
+      due() {
         if (!this.locked_at) {
           return '';
         }
         let date = new Date(this.locked_at);
         date.setDate(date.getDate() + Number(this.lock_days));
-        return date.toLocaleString()
+        return date;
       },
       bonus() {
         if (!this.amount || isNaN(Number(this.amount)) || !this.rate) {

@@ -147,11 +147,11 @@ const locale = {
   },
   about: {
     title: '关于我们',
-    version: 'V0.0.1(Beta)',
+    version: 'V0.0.1',
     desc: {
-      line1: '公信宝钱包是一款移动端轻钱包APP，',
+      line1: 'GXS Wallet是一款移动端轻钱包APP，',
       line2: '通过它能实现公信股的转账、收款和钱包管理，',
-      line3: '并及时掌握公信宝的最新动态。'
+      line3: '并及时掌握GXS的最新动态。'
     },
     disclaimer: '免责声明'
   },

@@ -48,7 +48,7 @@
                     <small>GXS</small>
                   </div>
                   <div>
-                    <small class="color-light-gray">{{history.timestamp}}</small>
+                    <small class="color-light-gray">{{$d(history.timestamp,'long')}}</small>
                   </div>
                 </div>
               </div>
@@ -111,7 +111,7 @@
               timestamp: ''
             }
             fetch_block(hist.block_num).then((block) => {
-              result.timestamp = new Date(block.timestamp + 'Z').toLocaleString();
+              result.timestamp = new Date(block.timestamp + 'Z');
             })
             return result;
           });
