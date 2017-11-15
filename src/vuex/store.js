@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 const state = {
   loading: true,
-  isNative: false
+  isNative: false,
+  direction: 'slide-right'
 }
 
 const mutations = {
@@ -14,6 +15,9 @@ const mutations = {
   },
   setIsNative(state, payload) {
     state.isNative = payload.isNative;
+  },
+  setDirection(state, payload) {
+    state.direction = payload.direction;
   }
 }
 
@@ -23,12 +27,16 @@ const actions = {
   },
   setIsNative({commit}, payload) {
     commit('setIsNative', payload)
+  },
+  setDirection({commit}, payload) {
+    commit('setDirection', payload)
   }
 }
 
 const getters = {
   loading: state => state.loading,
-  isNative: state => state.isNative
+  isNative: state => state.isNative,
+  direction: state => state.direction
 }
 
 export default new Vuex.Store({

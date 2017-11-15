@@ -3,7 +3,7 @@
     <div class="view" v-if="loading">
       <loading-layer></loading-layer>
     </div>
-    <transition :name="isNative?'fadeIn':''" mode="in-out">
+    <transition :name="isNative ? direction : ''">
       <router-view class="view" :class="{hide:loading}"></router-view>
     </transition>
   </div>
@@ -20,7 +20,8 @@
     computed: {
       ...mapGetters({
         loading: 'loading',
-        isNative: 'isNative'
+        isNative: 'isNative',
+        direction: 'direction'
       })
     },
     methods: {
