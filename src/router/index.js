@@ -194,7 +194,27 @@ const inWhiteList = (component) => {
   return !!component.meta.whiteList;
 }
 
+const history = window.sessionStorage;
+history.clear()
+let historyCount = history.getItem('count') * 1 || 0;
+history.setItem('/', 0);
+
 router.beforeEach((to, from, next) => {
+  const toIndex = history.getItem(to.path);
+  const fromIndex = history.getItem(from.path);
+  if (toIndex) {
+    if (!fromIndex || parseInt(toIndex, 10) > parseInt(fromIndex, 10) || (toIndex === '0' && fromIndex === '0')) {
+      store.commit('setDirection', {direction: 'slide-right'})
+    } else {
+      store.commit('setDirection', {direction: 'slide-left'})
+    }
+  } else {
+    ++historyCount;
+    history.setItem('count', historyCount);
+    to.path !== '/' && history.setItem(to.path, historyCount);
+    store.commit('setDirection', {direction: 'slide-right'})
+  }
+
   let platform = (from.name ? from.query.platform : to.query.platform) || 'browser';
   to.query.platform = platform;
   // let nativeHook = typeof to.query.nativeHook == undefined ? true : to.query.nativeHook;
