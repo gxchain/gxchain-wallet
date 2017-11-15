@@ -261,7 +261,7 @@ const locale = {
     no_record:'No record',
     locked_at:'Locked At',
     locked_amount:'Locked Amount(GXS)',
-    button_join:'Earn <span class="asset">{percent}</span>% by joining our Loyalty Program',
+    button_join:'Earn <span class="asset">{bonus}</span>% by joining our Loyalty Program',
     placeholder:{
       amount:'Amount to lock'
     },
