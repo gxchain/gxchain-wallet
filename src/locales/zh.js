@@ -17,7 +17,7 @@ const locale = {
     import_wallet: '导入钱包',
     create_wallet: '创建钱包',
     manage_wallets: '管理钱包',
-    history: '转账记录',
+    history: '收发记录',
     language: 'Language',
     about: '关于我们'
   },
