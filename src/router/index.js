@@ -23,11 +23,14 @@ import store from '@/vuex/store'
 import connect from '@/common/connect'
 import cordovaLoader from '@/common/cordovaLoader'
 import {get_wallets} from '@/services/WalletService'
+import RouterTransition from '@/plugins/RouterTransition'
 
-Router.prototype.replace = function replace (location, onComplete, onAbort) {
-  this.isBack = true;
-  this.history.replace(location, onComplete, onAbort);
-};
+RouterTransition.use(store, Router, {
+  moduleName: 'route',
+  initTransitionName: 'slide-right',
+  fowardTransitionName: 'slide-right',
+  backTransitionName: 'slide-left'
+})
 
 Vue.use(Router)
 
@@ -200,17 +203,6 @@ const inWhiteList = (component) => {
 }
 
 router.beforeEach((to, from, next) => {
-  if (router.isBack === undefined) {
-    store.commit('setDirection', {direction: ''})
-  } else {
-    if (router.isBack){
-      store.commit('setDirection', {direction: 'slide-left'})
-    }else{
-      store.commit('setDirection', {direction: 'slide-right'})
-    }
-  }
-  router.isBack = false;
-
   let platform = (from.name ? from.query.platform : to.query.platform) || 'browser';
   to.query.platform = platform;
   let isNative = platform == 'ios' || platform == 'android';
