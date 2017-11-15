@@ -2,7 +2,8 @@ const locale = {
   index: {
     balance_loading: 'loading..',
     backup_wallet: 'backup wallet',
-    asset_name: 'GXS(GXShares)',
+    asset_name: 'GXS',
+    asset_full_name:'GXShares',
     value: 'Total Assets($)',
     transfer: 'Send',
     receive: 'Receive',
@@ -156,7 +157,7 @@ const locale = {
   },
   disclaimer: {
     title: 'Disclaimer',
-    content: '<p>Notice to Use and Disclaimer</p>' +
+    content: '<h4 class="text-center">Notice to Use and Disclaimer</h4>' +
     '<p>GXS Wallet is a decentralized blockchain application. Please acquire a full understanding of the blockchain technology before use. Make sure you have the basic competence to use and manage decentralized wallet on a reasonable level.</p>' +
     '<p>1. Once GXS Wallet account or password is lost, it is unable to retrieve. Please keep properly your account and password, and back up your wallet. GXB is not responsible for the loss or theft of the wallet due to your failure to back up, safekeep or properly use the wallet.\n</p>' +
     '<p>2. If you obtain GXS Wallet app or any other application under the same name of this sofeware from any unauthorized third party, GXB will not vouch for its security. You will be responsible for the loss inflicted thereby. </p>' +

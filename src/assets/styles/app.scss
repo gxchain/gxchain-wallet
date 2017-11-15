@@ -33,34 +33,33 @@
 .slide-left-enter-active,
 .slide-left-leave-active,
 .slide-right-enter-active,
-.slide-right-leave-active{
+.slide-right-leave-active {
   transition: all .4s ease;
 }
 
-.slide-right-enter-active .content,.slide-right-enter-active header .title{
+.slide-right-enter-active .content, .slide-right-enter-active header .title {
   animation: RightToCenter .4s forwards;
 }
 
-.slide-right-leave-active .content,.slide-right-leave-active header .title{
+.slide-right-leave-active .content, .slide-right-leave-active header .title {
   animation: CenterToRight .4s forwards;
 }
 
-.slide-left-enter-active .content,.slide-left-enter-active header .title{
+.slide-left-enter-active .content, .slide-left-enter-active header .title {
   animation: LeftToCenter .4s forwards;
 }
 
-.slide-left-leave-active .content,.slide-left-leave-active header .title{
+.slide-left-leave-active .content, .slide-left-leave-active header .title {
   animation: CenterToLeft .4s forwards;
 }
 
-.slide-right-enter-active header .icon,.slide-left-enter-active header .icon{
+.slide-right-enter-active header .icon, .slide-left-enter-active header .icon {
   animation: FadeIn .4s forwards;
 }
 
-.slide-right-leave-active header .icon, .slide-left-leave-active header .icon{
+.slide-right-leave-active header .icon, .slide-left-leave-active header .icon {
   animation: FadeOut .4s forwards;
 }
-
 
 @keyframes FadeIn {
   from {
@@ -192,6 +191,8 @@ a {
 .swiper-pagination-bullet {
   background: #fff;
   opacity: 1;
+  width: .3rem;
+  height: .3rem;
 }
 
 .swiper-pagination-bullet-active {
@@ -271,6 +272,10 @@ body.with-panel-right-cover .panel-overlay {
   color: $THEME_COLOR_DANGER !important;
 }
 
+.color-light-gray{
+  color:#888;
+}
+
 .list-block .item-title.label {
   width: 4.5rem;
   color: lighten($THEME_TINT_COLOR, 20%)
@@ -279,12 +284,19 @@ body.with-panel-right-cover .panel-overlay {
 ::-webkit-input-placeholder { /* WebKit browsers */
   color: lighten($THEME_TINT_COLOR, 50%)
 }
+
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
   color: lighten($THEME_TINT_COLOR, 50%)
 }
+
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
   color: lighten($THEME_TINT_COLOR, 50%)
 }
+
 :-ms-input-placeholder { /* Internet Explorer 10+ */
   color: lighten($THEME_TINT_COLOR, 50%)
+}
+
+.swiper-slide {
+  overflow: hidden;
 }

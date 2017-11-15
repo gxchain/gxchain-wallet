@@ -1,16 +1,17 @@
 import {mapGetters} from 'vuex'
+
 export default {
-  install(Vue,options){
+  install(Vue, options) {
     Vue.mixin({
-      computed:{
+      computed: {
         ...mapGetters({
-          isNative:'isNative'
+          isNative: 'isNative'
         })
       },
-      methods:{
-        link(path,query){
-          query = query||this.$route.query;
-          return this.$route.query.from||`${path||'/'}?${$.param(query)}`;
+      methods: {
+        link(path, query) {
+          query = $.extend({platform: this.$route.query.platform},query);
+          return `${path || '/'}?${$.param(query)}`;
         }
       }
     })

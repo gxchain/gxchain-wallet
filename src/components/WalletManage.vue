@@ -20,8 +20,10 @@
         <div class="list-block wallets">
           <ul v-for="wallet in wallets" :key="wallet.account">
             <li class="wallet-info">
-              <router-link :to="'/wallet-backup?account='+wallet.account" href="javascript:;"
-                           class="item-content item-link">
+              <router-link
+                :to="link('/wallet-backup',{from:$route.fullPath,account:wallet.account})"
+                href="javascript:;"
+                class="item-content item-link">
                 <div class="item-media">
                   <account-image :account="wallet.account" :size="20"></account-image>
                 </div>
@@ -37,19 +39,23 @@
             <li class="item-content price-info">
               <div class="item-inner">
                 <div class="item-title"></div>
-                <div class="item-after"><span class="color-primary price">{{wallet.balance}}</span>&nbsp;<small>GXS</small></div>
+                <div class="item-after"><span class="color-primary price">{{wallet.balance}}</span>&nbsp;<small>GXS
+                </small>
+                </div>
               </div>
             </li>
           </ul>
         </div>
       </div>
       <nav class="bar bar-tab">
-        <router-link class="tab-item external" :to="linkImport">
+        <router-link class="tab-item"
+                     :to="link('/wallet-import',{from:$route.fullPath})">
           <span class="gxicon gxicon-import"></span>
           &nbsp;
           <span class="tab-label">{{$t('wallet_manage.button_import')}}</span>
         </router-link>
-        <router-link class="tab-item external" :to="linkCreate">
+        <router-link class="tab-item"
+                     :to="link('/wallet-create',{from:$route.fullPath})">
           <span class="gxicon gxicon-wallet"></span>
           &nbsp;
           <span class="tab-label">{{$t('wallet_manage.button_create')}}</span>
@@ -60,7 +66,7 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
-  import {get_wallets,fetch_account_balance} from '@/services/WalletService'
+  import {get_wallets, fetch_account_balance} from '@/services/WalletService'
   import AccountImage from './sub/AccountImage.vue'
 
   export default {
@@ -77,9 +83,8 @@
     methods: {
       loadWallets() {
         if (this.wallets.length == 0) {
-          let query = this.$route.query;
           this.$router.replace({
-            path: `/wallet-create?${$.param(query)}`
+            path: this.link('/wallet-create')
           });
         }
         else {
@@ -100,23 +105,6 @@
           })
         }
       },
-//      loadWallets() {
-//        let wallets = get_wallets();
-//        wallets.forEach((wallet) => {
-//          wallet.balance = '**';
-//        })
-//        this.wallets = wallets;
-//        if (this.wallets.length == 0) {
-//          let query = this.$route.query;
-//          query.nativeHook = 0;
-//          this.$router.replace({
-//            path: `/wallet-create?${$.param(query)}`
-//          })
-//        }
-//        setTimeout(() => {
-//          $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
-//        }, 500)
-//      }
     },
     mounted() {
       $.init();
@@ -125,23 +113,6 @@
       $(this.$el).on('refresh', '.pull-to-refresh-content', (e) => {
         this.loadWallets();
       })
-    },
-    computed: {
-      ...mapGetters({
-        isNative: 'isNative'
-      }),
-      linkImport() {
-        let query = this.$route.query;
-        query.from = this.$route.fullPath;
-        delete query.nativeHook;
-        return `/wallet-import?${$.param(query)}`;
-      },
-      linkCreate() {
-        let query = this.$route.query;
-        query.from = this.$route.fullPath;
-        delete query.nativeHook;
-        return `/wallet-create-step-1?${$.param(query)}`;
-      }
     },
     components: {
       AccountImage
@@ -159,7 +130,7 @@
   }
 
   .wallets {
-    margin-top:0;
+    margin-top: 0;
     margin-bottom: 3.8rem;
     .wallet-info {
       .item-media {

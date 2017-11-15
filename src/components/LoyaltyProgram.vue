@@ -36,7 +36,7 @@
               <li class="item-content item-link">
                 <div class="item-inner">
                   <div class="item-title label">{{$t('loyalty_program.term')}}</div>
-                  <div class="item-input">
+                  <div class="item-input text-right">
                     <select v-model="term">
                       <option v-for="t in terms" :value="t">{{t.text}}</option>
                     </select>
@@ -47,7 +47,7 @@
                 <div class="item-inner">
                   <div class="item-title label auto-width">{{$t('loyalty_program.bonus')}}</div>
                   <div class="item-after">
-                    <span class="color-danger">{{rate}}</span>%
+                    <span class="color-danger">{{rate|number(1)}}</span>%
                     <span v-if="bonus">/{{bonus}}&nbsp;GXS</span>
                   </div>
                 </div>
@@ -180,7 +180,7 @@
         if (!this.amount || isNaN(Number(this.amount)) || !this.rate) {
           return ''
         }
-        return filters.asset(this.term.lock_days / 360 * this.rate * this.amount, 2);
+        return filters.asset(this.term.lock_days / 360 * this.rate / 100 * this.amount, 2);
       },
       formattedBalance() {
         if (!this.balance) {
@@ -246,7 +246,9 @@
                 interest_rate: param[1].interest_rate / 100
               }
             })
-            this.term = this.terms[0];
+            if(this.terms.length>0){
+              this.term = this.terms[this.terms.length-1];
+            }
           }
         })
       },

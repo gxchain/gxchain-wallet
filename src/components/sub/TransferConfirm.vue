@@ -199,13 +199,13 @@
         }
         this.submitting = true;
         transfer(this.account, this.to, this.amount, this.memo, this.password, true).then((resp) => {
-          let query = $.extend({}, this.$route.query, {
+          let query = {
             account: this.to,
             amount: this.amount,
             from: this.$route.fullPath
-          })
+          };
           this.$router.push({
-            path: `/transfer-success?${$.param(query)}`
+            path: this.link('/transfer-success',query)
           })
         }).catch(ex => {
           if (ex.message.indexOf('Insufficient Balance') > -1) {

@@ -13,10 +13,10 @@
             <p class="tip-alert text-center">{{$t('wallet_create.success.tip2')}}</p>
             <div class="content-block block-button">
               <p>
-                <router-link :to="linkBackup" replace class="button button-gxb">{{$t('wallet_create.success.backup_wallet')}}</router-link>
+                <router-link :to="link('/wallet-backup',{account:$route.query.account})" replace class="button button-gxb">{{$t('wallet_create.success.backup_wallet')}}</router-link>
               </p>
               <p class="text-center">
-                <a class="link-green" herf="javascript:;" @click="goWalletIndex">{{$t('wallet_create.success.detail')}}</a>
+                <router-link :to="link('/')" replace class="link-green">{{$t('wallet_create.success.detail')}}</router-link>
               </p>
             </div>
           </div>
@@ -31,26 +31,6 @@
   export default {
     mounted() {
       $.init();
-    },
-    computed: {
-      linkBackup() {
-        let query = this.$route.query;
-        query.nativeHook = false;
-        return `/wallet-backup?${$.param(query)}`;
-      }
-    },
-    methods: {
-      goWalletIndex() {
-        if (this.isNative) {
-          //pop all
-          cordova.exec(null, null, 'Controller', 'popTo', [99]);
-        }
-        else {
-          this.$router.replace({
-            path: '/'
-          });
-        }
-      }
     },
     components: {
       SuccessCheckMark

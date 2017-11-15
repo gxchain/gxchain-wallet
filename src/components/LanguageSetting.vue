@@ -54,6 +54,9 @@
   }
 </script>
 <style scoped lang="scss">
+  .list-block{
+    margin-top:0;
+  }
   .item-content{
     color:#3d3d3b;
     .icon-check{

@@ -37,7 +37,7 @@
                   <div>
                     <div>{{formatted_account(history.account)}}</div>
                     <div>
-                      <small>{{$t(`trade_history.${history.type}`)}}</small>
+                      <small color="color-light-gray">{{$t(`trade_history.${history.type}`)}}</small>
                     </div>
                   </div>
                 </div>
@@ -48,7 +48,7 @@
                     <small>GXS</small>
                   </div>
                   <div>
-                    <small>{{history.timestamp}}</small>
+                    <small color="color-light-gray">{{history.timestamp}}</small>
                   </div>
                 </div>
               </div>

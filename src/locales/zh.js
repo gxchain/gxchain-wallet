@@ -2,7 +2,8 @@ const locale = {
   index: {
     balance_loading: '**',
     backup_wallet: '备份钱包',
-    asset_name: 'GXS(公信股)',
+    asset_name: 'GXS',
+    asset_full_name:'公信股',
     value: '价值(CNY)',
     transfer: '发送',
     receive: '接收',
@@ -17,7 +18,7 @@ const locale = {
     create_wallet: '创建钱包',
     manage_wallets: '管理钱包',
     history: '转账记录',
-    language: '语言设置',
+    language: 'Language',
     about: '关于我们'
   },
   wallet_create: {
@@ -156,7 +157,7 @@ const locale = {
   },
   disclaimer: {
     title: "免责声明",
-    content: '<p>使用须知和免责声明</p>' +
+    content: '<h4 class="text-center">使用须知和免责声明</h4>' +
     '<p>GXS钱包是去中心化区块链应用，在您使用之前，请充分了解区块链科技知识，具备合理使用和管理中心化钱包的基本能力。</p>' +
     '<p>一、GXS钱包账户和密码一旦丢失不可找回，请妥善保管好您的账户和密码，并备份好钱包。因未备份、未妥善保管或因操作不当而造成钱包丢失或被盗的情况，公信宝概不负责。</p>' +
     '<p>二、如果您从未经授权的第三方获取GXS钱包APP或与本软件名称相同的应用程序，公信宝将无法保证软件的安全性，因此造成的损失由您自行承担。</p>' +
@@ -228,7 +229,7 @@ const locale = {
     currentAccount:'当前账户: {account}',
     empty:'无更多记录',
     received:'接收',
-    send:'发送'
+    sent:'发送'
   },
   trade:{
     title:'记录详情',

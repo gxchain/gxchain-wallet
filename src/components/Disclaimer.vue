@@ -75,9 +75,10 @@
     }
   }
 </script>
-<style scoped>
+<style scoped lang="scss">
   .content-block {
     margin: 1.2rem 0 3.4rem 0;
+    font-size:.75rem;
   }
 
   .tab-item.active {

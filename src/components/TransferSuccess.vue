@@ -16,7 +16,7 @@
         </div>
         <div class="content-block button-block">
           <p>
-            <router-link :to="link('/transfer')" replace class="button button-gxb">{{$t('transfer.success.done')}}</router-link>
+            <router-link :to="$route.query.from||link('/transfer')" replace class="button button-gxb">{{$t('transfer.success.done')}}</router-link>
           </p>
         </div>
       </div>
@@ -31,26 +31,6 @@
     filters,
     mounted() {
       $.init();
-    },
-    computed: {
-      linkBackup() {
-        let query = this.$route.query;
-        query.nativeHook = false;
-        return `/wallet-backup?${$.param(query)}`;
-      }
-    },
-    methods: {
-      goWalletIndex() {
-        if (this.isNative) {
-          //pop all
-          cordova.exec(null, null, 'Controller', 'popTo', [99]);
-        }
-        else {
-          this.$router.replace({
-            path: '/'
-          });
-        }
-      }
     },
     components: {
       SuccessCheckMark

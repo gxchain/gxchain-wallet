@@ -62,15 +62,17 @@
                 </div>
               </div>
             </swiper-slide>
-            <div class="swiper-pagination" slot="pagination"></div>
+            <div class="swiper-pagination" slot="pagination" v-show="wallets&&wallets.length>1"></div>
           </swiper>
-          <router-link :to="link('/loyalty-program',{platform:$route.query.platform||'browser'})" class="link-loyalty-program">
+          <router-link :to="link('/loyalty-program')"
+                       class="link-loyalty-program">
             {{$t('index.join_loyalty_program')}}
           </router-link>
         </div>
         <!--function entries-->
         <div class="row-operation">
-          <router-link :to="link('/transfer',{platform:$route.query.platform||'browser'})" class="item" href="javascript:;">
+          <router-link :to="link('/transfer')" class="item"
+                       href="javascript:;">
             <span class="gxicon x2 gxicon-transfer"></span><span class="item-text">{{$t('index.transfer')}}</span>
           </router-link>
           <div class="sep"></div>
@@ -86,7 +88,7 @@
                 <a href="javascript:;" class="item-content item-exchange">
                   <div class="item-inner">
                     <div class="title-ex-name">
-                      <div>{{$t('index.asset_name')}}</div>
+                      <div class="asset-name">{{$t('index.asset_name')}}<small class="color-light-gray">({{$t('index.asset_full_name')}})</small></div>
                       <div class="ex-name">{{exchange.name}}</div>
                     </div>
                     <div class="price">
@@ -147,6 +149,7 @@
         exchanges: [],
         swiperOption: {
           pagination: '.swiper-pagination',
+          autoplay:false,
           keyboardControl: true,
           paginationClickable: true,
           initialSlide: wallet_index,
@@ -183,10 +186,8 @@
       },
       loadWallets() {
         if (this.wallets.length == 0) {
-          let query = this.$route.query;
-          query.nativeHook = 0;
           this.$router.replace({
-            path: `/wallet-create?${$.param(query)}`
+            path: this.link('/wallet-create')
           });
         }
         else {
@@ -222,25 +223,15 @@
         let self = this;
         if (this.isNative) {
           cordova.exec(function (result) {
+            let query = {
+              to: result
+            }
             if (result.indexOf('qr://transfer') == 0) {
-              let query = util.query2Obj(result.replace('qr://transfer', ''));
-              if (self.$route.platform) {
-                query.platform = self.$route.platform
-              }
-              self.$router.push({
-                path: `/transfer?${$.param(query)}`
-              })
+              query = util.query2Obj(result.replace('qr://transfer', ''));
             }
-            else{
-              let query ={
-                platform:self.$route.platform,
-                amount:result
-              }
-              self.$router.push({
-                path: `/transfer?${$.param(query)}`
-              })
-            }
-            //qr://transfer?to=gxb123&memo=
+            self.$router.push({
+              path: self.link('/transfer',query)
+            })
           }, null, 'QRCode', 'scan', []);
         }
       },
@@ -504,6 +495,9 @@
       padding-bottom: .65rem;
       .title-ex-name {
         text-align: left;
+        .asset-name{
+          color: #3d3d3b;
+        }
         .ex-name {
           font-size: .7rem;
           color: #888;
@@ -537,10 +531,6 @@
     .line-scale > div {
       background-color: #fff !important;
     }
-  }
-
-  .swiper-slide {
-    overflow: hidden;
   }
 
   .link-loyalty-program {

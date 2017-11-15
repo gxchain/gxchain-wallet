@@ -3,7 +3,8 @@
     <div class="page">
       <header class="bar bar-nav">
         <h3 class="title">{{$t('wallet_backup.index.title')}}</h3>
-        <router-link :to="link('/')" replace class="icon icon-left"></router-link>
+        <router-link :to="$route.query.from||link('/')" replace
+                     class="icon icon-left"></router-link>
       </header>
       <div class="content">
         <div class="tip-info">
@@ -106,8 +107,9 @@
   .button-block {
     margin-top: 4rem;
   }
-  .tip-info{
-    word-break:break-word;
+
+  .tip-info {
+    word-break: break-word;
   }
 </style>
 

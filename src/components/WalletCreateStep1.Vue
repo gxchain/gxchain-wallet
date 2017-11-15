@@ -3,7 +3,7 @@
     <div class="page" id="page-wallet-create-step-1">
       <header class="bar bar-nav">
         <h3 class="title">{{$t('wallet_create.step1.title')}}</h3>
-        <router-link :to="{path:$route.query.from||'/'}" replace class="icon icon-left"></router-link>
+        <router-link :to="$route.query.from||link('/')" replace class="icon icon-left"></router-link>
       </header>
       <div class="content">
         <div class="list-block">
@@ -127,11 +127,12 @@
               this.error = this.$t('wallet_create.step1.error.account_already_exist');
             }
             else {
-              let query = this.$route.query;
-              query.account = this.account;
-              query.from = this.$route.fullPath;
+              let query ={
+                account:this.account,
+                from:this.$route.fullPath
+              };
               this.$router.push({
-                path: `/wallet-create-step-2?${$.param(query)}`
+                path: this.link('/wallet-create-step-2',query)
               });
             }
           }, 500);

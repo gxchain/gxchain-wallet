@@ -37,17 +37,15 @@
     methods: {
       loadWallets() {
         if (get_wallets().length > 0) {
-          let query = this.$route.query;
-          query.nativeHook = 0;
           this.$router.replace({
-            path: `/?${$.param(query)}`
+            path: this.link(`/`)
           })
         }
         else {
           if (!get_disclaimer_accepted()) {
-            let query = $.extend({}, this.$route.query, {from: this.$route.fullPath});
+            let query = {from: this.$route.fullPath};
             this.$router.push({
-              path: `/disclaimer?${$.param(query)}`
+              path: this.link('/disclaimer',query)
             })
           }
         }

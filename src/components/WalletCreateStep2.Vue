@@ -3,7 +3,7 @@
     <div class="page" id="page-wallet-create-step-2">
       <header class="bar bar-nav">
         <h3 class="title">{{$t('wallet_create.step2.title')}}</h3>
-        <router-link :to="link('/wallet-create-step-1')" replace class="icon icon-left"></router-link>
+        <router-link :to="$route.query.from||link('/wallet-create-step-1')" replace class="icon icon-left"></router-link>
       </header>
       <div class="content">
         <div class="content-block text-center">
@@ -83,10 +83,8 @@
         create_account(this.$route.query.account, this.pwd1).then((wallet) => {
           $.hidePreloader();
           if (wallet.account) {
-            let query = this.$route.query;
-            query.nativeHook = 0;
             this.$router.replace({
-              path: `/wallet-create-success?${$.param(query)}`
+              path: this.link('/wallet-create-success',{account:wallet.account})
             });
           }
           else {
@@ -97,7 +95,7 @@
           if (ex.data && ex.data.error && ex.data.error.base && ex.data.error.base[0].indexOf('current_account_itr') > -1) {
             $.alert(this.$t('wallet_create.step2.error.account_has_been_registered'), this.$t('wallet_create.step2.notice'), () => {
               this.$router.replace({
-                path: this.$route.query.from || '/wallet-create-step-1'
+                path: this.$route.query.from || this.link('/wallet-create-step-1')
               });
             });
           }

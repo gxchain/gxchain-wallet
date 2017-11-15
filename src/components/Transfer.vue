@@ -145,38 +145,6 @@
         }
         if (this.validateAccount() && this.validateAmount()) {
           this.$refs.confirm.show();
-//          $.modal({
-//            title: '',
-//            text: '请输入密码',
-//            afterText: '<input placeholder="密码" class="modal-text-input" id="pwd-transfer" type="password"/>',
-//            buttons: [{
-//              text: '取消',
-//              onClick() {
-//
-//              }
-//            }, {
-//              text: '确定',
-//              onClick() {
-//                $.showPreloader(self.$t('transfer.sending'));
-//                transfer(self.currentWallet.account, self.account, self.amount, self.memo, $('#pwd-transfer').val()).then((resp) => {
-//                  let query = $.extend({}, self.$route.query, {
-//                    account: self.account,
-//                    amount: self.amount,
-//                    from: self.$route.fullPath
-//                  })
-//                  self.$router.push({
-//                    path: `/transfer-success?${$.param(query)}`
-//                  })
-//                  $.hidePreloader();
-//                }).catch(ex => {
-//                  $.hidePreloader();
-//                  self.fetch_balance();
-//                  self.error.other = ex.message;
-//                  console.error(ex);
-//                })
-//              }
-//            }]
-//          })
         }
       },
       onAmountChange() {

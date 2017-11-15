@@ -66,9 +66,9 @@
   </div>
 </template>
 <script>
-  export default{
-    methods:{
-      open(){
+  export default {
+    methods: {
+      open() {
         $.openPanel(this.$refs.panel)
       }
     }
@@ -93,7 +93,7 @@
         }
         padding: 1rem 0;
         .item-media .gxicon {
-          font-size: 1.2rem;
+          font-size: 1.1rem;
         }
         &.last:after {
           height: 0;
@@ -101,6 +101,9 @@
       }
       .item-inner:after {
         height: 0;
+      }
+      .item-title {
+        font-size: .75rem;
       }
       .item-content {
         height: 2.5rem;

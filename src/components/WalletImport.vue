@@ -3,7 +3,7 @@
     <div class="page" id="page-wallet-import">
       <header class="bar bar-nav">
         <h3 class="title">{{$t('wallet_import.title')}}</h3>
-        <router-link :to="{path:$route.query.from||'/'}" replace class="icon icon-left"></router-link>
+        <router-link :to="$route.query.from||link('/')" replace class="icon icon-left"></router-link>
       </header>
       <div class="content">
         <!--<div class="content-block block-tab">-->
@@ -170,11 +170,8 @@
             this.submitting = false;
             $.hidePreloader();
             if (info.imported.length > 0) {
-              let query = this.$route.query;
-              query.nativeHook = 0;
-              query.account = info.imported[0].account;
               this.$router.replace({
-                path: `/wallet-import-success?${$.param(query)}`,
+                path: this.link('/wallet-import-success',{account:info.imported[0].account})
               });
             } else {
               this.error.common = this.$t('wallet_import.error.account_already_exist');
