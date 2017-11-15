@@ -8,7 +8,7 @@ const locale = {
     receive: 'Receive',
     wallet: 'Wallet',
     account_name: 'Account',
-    copy: 'Copy',
+    copy: 'Copy Account Name',
     copied: 'Copied',
     join_loyalty_program:'Loyalty Program'
   },
@@ -128,7 +128,7 @@ const locale = {
       tip1: 'Copy or transcribe the key verbatim on paper, and keep it in good care.',
       tip2: 'Anyone with knowledge of info on your key gains access to the assets in your wallet.',
       unlock: 'Unlock',
-      copy: 'Copy',
+      copy: 'Copy Private Key',
       copied: 'Copied',
       cancel: 'Cancel',
       ok: 'OK',

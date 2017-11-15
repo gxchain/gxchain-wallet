@@ -8,7 +8,7 @@ const locale = {
     receive: '接收',
     wallet: '钱包账户',
     account_name: '账户名',
-    copy: '复制',
+    copy: '复制账户名',
     copied: '已复制',
     join_loyalty_program:'参与忠诚者计划'
   },
@@ -128,7 +128,7 @@ const locale = {
       tip1: '按顺序将密钥复制或抄录在纸上，并妥善保存',
       tip2: '任何人获得你的密钥信息即可操作你的钱包资金',
       unlock: '解锁',
-      copy: '复制',
+      copy: '复制私钥',
       copied: '已复制',
       cancel: '取消',
       ok: '确定',
