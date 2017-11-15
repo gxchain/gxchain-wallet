@@ -76,7 +76,7 @@ const locale = {
       tip1: 'Wallet created',
       tip2: 'Please do remember to backup your wallet, there is no way to find it back if you lost it.',
       backup_wallet: 'Backup Now',
-      detail: 'Open my wallet',
+      detail: 'Open my wallet'
     }
   },
   wallet_import: {
