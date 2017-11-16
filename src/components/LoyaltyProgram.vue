@@ -357,11 +357,12 @@
   .list-block {
     margin:.75rem 0;
     select,input{
+      height: auto;
       text-align: right;
     }
     .item-title {
       width: 6.5rem;
-      font-size: .8rem;
+      font-size: .75rem;
       &.auto-width {
         width: auto;
       }
