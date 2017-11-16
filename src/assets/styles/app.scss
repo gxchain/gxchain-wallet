@@ -207,6 +207,17 @@ body.with-panel-right-cover .panel-overlay {
   word-break: break-all;
 }
 
+.tip-warning {
+  background: #fff5e6;
+  border: 1px solid #ffebcc;
+  border-radius: 6px;
+  color: #495060;
+  font-size: .6rem;
+  padding: .3rem;
+  white-space: normal;
+  word-break: break-all;
+}
+
 .button-block {
   padding: 0 2rem;
 }
@@ -244,6 +255,7 @@ body.with-panel-right-cover .panel-overlay {
 
 .color-danger {
   color: $THEME_COLOR_DANGER !important;
+  font-weight: bold;
 }
 
 .color-light-gray{
@@ -256,19 +268,23 @@ body.with-panel-right-cover .panel-overlay {
 }
 
 ::-webkit-input-placeholder { /* WebKit browsers */
-  color: lighten($THEME_TINT_COLOR, 50%)
+  color: lighten($THEME_TINT_COLOR, 50%);
+  font-size: .65rem;
 }
 
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-  color: lighten($THEME_TINT_COLOR, 50%)
+  color: lighten($THEME_TINT_COLOR, 50%);
+  font-size: .65rem;
 }
 
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
-  color: lighten($THEME_TINT_COLOR, 50%)
+  color: lighten($THEME_TINT_COLOR, 50%);
+  font-size: .65rem;
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10+ */
-  color: lighten($THEME_TINT_COLOR, 50%)
+  color: lighten($THEME_TINT_COLOR, 50%);
+  font-size: .65rem;
 }
 
 .swiper-slide {

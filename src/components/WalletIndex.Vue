@@ -536,6 +536,7 @@
   .link-loyalty-program {
     z-index: 2;
     position: absolute;
+    top: 3.5rem;
     right: 0;
     font-size: .6rem;
     height: 1.2rem;

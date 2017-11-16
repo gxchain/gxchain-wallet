@@ -58,33 +58,40 @@
   .page{
     display: flex;
     flex-direction: row;
-    .center-content {
-      align-items: center;
+    .content{
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      min-height: 17.625rem;
-      background: linear-gradient(to bottom, #150838 0%, #3853bc 49%, #18bce2 100%);
-      color:#fff;
-      .logo{
-        font-size: 6rem;
-      }
-      .app-intro{
-        p{
-          font-size: .75rem;
-          margin:.5rem 0;
+      .center-content {
+        flex: 1;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 17.625rem;
+        background: linear-gradient(to bottom, #150838 0%, #3853bc 49%, #18bce2 100%);
+        color:#fff;
+        .logo{
+          font-size: 6rem;
+        }
+        .app-intro{
+          p{
+            font-size: .65rem;
+            margin:.5rem 0;
+          }
         }
       }
-    }
-    .list-block{
-      margin-top:0;
-    }
-    .copy-right{
-      color:#999;
-      font-size:.7rem;
-      text-align: center;
-      p{
-        margin:.3rem 0;
+      .list-block{
+        flex: 1;
+        margin-top:0;
+      }
+      .copy-right{
+        padding: .3rem;
+        color:#999;
+        font-size:.7rem;
+        text-align: center;
+        p{
+          margin:.3rem 0;
+        }
       }
     }
   }

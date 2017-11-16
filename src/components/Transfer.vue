@@ -52,7 +52,7 @@
               <div class="item-inner">
                 <div class="item-title label">{{$t('transfer.amount')}}</div>
                 <div class="item-input">
-                  <input @change="onAmountChange" class="input-account" v-model="amount" type="number" maxlength="30"
+                  <input @change="onAmountChange" class="input-amount" v-model="amount" type="number" maxlength="30"
                          :placeholder="$t('transfer.amount_placeholder')">
                 </div>
               </div>
@@ -273,6 +273,15 @@
 
   .list-block .item-title.label {
     width: 4.5rem;
+  }
+
+  .list-block .input-account{
+    text-transform: lowercase;
+  }
+
+  .list-block textarea{
+    padding-top: .6rem;
+    font-size: .65rem;
   }
 
   .color-gray {

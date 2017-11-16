@@ -10,7 +10,7 @@
           <div class="content-block">
             <success-check-mark></success-check-mark>
             <p class="text-center text-success">{{$t('transfer.success.tip1')}}</p>
-            <p class="text-center"><span>{{$route.query.account}}</span>&nbsp;{{$t('transfer.success.tip2')}}</p>
+            <p class="text-center"><span>{{$route.query.account}}</span>&nbsp;<span>{{$t('transfer.success.tip2')}}</span></p>
             <p class="text-center"><span class="asset">{{$route.query.amount | asset(2)}}</span>&nbsp;GXS</p>
           </div>
         </div>
@@ -47,11 +47,11 @@
     align-items: flex-end;
     display: flex;
     justify-content: center;
-    letter-spacing: .15rem;
     .content-block {
       width: 100%;
     }
     .text-success {
+      letter-spacing: .15rem;
       margin-top: 1.5rem;
     }
     .block-button {

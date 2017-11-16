@@ -86,16 +86,16 @@ const locale = {
       confirm: '确认密码'
     },
     placeholder: {
-      key: '在此填入账户活跃权限私钥',
+      key: '在此填入账户私钥',
       password: '6位以上字符'
     },
     confirm: '确认导入',
     error: {
       password_not_equal: '两次输入密码不一致',
-      account_already_exist: '账户已存在,请勿重复导入',
+      account_already_exist: '账户已存在，请勿重复导入',
       account_not_found: '账户不存在',
       invalid_key: '私钥格式错误',
-      no_reference_account: '导入失败, 私钥对应账户不存在，请检查是否为活跃权限私钥'
+      no_reference_account: '导入失败，私钥对应账户不存在'
     },
     success: {
       title: '导入成功',
@@ -133,6 +133,7 @@ const locale = {
       copied: '已复制',
       cancel: '取消',
       ok: '确定',
+      confirm: '确定已备份好密钥？',
       tip_password: '解锁你的钱包',
       placeholder: {
         password: '请输入密码'
@@ -184,7 +185,7 @@ const locale = {
     to_placeholder: '填写对方账号',
     amount: '发送数量',
     amount_placeholder: '填写GXS数量',
-    available: '<small class="color-gray">可用GXS:</small> {amount}',
+    available: '可用: <span class="color-danger">{amount}</span> GXS',
     memo: '备注信息',
     fee: '手续费',
     memo_placeholder: '选填',
@@ -255,7 +256,8 @@ const locale = {
     day:'{day}日 | {day}日',
     due:'到期时间',
     amount:'锁定金额',
-    available:'可用GXS: <span class="color-danger">{amount}</span>',
+    available:'可用: <span class="color-danger">{amount}</span> GXS',
+    reward:'奖励: <span class="color-danger">{amount}</span> GXS',
     join:'设置计划',
     history:'锁定记录',
     no_record:'无记录',

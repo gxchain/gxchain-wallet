@@ -16,11 +16,10 @@
           </div>
         </div>
       </div>
-      <div class="tip-info">
-        <h3>{{$t('loyalty_program.tip1')}}</h3>
-        <p>{{$t('loyalty_program.tip2')}}</p>
+      <div class="content-banner">
+        <img src="../../static/loyalty-program-banner.jpg">
       </div>
-      <div class="content-block">
+      <div class="content-block tips">
         <p>{{$t('loyalty_program.tip3')}}</p>
       </div>
       <div class="buttons-tab">
@@ -36,7 +35,7 @@
               <li class="item-content item-link">
                 <div class="item-inner">
                   <div class="item-title label">{{$t('loyalty_program.term')}}</div>
-                  <div class="item-input text-right">
+                  <div class="item-select">
                     <select v-model="term">
                       <option v-for="t in terms" :value="t">{{t.text}}</option>
                     </select>
@@ -48,7 +47,6 @@
                   <div class="item-title label auto-width">{{$t('loyalty_program.bonus')}}</div>
                   <div class="item-after">
                     <span class="color-danger">{{rate | number(1)}}</span>%
-                    <span v-if="bonus">/{{bonus}}&nbsp;GXS</span>
                   </div>
                 </div>
               </li>
@@ -75,6 +73,9 @@
               </li>
               <li class="tip-success" v-if="balance!=-1">
                 <div v-html="$t('loyalty_program.available', {amount: formattedBalance})"></div>
+              </li>
+              <li class="tip-info" v-if="bonus">
+                <div v-html="$t('loyalty_program.reward', {amount: bonus})"></div>
               </li>
             </ul>
           </div>
@@ -107,7 +108,8 @@
               </li>
             </ul>
           </div>
-          <p v-else class="text-center">
+          <p v-else class="no-reocrd text-center">
+            <span class="icon icon-edit"></span>
             {{$t('loyalty_program.no_record')}}
           </p>
         </div>
@@ -324,19 +326,39 @@
   }
 </script>
 <style lang="scss" scoped>
+  .page {
+    background-color: #fff;
+  }
 
   .tip-info, .tip-alert, .tip-success {
     padding-left: .75rem;
   }
 
+  .content-banner img{
+    width: 100%;
+  }
+
+  .list-block ul:before {
+    height: 0;
+  }
+
   .content-block {
     font-size: .75rem;
-    margin-top: .3rem;
-    margin-bottom: .3rem;
+  }
+
+  .content-block.tips{
+    font-size: .6rem;
+    margin: .3rem 0;
+    color: #6981a7;
+    line-height: 1rem;
+    letter-spacing: 0.5px;
   }
 
   .list-block {
     margin:.75rem 0;
+    select,input{
+      text-align: right;
+    }
     .item-title {
       width: 6.5rem;
       font-size: .8rem;
@@ -344,13 +366,13 @@
         width: auto;
       }
     }
-
     .last .item-inner:after {
       height: 0;
     }
   }
 
   .history {
+    margin-top: 0;
     .item-title {
       width: auto;
     }
@@ -360,6 +382,12 @@
     .amount {
       align-items: flex-end;
     }
+  }
+
+  .no-reocrd {
+    margin-top: 1.5rem;
+    font-size: .7rem;
+    color: #80848f
   }
 
   .button-gxb {

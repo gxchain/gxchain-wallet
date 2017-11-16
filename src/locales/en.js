@@ -133,6 +133,7 @@ const locale = {
       copied: 'Copied',
       cancel: 'Cancel',
       ok: 'OK',
+      confirm: 'Verify that the backup key has been backed up?',
       tip_password: 'Unlock your wallet',
       placeholder: {
         password: 'Please enter your password'
@@ -184,7 +185,7 @@ const locale = {
     to_placeholder: 'account name',
     amount: 'Amount',
     amount_placeholder: 'Amount to send',
-    available: '{amount} <small class="color-gray">GXS Available</small>',
+    available: '<span class="color-danger">{amount}</span> GXS Available',
     memo: 'Memo',
     fee: 'Fee',
     memo_placeholder: 'Optional',
@@ -255,7 +256,8 @@ const locale = {
     day:'{day} day|{day} days',
     due:'Due Date',
     amount:'Lockup Amount',
-    available:'<span>{amount}</span> GXS Available',
+    available:'<span class="color-danger">{amount}</span> GXS Available',
+    reward:'<span class="color-danger">{amount}</span> GXS Reward',
     join:'Setup',
     history:'History',
     no_record:'No record',

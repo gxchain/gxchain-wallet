@@ -45,7 +45,10 @@
               <li class="item-content">
                 <div class="item-inner">
                   <div class="item-title label">{{$t('transfer.to')}}</div>
-                  <div class="item-after">{{to}}</div>
+                  <div class="item-after">
+                    <account-image :account="to" :size='14'></account-image>
+                    <span class="account-name">{{to}}</span>
+                  </div>
                 </div>
               </li>
               <li class="item-content">
@@ -87,6 +90,7 @@
   import {swiper, swiperSlide} from 'vue-awesome-swiper'
   import filters from '@/filters'
   import {transfer} from '@/services/WalletService'
+  import AccountImage from './AccountImage.vue'
 
   let defaultData = {
     step: 0,
@@ -221,7 +225,8 @@
     },
     components: {
       swiper,
-      swiperSlide
+      swiperSlide,
+      AccountImage
     }
   }
 </script>
@@ -256,5 +261,9 @@
 
   .list-block .item-title.label {
     width: 4.5rem;
+  }
+
+  .list-block .account-name{
+    padding-left: .5rem;
   }
 </style>
