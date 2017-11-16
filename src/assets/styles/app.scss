@@ -262,6 +262,10 @@ body.with-panel-right-cover .panel-overlay {
   color:#888;
 }
 
+.list-block {
+  margin: .6rem 0;
+}
+
 .list-block .item-title.label {
   width: 4.5rem;
   color: lighten($THEME_TINT_COLOR, 20%)
@@ -269,22 +273,18 @@ body.with-panel-right-cover .panel-overlay {
 
 ::-webkit-input-placeholder { /* WebKit browsers */
   color: lighten($THEME_TINT_COLOR, 50%);
-  font-size: .65rem;
 }
 
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
   color: lighten($THEME_TINT_COLOR, 50%);
-  font-size: .65rem;
 }
 
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
   color: lighten($THEME_TINT_COLOR, 50%);
-  font-size: .65rem;
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10+ */
   color: lighten($THEME_TINT_COLOR, 50%);
-  font-size: .65rem;
 }
 
 .swiper-slide {

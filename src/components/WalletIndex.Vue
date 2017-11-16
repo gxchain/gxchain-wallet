@@ -64,10 +64,9 @@
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination" v-show="wallets&&wallets.length>1"></div>
           </swiper>
-          <router-link :to="link('/loyalty-program')"
-                       class="link-loyalty-program">
-            {{$t('index.join_loyalty_program')}}
-          </router-link>
+          <div class="link-loyalty-program" @click="goLoyaltyProgram">
+            <img :src="'../../static/'+$t('index.loyalty_program_icon')">
+          </div>
         </div>
         <!--function entries-->
         <div class="row-operation">
@@ -167,6 +166,9 @@
     },
 
     methods: {
+      goLoyaltyProgram() {
+        this.$router.push({path: this.link('/loyalty-program')})
+      },
       loadMarketInfo() {
         get_market_info().then((resp) => {
           this.exchanges = resp;
@@ -536,23 +538,12 @@
   .link-loyalty-program {
     z-index: 2;
     position: absolute;
-    top: 3.5rem;
     right: 0;
-    font-size: .6rem;
+    width: 3.1rem;
     height: 1.2rem;
-    background: #fff;
-    padding: 0 .2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    &:before {
-      content: '';
-      position: absolute;
-      border: .6rem solid #fff;
-      left: -.6rem;
-      border-top-color: transparent;
-      border-bottom-color: transparent;
-      border-left: 0;
+    img{
+      width: 100%;
+      height: 100%;
     }
   }
 

@@ -11,7 +11,7 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
-    "gxbjs": "^1.2.68",
+    "gxbjs": "^1.2.69",
     "jdenticon": "^1.7.2",
     "js-sha256": "^0.6.0",
     "loaders.css": "^0.1.2",

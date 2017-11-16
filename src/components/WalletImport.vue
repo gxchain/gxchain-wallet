@@ -6,13 +6,7 @@
         <router-link :to="$route.query.from||link('/')" replace class="icon icon-left"></router-link>
       </header>
       <div class="content">
-        <!--<div class="content-block block-tab">-->
-        <!--<div class="list-block">-->
-        <!---->
-        <!--</div>-->
-        <!--</div>-->
         <div class="list-block block-pwd">
-
           <ul>
             <li class="align-top">
               <div class="item-content">
@@ -188,13 +182,6 @@
 </script>
 
 <style scoped lang="scss">
-  .content {
-  }
-
-  .list-block {
-    margin: .6rem 0;
-  }
-
   .block-pwd {
     ul:before {
       height: 0;

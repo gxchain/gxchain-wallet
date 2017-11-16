@@ -279,11 +279,6 @@
     text-transform: lowercase;
   }
 
-  .list-block textarea{
-    padding-top: .6rem;
-    font-size: .65rem;
-  }
-
   .color-gray {
     color: lighten(#3d3d3b, 20%)
   }
