@@ -134,10 +134,6 @@
   }
 }
 
-.title {
-  color: $THEME_TITLE_COLOR;
-}
-
 .native-ios {
   .bar.bar-nav {
     padding-top: 1rem;
@@ -262,8 +258,22 @@ body.with-panel-right-cover .panel-overlay {
   color:#888;
 }
 
+.bar .icon{
+  font-size: .8rem;
+}
+
+.title {
+  font-size: .8rem;
+  color: $THEME_TITLE_COLOR;
+}
+
 .list-block {
   margin: .6rem 0;
+  font-size: .75rem;
+}
+
+.list-block input[type=text], .list-block input[type=password], .list-block input[type=email], .list-block input[type=tel], .list-block input[type=url], .list-block input[type=date], .list-block input[type=datetime-local], .list-block input[type=time], .list-block input[type=number], .list-block input[type=search], .list-block select, .list-block textarea{
+  font-size: .75rem;
 }
 
 .list-block .item-title.label {

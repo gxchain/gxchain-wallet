@@ -108,7 +108,7 @@
               </li>
             </ul>
           </div>
-          <p v-else class="no-reocrd text-center">
+          <p class="no-reocrd text-center" v-else >
             <span class="icon icon-edit"></span>
             {{$t('loyalty_program.no_record')}}
           </p>
@@ -387,7 +387,10 @@
   .no-reocrd {
     margin-top: 1.5rem;
     font-size: .7rem;
-    color: #80848f
+    color: #80848f;
+    span {
+      padding-right: 5px;
+    }
   }
 
   .button-gxb {

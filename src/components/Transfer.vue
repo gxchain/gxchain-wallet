@@ -65,7 +65,7 @@
             </li>
             <li class="item-content align-top">
               <div class="item-inner">
-                <small class="item-title label">{{$t('transfer.memo')}}</small>
+                <div class="item-title label">{{$t('transfer.memo')}}</div>
                 <div class="item-input">
                   <textarea v-model="memo" :placeholder="$t('transfer.memo_placeholder')"></textarea>
                 </div>

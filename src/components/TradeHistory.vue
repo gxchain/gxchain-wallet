@@ -56,7 +56,9 @@
           </li>
         </ul>
       </div>
-      <p class="tip-warning text-center" v-if="histories.length==0">{{$t('trade_history.empty')}}</p>
+      <p class="no-reocrd text-center" v-if="histories.length==0">
+        <span class="icon icon-edit"></span>{{$t('trade_history.empty')}}
+      </p>
     </div>
   </div>
 </template>
@@ -200,6 +202,15 @@
         display: flex;
         align-items: flex-end;
       }
+    }
+  }
+
+  .no-reocrd {
+    margin-top: 1.5rem;
+    font-size: .7rem;
+    color: #80848f;
+    span {
+      padding-right: 5px;
     }
   }
 </style>

@@ -142,7 +142,7 @@
       }
     }
     ul {
-      margin-top: .2rem;
+      margin-bottom: .2rem;
       /*background: #f0f5f6;*/
     }
     .price-info {
