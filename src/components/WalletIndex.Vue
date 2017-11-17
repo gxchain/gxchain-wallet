@@ -538,6 +538,7 @@
   .link-loyalty-program {
     z-index: 2;
     position: absolute;
+    top: 5.5rem;
     right: 0;
     width: 4.1rem;
     height: 1.6rem;

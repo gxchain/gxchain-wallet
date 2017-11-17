@@ -7,6 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  letter-spacing: .15rem;
   border-radius: 2.2rem;
   height:2.2rem;
   &:active{
@@ -34,6 +35,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  letter-spacing: .15rem;
   border-radius: 2.2rem;
   height:2.2rem;
   &:active{
@@ -55,14 +57,11 @@
   border-color: $THEME_BUTTON_BG_COLOR;
 }
 
-.button-danger {
-  border-color:$THEME_COLOR_DANGER;
-  background-color: $THEME_COLOR_DANGER;
+.button-disabled {
+  color: #fff;
+  border-color:#c8c9cb;
+  background-color: #c8c9cb;
   &:active{
-    background: darken($THEME_COLOR_DANGER,2%);
-  }
-  &.disabled{
-    color:#fff !important;
-    background:#c8c9cb;
+    background: darken(#c8c9cb,2%);
   }
 }

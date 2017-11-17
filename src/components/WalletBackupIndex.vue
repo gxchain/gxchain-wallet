@@ -54,7 +54,7 @@
             </router-link>
           </p>
           <p>
-            <a href="javascript:;" class="button button-gxb button-danger" @click="delWallet">{{$t('wallet_backup.index.button_remove')}}</a>
+            <a href="javascript:;" class="button button-gxb button-disabled" @click="delWallet">{{$t('wallet_backup.index.button_remove')}}</a>
           </p>
         </div>
       </div>

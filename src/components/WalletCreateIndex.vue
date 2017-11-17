@@ -92,11 +92,13 @@
     align-items: flex-end;
     display: flex;
     justify-content: center;
-    letter-spacing: .15rem;
     text-align: center;
     .gxicon-bind {
       font-size: 6.5rem;
       color: #d5d5d5;
+    }
+    .text-bind {
+      font-size: .75rem;
     }
     .content-block {
       width: 100%;
@@ -107,6 +109,7 @@
     .block-button {
       padding: 0 2rem;
       margin-top: 1rem;
+      letter-spacing: .15rem;
     }
   }
 

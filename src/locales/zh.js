@@ -228,7 +228,7 @@ const locale = {
     confirm: {
       title: '确认转账',
       title_password: '密码',
-      enter_password: '输入密码'
+      enter_password: '请输入密码'
     },
     success: {
       title: '转账成功',

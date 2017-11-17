@@ -240,6 +240,7 @@
   .bar-nav {
     background: transparent;
     .title {
+      font-weight: normal;
       color: #3d3d3b;
     }
     .icon {
