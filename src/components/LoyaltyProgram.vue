@@ -2,7 +2,7 @@
   <div class="page-group">
     <div class="page" id="page-loyalty-program">
       <header class="bar bar-nav">
-        <router-link class="icon icon-left pull-left" :to="link('/')"></router-link>
+        <router-link class="icon icon-left pull-left" :to="link('/')" replace></router-link>
         <h3 class="title">{{$t('loyalty_program.title')}}</h3>
       </header>
       <div class="content pull-to-refresh-content">
@@ -72,6 +72,9 @@
                 <li class="tip-alert" v-if="error.amount">
                   <div>{{error.amount}}</div>
                 </li>
+                <li class="tip-alert" v-if="error.common">
+                  <div>{{error.common}}</div>
+                </li>
                 <li class="tip-success" v-if="balance!=-1">
                   <div v-html="$t('loyalty_program.available', {amount: formattedBalance})"></div>
                 </li>
@@ -81,7 +84,6 @@
               </ul>
             </div>
             <div class="content-block button-block" v-if="balance!=-1">
-              <p class="tip-error" v-if="error.common">{{error.common}}</p>
               <p>
                 <a @click="onSubmit" class="button button-gxb" :class="{disabled:!submitEnable}"
                    v-html="submitting?submittingHTML:$t('loyalty_program.button_join',{bonus:rate})">

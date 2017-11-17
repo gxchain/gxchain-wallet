@@ -61,6 +61,7 @@
             </li>
           </ul>
         </div>
+        <p class="tip-error text-center" v-if="error.common">{{error.common}}</p>
       </div>
     </div>
     <password-confirm ref="confirm" @unlocking="unlocking"></password-confirm>
@@ -96,7 +97,10 @@
         memo: {},
         accounts: {},
         items: {},
-        unlocked: false
+        unlocked: false,
+        error: {
+          common: ''
+        }
       }
     },
     mounted() {
@@ -137,12 +141,13 @@
         });
       },
       unlock() {
+        this.error.common = '';
         this.$refs.confirm.show();
       },
       unlocking(pwd) {
         let self = this;
         if (!pwd.trim()) {
-          $.toast(this.$t('unlock.error.invalid_password'));
+          this.error.common = this.$t('unlock.error.invalid_password');
           this.$refs.confirm.unlocked();
           return;
         }
@@ -153,7 +158,7 @@
           self.$refs.confirm.unlocked();
         }).catch((ex) => {
           self.$refs.confirm.unlocked();
-          $.toast(self.$t('unlock.error.invalid_password'));
+          self.error.common = self.$t('unlock.error.invalid_password');
         })
       }
     },

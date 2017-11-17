@@ -3,7 +3,7 @@ const locale = {
     balance_loading: '**',
     backup_wallet: '备份钱包',
     asset_name: 'GXS',
-    asset_full_name:'公信股',
+    asset_full_name:'GXS',
     value: '价值(CNY)',
     transfer: '发送',
     receive: '接收',
@@ -25,7 +25,7 @@ const locale = {
   wallet_create: {
     index: {
       title: '钱包',
-      tip_empty: '暂未绑定公信股钱包',
+      tip_empty: '暂未绑定GXS钱包',
       button_create: '创建钱包',
       button_import: '导入钱包',
       tip_how: '如何导入钱包?'
@@ -164,7 +164,7 @@ const locale = {
     version: 'V0.0.1',
     desc: {
       line1: 'GXS Wallet是一款移动端轻钱包APP，',
-      line2: '通过它能实现公信股的转账、收款和钱包管理，',
+      line2: '通过它能实现GXS的转账、收款和钱包管理，',
       line3: '并及时掌握GXS的最新动态。'
     },
     disclaimer: '免责声明'
@@ -199,7 +199,7 @@ const locale = {
     amount: '发送数量',
     amount_placeholder: '填写GXS数量',
     available: '可用: <span class="color-danger">{amount}</span> GXS',
-    memo: '备注信息',
+    memo: '备注(MEMO)',
     fee: '手续费',
     memo_placeholder: '选填',
     next: '下一步',
@@ -254,14 +254,14 @@ const locale = {
       to:'接收账号',
       timestamp:'操作时间',
       fee:'手续费(GXS)',
-      memo:'备注消息'
+      memo:'备注(MEMO)'
     }
   },
   loyalty_program:{
     title:'忠诚计划',
     tip1:'与公信宝一起成长',
     tip2:'价值投资者的福利，长线持有还送奖励',
-    tip3:'忠诚计划是公信宝推出的一项福利计划，投资者可锁定一定额度的公信股，锁定期间金额冻结，同时享受对应的奖励。如锁定1万公信股9个月，按年化6%，到期后可获得450个公信股的奖励。公信宝希望投资者通过忠诚计划，享受未来公信宝发展所带来的长期效益！',
+    tip3:'忠诚计划是公信宝推出的一项福利计划，投资者可锁定一定额度的GXS，锁定期间金额冻结，同时享受对应的奖励。如锁定1万GXS9个月，按年化6%，到期后可获得450个GXS的奖励。公信宝希望投资者通过忠诚计划，享受未来公信宝发展所带来的长期效益！',
     banner: 'loyalty-program-banner-zh.jpg',
     term:'锁定期限',
     bonus:'年化奖励',

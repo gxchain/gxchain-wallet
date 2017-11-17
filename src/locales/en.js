@@ -25,7 +25,7 @@ const locale = {
   wallet_create: {
     index: {
       title: 'Wallet',
-      tip_empty: 'Wallet was not created',
+      tip_empty: 'GXS Wallet was not created',
       button_create: 'Create Wallet',
       button_import: 'Import Wallet',
       tip_how: 'How to import wallet'
@@ -109,7 +109,7 @@ const locale = {
   wallet_manage: {
     title: 'Wallets',
     tip_backup: 'Backup required',
-    button_import: 'Import wallet',
+    button_import: 'Import Wallet',
     button_create: 'Create Wallet'
   },
   wallet_backup: {
