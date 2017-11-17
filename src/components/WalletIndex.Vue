@@ -539,8 +539,8 @@
     z-index: 2;
     position: absolute;
     right: 0;
-    width: 3.1rem;
-    height: 1.2rem;
+    width: 4.1rem;
+    height: 1.6rem;
     img{
       width: 100%;
       height: 100%;

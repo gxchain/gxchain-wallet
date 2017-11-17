@@ -27,7 +27,7 @@ import RouterTransition from '@/plugins/RouterTransition'
 
 RouterTransition.use(store, Router, {
   moduleName: 'route',
-  initTransitionName: 'slide-right',
+  initTransitionName: '',
   fowardTransitionName: 'slide-right',
   backTransitionName: 'slide-left'
 })

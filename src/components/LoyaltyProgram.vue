@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="content-banner">
-        <img src="../../static/loyalty-program-banner.jpg">
+        <img :src="'../../static/' + $t('loyalty_program.banner')">
       </div>
       <div class="content-block tips">
         <p>{{$t('loyalty_program.tip3')}}</p>

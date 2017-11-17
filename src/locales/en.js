@@ -250,6 +250,7 @@ const locale = {
     tip1:'Grow with GXB',
     tip2:'Benefit for value investors, extra bonus for long-run holders',
     tip3:'GXB\'s Loyalty Program is a benefit program designed for investors to lock up certain amount of GXS (GX Share). During the lockup period, the capital is frozen, meanwhile investors are entitled to extra bonus. For example, lock up 10,000 GXS for 9 months; calculating by 6% annualized return,  you may get 450 GXS for bonus on the due date. GXS would like our investors to join the Loyalty Program and enjoy the long-term benefits brought by GXB\'s growth in the future.',
+    banner: 'loyalty-program-banner-en.jpg',
     term:'Lockup Term',
     bonus:'Annualized Bonus',
     expected_bonus:'Expected bonus',
