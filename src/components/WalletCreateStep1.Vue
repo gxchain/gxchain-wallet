@@ -36,7 +36,7 @@
   </div>
 </template>
 <script>
-  import {fetch_account} from '@/services/WalletService'
+  import {fetch_account, get_disclaimer_accepted} from '@/services/WalletService'
 
   export default {
     data() {
@@ -153,6 +153,12 @@
     },
     mounted() {
       $.init();
+      if (!get_disclaimer_accepted()) {
+        let query = {from: this.$route.path};
+        this.$router.push({
+          path: this.link('/disclaimer',query)
+        })
+      }
     }
   }
 </script>

@@ -38,16 +38,8 @@
       loadWallets() {
         if (get_wallets().length > 0) {
           this.$router.replace({
-            path: this.link(`/wallet-create-step-1`)
+            path: this.link(`/`)
           })
-        }
-        else {
-          if (!get_disclaimer_accepted()) {
-            let query = {from: this.$route.fullPath};
-            this.$router.push({
-              path: this.link('/disclaimer',query)
-            })
-          }
         }
       },
       switchLanguage() {

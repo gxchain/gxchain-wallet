@@ -58,7 +58,7 @@
 </template>
 <script>
   import errorHandler from '@/common/errorHandler'
-  import {import_account} from '../services/WalletService'
+  import {import_account, get_disclaimer_accepted} from '@/services/WalletService'
   import {PrivateKey} from 'gxbjs'
 
   export default {
@@ -107,6 +107,12 @@
     },
     mounted() {
       $.init();
+      if (!get_disclaimer_accepted()) {
+        let query = {from: this.$route.path};
+        this.$router.push({
+          path: this.link('/disclaimer',query)
+        })
+      }
     },
     methods: {
       isValidWifKey(wifKey) {

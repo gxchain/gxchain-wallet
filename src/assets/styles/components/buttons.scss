@@ -58,5 +58,11 @@
 .button-danger {
   border-color:$THEME_COLOR_DANGER;
   background-color: $THEME_COLOR_DANGER;
-
+  &:active{
+    background: darken($THEME_COLOR_DANGER,2%);
+  }
+  &.disabled{
+    color:#fff !important;
+    background:#c8c9cb;
+  }
 }

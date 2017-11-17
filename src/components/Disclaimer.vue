@@ -32,7 +32,7 @@
         }
         else {
           this.$router.replace({
-            path: this.link('/')
+            path: this.link(this.$route.query.from||'/')
           });
         }
       },
