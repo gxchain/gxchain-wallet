@@ -144,6 +144,18 @@ const locale = {
       }
     }
   },
+  wallet_del: {
+    title: 'Wallet delete',
+    cancel: 'Cancel',
+    ok: 'Ok',
+    tip_del: 'Confirm unlock and delete this wallet. This operation is irrevocable. Are you sure to delete this wallet?',
+    placeholder: {
+      password: 'Please enter your password'
+    },
+    error: {
+      invalid_password: 'Invalid password'
+    }
+  },
   language_setting: {
     title: 'Language'
   },

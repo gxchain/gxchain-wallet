@@ -47,13 +47,14 @@
             </li>
           </ul>
         </div>
+        <p class="tip-error text-center" v-if="error.common">{{error.common}}</p>
         <div class="content-block button-block">
           <p>
             <router-link :to="linkBackupKey" class="button button-gxb">{{$t('wallet_backup.index.button_backup')}}
             </router-link>
           </p>
           <p>
-            <a href="javascript:;" class="button button-gxb disabled">{{$t('wallet_backup.index.button_remove')}}</a>
+            <a href="javascript:;" class="button button-gxb button-danger" @click="delWallet">{{$t('wallet_backup.index.button_remove')}}</a>
           </p>
         </div>
       </div>
@@ -63,7 +64,7 @@
 <script>
   import {mapGetters} from 'vuex'
   import AccountImage from './sub/AccountImage.vue'
-  import {fetch_account_balance} from '@/services/WalletService'
+  import {fetch_account_balance, get_wallet_index, unlock_wallet, del_wallet} from '@/services/WalletService'
   import filters from '@/filters'
 
   export default {
@@ -74,7 +75,10 @@
     },
     data() {
       return {
-        balance: '**'
+        balance: '**',
+        error: {
+          common: ''
+        }
       }
     },
     methods: {
@@ -83,6 +87,30 @@
           this.balance = balance.amount / 100000;
         }).catch(ex => {
           console.error(ex);
+        })
+      },
+      delWallet() {
+        let self = this;
+        this.error.common = '';
+        $.modal({
+          title: '',
+          text: self.$t('wallet_del.tip_del'),
+          afterText: `<input placeholder="${self.$t('wallet_del.placeholder.password')}" class="modal-text-input" id="pwd" type="password"/>`,
+          buttons: [{
+            text: self.$t('wallet_del.cancel'),
+            onClick() {}
+          }, {
+            text: self.$t('wallet_del.ok'),
+            onClick() {
+              unlock_wallet(self.$route.query.account, $('#pwd').val()).then((info) => {
+                let wallet = info.wallet;
+                del_wallet(wallet);
+                self.$router.replace({path: self.$route.query.from||link('/')});
+              }).catch((ex) => {
+                self.error.common = self.$t('wallet_del.error.invalid_password')
+              })
+            }
+          }]
         })
       }
     },

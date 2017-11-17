@@ -272,7 +272,17 @@ body.with-panel-right-cover .panel-overlay {
   font-size: .75rem;
 }
 
-.list-block input[type=text], .list-block input[type=password], .list-block input[type=email], .list-block input[type=tel], .list-block input[type=url], .list-block input[type=date], .list-block input[type=datetime-local], .list-block input[type=time], .list-block input[type=number], .list-block input[type=search], .list-block select, .list-block textarea{
+.list-block input[type=text],
+.list-block input[type=password],
+.list-block input[type=email],
+.list-block input[type=tel],
+.list-block input[type=url],
+.list-block input[type=date],
+.list-block input[type=datetime-local],
+.list-block input[type=time],
+.list-block input[type=number],
+.list-block input[type=search],
+.list-block select, .list-block textarea{
   font-size: .75rem;
 }
 
@@ -282,19 +292,19 @@ body.with-panel-right-cover .panel-overlay {
 }
 
 ::-webkit-input-placeholder { /* WebKit browsers */
-  color: lighten($THEME_TINT_COLOR, 50%);
+  color: lighten($THEME_TINT_COLOR, 60%);
 }
 
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-  color: lighten($THEME_TINT_COLOR, 50%);
+  color: lighten($THEME_TINT_COLOR, 60%);
 }
 
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
-  color: lighten($THEME_TINT_COLOR, 50%);
+  color: lighten($THEME_TINT_COLOR, 60%);
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10+ */
-  color: lighten($THEME_TINT_COLOR, 50%);
+  color: lighten($THEME_TINT_COLOR, 60%);
 }
 
 .swiper-slide {

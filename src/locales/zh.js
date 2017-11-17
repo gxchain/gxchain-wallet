@@ -144,6 +144,18 @@ const locale = {
       }
     }
   },
+  wallet_del: {
+    title: '删除钱包',
+    cancel: '取消',
+    ok: '确定',
+    tip_del: '确认解锁并删除此钱包，此操作不可撤销，确定删除吗？',
+    placeholder: {
+      password: '请输入密码'
+    },
+    error: {
+      invalid_password: '密码错误'
+    }
+  },
   language_setting: {
     title: '语言设置'
   },

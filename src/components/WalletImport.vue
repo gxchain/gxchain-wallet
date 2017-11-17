@@ -211,7 +211,7 @@
   .item-required span{
     color:red;
     position: absolute;
-    top: .35rem;
+    top: .5rem;
     font-weight: bold;
   }
 

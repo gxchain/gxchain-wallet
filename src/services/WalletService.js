@@ -64,7 +64,6 @@ const get_wallets = () => {
   return wallets;
 }
 
-
 /**
  * save wallets into local storage
  * @param wallets
@@ -139,6 +138,20 @@ const update_wallet = (wallet) => {
     }
     return w;
   })
+  set_wallets(wallets);
+}
+
+/**
+ * del wallet from local storage
+ * @param wallet
+ */
+const del_wallet = (wallet) => {
+  let wallets = get_wallets();
+  for (let i = 0; i < wallets.length; i++) {
+    if (wallet.account === wallets[i].account) {
+      wallets.splice(i, 1);
+    }
+  }
   set_wallets(wallets);
 }
 
@@ -489,6 +502,7 @@ export {
   set_wallet_index,
   unlock_wallet,
   update_wallet,
+  del_wallet,
   fetch_account,
   fetch_full_account,
   import_account,

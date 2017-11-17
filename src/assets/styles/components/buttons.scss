@@ -46,8 +46,8 @@
   }
 }
 
-.container-button{
-
+.buttons-tab .button {
+  font-size: .75rem;
 }
 
 .buttons-tab .button.active {
@@ -55,6 +55,8 @@
   border-color: $THEME_BUTTON_BG_COLOR;
 }
 
-.buttons-tab .button{
-  font-size: .75rem;
+.button-danger {
+  border-color:$THEME_COLOR_DANGER;
+  background-color: $THEME_COLOR_DANGER;
+
 }
