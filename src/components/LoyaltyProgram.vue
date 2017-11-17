@@ -1,120 +1,123 @@
 <template>
-  <div class="page" id="page-loyalty-program">
-    <header class="bar bar-nav">
-      <router-link class="icon icon-left pull-left" :to="link('/')"></router-link>
-      <h3 class="title">{{$t('loyalty_program.title')}}</h3>
-    </header>
-    <div class="content pull-to-refresh-content">
-      <div class="pull-to-refresh-layer">
-        <div class="preloader">
-          <div class="line-scale">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+  <div class="page-group">
+    <div class="page" id="page-loyalty-program">
+      <header class="bar bar-nav">
+        <router-link class="icon icon-left pull-left" :to="link('/')"></router-link>
+        <h3 class="title">{{$t('loyalty_program.title')}}</h3>
+      </header>
+      <div class="content pull-to-refresh-content">
+        <div class="pull-to-refresh-layer">
+          <div class="preloader">
+            <div class="line-scale">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="content-banner">
-        <img :src="'../../static/' + $t('loyalty_program.banner')">
-      </div>
-      <div class="content-block tips">
-        <p>{{$t('loyalty_program.tip3')}}</p>
-      </div>
-      <div class="buttons-tab">
-        <a :class="{active:tabIndex==0}" @click="tabIndex=0"
-           class="tab-link button">{{$t('loyalty_program.join')}}</a>
-        <a :class="{active:tabIndex==1}" @click="tabIndex=1"
-           class="tab-link button">{{$t('loyalty_program.history')}}</a>
-      </div>
-      <div class="tabs">
-        <div class="tab" :class="{active:tabIndex==0}">
-          <div class="list-block history">
-            <ul>
-              <li class="item-content item-link">
-                <div class="item-inner">
-                  <div class="item-title label">{{$t('loyalty_program.term')}}</div>
-                  <div class="item-select">
-                    <select v-model="term">
-                      <option v-for="t in terms" :value="t">{{t.text}}</option>
-                    </select>
+        <div class="content-banner">
+          <img :src="'../../static/' + $t('loyalty_program.banner')">
+        </div>
+        <div class="content-block tips">
+          <p>{{$t('loyalty_program.tip3')}}</p>
+        </div>
+        <div class="buttons-tab">
+          <a :class="{active:tabIndex==0}" @click="tabIndex=0"
+             class="tab-link button">{{$t('loyalty_program.join')}}</a>
+          <a :class="{active:tabIndex==1}" @click="tabIndex=1"
+             class="tab-link button">{{$t('loyalty_program.history')}}</a>
+        </div>
+        <div class="tabs">
+          <div class="tab" :class="{active:tabIndex==0}">
+            <div class="list-block history">
+              <ul>
+                <li class="item-content item-link">
+                  <div class="item-inner">
+                    <div class="item-title label">{{$t('loyalty_program.term')}}</div>
+                    <div class="item-select">
+                      <select v-model="term">
+                        <option v-for="t in terms" :value="t">{{t.text}}</option>
+                      </select>
+                    </div>
                   </div>
-                </div>
-              </li>
-              <li class="item-content">
-                <div class="item-inner">
-                  <div class="item-title label auto-width">{{$t('loyalty_program.bonus')}}</div>
-                  <div class="item-after">
-                    <span class="color-danger">{{rate | number(1)}}</span>%
+                </li>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label auto-width">{{$t('loyalty_program.bonus')}}</div>
+                    <div class="item-after">
+                      <span class="color-danger">{{rate | number(1)}}</span>%
+                    </div>
                   </div>
-                </div>
-              </li>
-              <li class="item-content">
-                <div class="item-inner">
-                  <div class="item-title label">{{$t('loyalty_program.due')}}</div>
-                  <div class="item-after">
-                    {{$d(due,'short')}}
+                </li>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">{{$t('loyalty_program.due')}}</div>
+                    <div class="item-after">
+                      {{$d(due,'short')}}
+                    </div>
                   </div>
-                </div>
-              </li>
-              <li class="item-content last">
-                <div class="item-inner">
-                  <div class="item-title label">{{$t('loyalty_program.amount')}}</div>
-                  <div class="item-input">
-                    <input :placeholder="$t('loyalty_program.placeholder.amount')" type="number" v-model="amount"
-                           @change="onAmountChange">
+                </li>
+                <li class="item-content last">
+                  <div class="item-inner">
+                    <div class="item-title label">{{$t('loyalty_program.amount')}}</div>
+                    <div class="item-input">
+                      <input :placeholder="$t('loyalty_program.placeholder.amount')" type="number" v-model="amount"
+                             @change="onAmountChange">
+                    </div>
+                    <div class="item-after">GXS</div>
                   </div>
-                  <div class="item-after">GXS</div>
-                </div>
-              </li>
-              <li class="tip-alert" v-if="error.amount">
-                <div>{{error.amount}}</div>
-              </li>
-              <li class="tip-success" v-if="balance!=-1">
-                <div v-html="$t('loyalty_program.available', {amount: formattedBalance})"></div>
-              </li>
-              <li class="tip-info" v-if="bonus">
-                <div v-html="$t('loyalty_program.reward', {amount: bonus})"></div>
-              </li>
-            </ul>
+                </li>
+                <li class="tip-alert" v-if="error.amount">
+                  <div>{{error.amount}}</div>
+                </li>
+                <li class="tip-success" v-if="balance!=-1">
+                  <div v-html="$t('loyalty_program.available', {amount: formattedBalance})"></div>
+                </li>
+                <li class="tip-info" v-if="bonus">
+                  <div v-html="$t('loyalty_program.reward', {amount: bonus})"></div>
+                </li>
+              </ul>
+            </div>
+            <div class="content-block button-block" v-if="balance!=-1">
+              <p class="tip-error" v-if="error.common">{{error.common}}</p>
+              <p>
+                <a @click="onSubmit" class="button button-gxb" :class="{disabled:!submitEnable}"
+                   v-html="submitting?submittingHTML:$t('loyalty_program.button_join',{bonus:rate})">
+                </a>
+              </p>
+            </div>
           </div>
-          <div class="content-block button-block" v-if="balance!=-1">
-            <p class="tip-error" v-if="error.common">{{error.common}}</p>
-            <p>
-              <a @click="onSubmit" class="button button-gxb" :class="{disabled:!submitEnable}"
-                 v-html="submitting?submittingHTML:$t('loyalty_program.button_join',{bonus:rate})">
-              </a>
+          <div class="tab" :class="{active:tabIndex==1}">
+            <div class="list-block history" v-if="histories.length>0">
+              <ul>
+                <li v-for="history in histories">
+                  <router-link :to="`/loyalty-program/${history.id}`" class="item-content">
+                    <div class="item-inner">
+                      <div class="item-title-row">
+                        <div class="item-title">{{history.amount | asset(2)}} GXS</div>
+                        <div class="item-subtitle">{{$d(history.created_at,'long')}}</div>
+                      </div>
+                      <div class="item-after">
+                        <small :class="{'color-primary':history.status=='can_unlock'}">
+                          {{$t(`loyalty_program.status.${history.status}`)}}
+                        </small>
+                      </div>
+                    </div>
+                  </router-link>
+                </li>
+              </ul>
+            </div>
+            <p class="no-reocrd text-center" v-else >
+              <span class="icon icon-edit"></span>
+              {{$t('loyalty_program.no_record')}}
             </p>
           </div>
         </div>
-        <div class="tab" :class="{active:tabIndex==1}">
-          <div class="list-block history" v-if="histories.length>0">
-            <ul>
-              <li v-for="history in histories">
-                <router-link :to="`/loyalty-program/${history.id}`" class="item-content">
-                  <div class="item-inner">
-                    <div class="item-title-row">
-                      <div class="item-title">{{history.amount | asset(2)}} GXS</div>
-                      <div class="item-subtitle">{{$d(history.created_at,'long')}}</div>
-                    </div>
-                    <div class="item-after">
-                      <small :class="{'color-primary':history.status=='can_unlock'}">
-                        {{$t(`loyalty_program.status.${history.status}`)}}
-                      </small>
-                    </div>
-                  </div>
-                </router-link>
-              </li>
-            </ul>
-          </div>
-          <p class="no-reocrd text-center" v-else >
-            <span class="icon icon-edit"></span>
-            {{$t('loyalty_program.no_record')}}
-          </p>
-        </div>
       </div>
     </div>
+    <password-confirm ref="confirm" @unlocking="unlocking" :tips="$t('loyalty_program.modal.message')"></password-confirm>
   </div>
 </template>
 
@@ -129,6 +132,7 @@
     lock_balance
   } from '@/services/WalletService'
   import filters from '@/filters'
+  import PasswordConfirm from './sub/PasswordConfirm.vue'
 
   export default {
     filters,
@@ -156,6 +160,9 @@
           amount: ''
         }
       }
+    },
+    components: {
+      PasswordConfirm
     },
     computed: {
       submittingHTML() {
@@ -290,37 +297,35 @@
         })
       },
       unlock() {
-        let self = this;
         this.error.common = '';
         if (this.submitting) {
           return;
         }
-        $.modal({
-          title: '',
-          text: self.$t('loyalty_program.modal.message'),
-          afterText: `<input placeholder="${self.$t('unlock.placeholder.password')}" class="modal-text-input" id="pwd" type="password"/>`,
-          buttons: [{
-            text: self.$t('unlock.cancel')
-          }, {
-            text: self.$t('unlock.ok'),
-            onClick() {
-              self.submitting = true;
-              lock_balance(self.term.id, self.currentWallet.account, self.amount * 100000, self.term.interest_rate * 100, self.term.lock_days, '', $('#pwd').val(), true)
-                .then(result => {
-                  self.submitting = false;
-                  $.alert(self.$t('loyalty_program.success.message', {amount: filters.asset(self.amount, 2)}), self.$t('loyalty_program.success.title'), function () {
-                    self.load_init_data();
-                    self.amount = '';
-                  })
-                })
-                .catch((ex) => {
-                  self.submitting = false;
-                  console.error(ex);
-                  self.error.common = ex.message;
-                })
-            }
-          }]
-        })
+        this.$refs.confirm.show();
+      },
+      unlocking(pwd) {
+        let self = this;
+        if (!pwd.trim()) {
+          this.error.common = this.$t('unlock.error.invalid_password');
+          this.$refs.confirm.unlocked();
+          return;
+        }
+        this.submitting = true;
+        lock_balance(this.term.id, this.currentWallet.account, this.amount * 100000, this.term.interest_rate * 100, this.term.lock_days, '', pwd, true)
+          .then(result => {
+            self.submitting = false;
+            self.$refs.confirm.unlocked();
+            $.alert(self.$t('loyalty_program.success.message', {amount: filters.asset(self.amount, 2)}), self.$t('loyalty_program.success.title'), function () {
+              self.load_init_data();
+              self.amount = '';
+            })
+          })
+          .catch((ex) => {
+            self.submitting = false;
+            self.$refs.confirm.unlocked();
+            console.error(ex);
+            self.error.common = ex.message;
+          })
       }
     }
   }

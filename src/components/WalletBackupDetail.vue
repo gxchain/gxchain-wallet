@@ -34,11 +34,13 @@
         </div>
       </div>
     </div>
+    <password-confirm ref="confirm" @unlocking="unlocking"></password-confirm>
   </div>
 </template>
 <script>
   import {mapGetters} from 'vuex'
   import {unlock_wallet, update_wallet} from '@/services/WalletService'
+  import PasswordConfirm from './sub/PasswordConfirm.vue'
 
   export default {
     data() {
@@ -52,31 +54,26 @@
     },
     methods: {
       unlock() {
-        let self = this;
         this.error.common = '';
-        $.modal({
-          title: '',
-          text: self.$t('wallet_backup.detail.tip_password'),
-          afterText: `<input placeholder="${self.$t('wallet_backup.detail.placeholder.password')}" class="modal-text-input" id="pwd" type="password"/>`,
-          buttons: [{
-            text: self.$t('wallet_backup.detail.cancel'),
-            onClick() {
-
-            }
-          }, {
-            text: self.$t('wallet_backup.detail.ok'),
-            onClick() {
-              unlock_wallet(self.$route.query.account, $('#pwd').val()).then((info) => {
-                self.wifKey = info.wifKey;
-                let wallet = info.wallet;
-                wallet.backup_date = new Date().getTime()
-                update_wallet(wallet);
-              }).catch((ex) => {
-                self.error.common = self.$t('wallet_backup.detail.error.invalid_password')
-              })
-            }
-          }]
-        })
+        this.$refs.confirm.show();
+      },
+      unlocking(pwd) {
+        let self = this;
+        if (!pwd.trim()) {
+          this.error.common = this.$t('unlock.error.invalid_password');
+          this.$refs.confirm.unlocked();
+          return;
+        }
+        unlock_wallet(this.$route.query.account, pwd).then((info) => {
+          self.wifKey = info.wifKey;
+          let wallet = info.wallet;
+          wallet.backup_date = new Date().getTime();
+          update_wallet(wallet);
+          self.$refs.confirm.unlocked();
+        }).catch((ex) => {
+          self.$refs.confirm.unlocked();
+          self.error.common = self.$t('wallet_backup.detail.error.invalid_password')
+        });
       },
       copyKey() {
         cordova.exec(() => {
@@ -102,6 +99,9 @@
       ...mapGetters({
         isNative: 'isNative'
       })
+    },
+    components: {
+      PasswordConfirm
     }
   }
 </script>

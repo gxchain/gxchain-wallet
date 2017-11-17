@@ -79,11 +79,13 @@
         </div>
       </div>
     </div>
+    <password-confirm ref="confirm" @unlocking="unlocking"></password-confirm>
   </div>
 </template>
 <script>
   import {get_objects, unlock_balance, get_wallets, get_wallet_index} from '@/services/WalletService'
   import filters from '@/filters'
+  import PasswordConfirm from './sub/PasswordConfirm.vue'
 
   export default {
     filters,
@@ -123,6 +125,9 @@
         return filters.asset(this.lock_days / 360 * this.rate * this.amount, 2);
       }
     },
+    components: {
+      PasswordConfirm
+    },
     methods: {
       loadLockedBalance() {
         get_objects([this.$route.params.id]).then(results => {
@@ -138,38 +143,36 @@
         })
       },
       unlock_balance() {
-        let self = this;
         this.error.common = '';
         if (this.submitting) {
           return;
         }
-        $.modal({
-          title: '',
-          text: self.$t('unlock.tip_password'),
-          afterText: `<input placeholder="${self.$t('unlock.placeholder.password')}" class="modal-text-input" id="pwd" type="password"/>`,
-          buttons: [{
-            text: self.$t('unlock.cancel')
-          }, {
-            text: self.$t('unlock.ok'),
-            onClick() {
-              self.submitting = true;
-              unlock_balance(self.$route.params.id, self.currentWallet.account, $('#pwd').val(), true)
-                .then(result => {
-                  self.submitting = false;
-                  $.alert(self.$t('loyalty_program.detail.success.message', {amount: filters.asset(self.amount, 2)}), self.$t('loyalty_program.detail.success.title'), function () {
-                    self.$router.replace({
-                      path: self.link('/loyalty-program')
-                    });
-                  })
-                })
-                .catch((ex) => {
-                  self.submitting = false;
-                  console.error(ex);
-                  self.error.common = ex.message;
-                })
-            }
-          }]
-        })
+        this.$refs.confirm.show();
+      },
+      unlocking(pwd){
+        let self = this;
+        if (!pwd.trim()) {
+          this.error.common = this.$t('unlock.error.invalid_password');
+          this.$refs.confirm.unlocked();
+          return;
+        }
+        this.submitting = true;
+        unlock_balance(this.$route.params.id, this.currentWallet.account, pwd, true)
+          .then(result => {
+            self.submitting = false;
+            self.$refs.confirm.unlocked();
+            $.alert(self.$t('loyalty_program.detail.success.message', {amount: filters.asset(self.amount, 2)}), self.$t('loyalty_program.detail.success.title'), function () {
+              self.$router.replace({
+                path: self.link('/loyalty-program')
+              });
+            })
+          })
+          .catch((ex) => {
+            self.submitting = false;
+            self.$refs.confirm.unlocked();
+            console.error(ex);
+            self.error.common = ex.message;
+          });
       }
     }
   }

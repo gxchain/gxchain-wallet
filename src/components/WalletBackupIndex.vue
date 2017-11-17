@@ -59,11 +59,13 @@
         </div>
       </div>
     </div>
+    <password-confirm ref="confirm" @unlocking="unlocking" :tips="$t('wallet_del.tip_del')"></password-confirm>
   </div>
 </template>
 <script>
   import {mapGetters} from 'vuex'
   import AccountImage from './sub/AccountImage.vue'
+  import PasswordConfirm from './sub/PasswordConfirm.vue'
   import {fetch_account_balance, get_wallet_index, unlock_wallet, del_wallet} from '@/services/WalletService'
   import filters from '@/filters'
 
@@ -90,29 +92,26 @@
         })
       },
       delWallet() {
-        let self = this;
         this.error.common = '';
-        $.modal({
-          title: '',
-          text: self.$t('wallet_del.tip_del'),
-          afterText: `<input placeholder="${self.$t('wallet_del.placeholder.password')}" class="modal-text-input" id="pwd" type="password"/>`,
-          buttons: [{
-            text: self.$t('wallet_del.cancel'),
-            onClick() {}
-          }, {
-            text: self.$t('wallet_del.ok'),
-            onClick() {
-              unlock_wallet(self.$route.query.account, $('#pwd').val()).then((info) => {
-                let wallet = info.wallet;
-                del_wallet(wallet);
-                self.$router.replace({path: self.$route.query.from||link('/')});
-              }).catch((ex) => {
-                self.error.common = self.$t('wallet_del.error.invalid_password')
-              })
-            }
-          }]
-        })
-      }
+        this.$refs.confirm.show();
+      },
+      unlocking(pwd) {
+        let self = this;
+        if (!pwd.trim()) {
+          this.error.common = this.$t('unlock.error.invalid_password');
+          this.$refs.confirm.unlocked();
+          return;
+        }
+        unlock_wallet(this.$route.query.account, pwd).then((info) => {
+          let wallet = info.wallet;
+          del_wallet(wallet);
+          self.$router.replace({path: self.$route.query.from||link('/')});
+          self.$refs.confirm.unlocked();
+        }).catch((ex) => {
+          self.$refs.confirm.unlocked();
+          self.error.common = self.$t('wallet_del.error.invalid_password')
+        });
+      },
     },
     computed: {
       ...mapGetters({
@@ -127,7 +126,8 @@
       }
     },
     components: {
-      AccountImage
+      AccountImage,
+      PasswordConfirm
     }
   }
 </script>
