@@ -10,7 +10,7 @@ export default {
       },
       methods: {
         link(path, query) {
-          query = $.extend({platform: this.$route.query.platform},query);
+          query = $.extend({platform: this.$route.query.platform}, query);
           return `${path || '/'}?${$.param(query)}`;
         }
       }

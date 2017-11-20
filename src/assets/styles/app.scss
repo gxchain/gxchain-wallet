@@ -33,23 +33,23 @@
 .slide-left-enter-active,
 .slide-left-leave-active,
 .slide-right-enter-active,
-.slide-right-leave-active{
+.slide-right-leave-active {
   transition: all .4s ease;
 }
 
-.slide-right-enter-active{
+.slide-right-enter-active {
   animation: RightToCenter .4s forwards;
 }
 
-.slide-right-leave-active{
+.slide-right-leave-active {
   animation: CenterToRight .4s forwards;
 }
 
-.slide-left-enter-active{
+.slide-left-enter-active {
   animation: LeftToCenter .4s forwards;
 }
 
-.slide-left-leave-active{
+.slide-left-leave-active {
   animation: CenterToLeft .4s forwards;
 }
 
@@ -147,9 +147,36 @@
   }
 }
 
+.native-ios-x {
+  .bar.bar-nav {
+    padding-top: 2.2rem;
+    height: 4.4rem;
+  }
+  .bar-nav ~ .content {
+    top: 4.4rem;
+  }
+  .bar-nav ~ .pull-to-refresh-content {
+    top: 2.2rem;
+  }
+}
+
+.normal-nav {
+  &.bar.bar-nav {
+    padding-top: 0;
+    height: 2.2rem;
+  }
+  &.bar-nav ~ .content {
+    top: 2.2rem;
+  }
+  &.bar-nav ~ .pull-to-refresh-content {
+    top: 0rem;
+  }
+}
+
+
 a {
   color: #6699ff;
-  &.icon,&.item-content{
+  &.icon, &.item-content {
     color: #3d4145;
   }
 }
@@ -254,11 +281,11 @@ body.with-panel-right-cover .panel-overlay {
   font-weight: bold;
 }
 
-.color-light-gray{
-  color:#888;
+.color-light-gray {
+  color: #888;
 }
 
-.bar .icon{
+.bar .icon {
   font-size: .8rem;
   width: 2rem;
 }
@@ -291,7 +318,7 @@ body.with-panel-right-cover .panel-overlay {
 .list-block input[type=time],
 .list-block input[type=number],
 .list-block input[type=search],
-.list-block select, .list-block textarea{
+.list-block select, .list-block textarea {
   font-size: .75rem;
 }
 

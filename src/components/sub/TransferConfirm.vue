@@ -1,6 +1,6 @@
 <template>
   <div class="popup popup-transfer-confirm">
-    <div class="bar bar-nav">
+    <div class="bar bar-nav normal-nav">
       <h3 class="title">{{$t('transfer.confirm.title')}}</h3>
       <a href="javascript:;" class="pull-right icon icon-close close-popup">&times;</a>
     </div>
