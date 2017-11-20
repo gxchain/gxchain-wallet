@@ -208,7 +208,8 @@
       this.load_init_data();
       $(this.$el).on('refresh', '.pull-to-refresh-content', (e) => {
         this.load_init_data();
-      })
+      });
+      FastClick.attach(document.body);
     },
     methods: {
       load_init_data() {
@@ -367,9 +368,17 @@
 
   .list-block {
     margin:.75rem 0;
-    select,input{
+    .item-select {
+      width: 100%;
+    }
+    select,input {
       height: auto;
-      text-align: right;
+    }
+    select {
+      direction: rtl;
+    }
+    select option {
+      direction: ltr;
     }
     .item-title {
       width: 6.5rem;
