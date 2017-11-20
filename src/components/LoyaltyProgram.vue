@@ -372,6 +372,7 @@
       width: 100%;
     }
     select,input {
+      text-align: right;
       height: auto;
     }
     select {
