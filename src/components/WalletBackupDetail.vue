@@ -31,6 +31,9 @@
             <a @click="copyKey()" class="button button-gxb"
                :class="{disabled:keyCopied}">{{keyCopied ? $t('wallet_backup.detail.copied') : $t('wallet_backup.detail.copy')}}</a>
           </p>
+          <p v-if="wifKey">
+            <a @click="confirm" class="button button-gxb" >{{$t('wallet_backup.detail.go_back')}}</a>
+          </p>
         </div>
       </div>
     </div>
@@ -47,6 +50,8 @@
       return {
         wifKey: '',
         keyCopied: false,
+        unlocked: false,
+        wallet: {},
         error: {
           common: ''
         }
@@ -66,9 +71,8 @@
         }
         unlock_wallet(this.$route.query.account, pwd).then((info) => {
           self.wifKey = info.wifKey;
-          let wallet = info.wallet;
-          wallet.backup_date = new Date().getTime();
-          update_wallet(wallet);
+          self.wallet = info.wallet;
+          self.unlocked = true;
           self.$refs.confirm.unlocked();
         }).catch((ex) => {
           self.$refs.confirm.unlocked();
@@ -85,11 +89,22 @@
       },
       confirm() {
         let self = this;
-        $.confirm(this.$t('wallet_backup.detail.confirm'),
-          function () {
-            self.$router.replace({path: self.$route.query.from||link('/')});
+        if (this.unlocked){
+          if (!self.wallet.backup_date) {
+            $.confirm(this.$t('wallet_backup.detail.confirm'),
+              function () {
+                let wallet = self.wallet;
+                wallet.backup_date = new Date().getTime();
+                update_wallet(wallet);
+                self.$router.replace({path: self.$route.query.from || link('/')});
+              }
+            );
+          }else{
+            this.$router.replace({path: this.$route.query.from||link('/')});
           }
-        );
+        }else{
+          this.$router.replace({path: this.$route.query.from||link('/')});
+        }
       }
     },
     mounted() {
@@ -131,6 +146,10 @@
     li {
       padding-left: 0
     }
+  }
+
+  .link-green{
+    font-size: .75rem;
   }
 
   .button-block {

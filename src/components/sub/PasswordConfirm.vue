@@ -6,31 +6,33 @@
     </div>
     <div class="content">
       <div class="list-block">
-        <p class="tip-alert" v-if="tips">{{tips}}</p>
-        <ul>
-          <li class="item-content">
-            <div class="item-inner">
-              <div class="item-input">
-                <input ref="password" v-model="password" type="password"
-                       :placeholder="$t('transfer.confirm.enter_password')">
+        <p class="info-alert" v-if="tips">{{tips}}</p>
+        <div class="password-confirm">
+          <div class="password-confirm-input">
+            <ul>
+              <li class="item-content">
+                <div class="item-inner">
+                  <div class="item-input">
+                    <input ref="password" v-model="password" type="password"
+                           :placeholder="$t('transfer.confirm.enter_password')">
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="password-confirm-btn">
+            <a href="javascript:;" @click="onPasswordConfirm" class="button button-gxb">
+              <div class="line-scale-pulse-out" v-if="submitting">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
               </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="content-block">
-        <p>
-          <a href="javascript:;" @click="onPasswordConfirm" class="button button-gxb">
-            <div class="line-scale-pulse-out" v-if="submitting">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-            <span v-if="!submitting">{{$t('transfer.next')}}</span>
-          </a>
-        </p>
+              <span v-if="!submitting">{{$t('transfer.next')}}</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -86,14 +88,46 @@
   }
 
   .popup-transfer-confirm {
-    max-height: 19.5rem;
+    max-height: 8rem;
     bottom: 0;
     top: initial;
-    background: #efeff4;
+    background: #fff;
     transition-duration: .2s;
+  }
+
+  .list-block {
+    margin-top: 0;
   }
 
   .list-block .item-title.label {
     width: 4.5rem;
   }
+
+  .list-block .info-alert{
+    font-size: .6rem;
+    padding: 0 .75rem;
+    text-align: center;
+    margin-top: 0;
+    color: #ed3f14;
+  }
+
+  .list-block .password-confirm {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .list-block .password-confirm .password-confirm-input {
+    flex: 1;
+  }
+
+  .list-block .password-confirm .password-confirm-btn {
+    width: 3rem;
+  }
+
+  .list-block .password-confirm .password-confirm-btn .button{
+    font-size: .6rem;
+    border-radius: 0;
+  }
+
+
 </style>

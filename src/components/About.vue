@@ -29,7 +29,7 @@
           </ul>
         </div>
         <div class="copy-right">
-          <p>Copyright © 2016 GongXinBao</p>
+          <p>Copyright © 2017 GXChain</p>
           <p>All rights reserved.</p>
         </div>
       </div>
@@ -87,7 +87,7 @@
       .copy-right{
         padding: .3rem;
         color:#999;
-        font-size:.7rem;
+        font-size:.6rem;
         text-align: center;
         p{
           margin:.3rem 0;

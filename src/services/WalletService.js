@@ -255,6 +255,7 @@ const import_account = (wifKey, password) => {
           })
           if (imported.length > 0) {
             set_wallets(wallets);
+            localStorage.setItem(`gxb_wallet_index_${Apis.instance().chain_id}`, wallets.length - 1);
           }
           return {
             imported,
@@ -306,6 +307,7 @@ const create_account = (account, password) => {
         }
         wallets.push(wallet)
         set_wallets(wallets);
+        localStorage.setItem(`gxb_wallet_index_${Apis.instance().chain_id}`, wallets.length - 1);
         return wallet
       })
     }));

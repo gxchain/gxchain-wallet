@@ -51,7 +51,7 @@
                 </div>
               </div>
             </li>
-            <li class="item-content">
+            <li class="item-content" v-if="memo.message">
               <div class="item-inner">
                 <div class="item-title label">{{$t('trade.label.memo')}}</div>
                 <div class="item-after">

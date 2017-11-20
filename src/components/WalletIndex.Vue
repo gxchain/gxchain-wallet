@@ -41,13 +41,13 @@
                       <small class="icon icon-code"></small>
                     </a>
                   </div>
-                  <div>
+                  <p class="bak-tip">
                     <router-link :to="linkBackup(wallet.account)" class="btn-backup"
                                  :class="{visible:!wallet.backup_date}" href="javascript:;">
                       <small>{{$t('index.backup_wallet')}}&nbsp;<span class="red-dot"></span><span
                         class="icon icon-right"></span></small>
                     </router-link>
-                  </div>
+                  </p>
                 </div>
                 <div class="row-balance">
                   <div class="item">
@@ -87,7 +87,7 @@
                 <a href="javascript:;" class="item-content item-exchange">
                   <div class="item-inner">
                     <div class="title-ex-name">
-                      <div class="asset-name">{{$t('index.asset_name')}}<small class="color-light-gray">({{$t('index.asset_full_name')}})</small></div>
+                      <div class="asset-name">{{$t('index.asset_name')}}<small class="color-light-gray" v-if="$t('index.asset_full_name')!=''">({{$t('index.asset_full_name')}})</small></div>
                       <div class="ex-name">{{exchange.name}}</div>
                     </div>
                     <div class="price">
@@ -404,9 +404,12 @@
       color: #fff;
       .icon {
         position: relative;
-        top: -3px;
+        top: -1px;
         font-size: .8rem;
       }
+    }
+    .bak-tip{
+      margin: .4rem 0;
     }
     .btn-backup {
       visibility: hidden;
@@ -431,7 +434,6 @@
       display: flex;
       flex-direction: row;
       padding: 0 .75rem;
-      margin-top: 1.25rem;
       .item {
         flex: 2;
         display: flex;
@@ -515,9 +517,13 @@
       }
 
       .quote {
-        padding: .1rem .3rem;
+        height: 1.2rem;
+        line-height: 1.2rem;
+        width: 3.5rem;
+        text-align: right;
+        padding: 0 .2rem;
         font-weight: bold;
-        font-size: .5rem;
+        font-size: .65rem;
         color: #fff;
         background: #d63932;
         &.green {
