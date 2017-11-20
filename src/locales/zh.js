@@ -3,7 +3,7 @@ const locale = {
     balance_loading: '**',
     backup_wallet: '备份私钥',
     asset_name: 'GXS',
-    asset_full_name:'GXS',
+    asset_full_name:'',
     value: '价值(CNY)',
     transfer: '发送',
     receive: '接收',
@@ -163,7 +163,7 @@ const locale = {
   },
   about: {
     title: '关于我们',
-    version: 'V1.0.0',
+    version: 'V1.0.1',
     desc: {
       line1: 'GXS Wallet是一款移动端轻钱包APP，',
       line2: '通过它能实现GXS的转账、收款和钱包管理，',

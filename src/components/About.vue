@@ -87,7 +87,7 @@
       .copy-right{
         padding: .3rem;
         color:#999;
-        font-size:.7rem;
+        font-size:.6rem;
         text-align: center;
         p{
           margin:.3rem 0;

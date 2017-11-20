@@ -263,7 +263,11 @@ body.with-panel-right-cover .panel-overlay {
   width: 2rem;
 }
 
-.bar .icon.icon-close{
+.bar .pull-left {
+  text-align: left;
+}
+
+.bar .pull-right {
   text-align: right;
 }
 

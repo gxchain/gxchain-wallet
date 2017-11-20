@@ -87,7 +87,7 @@
                 <a href="javascript:;" class="item-content item-exchange">
                   <div class="item-inner">
                     <div class="title-ex-name">
-                      <div class="asset-name">{{$t('index.asset_name')}}<small class="color-light-gray">({{$t('index.asset_full_name')}})</small></div>
+                      <div class="asset-name">{{$t('index.asset_name')}}<small class="color-light-gray" v-if="$t('index.asset_full_name')!=''">({{$t('index.asset_full_name')}})</small></div>
                       <div class="ex-name">{{exchange.name}}</div>
                     </div>
                     <div class="price">
@@ -517,9 +517,13 @@
       }
 
       .quote {
-        padding: .1rem .3rem;
+        height: 1.2rem;
+        line-height: 1.2rem;
+        width: 3.5rem;
+        text-align: right;
+        padding: 0 .2rem;
         font-weight: bold;
-        font-size: .5rem;
+        font-size: .65rem;
         color: #fff;
         background: #d63932;
         &.green {

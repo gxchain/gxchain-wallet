@@ -2,7 +2,7 @@
   <div class="page-group">
     <div class="page" id="page-loyalty-program-detail">
       <header class="bar bar-nav">
-        <router-link :to="link('/loyalty-program')" class="icon icon-left pull-left"></router-link>
+        <router-link :to="link('/loyalty-program')" class="icon icon-left pull-left" replace></router-link>
         <h3 class="title">{{$t('loyalty_program.detail.title')}}</h3>
       </header>
       <div class="content">
@@ -122,7 +122,7 @@
         if (!this.amount || isNaN(Number(this.amount)) || !this.rate) {
           return ''
         }
-        return filters.asset(this.lock_days / 360 * this.rate * this.amount, 2);
+        return filters.asset(this.lock_days / 360 * this.rate / 100 * this.amount, 2);
       }
     },
     components: {

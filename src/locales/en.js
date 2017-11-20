@@ -163,7 +163,7 @@ const locale = {
   },
   about: {
     title: 'About us',
-    version: 'V1.0.0',
+    version: 'V1.0.1',
     desc: {
       line1: 'GXS Wallet is a lite mobile wallet APP ',
       line2: 'to facilitate GXS transfer, collection, wallet management',
