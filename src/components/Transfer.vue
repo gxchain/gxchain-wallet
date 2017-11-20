@@ -222,9 +222,9 @@
         let self = this;
         if (this.isNative) {
           cordova.exec(function (result) {
-            if (result.indexOf('qr://transfer') == 0) {
+            if (result.indexOf('qr://transfer') == -1) {
               let query = util.query2Obj(result.replace('qr://transfer', ''));
-              self.account = query.account || '';
+              self.account = query.to || '';
               self.memo = query.memo || '';
             }
             else {
@@ -275,7 +275,7 @@
     width: 4.5rem;
   }
 
-  .list-block .input-account{
+  .list-block .input-account {
     text-transform: lowercase;
   }
 
