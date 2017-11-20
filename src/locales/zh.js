@@ -1,7 +1,7 @@
 const locale = {
   index: {
     balance_loading: '**',
-    backup_wallet: '备份钱包',
+    backup_wallet: '备份私钥',
     asset_name: 'GXS',
     asset_full_name:'GXS',
     value: '价值(CNY)',
@@ -75,8 +75,8 @@ const locale = {
     success: {
       title: '创建成功',
       tip1: '钱包创建成功',
-      tip2: '强烈建议您在使用前备份钱包，一旦丢失不可找回',
-      backup_wallet: '备份钱包',
+      tip2: '强烈建议您在使用前备份钱包私钥，一旦丢失不可找回',
+      backup_wallet: '备份私钥',
       detail: '查看钱包详情'
     }
   },
@@ -101,8 +101,8 @@ const locale = {
     success: {
       title: '导入成功',
       tip1: '钱包导入成功',
-      tip2: '强烈建议您在使用前备份钱包，一旦丢失不可找回',
-      backup_wallet: '备份钱包',
+      tip2: '强烈建议您在使用前备份钱包私钥，一旦丢失不可找回',
+      backup_wallet: '备份私钥',
       detail: '查看钱包详情'
     }
   },
@@ -114,18 +114,18 @@ const locale = {
   },
   wallet_backup: {
     index: {
-      title: '钱包备份',
-      tip: '当APP被删后在其他手机上使用钱包时，需导入当前钱包备份信息，否则可能永久丢失钱包资产，请务必备份好钱包，并妥善保管备份信息。',
+      title: '备份私钥',
+      tip: '当APP被删后在其他手机上使用钱包时，需导入当前钱包备份私钥，否则可能永久丢失钱包资产，请务必备份好钱包，并妥善保管备份信息。',
       label: {
         account: '钱包账号',
         asset: '钱包资产(GXS)',
         private_key: '私钥'
       },
-      button_backup: '备份钱包',
+      button_backup: '备份私钥',
       button_remove: '删除钱包'
     },
     detail: {
-      title: '钱包备份',
+      title: '备份私钥',
       tip: '为了方便备份，我们将钱包账户加密为以下英文字母组成的密钥，备份该密钥即可恢复钱包。',
       tip1: '按顺序将密钥复制或抄录在纸上，并妥善保存',
       tip2: '任何人获得你的密钥信息即可操作你的钱包资金',
@@ -136,6 +136,7 @@ const locale = {
       ok: '确定',
       confirm: '确定已备份好密钥？',
       tip_password: '解锁你的钱包',
+      go_back: '回到首页',
       placeholder: {
         password: '请输入密码'
       },
@@ -153,7 +154,8 @@ const locale = {
       password: '请输入密码'
     },
     error: {
-      invalid_password: '密码错误'
+      invalid_password: '密码错误',
+      invalid_delete: '无法删除含有余额的账户'
     }
   },
   language_setting: {
@@ -161,7 +163,7 @@ const locale = {
   },
   about: {
     title: '关于我们',
-    version: 'V0.0.1',
+    version: 'V1.0.0',
     desc: {
       line1: 'GXS Wallet是一款移动端轻钱包APP，',
       line2: '通过它能实现GXS的转账、收款和钱包管理，',
@@ -208,7 +210,8 @@ const locale = {
     error: {
       amount: {
         invalid: '数量不正确',
-        insufficient_balance: '余额不足,请确认余额大于转账金额+手续费'
+        insufficient_balance: '余额不足,请确认余额大于转账金额+手续费',
+        minimum: '最小数量不能少于1'
       },
       account: {
         cannot_send_to_yourself: '不能向自己转账',

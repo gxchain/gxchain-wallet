@@ -29,7 +29,7 @@
           </ul>
         </div>
         <div class="copy-right">
-          <p>Copyright © 2016 GongXinBao</p>
+          <p>Copyright © 2017 GXChain</p>
           <p>All rights reserved.</p>
         </div>
       </div>

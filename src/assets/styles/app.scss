@@ -260,6 +260,11 @@ body.with-panel-right-cover .panel-overlay {
 
 .bar .icon{
   font-size: .8rem;
+  width: 2rem;
+}
+
+.bar .icon.icon-close{
+  text-align: right;
 }
 
 .title {

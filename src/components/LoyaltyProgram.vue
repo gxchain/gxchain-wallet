@@ -237,6 +237,10 @@
           this.error.amount = this.$t('transfer.error.amount.insufficient_balance');
           return false;
         }
+        else if (amount < 1) {
+          this.error.amount = this.$t('transfer.error.amount.minimum');
+          return false;
+        }
         this.error.amount = '';
         return true;
       },

@@ -1,7 +1,7 @@
 const locale = {
   index: {
     balance_loading: 'loading..',
-    backup_wallet: 'backup wallet',
+    backup_wallet: 'backup private key',
     asset_name: 'GXS',
     asset_full_name:'GXShares',
     value: 'Total Assets($)',
@@ -75,7 +75,7 @@ const locale = {
     success: {
       title: 'Create Success',
       tip1: 'Wallet created',
-      tip2: 'Please do remember to backup your wallet, there is no way to find it back if you lost it.',
+      tip2: 'Please do remember to backup your wallet private key, there is no way to find it back if you lost it.',
       backup_wallet: 'Backup Now',
       detail: 'Open my wallet'
     }
@@ -101,7 +101,7 @@ const locale = {
     success: {
       title: 'Import Success',
       tip1: 'Wallet imported',
-      tip2: 'Please do remember to backup your wallet, there is no way to find it back if you lost it.',
+      tip2: 'Please do remember to backup your wallet private key, there is no way to find it back if you lost it.',
       backup_wallet: 'Backup Now',
       detail: 'Open my wallet',
     }
@@ -114,18 +114,18 @@ const locale = {
   },
   wallet_backup: {
     index: {
-      title: 'Wallet backup',
-      tip: 'When APP is deleted and used on another device, you need to import backed-up information of the current wallet, or assets in the wallet could be lost permanently. Please make sure your wallet is backed up and backed-up info is kept in good care.',
+      title: 'Private key backup',
+      tip: 'When APP is deleted and used on another device, you need to import backed-up private key of the current wallet, or assets in the wallet could be lost permanently. Please make sure your wallet is backed up and backed-up info is kept in good care.',
       label: {
         account: 'Account',
         asset: 'Asset(GXS)',
         private_key: 'Private Key'
       },
       button_backup: 'Backup Now',
-      button_remove: 'Remove Wallet'
+      button_remove: 'Remove Wallet',
     },
     detail: {
-      title: 'Wallet backup',
+      title: 'Private key backup',
       tip: 'To make backup easier, your wallet account is encrypted with the following key of letters. Back up this key to retrieve your wallet.',
       tip1: 'Copy or transcribe the key verbatim on paper, and keep it in good care.',
       tip2: 'Anyone with knowledge of info on your key gains access to the assets in your wallet.',
@@ -136,6 +136,7 @@ const locale = {
       ok: 'OK',
       confirm: 'Verify that the backup key has been backed up?',
       tip_password: 'Unlock your wallet',
+      go_back: 'Go Back',
       placeholder: {
         password: 'Please enter your password'
       },
@@ -153,7 +154,8 @@ const locale = {
       password: 'Please enter your password'
     },
     error: {
-      invalid_password: 'Invalid password'
+      invalid_password: 'Invalid password',
+      invalid_delete: 'Unable to delete account with balance'
     }
   },
   language_setting: {
@@ -161,7 +163,7 @@ const locale = {
   },
   about: {
     title: 'About us',
-    version: 'V0.0.1',
+    version: 'V1.0.0',
     desc: {
       line1: 'GXS Wallet is a lite mobile wallet APP ',
       line2: 'to facilitate GXS transfer, collection, wallet management',
@@ -208,7 +210,8 @@ const locale = {
     error: {
       amount: {
         invalid: 'Invalid amount',
-        insufficient_balance: 'Insufficient balance, Please make sure your balance are more than amount and fee'
+        insufficient_balance: 'Insufficient balance, Please make sure your balance are more than amount and fee',
+        minimum: 'The minimum amount must not be less than 1'
       },
       account: {
         cannot_send_to_yourself: 'Cannot send to yourself',

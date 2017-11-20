@@ -84,7 +84,8 @@
         </div>
       </div>
     </div>
-    <transfer-confirm :account="currentWallet.account" :amount="amount" :to="account" :memo="memo"
+    <password-confirm ref="unlock" @unlocking="unlocking"></password-confirm>
+    <transfer-confirm :transaction="transaction" :account="currentWallet.account" :pwd="password" :amount="amount" :to="account" :memo="memo"
                       ref="confirm"></transfer-confirm>
   </div>
 </template>
@@ -96,6 +97,7 @@
   import util from '@/common/util'
   import errorHandler from '@/common/errorHandler'
   import filters from '@/filters'
+  import PasswordConfirm from './sub/PasswordConfirm.vue'
   import TransferConfirm from './sub/TransferConfirm.vue'
 
   export default {
@@ -103,10 +105,12 @@
     data() {
       let wallets = get_wallets();
       return {
+        transaction: null,
         account: '',
         amount: '',
         memo: '',
         balance: -1,
+        password: '',
         wallets: wallets,
         currentWallet: wallets[get_wallet_index()],
         error: {
@@ -119,6 +123,7 @@
     watch: {
       account() {
         this.error.other = '';
+        this.account = this.account.toLowerCase();
       },
       amount() {
         this.error.other = '';
@@ -139,13 +144,29 @@
     },
     methods: {
       onSubmit() {
-        let self = this;
         if (!this.submitEnable) {
           return;
         }
         if (this.validateAccount() && this.validateAmount()) {
-          this.$refs.confirm.show();
+          this.error.other = '';
+          this.$refs.unlock.show();
         }
+      },
+      unlocking(pwd) {
+        let self = this;
+        if (!pwd.trim()) {
+          this.error.other = this.$t('unlock.error.invalid_password');
+          this.$refs.unlock.unlocked();
+          return;
+        }
+        transfer(this.currentWallet.account, this.account, this.amount, this.memo, pwd, false).then((resp) => {
+          self.transaction = resp;
+          self.password = pwd;
+          self.$refs.confirm.show();
+        }).catch(ex => {
+          self.error.other = ex.message;
+          self.$refs.unlock.unlocked();
+        });
       },
       onAmountChange() {
         this.validateAmount();
@@ -261,6 +282,7 @@
     },
     components: {
       AccountImage,
+      PasswordConfirm,
       TransferConfirm
     }
   }
@@ -271,23 +293,28 @@
     word-break: break-word;
   }
 
-  .list-block .item-title.label {
-    width: 4.5rem;
-  }
-
-  .list-block .input-account{
-    text-transform: lowercase;
+  .tip-alert, .tip-success {
+    padding-left: .75rem;
   }
 
   .color-gray {
     color: lighten(#3d3d3b, 20%)
   }
 
+  .list-block .item-title.label {
+    width: 4.5rem;
+  }
+
+  .list-block .input-account {
+    text-transform: lowercase;
+  }
+
+  .list-block textarea {
+    margin-top: .2rem;
+  }
+
   .list-block .last .item-inner:after {
     height: 0;
   }
 
-  .tip-alert, .tip-success {
-    padding-left: .75rem;
-  }
 </style>

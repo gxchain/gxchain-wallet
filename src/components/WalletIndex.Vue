@@ -41,13 +41,13 @@
                       <small class="icon icon-code"></small>
                     </a>
                   </div>
-                  <div>
+                  <p class="bak-tip">
                     <router-link :to="linkBackup(wallet.account)" class="btn-backup"
                                  :class="{visible:!wallet.backup_date}" href="javascript:;">
                       <small>{{$t('index.backup_wallet')}}&nbsp;<span class="red-dot"></span><span
                         class="icon icon-right"></span></small>
                     </router-link>
-                  </div>
+                  </p>
                 </div>
                 <div class="row-balance">
                   <div class="item">
@@ -404,9 +404,12 @@
       color: #fff;
       .icon {
         position: relative;
-        top: -3px;
+        top: -1px;
         font-size: .8rem;
       }
+    }
+    .bak-tip{
+      margin: .4rem 0;
     }
     .btn-backup {
       visibility: hidden;
@@ -431,7 +434,6 @@
       display: flex;
       flex-direction: row;
       padding: 0 .75rem;
-      margin-top: 1.25rem;
       .item {
         flex: 2;
         display: flex;
