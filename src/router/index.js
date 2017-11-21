@@ -28,8 +28,8 @@ import RouterTransition from '@/plugins/RouterTransition'
 RouterTransition.use(store, Router, {
   moduleName: 'route',
   initTransitionName: '',
-  fowardTransitionName: 'slide-right',
-  backTransitionName: 'slide-left'
+  forwardTransitionName: 'forward',
+  backTransitionName: 'back'
 })
 
 Vue.use(Router)

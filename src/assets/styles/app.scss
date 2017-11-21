@@ -30,70 +30,72 @@
   }
 }
 
-.slide-left-enter-active,
-.slide-left-leave-active,
-.slide-right-enter-active,
-.slide-right-leave-active {
+.back-enter-active,
+.back-leave-active,
+.forward-enter-active,
+.forward-leave-active {
   transition: all .4s ease;
 }
 
-.slide-right-enter-active {
+.forward-enter-active {
   animation: RightToCenter .4s forwards;
+  z-index: 2002;
 }
 
-.slide-right-leave-active {
-  animation: CenterToRight .4s forwards;
+.forward-leave-active {
+  animation: CenterToLeft .4s forwards;
 }
 
-.slide-left-enter-active {
+.back-enter-active {
   animation: LeftToCenter .4s forwards;
 }
 
-.slide-left-leave-active {
-  animation: CenterToLeft .4s forwards;
+.back-leave-active {
+  animation: CenterToRight .4s forwards;
+  z-index: 2002;
 }
 
 @keyframes RightToCenter {
   from {
-    opacity: 0;
     transform: translate3d(100%, 0, 0);
+    opacity: .9;
   }
   to {
+    transform: translate3d(0, 0, 0);
     opacity: 1;
-    transform: translate3d(0%, 0, 0);
   }
 }
 
 @keyframes CenterToRight {
   from {
+    transform: translate3d(0, 0, 0);
     opacity: 1;
-    transform: translate3d(0%, 0, 0);
   }
   to {
-    opacity: 0;
-    transform: translate3d(-100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+    opacity: .9;
   }
 }
 
 @keyframes LeftToCenter {
   from {
-    opacity: 0;
-    transform: translate3d(-100%, 0, 0);
+    opacity: .5;
+    transform: translate3d(-20%, 0, 0);
   }
   to {
     opacity: 1;
-    transform: translate3d(0%, 0, 0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes CenterToLeft {
   from {
     opacity: 1;
-    transform: translate3d(0%, 0, 0);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    opacity: 0.9;
-    transform: translate3d(100%, 0, 0);
+    opacity: 0.5;
+    transform: translate3d(-20%, 0, 0);
   }
 }
 

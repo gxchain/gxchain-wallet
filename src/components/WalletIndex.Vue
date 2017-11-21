@@ -427,6 +427,7 @@
         position: relative;
         top: -2px;
         font-size: .6rem;
+        margin-left:.2rem;
       }
     }
 

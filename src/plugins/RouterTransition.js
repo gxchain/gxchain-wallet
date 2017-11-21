@@ -2,7 +2,7 @@ export default {
   use(store, router, options) {
     const moduleName = (options || {}).moduleName || 'route';
     const initTransitionName = (options || {}).initTransitionName || '';
-    const fowardTransitionName = (options || {}).fowardTransitionName || '';
+    const forwardTransitionName = (options || {}).forwardTransitionName || '';
     const backTransitionName = (options || {}).backTransitionName || '';
     store.registerModule(moduleName, {
       namespaced: true,
@@ -25,7 +25,7 @@ export default {
     };
 
     router.prototype.push = function push (location, onComplete, onAbort) {
-      store.commit(moduleName + '/TRANSITION_CHANGED', {transitionName: fowardTransitionName});
+      store.commit(moduleName + '/TRANSITION_CHANGED', {transitionName: forwardTransitionName});
       this.history.push(location, onComplete, onAbort);
     };
   }
