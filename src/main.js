@@ -33,3 +33,7 @@ new Vue({
   template: '<App/>',
   components: {App}
 })
+
+FastClick.attach(document.body,{
+  tapDelay:1
+});

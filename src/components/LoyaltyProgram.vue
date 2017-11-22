@@ -209,7 +209,6 @@
       $(this.$el).on('refresh', '.pull-to-refresh-content', (e) => {
         this.load_init_data();
       });
-      FastClick.attach(document.body);
     },
     methods: {
       load_init_data() {
