@@ -4147,7 +4147,7 @@ body.panel-closing .page {
 }
 @font-face {
   font-family: "iconfont-sm";
-  src: url('//at.alicdn.com/t/font_1433401008_2229297.woff') format('woff'), /* chromeã€firefox */ url('//at.alicdn.com/t/font_1433401008_2229297.ttf') format('truetype'), /* chromeã€firefoxã€operaã€Safari, Android, iOS 4.2+*/ url('//at.alicdn.com/t/font_1433401008_2229297.svg#iconfont') format('svg');
+  src: url('http:///at.alicdn.com/t/font_1433401008_2229297.woff') format('woff'), /* chromeã€firefox */ url('http://at.alicdn.com/t/font_1433401008_2229297.ttf') format('truetype'), /* chromeã€firefoxã€operaã€Safari, Android, iOS 4.2+*/ url('http://at.alicdn.com/t/font_1433401008_2229297.svg#iconfont') format('svg');
   /* iOS 4.1- */
 }
 .icon {
