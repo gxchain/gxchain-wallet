@@ -194,7 +194,7 @@ const locale = {
     }
   },
   transfer: {
-    title: '发送',
+    title: '发 送',
     from: '发送账户',
     to: '对方账户',
     to_placeholder: '填写对方账号',
@@ -204,7 +204,7 @@ const locale = {
     memo: '备注(MEMO)',
     fee: '手续费',
     memo_placeholder: '选填',
-    next: '下一步',
+    next: '下 一 步',
     send: '发送',
     sending: '发送中',
     error: {
