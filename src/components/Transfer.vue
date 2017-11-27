@@ -243,7 +243,7 @@
         let self = this;
         if (this.isNative) {
           cordova.exec(function (result) {
-            if (result.indexOf('qr://transfer') == -1) {
+            if (result.indexOf('qr://transfer') > -1) {
               let query = util.query2Obj(result.replace('qr://transfer', ''));
               self.account = query.to || '';
               self.memo = query.memo || '';
