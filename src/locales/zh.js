@@ -87,7 +87,7 @@ const locale = {
       confirm: '确认密码'
     },
     placeholder: {
-      key: '在此填入账户私钥',
+      key: '在此填入活跃权限私钥',
       password: '6位以上字符'
     },
     confirm: '确认导入',
