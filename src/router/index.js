@@ -24,6 +24,7 @@ import connect from '@/common/connect'
 import cordovaLoader from '@/common/cordovaLoader'
 import {get_wallets} from '@/services/WalletService'
 import RouterTransition from '@/plugins/RouterTransition'
+import RealtimeQuotations from '@/components/RealtimeQuotations'
 
 RouterTransition.use(store, Router, {
   moduleName: 'route',
@@ -194,7 +195,16 @@ let router = new Router({
       },
       name: 'LoyaltyProgramDetail',
       component: LoyaltyProgramDetail
+    },
+    {
+      path: '/realtime-quotations/:exchange_name/:exchange_price_rmb/:exchange_price_dollar/:exchange_quote',
+      meta: {
+        title: '实时行情'
+      },
+      name: 'RealtimeQuotations',
+      component: RealtimeQuotations
     }
+
   ]
 })
 
