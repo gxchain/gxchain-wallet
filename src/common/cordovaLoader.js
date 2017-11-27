@@ -23,7 +23,7 @@ export default {
         else {
           $('html').removeClass('native-ios-x');
         }
-        document.write(`<script id="js-cdv" type="text/javascript" src="/static/cordova/cordova.${platform}.js"></script>`);
+        document.write(`<script id="js-cdv" type="text/javascript" src="static/cordova/cordova.${platform}.js"></script>`);
         document.addEventListener('deviceready', function () {
           let timeout = (new Date() - start) > 1000 ? 0 : 500;
           setTimeout(() => {

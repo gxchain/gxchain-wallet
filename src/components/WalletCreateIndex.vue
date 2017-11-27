@@ -76,7 +76,7 @@
         if (locale == 'en') {
           locale = 'us';
         }
-        return `/static/img/${locale.toUpperCase()}.png`;
+        return `static/img/${locale.toUpperCase()}.png`;
       }
     }
   }

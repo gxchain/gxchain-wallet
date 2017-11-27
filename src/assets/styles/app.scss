@@ -113,8 +113,10 @@
 }
 
 .bar-nav {
+  opacity: 1;
   background: $THEME_BAR_BG_COLOR;
   .icon {
+    width: 2rem;
     color: $THEME_TITLE_COLOR;
   }
   .icon-close {
@@ -285,11 +287,6 @@ body.with-panel-right-cover .panel-overlay {
 
 .color-light-gray {
   color: #888;
-}
-
-.bar .icon {
-  font-size: .8rem;
-  width: 2rem;
 }
 
 .bar .pull-left {

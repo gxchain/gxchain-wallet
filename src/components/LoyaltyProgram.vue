@@ -18,7 +18,7 @@
           </div>
         </div>
         <div class="content-banner">
-          <img :src="'../../static/' + $t('loyalty_program.banner')">
+          <img :src="`static/${$t('loyalty_program.banner')}`">
         </div>
         <div class="content-block tips">
           <p>{{$t('loyalty_program.tip3')}}</p>
@@ -209,7 +209,6 @@
       $(this.$el).on('refresh', '.pull-to-refresh-content', (e) => {
         this.load_init_data();
       });
-      FastClick.attach(document.body);
     },
     methods: {
       load_init_data() {

@@ -100,6 +100,7 @@
             });
           }
           else {
+            console.error(ex);
             errorHandler(ex, this.$t('wallet_create.step2.error.account_create_failed'));
           }
         });

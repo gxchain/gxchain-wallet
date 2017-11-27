@@ -65,7 +65,7 @@
             <div class="swiper-pagination" slot="pagination" v-show="wallets&&wallets.length>1"></div>
           </swiper>
           <div class="link-loyalty-program" @click="goLoyaltyProgram">
-            <img :src="'../../static/'+$t('index.loyalty_program_icon')">
+            <img :src="`static/${$t('index.loyalty_program_icon')}`">
           </div>
         </div>
         <!--function entries-->

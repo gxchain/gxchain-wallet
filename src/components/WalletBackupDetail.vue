@@ -3,7 +3,7 @@
     <div class="page" id="page-wallet-backup-detail">
       <header class="bar bar-nav">
         <h3 class="title">{{$t('wallet_backup.detail.title')}}</h3>
-        <a href="javascript:void(0)" class="icon icon-left" @click="confirm"></a>
+        <a href="javascript:void(0)" class="icon icon-left" @click="confirm($route.query.from||link('/'))"></a>
       </header>
       <div class="content">
         <div class="tip-info">
@@ -32,7 +32,7 @@
                :class="{disabled:keyCopied}">{{keyCopied ? $t('wallet_backup.detail.copied') : $t('wallet_backup.detail.copy')}}</a>
           </p>
           <p v-if="wifKey">
-            <a @click="confirm" class="button button-gxb" >{{$t('wallet_backup.detail.go_back')}}</a>
+            <a @click="confirm(link('/'))" class="button button-gxb" >{{$t('wallet_backup.detail.go_back')}}</a>
           </p>
         </div>
       </div>
@@ -87,7 +87,7 @@
           }, 1000)
         }, null, 'ClipBoard', 'copy', [this.wifKey]);
       },
-      confirm() {
+      confirm(returnURL) {
         let self = this;
         if (this.unlocked){
           if (!self.wallet.backup_date) {
@@ -96,14 +96,14 @@
                 let wallet = self.wallet;
                 wallet.backup_date = new Date().getTime();
                 update_wallet(wallet);
-                self.$router.replace({path: self.$route.query.from || link('/')});
+                self.$router.replace({path: returnURL});
               }
             );
           }else{
-            this.$router.replace({path: this.$route.query.from||link('/')});
+            this.$router.replace({path: returnURL});
           }
         }else{
-          this.$router.replace({path: this.$route.query.from||link('/')});
+          this.$router.replace({path: returnURL});
         }
       }
     },

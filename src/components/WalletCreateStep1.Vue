@@ -92,6 +92,7 @@
         return (/[0-9-]/.test(this.account) || !/[aeiouy]/.test(this.account));
       },
       validate() {
+        this.account=this.account.toLowerCase();
         if (!this.is_cheap_name()) {
           this.error = this.$t('wallet_create.step1.error.premium_name');
           return false;

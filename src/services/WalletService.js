@@ -44,7 +44,7 @@ const fetch_account_histroy = (account_name) => {
  */
 const fetch_dictionary = () => {
   return new Promise((resolve, reject) => {
-    resolve(Vue.http.get(`${location.protocol}//${location.host}/static/dictionary_en.json`).then((resp) => {
+    resolve(Vue.http.get(`${process.env.__HOST__.replace('/#','')}/static/dictionary_en.json`).then((resp) => {
       return resp.data.en;
     }))
   })
