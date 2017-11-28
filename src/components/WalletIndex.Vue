@@ -84,19 +84,19 @@
           <div class="list-block media-list">
             <ul>
               <li v-for="exchange in exchanges">
-                <router-link :to="`/realtime-quotations/${exchange.name}/${exchange.price_rmb}/${exchange.price_dollar}/${exchange.quote}`">
+                <router-link :to="`/realtime-quotations/${exchange.name}/${exchange.symbol}`">
                   <div class="item-content item-exchange">
                     <div class="item-inner">
                       <div class="title-ex-name">
-                        <div class="asset-name">{{$t('index.asset_name')}}<small class="color-light-gray" v-if="$t('index.asset_full_name')!=''">({{$t('index.asset_full_name')}})</small></div>
+                        <div class="asset-name">{{exchange.symbol}}</div>
                         <div class="ex-name">{{exchange.name}}</div>
                       </div>
                       <div class="price">
                         <div class="price_primary">
-                          {{_i18n.locale == 'zh' ? `￥${exchange.price_rmb}` : `$${exchange.price_dollar}`}}
+                          {{exchange.price}}
                         </div>
                         <div class="price_secondary">
-                          {{_i18n.locale == 'zh' ? `$${exchange.price_dollar}` : `￥${exchange.price_rmb}`}}
+                          {{_i18n.locale == 'zh' ? `￥${exchange.price_rmb}` : `$${exchange.price_dollar}`}}
                         </div>
                       </div>
                       <div class="quote" :class="{green:exchange.quote>0}">

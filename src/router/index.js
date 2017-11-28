@@ -197,7 +197,7 @@ let router = new Router({
       component: LoyaltyProgramDetail
     },
     {
-      path: '/realtime-quotations/:exchange_name/:exchange_price_rmb/:exchange_price_dollar/:exchange_quote',
+      path: '/realtime-quotations/:exchange_name/:exchange_symbol',
       meta: {
         title: '实时行情'
       },

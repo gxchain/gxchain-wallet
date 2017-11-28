@@ -314,12 +314,12 @@ const locale = {
   },
   realtime_quotations:{
     title:'实时行情',
-    opening_title:'开盘',
     high:'24h最高价',
     low:'24h最低价',
     volume:'24h成交量',
     time_sharing:'分时',
-    k_line:'日k'
+    k_line:'日k',
+    strategy:'交易所入金攻略'
   }
 }
 

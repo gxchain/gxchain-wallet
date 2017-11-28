@@ -9,12 +9,14 @@
         <div class="content">
           <div class="exchange">
             <div class="exchange-title">
-              <div class="asset-name">{{$t('index.asset_name')}}<small class="color-light-gray" v-if="$t('index.asset_full_name')!=''">({{$t('index.asset_full_name')}})</small></div>
+              <!-- <div class="asset-name">{{$t('index.asset_name')}}<small class="color-light-gray" v-if="$t('index.asset_full_name')!=''">({{$t('index.asset_full_name')}})</small></div> -->
+              <div class="asset-name">{{exchange_symbol}}</div>
               <div class="exchange-name">{{exchange_name}}</div>
             </div>
             <div class="exchange-price">
               <div class="price-primary">
-                {{_i18n.locale == 'zh' ? `$${exchange_price_dollar}` : `￥${exchange_price_rmb}`}}
+                <!-- {{_i18n.locale == 'zh' ? `￥${exchange_price_rmb}` : `$${exchange_price_dollar}`}} -->
+                {{exchange_price}}
               </div>
               <div class="price-secondary">
                 {{_i18n.locale == 'zh' ? `￥${exchange_price_rmb}` : `$${exchange_price_dollar}`}}
@@ -33,7 +35,7 @@
                 {{$t('realtime_quotations.high')}}
               </div>
               <div class="quotation-item-value">
-                {{123}}
+                {{high}}
               </div>
             </div>
             <div class="quotation-item">
@@ -41,7 +43,7 @@
                 {{$t('realtime_quotations.low')}}
               </div>
               <div class="quotation-item-value">
-                {{456}}
+                {{low}}
               </div>
             </div>
             <div class="quotation-item">
@@ -49,7 +51,7 @@
                 {{$t('realtime_quotations.volume')}}
               </div>
               <div class="quotation-item-value">
-                {{123}}
+                {{volume}}
               </div>
             </div>
           </div>
@@ -70,27 +72,61 @@
             </div>
           </div>
           <div class="strategy">
-            <a></a>
+            <a v-show="showStrategyLink" @click="showPDFModal">{{$t('realtime_quotations.strategy')+'>'}}></a>
           </div>
         </div>
       </div>
     </div>
+    <exchange-strategy  ref="strategy" :fileUrl="this.strategy_pdf_url"></exchange-strategy>
   </div>
 </template>
 <script>
-  // import G2 from '@antv/g2'
   import F2 from '@antv/f2'
+  import ExchangeStrategy from '@/components/ExchangeStrategy.vue'
+  import {get_realtime_quotation} from '@/services/MarketService'
   export default {
     data() {
       return {
         exchange_name: this.$route.params.exchange_name,
-        exchange_price_rmb: this.$route.params.exchange_price_rmb,
-        exchange_price_dollar: this.$route.params.exchange_price_dollar,
-        exchange_quote: this.$route.params.exchange_quote,
+        exchange_symbol: this.$route.params.exchange_symbol,
+        exchange_price: '',
+        exchange_price_rmb: '',
+        exchange_price_dollar: '',
+        exchange_quote: '',
+        high:'',
+        low:'',
+        volume:'',
         tabIndex:0,
+        strategy_pdf_url:'',
+        showStrategyLink: true,
+        stopFetchingQuotation: false
       }
     },
     methods: {
+      loadRealtimeQuotation(){
+        get_realtime_quotation(this.exchange_name,this.exchange_symbol).then((resp) => {
+          console.log('resp:'+JSON.stringify(resp));
+          this.exchange_price = resp.price;
+          this.exchange_price_rmb = resp.price_rmb;
+          this.exchange_price_dollar = resp.price_dollar;
+          this.exchange_quote = resp.quote,
+          this.high = resp.high,
+          this.low = resp.low,
+          this.volume = resp.volume,
+          setTimeout(() => {
+            if(!this.stopFetchingQuotation){
+              this.loadRealtimeQuotation();
+            }
+          }, 5000);
+        }).catch(ex => {
+          console.error(ex);
+          setTimeout(() => {
+            if(!this.stopFetchingQuotation){
+              this.loadRealtimeQuotation();
+            }
+          }, 5000);
+        })
+      },
       renderTimeSharing(){
         // 设置屏幕像素比
       F2.Global.pixelRatio = window.devicePixelRatio;
@@ -126,13 +162,13 @@
         // 配置刻度文字大小，供PC端显示用(移动端可以使用默认值20px)
       chart.axis('tem', {
         label: {
-          fontSize: 14
+          fontSize: 12
         }
       });
         // 配置time刻度文字样式
       const label = {
         fill: '#979797',
-        font: '14px san-serif',
+        font: '12px san-serif',
         offset: 6
       };
       chart.axis('time', {
@@ -142,8 +178,12 @@
           if (index === 0) {
             cfg.textAlign = 'start';
           }
-          if (index > 0 && index === total - 1) {
-            cfg.textAlign = 'end';
+          if (index > 0) {
+            if(index === total - 1){
+              cfg.textAlign = 'end';
+            }else{
+              cfg.textAlign = 'center';
+            }
           }
           return cfg;
         }
@@ -268,13 +308,13 @@
         // 配置刻度文字大小，供PC端显示用(移动端可以使用默认值20px)
         chart.axis('range', {
           label: {
-            fontSize: 14
+            fontSize: 12
           }
         });
         // 配置time刻度文字样式
         const label = {
           fill: '#979797',
-          font: '14px san-serif',
+          font: '12px san-serif',
           offset: 6
         };
         chart.axis('time', {
@@ -284,8 +324,12 @@
             if (index === 0) {
               cfg.textAlign = 'start';
             }
-            if (index > 0 && index === total - 1) {
-              cfg.textAlign = 'end';
+            if (index > 0) {
+              if(index === total - 1){
+                cfg.textAlign = 'end';
+              }else{
+                cfg.textAlign = 'center';
+              }
             }
             return cfg;
           }
@@ -305,17 +349,44 @@
           .shape('candle');
         chart.render();
       },
+      showPDFModal(){
+        this.getPDFUrl();
+        this.$refs.strategy.show();
+      },
+      isShowStrategyLink(){
+        if(this.exchange_name === 'Bit-Z' || this.exchange_name === 'AllCoin' || this.exchange_name ==='Binance'){
+          this.showStrategyLink = true;
+        }else {
+          this.showStrategyLink = false;
+        }
+      },
+      getPDFUrl(){
+        if(this.exchange_name === 'Bit-Z'){
+          this.strategy_pdf_url = '../../static/bit-z.pdf';
+        }else if(this.exchange_name === 'AllCoin'){
+          this.strategy_pdf_url = '../../static/allcoin.pdf';
+        }else if(this.exchange_name === 'Binance'){
+          this.strategy_pdf_url = '../../static/binance.pdf';
+        }
+      }
     },
     mounted() {
       $.init();
+      this.loadRealtimeQuotation();
+      this.isShowStrategyLink();
       this.renderTimeSharing();
-
       this.renderKLine();
+    },
+    components: {
+      ExchangeStrategy
     }
   }
 
 </script>
 <style lang="scss" scoped>
+  .content{
+    background: #fff;
+  }
   .exchange{
     display: flex;
     flex-direction: row;
@@ -389,18 +460,6 @@
         color:#3d3d3b;
       }
     }
-    // .volume{
-    //   flex:1;
-    //   text-align: left;
-    //   .volume-title{
-    //     font-size: .6rem;
-    //     color:#888;
-    //   }
-    //   .total-volume{
-    //     font-size: .7rem;
-    //     color:#3d3d3b;
-    //   }
-    // }
   }
   .chart{
     height: 20rem;
@@ -415,6 +474,14 @@
         color:#fff;
       }
     }
+  }
+  .strategy{
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // text-align: center;
+    font-size: .7rem;
   }
 
 </style>
