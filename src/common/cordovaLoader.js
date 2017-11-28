@@ -1,6 +1,3 @@
-import store from '../vuex/store'
-
-
 function isIphoneX() {
   return /iphone/gi.test(navigator.userAgent) && (screen.height == 812 && screen.width == 375)
 }
@@ -27,7 +24,6 @@ export default {
         document.addEventListener('deviceready', function () {
           let timeout = (new Date() - start) > 1000 ? 0 : 500;
           setTimeout(() => {
-            store.commit('setLoading', {loading: false});
             resolve()
           }, timeout)
         })

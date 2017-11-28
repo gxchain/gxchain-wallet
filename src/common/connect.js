@@ -1,5 +1,6 @@
 import {ChainStore} from 'gxbjs'
 import {Apis, Manager} from 'gxbjs-ws'
+import store from '../vuex/store'
 
 let witnesses = process.env.witnesses;
 let connectionManager = null;
@@ -19,10 +20,10 @@ let connect = function (callback) {
     ChainStore.clearCache();
     ChainStore.head_block_time_string = null;
     ChainStore.init().then(() => {
-      callback(connected);
+      callback&&callback(connected);
     }).catch(ex => {
       console.error(ex);
-      callback(connected);
+      callback&&callback(connected);
     });
   });
 }

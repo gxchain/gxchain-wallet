@@ -225,6 +225,7 @@ router.beforeEach((to, from, next) => {
         })
       }
       else {
+        store.commit('setLoading', {loading: false});
         next();
       }
     })
