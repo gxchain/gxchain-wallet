@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui,viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" ,content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" ,content="black">
+  <meta name="format-detection" ,content="telephone=no">
+  <meta name="description" ,content="Download Mobile wallet for GXS">
+  <title>GXS Wallet</title>
+  <link rel="stylesheet" href="msui/sm.min.css">
+  <script type='text/javascript' src='msui/zepto.min.js' charset='utf-8'></script>
+  <script>
+    $.config = {router: false,autoInit:true}
+  </script>
+  <style>
+    .page {
+      display: flex;
+      flex-direction: row;
+      font-size:.8rem;
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+    }
+    .center-content {
+      flex: 1;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 17.625rem;
+      background: linear-gradient(to bottom, #150838 0%, #3853bc 49%, #18bce2 100%);
+      color: #fff;
+    }
+    .logo{
+      font-size: 6rem;
+    }
+    .copy-right {
+      padding: .3rem;
+      color: #999;
+      font-size: .6rem;
+      text-align: center;
+    }
+    .copy-right p{
+      margin:.3rem 0;
+    }
+  </style>
+</head>
+<body>
+<div class="page-group">
+  <div class="page" id="page-about">
+    <div class="content">
+      <div class="center-content">
+        <div class="row-logo">
+            <img class="logo" src="logo1024.png" width="100" style="border-radius: 12px">
+        </div>
+        <p>GXS钱包v1.0.1</p>
+        <div class="app-intro text-center">
+          <p>GXS钱包是一款移动端轻钱包APP，</p>
+          <p>通过它能实现GXS的转账、收款和钱包管理，</p>
+          <p>并及时掌握GXS的最新动态</p>
+        </div>
+      </div>
+      <div class="content-block">
+        <p>
+          <a target="_blank" href="https://gxs-wallet.oss-cn-shanghai.aliyuncs.com/gxs-wallet.apk" class="button button-primary button-fill button-big">下载Android版本</a>
+        </p>
+        <p>
+          <a class="button button-fill button-big disabled">iOS版本等待审核后上线</a>
+        </p>
+      </div>
+      <div class="copy-right">
+        <p>Copyright © 2017 GXChain</p>
+        <p>All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- built files will be auto injected -->
+<script type='text/javascript' src='msui/sm.js' charset='utf-8'></script>
+
+</body>
+</html>
