@@ -80,6 +80,14 @@
 </div>
 <!-- built files will be auto injected -->
 <script type='text/javascript' src='msui/sm.js' charset='utf-8'></script>
+<script>
+  window.onload = function(){
+    var ua = window.navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+      $.alert('当前是微信浏览器，请用外部浏览器打开');
+    }
+  }
+</script>
 
 </body>
 </html>
