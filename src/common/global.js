@@ -50,7 +50,7 @@ document.addEventListener('touchstart', function (e) {
   }
 })
 document.addEventListener('touchmove', function (e) {
-  if(start){
+  if (start) {
     let deltaX = e.targetTouches[0].pageX - start.x;
     if (deltaX > 30) {
       $('.page .bar-nav .icon-left').click();
@@ -60,5 +60,10 @@ document.addEventListener('touchmove', function (e) {
 document.addEventListener('touchend', function (e) {
   start = null;
 })
+
+window.goBack = function () {
+  $('.page .bar-nav .icon-left').click();
+}
+
 
 export default {}

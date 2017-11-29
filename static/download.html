@@ -54,7 +54,7 @@
     <div class="content">
       <div class="center-content">
         <div class="row-logo">
-            <img class="logo" src="logo1024.png" width="100" style="border-radius: 12px">
+          <img class="logo" src="logo1024.png" width="100" style="border-radius: 12px">
         </div>
         <p>GXS钱包v1.0.1</p>
         <div class="app-intro text-center">
@@ -65,7 +65,7 @@
       </div>
       <div class="content-block">
         <p>
-          <a target="_blank" href="https://gxs-wallet.oss-cn-shanghai.aliyuncs.com/gxs-wallet.apk" class="button button-primary button-fill button-big">下载Android版本</a>
+          <a href="javascript:;" onclick="download()" class="button button-primary button-fill button-big">下载Android版本</a>
         </p>
         <p>
           <a class="button button-fill button-big disabled">iOS版本等待审核后上线</a>
@@ -81,10 +81,13 @@
 <!-- built files will be auto injected -->
 <script type='text/javascript' src='msui/sm.js' charset='utf-8'></script>
 <script>
-  window.onload = function(){
+  function download(){
     var ua = window.navigator.userAgent.toLowerCase();
     if(ua.match(/MicroMessenger/i) == 'micromessenger'){
       $.alert('当前是微信浏览器，请用外部浏览器打开');
+    }
+    else{
+      window.open('https://gxs-wallet.oss-cn-shanghai.aliyuncs.com/gxs-wallet.apk');
     }
   }
 </script>
