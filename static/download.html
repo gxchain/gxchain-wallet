@@ -12,18 +12,27 @@
   <link rel="stylesheet" href="msui/sm.min.css">
   <script type='text/javascript' src='msui/zepto.min.js' charset='utf-8'></script>
   <script>
-    $.config = {router: false,autoInit:true}
+    $.config = {router: false, autoInit: true}
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4eab1c3ea109958865ad322c46ee3ef2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
   </script>
   <style>
     .page {
       display: flex;
       flex-direction: row;
-      font-size:.8rem;
+      font-size: .8rem;
     }
+
     .content {
       display: flex;
       flex-direction: column;
     }
+
     .center-content {
       flex: 1;
       align-items: center;
@@ -34,27 +43,35 @@
       background: linear-gradient(to bottom, #150838 0%, #3853bc 49%, #18bce2 100%);
       color: #fff;
     }
-    .logo{
+
+    .logo {
       font-size: 6rem;
     }
+
     .copy-right {
       padding: .3rem;
       color: #999;
       font-size: .6rem;
       text-align: center;
     }
-    .copy-right p{
-      margin:.3rem 0;
+
+    .copy-right p {
+      margin: .3rem 0;
     }
   </style>
   <script>
-    function download(){
+    function download() {
       var ua = window.navigator.userAgent.toLowerCase();
-      if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+      if (ua.match(/MicroMessenger/i) == 'micromessenger') {
         $.alert('当前是微信浏览器，请用外部浏览器打开');
       }
-      else{
-        window.open('https://gxs-wallet.oss-cn-shanghai.aliyuncs.com/gxs-wallet.apk');
+      else {
+        if ($.os == 'android') {
+          window.open('https://gxs-wallet.oss-cn-shanghai.aliyuncs.com/gxs-wallet.apk');
+        }
+        else {
+          window.open('itms-apps://itunes.apple.com/app/id1318213142');
+        }
       }
     }
   </script>
@@ -79,7 +96,7 @@
           <a href="javascript:;" onclick="window.download()" class="button button-primary button-fill button-big">下载Android版本</a>
         </p>
         <p>
-          <a class="button button-fill button-big disabled">iOS版本等待审核后上线</a>
+          <a href="https://itunes.apple.com/app/id1318213142" class="button button-fill button-big">下载iOS版本</a>
         </p>
       </div>
       <div class="copy-right">
