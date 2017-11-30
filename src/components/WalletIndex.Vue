@@ -241,10 +241,10 @@
       },
       linkBackup(account) {
         let query = {
-          account,
+          account: this.$route.query.account,
           from: this.$route.fullPath
         }
-        return `/wallet-backup?${$.param(query)}`
+        return this.link('/wallet-backup-detail',query);
       },
       //TODO upload a qrcode image
       onFileUpload(e) {
