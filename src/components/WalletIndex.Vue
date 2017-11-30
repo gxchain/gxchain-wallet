@@ -64,9 +64,9 @@
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination" v-show="wallets&&wallets.length>1"></div>
           </swiper>
-           <div class="link-loyalty-program" @click="goLoyaltyProgram">
+          <router-link :to="link('/loyalty-program')" class="link-loyalty-program">
             <img :src="`static/${$t('index.loyalty_program_icon')}`">
-          </div>
+          </router-link>
         </div>
         <!--function entries-->
         <div class="row-operation">
@@ -96,7 +96,7 @@
                           {{exchange.price}}
                         </div>
                         <div class="price_secondary">
-                          {{_i18n.locale == 'zh' ? `￥${exchange.price_rmb}` : `$${exchange.price_dollar}`}}
+                          {{_i18n.locale == 'zh-CN' ? `￥${exchange.price_rmb}` : `$${exchange.price_dollar}`}}
                         </div>
                       </div>
                       <div class="quote" :class="{green:exchange.quote>0}">
@@ -168,9 +168,9 @@
     },
 
     methods: {
-      goLoyaltyProgram() {
-        this.$router.push({path: this.link('/loyalty-program')})
-      },
+//      goLoyaltyProgram() {
+//        this.$router.push({path: this.link('/loyalty-program')})
+//      },
       loadMarketInfo() {
         get_market_info().then((resp) => {
           this.exchanges = resp;
@@ -241,10 +241,10 @@
       },
       linkBackup(account) {
         let query = {
-          account,
+          account: this.$route.query.account,
           from: this.$route.fullPath
         }
-        return `/wallet-backup?${$.param(query)}`
+        return this.link('/wallet-backup-detail',query);
       },
       //TODO upload a qrcode image
       onFileUpload(e) {
@@ -321,7 +321,7 @@
         else {
           let best_price = 0;
           this.exchanges.forEach((exchange) => {
-            if (this.$i18n.locale == 'zh') {
+            if (this.$i18n.locale == 'zh-CN') {
               best_price = Math.max(Number(exchange.price_rmb), best_price);
             }
             else {

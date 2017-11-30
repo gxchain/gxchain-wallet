@@ -29,7 +29,7 @@
       <div class="list-block history" v-if="histories.length>0">
         <ul>
           <li v-for="history in histories">
-            <router-link :to="`/trade/${history.id}`" class="item-content">
+            <router-link :to="link(`/trade/${history.id}`)" class="item-content">
               <div class="item-inner">
                 <div class="item-title-row">
                   <account-image class="image" :size="20"

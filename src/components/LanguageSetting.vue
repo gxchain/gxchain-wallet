@@ -29,8 +29,8 @@
     data(){
       return {
         languages:[
-          {text:'简体中文',id:'zh'},
-          {text:'English',id:'en'}
+          {text:'简体中文',id:'zh-CN'},
+          {text:'English',id:'en-US'}
         ]
       }
     },
@@ -40,7 +40,7 @@
     methods:{
       switchLanguage(locale) {
         this._i18n.locale = locale
-        set_item('locale', locale)
+        set_item('_locale', locale)
       }
     },
     computed:{
