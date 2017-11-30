@@ -362,11 +362,11 @@
       },
       getPDFUrl(){
         if(this.exchange_name === 'Bit-Z'){
-          this.strategy_pdf_url = '../../static/bit-z.pdf';
+          this.strategy_pdf_url = 'https://gxs-wallet.oss-cn-shanghai.aliyuncs.com/bit-z.pdf';
         }else if(this.exchange_name === 'AllCoin'){
-          this.strategy_pdf_url = '../../static/allcoin.pdf';
+          this.strategy_pdf_url = 'https://gxs-wallet.oss-cn-shanghai.aliyuncs.com/allcoin.pdf';
         }else if(this.exchange_name === 'Binance'){
-          this.strategy_pdf_url = '../../static/binance.pdf';
+          this.strategy_pdf_url = 'https://gxs-wallet.oss-cn-shanghai.aliyuncs.com/binance.pdf';
         }
       }
     },
