@@ -189,7 +189,7 @@
         }, 500);
       },
       wifKeyTextAreaChange() {
-        if(this.wifKey.indexOf("(hide)") > 0){
+        if(this.wifKey.indexOf("(hide)") > -1){
           this.wifKey = this.wifKey.replace("(hide)","").trim();
         }
       }
