@@ -3,7 +3,7 @@
     <div class="page" id="page-wallet-backup-detail">
       <header class="bar bar-nav">
         <h3 class="title">{{$t('wallet_backup.detail.title')}}</h3>
-        <a href="javascript:void(0)" class="icon icon-left" @click="confirm($route.query.from||link('/'))"></a>
+        <a href="javascript:;" class="icon icon-left" @click="confirm($route.query.from||link('/'))"></a>
       </header>
       <div class="content">
         <div class="tip-info">
@@ -28,11 +28,11 @@
         </ul>
         <div class="button-block">
           <p v-if="isNative&&wifKey">
-            <a @click="copyKey()" class="button button-gxb"
+            <a href="javascript:;" @click="copyKey()" class="button button-gxb"
                :class="{disabled:keyCopied}">{{keyCopied ? $t('wallet_backup.detail.copied') : $t('wallet_backup.detail.copy')}}</a>
           </p>
           <p v-if="wifKey">
-            <a @click="confirm(link('/'))" class="button button-gxb" >{{$t('wallet_backup.detail.go_back')}}</a>
+            <a href="javascript:;" @click="confirm(link('/'))" class="button button-gxb" >{{$t('wallet_backup.detail.go_back')}}</a>
           </p>
         </div>
       </div>
