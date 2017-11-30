@@ -126,7 +126,7 @@
           account: this.$route.query.account,
           from: this.$route.fullPath
         }
-        return `wallet-backup-detail?${$.param(query)}`;
+        return this.link('/wallet-backup-detail',query);
       }
     },
     components: {
