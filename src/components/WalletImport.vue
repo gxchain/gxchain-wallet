@@ -174,7 +174,12 @@
                 path: this.link('/wallet-import-success',{account:info.imported[0].account})
               });
             } else {
-              this.error.common = this.$t('wallet_import.error.account_already_exist');
+              if (info.exist.length > 0) {
+                this.error.common = this.$t('wallet_import.error.account_already_exist');
+              }
+              else{
+                this.error.common = this.$t('wallet_import.error.no_reference_account');
+              }
             }
           }).catch((ex) => {
             this.submitting = false;
