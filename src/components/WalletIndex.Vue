@@ -64,7 +64,7 @@
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination" v-show="wallets&&wallets.length>1"></div>
           </swiper>
-           <div class="link-loyalty-program" @click="goLoyaltyProgram" v-if="$route.query.platform!='ios'">
+           <div class="link-loyalty-program" @click="goLoyaltyProgram">
             <img :src="`static/${$t('index.loyalty_program_icon')}`">
           </div>
         </div>
@@ -80,7 +80,7 @@
           </a>
         </div>
         <!--exchange list-->
-         <div class="table-exchanges" v-if="$route.query.platform!='ios'">
+         <div class="table-exchanges">
           <div class="list-block media-list">
             <ul>
               <li v-for="exchange in exchanges">
