@@ -64,7 +64,7 @@
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination" v-show="wallets&&wallets.length>1"></div>
           </swiper>
-           <router-link :to="link('/loyalty-program')" class="link-loyalty-program" @click="goLoyaltyProgram">
+           <router-link :to="link('/loyalty-program')" class="link-loyalty-program">
             <img :src="`static/${$t('index.loyalty_program_icon')}`">
           </router-link>
         </div>
