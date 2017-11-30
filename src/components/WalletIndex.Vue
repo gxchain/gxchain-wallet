@@ -96,7 +96,7 @@
                           {{exchange.price}}
                         </div>
                         <div class="price_secondary">
-                          {{_i18n.locale == 'zh' ? `￥${exchange.price_rmb}` : `$${exchange.price_dollar}`}}
+                          {{_i18n.locale == 'zh-CN' ? `￥${exchange.price_rmb}` : `$${exchange.price_dollar}`}}
                         </div>
                       </div>
                       <div class="quote" :class="{green:exchange.quote>0}">
@@ -321,7 +321,7 @@
         else {
           let best_price = 0;
           this.exchanges.forEach((exchange) => {
-            if (this.$i18n.locale == 'zh') {
+            if (this.$i18n.locale == 'zh-CN') {
               best_price = Math.max(Number(exchange.price_rmb), best_price);
             }
             else {

@@ -15,11 +15,11 @@
             </div>
             <div class="exchange-price">
               <div class="price-primary">
-                <!-- {{_i18n.locale == 'zh' ? `￥${exchange_price_rmb}` : `$${exchange_price_dollar}`}} -->
+                <!-- {{_i18n.locale == 'zh-CN' ? `￥${exchange_price_rmb}` : `$${exchange_price_dollar}`}} -->
                 {{exchange_price}}
               </div>
               <div class="price-secondary">
-                {{_i18n.locale == 'zh' ? `￥${exchange_price_rmb}` : `$${exchange_price_dollar}`}}
+                {{_i18n.locale == 'zh-CN' ? `￥${exchange_price_rmb}` : `$${exchange_price_dollar}`}}
               </div>
             </div>
             <div class="exchange-quote">
@@ -27,8 +27,8 @@
                 {{(exchange_quote > 0 ? '+' : '') + (exchange_quote) + '%'}}
               </div>
             </div>
-          </div>  
-          
+          </div>
+
           <div class="quotations">
             <div class="quotation-item">
               <div class="quotation-item-title">
@@ -140,7 +140,7 @@
         { time: '2016-08-10 01:40:00', tem: 18},
         { time: '2016-08-10 02:00:00', tem: 26},
         { time: '2016-08-10 02:20:00', tem: 12},
-        
+
       ];
       const chart = new F2.Chart({
         id: 'time-sharing',
