@@ -65,5 +65,16 @@ window.goBack = function () {
   $('.page .bar-nav .icon-left').click();
 }
 
+if(!window.Intl){
+  require.ensure([
+    'intl',
+    'intl/locale-data/jsonp/en.js',
+    'intl/locale-data/jsonp/zh.js'
+  ], function (require) {
+    require('intl');
+    require('intl/locale-data/jsonp/en.js');
+    require('intl/locale-data/jsonp/zh.js');
+  });
+}
 
 export default {}

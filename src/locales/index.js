@@ -2,23 +2,23 @@ import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import {set_item, get_item} from "@/services/CommonService"
 
-import en from './en'
-import zh from './zh'
+import en from './en-US'
+import zh from './zh-CN'
 
 Vue.use(VueI18n)
 
 const messages = {
-  en: en,
-  zh: zh
+  'en-US': en,
+  'zh-CN': zh
 }
 
 const numberFormats = {
-  'en': {
+  'en-US': {
     currency: {
       style: 'currency', currency: 'USD', currencyDisplay: 'symbol'
     }
   },
-  'zh': {
+  'zh-CN': {
     currency: {
       style: 'currency', currency: 'CNY', currencyDisplay: 'symbol'
     }
@@ -26,7 +26,7 @@ const numberFormats = {
 }
 
 const dateTimeFormats = {
-  'en': {
+  'en-US': {
     short: {
       year: 'numeric', month: 'short', day: 'numeric', hour12: true
     },
@@ -35,7 +35,7 @@ const dateTimeFormats = {
       hour: 'numeric', minute: 'numeric', hour12: true
     }
   },
-  'zh': {
+  'zh-CN': {
     short: {
       year: 'numeric', month: 'short', day: 'numeric', hour12: false
     },
@@ -46,12 +46,12 @@ const dateTimeFormats = {
   }
 }
 
-let locale = get_item('locale') || navigator.language.split('-')[0]
-set_item('locale', locale)
+let locale = get_item('_locale') || navigator.language;
+set_item('_locale', locale)
 
 export default new VueI18n({
   locale: locale,
-  fallbackLocale: 'en',
+  fallbackLocale: 'en-US',
   numberFormats,
   dateTimeFormats,
   messages

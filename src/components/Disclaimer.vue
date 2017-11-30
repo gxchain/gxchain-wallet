@@ -37,14 +37,13 @@
         }
       },
       switchLanguage() {
-        if (this.$i18n.locale == 'zh') {
-          this.$i18n.locale = 'en';
+        if (this.$i18n.locale == 'zh-CN') {
+          this.$i18n.locale = 'en-US';
         }
         else {
-          this.$i18n.locale = 'zh';
+          this.$i18n.locale = 'zh-CN';
         }
-        set_item('locale', this.$i18n.locale);
-
+        set_item('_locale', this.$i18n.locale);
       }
     },
     mounted() {
@@ -63,13 +62,7 @@
         }
       },
       imgFlag() {
-        let locale = this._i18n.locale;
-        if (locale == 'zh') {
-          locale = 'cn';
-        }
-        if (locale == 'en') {
-          locale = 'us';
-        }
+        let locale = this._i18n.locale.split('-')[1];
         return `static/img/${locale.toUpperCase()}.png`;
       }
     }
