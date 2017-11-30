@@ -13,7 +13,7 @@
                 <div class="item-inner">
                   <div class="item-input item-required">
                     <span>*</span>
-                    <textarea v-model="wifKey" :placeholder="$t('wallet_import.placeholder.key')"></textarea>
+                    <textarea v-model="wifKey" :placeholder="$t('wallet_import.placeholder.key')" @change="wifKeyTextAreaChange"></textarea>
                   </div>
                 </div>
               </div>
@@ -187,6 +187,11 @@
             this.error.common = this.$t('wallet_import.error.no_reference_account');
           });
         }, 500);
+      },
+      wifKeyTextAreaChange() {
+        if(this.wifKey.indexOf("(hide)") > 0){
+          this.wifKey = this.wifKey.replace("(hide)","").trim();
+        }
       }
     }
   }
