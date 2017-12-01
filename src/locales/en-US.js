@@ -134,7 +134,7 @@ const locale = {
       copied: 'Copied',
       cancel: 'Cancel',
       ok: 'OK',
-      confirm: 'Verify that the backup key has been backed up?',
+      confirm: 'Verify that the private key has been backed up?',
       tip_password: 'Unlock your wallet',
       go_back: 'Go Back',
       placeholder: {
