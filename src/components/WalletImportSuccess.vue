@@ -61,6 +61,7 @@
   .tip-alert {
     margin-top: 5rem;
     letter-spacing: normal;
+    word-break: normal;
   }
 
   .link-green {
