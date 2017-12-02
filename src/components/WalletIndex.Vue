@@ -241,7 +241,7 @@
       },
       linkBackup(account) {
         let query = {
-          account: this.$route.query.account,
+          account: this.currentWallet.account,
           from: this.$route.fullPath
         }
         return this.link('/wallet-backup-detail',query);
