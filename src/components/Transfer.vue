@@ -37,7 +37,7 @@
               <div class="item-inner">
                 <div class="item-title label">{{$t('transfer.to')}}</div>
                 <div class="item-input">
-                  <input @change="onAccountChange" class="input-account" v-model="account" type="text" maxlength="30"
+                  <input @change="onAccountChange" class="input-account" v-model="account" type="text" maxlength="80"
                          :placeholder="$t('transfer.to_placeholder')">
                 </div>
                 <div class="item-after">
@@ -52,7 +52,7 @@
               <div class="item-inner">
                 <div class="item-title label">{{$t('transfer.amount')}}</div>
                 <div class="item-input">
-                  <input @change="onAmountChange" class="input-amount" v-model="amount" type="number" maxlength="30"
+                  <input @change="onAmountChange" class="input-amount" v-model="amount" type="number" maxlength="80"
                          :placeholder="$t('transfer.amount_placeholder')">
                 </div>
               </div>
