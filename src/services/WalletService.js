@@ -5,6 +5,7 @@ import uniq from 'lodash/uniq'
 import some from 'lodash/some'
 import Vue from 'vue'
 import i18n from '@/locales'
+import IndexedDB from './IndexedDBService'
 
 
 /**
@@ -65,11 +66,42 @@ const get_wallets = () => {
 }
 
 /**
+ * merge wallets into localStorage
+ */
+const merge_wallets = () =>{
+  return new Promise((resolve, reject) => {
+    let walletDB = null;
+    IndexedDB.openDB('walletDB',1,walletDB,{
+      name:'wallet',
+      key:'walletKey'
+    },function(db){
+      let walletDB = db;
+      IndexedDB.getData(walletDB,'wallet',`gxb_wallets_${Apis.instance().chain_id}`,function(res){
+        if(res){
+          localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(res.value));
+          console.log('merge wallets success');
+        }
+        let wallets = get_wallets();
+        resolve(wallets);
+      });
+    })
+  })
+}
+
+/**
  * save wallets into local storage
  * @param wallets
  */
 const set_wallets = (wallets) => {
   localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(wallets));
+  let walletDB = null;
+  IndexedDB.openDB('walletDB',1,walletDB,{
+    name:'wallet',
+    key:'walletKey'
+  },function(db){
+    let walletDB = db;
+    IndexedDB.putJSON(walletDB,'wallet',{walletKey:`gxb_wallets_${Apis.instance().chain_id}`,value:wallets});
+  })
 }
 
 /**
@@ -499,6 +531,7 @@ export {
   get_objects,
   transfer,
   fetch_dictionary,
+  merge_wallets,
   get_wallets,
   get_wallet_index,
   set_wallet_index,
