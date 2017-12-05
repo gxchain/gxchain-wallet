@@ -225,7 +225,8 @@ const locale = {
         account_one_dash_error: 'Each account segment should have only one dash in a row',
         account_end_error: 'Each account segment should end with a letter or digit',
         account_segment_should_be_longer: 'Each account segment should be longer',
-        premium_name: "This is a premium name which is not supported by this faucet Please enter a regular name containing least one dash, a number or no vowels"
+        premium_name: "This is a premium name which is not supported by this faucet Please enter a regular name containing least one dash, a number or no vowels",
+        memo_signer_not_exist:"Cannot encrypt memo,since memo private key not exist"
       }
     },
     confirm: {
