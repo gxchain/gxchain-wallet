@@ -365,7 +365,7 @@ const transfer = (from, to, amount, memo, password, broadcast = true) => {
           memo_to_public = null
         }
         let fromPrivate = PrivateKey.fromWif(results[2].wifKey);
-        if(memo_from_public!=fromPrivate.toPublic().toPublicKey()){
+        if(memo_from_public!=fromPrivate.toPublicKey().toPublicKeyString()){
           throw new Error(i18n.t('transfer.error.account.memo_signer_not_exist'));
         }
       }
