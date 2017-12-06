@@ -4,7 +4,7 @@ export default {
         var version = version || 1;
         var request = this.indexedDB.open(dbname, version);
         request.onerror = function (event) {
-            console.log('open error');
+            console.log('open db error');
         };
         request.onsuccess = function (event) {
             db = event.target.result;
@@ -27,7 +27,7 @@ export default {
     deleteDB: function (dbname, callback) {
         var deleteQuest = this.indexedDB.deleteDatabase(dbname);
         deleteQuest.onerror = function () {
-            console.log('删除数据库出错');
+            console.log('delete db error');
         };
         deleteQuest.onsuccess = function () {
             if (callback && (typeof callback === 'function')) {
@@ -45,7 +45,7 @@ export default {
         for (var i = 0, len = dataArr.length; i < len; i++) {
             request = store.add(dataArr[i]);
             request.onerror = function () {
-                console.error('add error');
+                console.error('add data error');
             };
             request.onsuccess = function () {
                 if (callback && (typeof callback === 'function')) {
@@ -59,7 +59,7 @@ export default {
             request;
             request = store.put(json);
             request.onerror = function () {
-                console.error('put error');
+                console.error('put json error');
             };
             request.onsuccess = function () {
                 if (callback && (typeof callback === 'function')) {
@@ -73,7 +73,7 @@ export default {
         for (var i = 0, len = dataArr.length; i < len; i++) {
             request = store.put(dataArr[i]);
             request.onerror = function () {
-                console.error('PUT添加数据报错');
+                console.error('put data error');
             };
             request.onsuccess = function () {
                 if (callback && (typeof callback === 'function')) {
@@ -95,7 +95,7 @@ export default {
             request;
         request = store.get(key);
         request.onerror = function () {
-            console.log('get data by key');
+            console.log('get data by key error');
         };
         request.onsuccess = function (event) {
             var result = event.target.result;
