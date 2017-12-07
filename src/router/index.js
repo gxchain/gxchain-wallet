@@ -218,7 +218,7 @@ router.beforeEach((to, from, next) => {
   let isNative = platform == 'ios' || platform == 'android';
   const goNext = () => {
     connect(() => {
-      merge_wallets().then(function(){
+      merge_wallets().then(()=>{
         let wallets = get_wallets();
         if ((!wallets || wallets.length == 0) && !inWhiteList(to)) {
           let query = $.extend({platform: platform}, to.query);
