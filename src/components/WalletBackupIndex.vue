@@ -108,9 +108,11 @@
         }
         unlock_wallet(this.$route.query.account, pwd).then((info) => {
           let wallet = info.wallet;
-          del_wallet(wallet);
-          self.$router.replace({path: self.$route.query.from||link('/')});
-          self.$refs.confirm.unlocked();
+          return del_wallet(wallet).then(()=>{
+            self.$router.replace({path: self.$route.query.from||link('/')});
+            self.$refs.confirm.unlocked();
+          });
+          
         }).catch((ex) => {
           self.$refs.confirm.unlocked();
           self.error.common = self.$t('wallet_del.error.invalid_password')

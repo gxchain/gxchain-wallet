@@ -119,8 +119,11 @@ const set_wallets_db = (wallets) => {
  * @param wallets
  */
 const set_wallets = (wallets) => {
-  set_wallets_db(wallets).then(()=>{
-    localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(wallets));
+  return new Promise((resolve,reject)=>{
+    return set_wallets_db(wallets).then(()=>{
+      localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(wallets));
+      resolve();
+    })
   })
 }
 
@@ -181,16 +184,20 @@ const set_disclaimer_accepted = (accepted) => {
  * @param wallet
  */
 const update_wallet = (wallet) => {
-  let wallets = get_wallets();
-  let updated = 0;
-  wallets = wallets.map((w) => {
-    if (w.account == wallet.account) {
-      updated += 1;
-      return wallet;
-    }
-    return w;
+  return new Promise((resolve,reject)=>{
+    let wallets = get_wallets();
+    let updated = 0;
+    wallets = wallets.map((w) => {
+      if (w.account == wallet.account) {
+        updated += 1;
+        return wallet;
+      }
+      return w;
+    })
+    return set_wallets(wallets).then(()=>{
+      resolve();
+    });
   })
-  set_wallets(wallets);
 }
 
 /**
@@ -198,13 +205,17 @@ const update_wallet = (wallet) => {
  * @param wallet
  */
 const del_wallet = (wallet) => {
-  let wallets = get_wallets();
-  for (let i = 0; i < wallets.length; i++) {
-    if (wallet.account === wallets[i].account) {
-      wallets.splice(i, 1);
+  return new Promise((resolve,reject)=>{
+    let wallets = get_wallets();
+    for (let i = 0; i < wallets.length; i++) {
+      if (wallet.account === wallets[i].account) {
+        wallets.splice(i, 1);
+      }
     }
-  }
-  set_wallets(wallets);
+    return set_wallets(wallets).then(()=>{
+      resolve();
+    });
+  })
 }
 
 /**
