@@ -52,12 +52,18 @@
                 <div class="row-balance">
                   <div class="item">
                     <small>{{$t('index.asset_name')}}</small>
-                    <div class="digit balance">{{wallet.balance | asset(2)}}</div>
+                    <div v-if="wallet.isAssetHidden" class="digit balance">****</div>
+                    <div v-else class="digit balance">{{wallet.balance | asset(2)}}</div>
                   </div>
-                  <div class="item item-middle">≈</div>
+                  <div class="item item-middle">
+                    <div>≈</div>
+                    <small v-if="wallet.isAssetHidden" class="asset-handle-title" @click="assetHideClick">{{$t('index.hide_assets')}}</small>
+                    <small v-else class="asset-handle-title" @click="assetHideClick">{{$t('index.show_assets')}}</small>
+                  </div>
                   <div class="item value">
                     <small>{{$t('index.value')}}</small>
-                    <div class="digit balance">{{getMarketCap(wallet) | number(2)}}</div>
+                    <div v-if="wallet.isAssetHidden" class="digit balance">****</div>
+                    <div v-else class="digit balance">{{getMarketCap(wallet) | number(2)}}</div>
                   </div>
                 </div>
               </div>
@@ -84,7 +90,7 @@
           <div class="list-block media-list">
             <ul>
               <li v-for="exchange in exchanges">
-                 <!--<router-link :to="`/realtime-quotations/${exchange.name}/${exchange.symbol}`">-->
+                 <!-- <router-link :to="`/realtime-quotations/${exchange.name}/${exchange.symbol}`"> -->
                   <div class="item-content item-exchange">
                     <div class="item-inner">
                       <div class="title-ex-name">
@@ -104,7 +110,7 @@
                       </div>
                     </div>
                   </div>
-                 <!--</router-link>-->
+                 <!-- </router-link> -->
               </li>
             </ul>
           </div>
@@ -128,7 +134,8 @@
     get_wallets,
     fetch_account_balance,
     get_wallet_index,
-    set_wallet_index
+    set_wallet_index,
+    update_wallet
   } from '@/services/WalletService'
   import filters from '@/filters'
 
@@ -155,10 +162,15 @@
           paginationClickable: true,
           initialSlide: wallet_index,
           onSlideChangeEnd: function (s) {
+            let wallets = get_wallets();
+            let wallet = wallets[s.activeIndex];
+            self.isAssetHidden = wallet.isAssetHidden;
             set_wallet_index(s.activeIndex);
             self.currentWalletIndex = s.activeIndex;
           }
-        }
+        },
+        isAssetHidden:'',
+        assetHandleTitle:''
       }
     },
     watch: {
@@ -252,6 +264,12 @@
       },
       openQRCodeModal() {
         this.$refs.qrcode.show();
+      },
+      assetHideClick(){
+        this.isAssetHidden = !this.isAssetHidden;
+        let wallet = this.currentWallet;
+        wallet.isAssetHidden = this.isAssetHidden;
+        update_wallet(wallet);
       }
     },
     destroyed() {
@@ -264,6 +282,8 @@
       $.init();
       this.loadWallets();
       this.stopFetchingMarket = false;
+      this.isAssetHidden = this.currentWallet.isAssetHidden;
+      this.assetHandleTitle = this.currentWallet.isAssetHidden ? this.$t('index.hide_assets') : this.$t('index.show_assets');
       this.loadMarketInfo();
       if (this.isNative) {
         window.webview = {
@@ -448,8 +468,11 @@
         }
       }
       .item-middle {
-        flex: 1;
+        flex: 2;
         align-items: center;
+        .asset-handle-title{
+          font-size: .65rem;
+        }
       }
       .value {
         align-items: flex-end;

@@ -12,7 +12,10 @@ const locale = {
     copy: '复制账户名',
     copied: '已复制',
     join_loyalty_program:'参与忠诚者计划',
-    loyalty_program_icon:'loyalty-program-btn-zh.png'
+    loyalty_program_icon:'loyalty-program-btn-zh.png',
+    show_assets:'显示资产',
+    hide_assets:'隐藏资产'
+
   },
   left_panel: {
     import_wallet: '导入钱包',
