@@ -170,7 +170,6 @@
           }
         },
         isAssetHidden:'',
-        assetHandleTitle:''
       }
     },
     watch: {
@@ -283,7 +282,6 @@
       this.loadWallets();
       this.stopFetchingMarket = false;
       this.isAssetHidden = this.currentWallet.isAssetHidden;
-      this.assetHandleTitle = this.currentWallet.isAssetHidden ? this.$t('index.hide_assets') : this.$t('index.show_assets');
       this.loadMarketInfo();
       if (this.isNative) {
         window.webview = {
