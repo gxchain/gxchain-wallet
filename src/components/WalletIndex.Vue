@@ -90,7 +90,7 @@
           <div class="list-block media-list">
             <ul>
               <li v-for="exchange in exchanges">
-                 <!-- <router-link :to="`/realtime-quotations/${exchange.name}/${exchange.symbol}`"> -->
+                 <router-link :to="`/realtime-quotations/${exchange.name}/${exchange.symbol}`">
                   <div class="item-content item-exchange">
                     <div class="item-inner">
                       <div class="title-ex-name">
@@ -110,7 +110,7 @@
                       </div>
                     </div>
                   </div>
-                 <!-- </router-link> -->
+                 </router-link>
               </li>
             </ul>
           </div>
