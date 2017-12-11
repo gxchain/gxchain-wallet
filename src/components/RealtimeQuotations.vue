@@ -68,10 +68,11 @@
                 <div id="k-line"></div>
               </div>
             </div>
+            <div class="strategy">
+              <a v-if="_i18n.locale == 'zh-CN'" @click="showStrategyModal">{{$t('realtime_quotations.strategy')+'>'}}></a>
+            </div>
           </div>
-          <div class="strategy">
-            <a v-if="_i18n.locale == 'zh-CN'" @click="showStrategyModal">{{$t('realtime_quotations.strategy')+'>'}}></a>
-          </div>
+          
         </div>
       </div>
     </div>
@@ -145,11 +146,8 @@
         this.tabIndex = 0;
         if(this.timeData.length == 0){
           get_chart_data(this.exchange_name,this.exchange_symbol,'1m').then((resp) => {
-          this.timeData = resp.filter((item)=>{
-            return item.volumn > 0
-          }).map((item)=>{
-            item.pair_price = parseFloat((item.price / item.volumn).toFixed(7));
-            item.time = new Date(item.timestamp).format("yyyy-MM-dd hh:mm:ss"); 
+          this.timeData = resp.slice(-60).map((item) => {
+            item.price = parseFloat(item.price);
             return item;
           });
           this.renderTimeSharingG2();
@@ -160,15 +158,14 @@
         this.tabIndex = 1;
         if(this.klineData.length == 0){
           get_chart_data(this.exchange_name,this.exchange_symbol,'1440m').then((resp) => {
-          this.klineData = resp.map((r) => {
-            r.time = new Date(r.timestamp).format("yyyy-MM-dd hh:mm:ss");  
-            r.max = parseFloat(r.max);
-            r.min = parseFloat(r.min);
-            r.start = parseFloat(r.start);
-            r.end = parseFloat(r.end);
-            r.volumn = parseFloat(r.volumn);
-            r.money = parseFloat(r.price);
-            return r;
+          this.klineData = resp.map((item) => {
+            item.max = parseFloat(item.max);
+            item.min = parseFloat(item.min);
+            item.start = parseFloat(item.start);
+            item.end = parseFloat(item.end);
+            item.volumn = parseFloat(item.volumn);
+            item.money = parseFloat(item.money);
+            return item;
           });
           this.renderKLineG2();
           })
@@ -188,15 +185,16 @@
         const chart = new G2.Chart({
           container: 'k-line',
           forceFit: true,
-          height: 420,
+          height: 400,
           animate: true,
+          padding:[10,40,10,70]
         });
         chart.source(dv, {
           'time': {
-            type: 'timeCat',
+            // type: 'timeCat',
             nice: false,
             tickCount: 5,
-            mask: 'MM-DD',
+            // mask: 'MM-DD',
             range: [ 0, 1 ]
           },
           trend: {
@@ -285,35 +283,20 @@
             value: '<br/><span style="padding-left: 16px">成交量：' + volumn + '</span><br/>'
           };
         });
-
         chart.render();
-
-
       },
       renderTimeSharingG2(){
         const chart = new G2.Chart({
           container: 'time-sharing',
           forceFit: true,
-          height: 420
+          height: 400,
+          animate:true
         });
         chart.source(this.timeData);
         chart.scale({
-          pair_price: {
-            // min: 0.0002,
-            tickCount: 5,
-          },
           time: {
-            type: 'timeCat',
             tickCount: 5,
-            mask: 'HH:mm',
             range: [ 0, 1 ]
-          }
-        });
-        chart.axis('pair_price', {
-          label: {
-            formatter: val => {
-              return val
-            }
           }
         });
         chart.tooltip({
@@ -321,13 +304,32 @@
             type: 'line'
           }
         });
-        chart.area().position('time*pair_price');
-        chart.line().position('time*pair_price').size(1);
+        chart.area().position('time*price');
+        chart.line().position('time*price').size(1);
         chart.render();
+        setInterval(()=>{
+          if(!this.stopFetchingQuotation){
+            if(this.timeData.length>0){
+              let last = this.timeData[this.timeData.length - 1];
+              let now = new Date().format("hh:mm");
+              if(last.time < now){
+                let obj = {};
+                obj.price = parseFloat(parseFloat(this.exchange_price).toFixed(5));
+                obj.time = now;
+                this.timeData.push(obj);
+                console.log('timeData:'+JSON.stringify(this.timeData));
+              }
+            }
+            chart.changeData(this.timeData);
+          }
+        },1000);
       },
       showStrategyModal(){
         this.$refs.strategy.show();
       },
+    },
+    destroyed() {
+      this.stopFetchingQuotation = true;
     },
     mounted() {
       $.init();
@@ -450,10 +452,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    // text-align: center;
     font-size: .7rem;
   }
 
 </style>
-
 

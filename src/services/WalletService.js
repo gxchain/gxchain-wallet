@@ -3,8 +3,10 @@ import {Apis} from 'gxbjs-ws'
 import Promise from 'bluebird'
 import uniq from 'lodash/uniq'
 import some from 'lodash/some'
+import unionBy from 'lodash/unionBy'
 import Vue from 'vue'
 import i18n from '@/locales'
+import IndexedDB from './IndexedDBService'
 
 
 /**
@@ -65,11 +67,64 @@ const get_wallets = () => {
 }
 
 /**
+ * merge wallets into localStorage
+ */
+const merge_wallets = () =>{
+  return new Promise((resolve, reject) => {
+    let walletDB = null;
+    return IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id}`,1,walletDB,{
+      name:'wallet',
+      key:'walletKey'
+    }).then((db)=>{
+      let walletDB = db;
+      return IndexedDB.getData(walletDB,'wallet',`gxb_wallets_${Apis.instance().chain_id}`).then((res)=>{
+        if(res){
+          let localStorageWallets = get_wallets();
+          let unionWallets = unionBy(localStorageWallets,res.value,'account');
+          localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(unionWallets));
+        }
+        IndexedDB.closeDB(walletDB);
+        resolve();
+      })
+    }).catch((ex)=>{
+      resolve();
+    })
+  })
+}
+
+/**
+ * save wallets into indexedDB
+ * @param wallets
+ */
+const set_wallets_db = (wallets) => {
+  return new Promise((resolve,reject)=>{
+    let walletDB = null;
+    return IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id}`,1,walletDB,{
+      name:'wallet',
+      key:'walletKey'
+    }).then((db)=>{
+      let walletDB = db;
+      return IndexedDB.putJSON(walletDB,'wallet',{walletKey:`gxb_wallets_${Apis.instance().chain_id}`,value:wallets}).then(()=>{
+        IndexedDB.closeDB(walletDB);
+        resolve();
+      });
+    }).catch((ex)=>{
+      resolve();
+    })
+  })
+}
+
+/**
  * save wallets into local storage
  * @param wallets
  */
 const set_wallets = (wallets) => {
-  localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(wallets));
+  return new Promise((resolve,reject)=>{
+    return set_wallets_db(wallets).then(()=>{
+      localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(wallets));
+      resolve();
+    })
+  })
 }
 
 /**
@@ -129,16 +184,20 @@ const set_disclaimer_accepted = (accepted) => {
  * @param wallet
  */
 const update_wallet = (wallet) => {
-  let wallets = get_wallets();
-  let updated = 0;
-  wallets = wallets.map((w) => {
-    if (w.account == wallet.account) {
-      updated += 1;
-      return wallet;
-    }
-    return w;
+  return new Promise((resolve,reject)=>{
+    let wallets = get_wallets();
+    let updated = 0;
+    wallets = wallets.map((w) => {
+      if (w.account == wallet.account) {
+        updated += 1;
+        return wallet;
+      }
+      return w;
+    })
+    return set_wallets(wallets).then(()=>{
+      resolve();
+    });
   })
-  set_wallets(wallets);
 }
 
 /**
@@ -146,13 +205,17 @@ const update_wallet = (wallet) => {
  * @param wallet
  */
 const del_wallet = (wallet) => {
-  let wallets = get_wallets();
-  for (let i = 0; i < wallets.length; i++) {
-    if (wallet.account === wallets[i].account) {
-      wallets.splice(i, 1);
+  return new Promise((resolve,reject)=>{
+    let wallets = get_wallets();
+    for (let i = 0; i < wallets.length; i++) {
+      if (wallet.account === wallets[i].account) {
+        wallets.splice(i, 1);
+      }
     }
-  }
-  set_wallets(wallets);
+    return set_wallets(wallets).then(()=>{
+      resolve();
+    });
+  })
 }
 
 /**
@@ -503,6 +566,7 @@ export {
   get_objects,
   transfer,
   fetch_dictionary,
+  merge_wallets,
   get_wallets,
   get_wallet_index,
   set_wallet_index,
