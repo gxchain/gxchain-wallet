@@ -137,7 +137,7 @@
     fetch_account_balance,
     get_wallet_index,
     set_wallet_index,
-    update_wallet
+    set_wallets
   } from '@/services/WalletService'
   import filters from '@/filters'
 
@@ -268,9 +268,13 @@
       },
       assetHideClick(){
         this.isAssetHidden = !this.isAssetHidden;
-        let wallet = this.currentWallet;
-        wallet.isAssetHidden = this.isAssetHidden;
-        update_wallet(wallet);
+        let wallets = get_wallets();
+        wallets = wallets.map((w) => {
+          w.isAssetHidden = this.isAssetHidden;
+          return w;
+        });
+        this.wallets = wallets;
+        set_wallets(wallets);
       }
     },
     destroyed() {
