@@ -22,7 +22,7 @@ import LoyaltyProgramDetail from '@/components/LoyaltyProgramDetail'
 import store from '@/vuex/store'
 import connect from '@/common/connect'
 import cordovaLoader from '@/common/cordovaLoader'
-import {get_wallets,merge_wallets} from '@/services/WalletService'
+import {get_wallets, merge_wallets, bak_wallet} from '@/services/WalletService'
 import RouterTransition from '@/plugins/RouterTransition'
 import RealtimeQuotations from '@/components/RealtimeQuotations'
 
@@ -218,20 +218,20 @@ router.beforeEach((to, from, next) => {
   let isNative = platform == 'ios' || platform == 'android';
   const goNext = () => {
     connect(() => {
-      merge_wallets().then(()=>{
-        let wallets = get_wallets();
-        if ((!wallets || wallets.length == 0) && !inWhiteList(to)) {
-          let query = $.extend({platform: platform}, to.query);
-          router.replace({
-            path: `/wallet-create?${$.param(query)}`
-          })
-        }
-        else {
-          store.commit('setLoading', {loading: false});
-          next();
-        }
-      })
-
+      bak_wallet();
+      // merge_wallets().then(()=>{
+      let wallets = get_wallets();
+      if ((!wallets || wallets.length == 0) && !inWhiteList(to)) {
+        let query = $.extend({platform: platform}, to.query);
+        router.replace({
+          path: `/wallet-create?${$.param(query)}`
+        })
+      }
+      else {
+        store.commit('setLoading', {loading: false});
+        next();
+      }
+      // })
     })
   }
   $.hidePreloader();

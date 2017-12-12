@@ -46,7 +46,7 @@ const fetch_account_histroy = (account_name) => {
  */
 const fetch_dictionary = () => {
   return new Promise((resolve, reject) => {
-    resolve(Vue.http.get(`${process.env.__HOST__.replace('/#','')}/static/dictionary_en.json`).then((resp) => {
+    resolve(Vue.http.get(`${process.env.__HOST__.replace('/#', '')}/static/dictionary_en.json`).then((resp) => {
       return resp.data.en;
     }))
   })
@@ -66,27 +66,37 @@ const get_wallets = () => {
   return wallets;
 }
 
+const bak_wallet = () => {
+  let localStorageWallets = get_wallets();
+  if (!(localStorage.getItem(`gxb_wallets_bak_${Apis.instance().chain_id}`))) {
+    localStorage.setItem(`gxb_wallets_bak_${Apis.instance().chain_id}`, JSON.stringify(localStorageWallets));
+  }
+}
+
 /**
  * merge wallets into localStorage
  */
-const merge_wallets = () =>{
+const merge_wallets = () => {
   return new Promise((resolve, reject) => {
     let walletDB = null;
-    return IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id}`,1,walletDB,{
-      name:'wallet',
-      key:'walletKey'
-    }).then((db)=>{
+    return IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id}`, 1, walletDB, {
+      name: 'wallet',
+      key: 'walletKey'
+    }).then((db) => {
       let walletDB = db;
-      return IndexedDB.getData(walletDB,'wallet',`gxb_wallets_${Apis.instance().chain_id}`).then((res)=>{
-        if(res){
+      return IndexedDB.getData(walletDB, 'wallet', `gxb_wallets_${Apis.instance().chain_id}`).then((res) => {
+        if (res) {
           let localStorageWallets = get_wallets();
-          let unionWallets = unionBy(localStorageWallets,res.value,'account');
+          if (!(localStorage.getItem(`gxb_wallets_bak_${Apis.instance().chain_id}`))) {
+            localStorage.setItem(`gxb_wallets_bak_${Apis.instance().chain_id}`, JSON.stringify(localStorageWallets));
+          }
+          let unionWallets = unionBy(localStorageWallets, res.value, 'account');
           localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(unionWallets));
         }
         IndexedDB.closeDB(walletDB);
         resolve();
       })
-    }).catch((ex)=>{
+    }).catch((ex) => {
       resolve();
     })
   })
@@ -97,18 +107,21 @@ const merge_wallets = () =>{
  * @param wallets
  */
 const set_wallets_db = (wallets) => {
-  return new Promise((resolve,reject)=>{
+  return new Promise((resolve, reject) => {
     let walletDB = null;
-    return IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id}`,1,walletDB,{
-      name:'wallet',
-      key:'walletKey'
-    }).then((db)=>{
+    return IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id}`, 1, walletDB, {
+      name: 'wallet',
+      key: 'walletKey'
+    }).then((db) => {
       let walletDB = db;
-      return IndexedDB.putJSON(walletDB,'wallet',{walletKey:`gxb_wallets_${Apis.instance().chain_id}`,value:wallets}).then(()=>{
+      return IndexedDB.putJSON(walletDB, 'wallet', {
+        walletKey: `gxb_wallets_${Apis.instance().chain_id}`,
+        value: wallets
+      }).then(() => {
         IndexedDB.closeDB(walletDB);
         resolve();
       });
-    }).catch((ex)=>{
+    }).catch((ex) => {
       resolve();
     })
   })
@@ -119,11 +132,16 @@ const set_wallets_db = (wallets) => {
  * @param wallets
  */
 const set_wallets = (wallets) => {
-  return new Promise((resolve,reject)=>{
-    return set_wallets_db(wallets).then(()=>{
-      localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(wallets));
+  return new Promise((resolve, reject) => {
+    localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(wallets));
+    try {
+      set_wallets_db(wallets)
+    }
+    catch (ex) {
+
+    } finally {
       resolve();
-    })
+    }
   })
 }
 
@@ -184,7 +202,7 @@ const set_disclaimer_accepted = (accepted) => {
  * @param wallet
  */
 const update_wallet = (wallet) => {
-  return new Promise((resolve,reject)=>{
+  return new Promise((resolve, reject) => {
     let wallets = get_wallets();
     let updated = 0;
     wallets = wallets.map((w) => {
@@ -194,7 +212,7 @@ const update_wallet = (wallet) => {
       }
       return w;
     })
-    return set_wallets(wallets).then(()=>{
+    return set_wallets(wallets).then(() => {
       resolve();
     });
   })
@@ -205,14 +223,14 @@ const update_wallet = (wallet) => {
  * @param wallet
  */
 const del_wallet = (wallet) => {
-  return new Promise((resolve,reject)=>{
+  return new Promise((resolve, reject) => {
     let wallets = get_wallets();
     for (let i = 0; i < wallets.length; i++) {
       if (wallet.account === wallets[i].account) {
         wallets.splice(i, 1);
       }
     }
-    return set_wallets(wallets).then(()=>{
+    return set_wallets(wallets).then(() => {
       resolve();
     });
   })
@@ -428,7 +446,7 @@ const transfer = (from, to, amount, memo, password, broadcast = true) => {
           memo_to_public = null
         }
         let fromPrivate = PrivateKey.fromWif(results[2].wifKey);
-        if(memo_from_public!=fromPrivate.toPublicKey().toPublicKeyString()){
+        if (memo_from_public != fromPrivate.toPublicKey().toPublicKeyString()) {
           throw new Error(i18n.t('transfer.error.account.memo_signer_not_exist'));
         }
       }
@@ -563,6 +581,7 @@ const fetch_block = (block_num) => {
 }
 
 export {
+  bak_wallet,
   get_objects,
   transfer,
   fetch_dictionary,
