@@ -51,14 +51,16 @@
                 </div>
                 <div class="row-balance">
                   <div class="item">
-                    <small>{{$t('index.asset_name')}}</small>
+                    <small>
+                      {{$t('index.asset_name')}}&nbsp;
+                      <small v-if="wallet.isAssetHidden" class="gxicon gxicon-eye-off" @click="assetHideClick"></small>
+                      <small v-else class="gxicon gxicon-eye" @click="assetHideClick"></small>
+                    </small>
                     <div v-if="wallet.isAssetHidden" class="digit balance">****</div>
                     <div v-else class="digit balance">{{wallet.balance | asset(2)}}</div>
                   </div>
                   <div class="item item-middle">
                     <div>≈</div>
-                    <small v-if="wallet.isAssetHidden" class="asset-handle-title" @click="assetHideClick">{{$t('index.hide_assets')}}</small>
-                    <small v-else class="asset-handle-title" @click="assetHideClick">{{$t('index.show_assets')}}</small>
                   </div>
                   <div class="item value">
                     <small>{{$t('index.value')}}</small>
@@ -466,11 +468,8 @@
         }
       }
       .item-middle {
-        flex: 2;
+        flex: 1;
         align-items: center;
-        .asset-handle-title{
-          font-size: .65rem;
-        }
       }
       .value {
         align-items: flex-end;
