@@ -1,82 +1,79 @@
 <template>
-  <div>
-    <div class="page-group">
-      <div class="page">
-        <header class="bar bar-nav">
-          <h3 class="title">{{$t('realtime_quotations.title')}}</h3>
-          <router-link :to="link('/')" replace class="icon icon-left"></router-link>
-        </header>
-        <div class="content">
-          <div class="exchange">
-            <div class="exchange-title">
-              <div class="asset-name">{{exchange_symbol}}</div>
-              <div class="exchange-name">{{exchange_name}}</div>
+  <div class="page-group">
+    <div class="page">
+      <header class="bar bar-nav">
+        <h3 class="title">{{$t('realtime_quotations.title')}}</h3>
+        <router-link :to="link('/')" replace class="icon icon-left"></router-link>
+      </header>
+      <div class="content">
+        <div class="exchange">
+          <div class="exchange-title">
+            <div class="asset-name">{{exchange_symbol}}</div>
+            <div class="exchange-name">{{exchange_name}}</div>
+          </div>
+          <div class="exchange-price">
+            <div class="price-primary">
+              {{exchange_price}}
             </div>
-            <div class="exchange-price">
-              <div class="price-primary">
-                {{exchange_price}}
-              </div>
-              <div class="price-secondary">
-                {{_i18n.locale == 'zh-CN' ? `￥${exchange_price_rmb}` : `$${exchange_price_dollar}`}}
-              </div>
-            </div>
-            <div class="exchange-quote">
-              <div class="quote" :class="{green:exchange_quote>0}">
-                {{(exchange_quote > 0 ? '+' : '') + (exchange_quote) + '%'}}
-              </div>
+            <div class="price-secondary">
+              {{_i18n.locale == 'zh-CN' ? `￥${exchange_price_rmb}` : `$${exchange_price_dollar}`}}
             </div>
           </div>
-
-          <div class="quotations">
-            <div class="quotation-item">
-              <div class="quotation-item-title">
-                {{$t('realtime_quotations.high')}}
-              </div>
-              <div class="quotation-item-value">
-                {{high}}
-              </div>
-            </div>
-            <div class="quotation-item">
-              <div class="quotation-item-title">
-                {{$t('realtime_quotations.low')}}
-              </div>
-              <div class="quotation-item-value">
-                {{low}}
-              </div>
-            </div>
-            <div class="quotation-item">
-              <div class="quotation-item-title">
-                {{$t('realtime_quotations.volume')}}
-              </div>
-              <div class="quotation-item-value">
-                {{volume}}
-              </div>
+          <div class="exchange-quote">
+            <div class="quote" :class="{green:exchange_quote>0}">
+              {{(exchange_quote > 0 ? '+' : '') + (exchange_quote) + '%'}}
             </div>
           </div>
-          <div class="chart">
-            <div class="buttons-row">
-              <a :class="{active:tabIndex==0}" @click="loadTimeData"
-                class="tab-link button">{{$t('realtime_quotations.time_sharing')}}</a>
-              <a :class="{active:tabIndex==1}" @click="loadKlineData"
-                class="tab-link button">{{$t('realtime_quotations.k_line')}}</a>
-            </div>
-            <div class="tabs">
-              <div class="tab" :class="{active:tabIndex==0}">
-                <div id="time-sharing"></div>
-              </div>
-              <div class="tab" :class="{active:tabIndex==1}">
-                <div id="k-line"></div>
-              </div>
-            </div>
-            <div class="strategy">
-              <a v-if="_i18n.locale == 'zh-CN'" @click="showStrategyModal">{{$t('realtime_quotations.strategy')+'>'}}></a>
-            </div>
-          </div>
-          
         </div>
+
+        <div class="quotations">
+          <div class="quotation-item">
+            <div class="quotation-item-title">
+              {{$t('realtime_quotations.high')}}
+            </div>
+            <div class="quotation-item-value">
+              {{high}}
+            </div>
+          </div>
+          <div class="quotation-item">
+            <div class="quotation-item-title">
+              {{$t('realtime_quotations.low')}}
+            </div>
+            <div class="quotation-item-value">
+              {{low}}
+            </div>
+          </div>
+          <div class="quotation-item">
+            <div class="quotation-item-title">
+              {{$t('realtime_quotations.volume')}}
+            </div>
+            <div class="quotation-item-value">
+              {{volume}}
+            </div>
+          </div>
+        </div>
+        <div class="chart">
+          <div class="buttons-row">
+            <a :class="{active:tabIndex==0}" @click="loadTimeData"
+              class="tab-link button">{{$t('realtime_quotations.time_sharing')}}</a>
+            <a :class="{active:tabIndex==1}" @click="loadKlineData"
+              class="tab-link button">{{$t('realtime_quotations.k_line')}}</a>
+          </div>
+          <div class="tabs">
+            <div class="tab" :class="{active:tabIndex==0}">
+              <div id="time-sharing"></div>
+            </div>
+            <div class="tab" :class="{active:tabIndex==1}">
+              <div id="k-line"></div>
+            </div>
+          </div>
+          <div class="strategy">
+            <a v-if="_i18n.locale == 'zh-CN'" @click="showStrategyModal">{{$t('realtime_quotations.strategy')+'>'}}></a>
+          </div>
+        </div>
+        
       </div>
     </div>
-  
     <div v-if="exchange_name === 'Binance'">
       <binance-strategy  ref="strategy"></binance-strategy>
     </div>
@@ -89,8 +86,8 @@
     <div v-else-if="exchange_name === 'BigOne'">
       <bigone-strategy  ref="strategy"></bigone-strategy>
     </div>
-    
   </div>
+    
 </template>
 <script>
   import G2 from '@antv/g2'

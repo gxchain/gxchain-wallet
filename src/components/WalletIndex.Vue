@@ -92,7 +92,8 @@
           <div class="list-block media-list">
             <ul>
               <li v-for="exchange in exchanges">
-                 <router-link :to="`/realtime-quotations/${exchange.name}/${exchange.symbol}`">
+                 <!-- <router-link :to="`/realtime-quotations/${exchange.name}/${exchange.symbol}`" href="javascript:;"> -->
+                 <router-link :to="link(`/realtime-quotations/${exchange.name}/${exchange.symbol}`)" href="javascript:;">
                   <div class="item-content item-exchange">
                     <div class="item-inner">
                       <div class="title-ex-name">
