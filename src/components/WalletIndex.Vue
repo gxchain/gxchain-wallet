@@ -51,13 +51,21 @@
                 </div>
                 <div class="row-balance">
                   <div class="item">
-                    <small>{{$t('index.asset_name')}}</small>
-                    <div class="digit balance">{{wallet.balance | asset(2)}}</div>
+                    <small>
+                      {{$t('index.asset_name')}}&nbsp;
+                      <small v-if="wallet.isAssetHidden" class="gxicon gxicon-eye-off" @click="assetHideClick"></small>
+                      <small v-else class="gxicon gxicon-eye" @click="assetHideClick"></small>
+                    </small>
+                    <div v-if="wallet.isAssetHidden" class="digit balance">****</div>
+                    <div v-else class="digit balance">{{wallet.balance | asset(2)}}</div>
                   </div>
-                  <div class="item item-middle">≈</div>
+                  <div class="item item-middle">
+                    <div>≈</div>
+                  </div>
                   <div class="item value">
                     <small>{{$t('index.value')}}</small>
-                    <div class="digit balance">{{getMarketCap(wallet) | number(2)}}</div>
+                    <div v-if="wallet.isAssetHidden" class="digit balance">****</div>
+                    <div v-else class="digit balance">{{getMarketCap(wallet) | number(2)}}</div>
                   </div>
                 </div>
               </div>
@@ -128,7 +136,8 @@
     get_wallets,
     fetch_account_balance,
     get_wallet_index,
-    set_wallet_index
+    set_wallet_index,
+    set_wallets
   } from '@/services/WalletService'
   import filters from '@/filters'
 
@@ -155,10 +164,14 @@
           paginationClickable: true,
           initialSlide: wallet_index,
           onSlideChangeEnd: function (s) {
+            let wallets = get_wallets();
+            let wallet = wallets[s.activeIndex];
+            self.isAssetHidden = wallet.isAssetHidden;
             set_wallet_index(s.activeIndex);
             self.currentWalletIndex = s.activeIndex;
           }
-        }
+        },
+        isAssetHidden:'',
       }
     },
     watch: {
@@ -252,6 +265,16 @@
       },
       openQRCodeModal() {
         this.$refs.qrcode.show();
+      },
+      assetHideClick(){
+        this.isAssetHidden = !this.isAssetHidden;
+        let wallets = get_wallets();
+        wallets = wallets.map((w) => {
+          w.isAssetHidden = this.isAssetHidden;
+          return w;
+        });
+        this.wallets = wallets;
+        set_wallets(wallets);
       }
     },
     destroyed() {
@@ -264,6 +287,7 @@
       $.init();
       this.loadWallets();
       this.stopFetchingMarket = false;
+      this.isAssetHidden = this.currentWallet.isAssetHidden;
       this.loadMarketInfo();
       if (this.isNative) {
         window.webview = {

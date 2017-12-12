@@ -26,7 +26,7 @@
               <div class="item-inner">
                 <div class="item-title label">{{$t('transfer.from')}}</div>
                 <div class="item-input">
-                  <input type="text" maxlength="30" readonly :value="currentWallet.account">
+                  <input type="text" maxlength="80" readonly :value="currentWallet.account">
                 </div>
                 <div class="item-after">
                   <account-image :account="currentWallet.account" :size='14'></account-image>
