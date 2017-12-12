@@ -568,6 +568,7 @@ export {
   fetch_dictionary,
   merge_wallets,
   get_wallets,
+  set_wallets,
   get_wallet_index,
   set_wallet_index,
   unlock_wallet,
