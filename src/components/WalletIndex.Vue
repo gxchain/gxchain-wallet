@@ -49,12 +49,12 @@
                     </router-link>
                   </p>
                 </div>
-                <div class="row-balance">
+              <div class="row-balance">
                   <div class="item">
                     <small>
-                      {{$t('index.asset_name')}}&nbsp;
-                      <small v-if="wallet.isAssetHidden" class="gxicon gxicon-eye-off" @click="assetHideClick"></small>
-                      <small v-else class="gxicon gxicon-eye" @click="assetHideClick"></small>
+                      {{$t('index.asset_name')}}
+                      <span v-if="wallet.isAssetHidden" class="gxicon gxicon-eye-off" @click="assetHideClick"></span>
+                      <span v-else class="gxicon gxicon-eye" @click="assetHideClick"></span>
                     </small>
                     <div v-if="wallet.isAssetHidden" class="digit balance">****</div>
                     <div v-else class="digit balance">{{wallet.balance | asset(2)}}</div>
@@ -268,13 +268,11 @@
       },
       assetHideClick(){
         this.isAssetHidden = !this.isAssetHidden;
-        let wallets = get_wallets();
-        wallets = wallets.map((w) => {
+        this.wallets = this.wallets.map((w)=>{
           w.isAssetHidden = this.isAssetHidden;
           return w;
-        });
-        this.wallets = wallets;
-        set_wallets(wallets);
+        })
+        set_wallets(this.wallets);
       }
     },
     destroyed() {
@@ -466,6 +464,10 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        .gxicon-eye-off,.gxicon-eye{
+          border: 5px solid transparent; 
+          background-clip: padding-box;
+        }
         .digit {
           font-family: bebas;
           font-size: 1.1rem;
