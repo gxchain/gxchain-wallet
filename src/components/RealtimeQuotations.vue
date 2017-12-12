@@ -317,7 +317,6 @@
                 obj.price = parseFloat(parseFloat(this.exchange_price).toFixed(5));
                 obj.time = now;
                 this.timeData.push(obj);
-                console.log('timeData:'+JSON.stringify(this.timeData));
               }
             }
             chart.changeData(this.timeData);
