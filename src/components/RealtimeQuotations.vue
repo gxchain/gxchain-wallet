@@ -143,7 +143,7 @@
         this.tabIndex = 0;
         if(this.timeData.length == 0){
           get_chart_data(this.exchange_name,this.exchange_symbol,'1m').then((resp) => {
-          this.timeData = resp.slice(-60).map((item) => {
+          this.timeData = resp.map((item) => {
             item.price = parseFloat(item.price);
             return item;
           });
@@ -311,7 +311,7 @@
               let now = new Date().format("hh:mm");
               if(last.time < now){
                 let obj = {};
-                obj.price = parseFloat(parseFloat(this.exchange_price).toFixed(5));
+                obj.price = parseFloat(this.exchange_price);
                 obj.time = now;
                 this.timeData.push(obj);
               }
