@@ -97,6 +97,7 @@
   import AllcoinStrategy from '@/components/AllcoinStrategy.vue'
   import BigoneStrategy from '@/components/BigoneStrategy.vue'
   import {get_realtime_quotation,get_chart_data} from '@/services/MarketService'
+  G2.track(false)
   export default {
     data() {
       return {
