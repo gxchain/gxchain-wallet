@@ -90,8 +90,8 @@
     
 </template>
 <script>
-  import G2 from '@antv/g2'
-  import {View} from '@antv/data-set'
+  import G2 from 'g2'
+  import DataSet from 'dataset'
   import BinanceStrategy from '@/components/BinanceStrategy.vue'
   import BitzStrategy from '@/components/BitzStrategy.vue'
   import AllcoinStrategy from '@/components/AllcoinStrategy.vue'
@@ -170,7 +170,7 @@
         }
       },
       renderKLineG2(){
-        const dv = new View();
+        const dv = new DataSet.View();
         dv.source(this.klineData)
         .transform({
           type: 'map',
