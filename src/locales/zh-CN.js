@@ -318,8 +318,8 @@ const locale = {
     high:'24h最高价',
     low:'24h最低价',
     volume:'24h成交量',
-    time_sharing:'分时',
-    k_line:'日k',
+    line:'分时',
+    candle:'日k',
     strategy:'交易所入金攻略'
   }
 }

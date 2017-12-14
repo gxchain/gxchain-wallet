@@ -314,12 +314,12 @@ const locale = {
     }
   },
   realtime_quotations:{
-    title:'Realtime Quotations',
+    title:'Real Time Quotes',
     high:'24h High',
     low:'24h Low',
     volume:'24h Volume',
-    time_sharing:'Time-sharing',
-    k_line:'K-line',
+    line:'Line',
+    candle:'Candle',
     strategy:'Exchange strategy'
   }
 }
