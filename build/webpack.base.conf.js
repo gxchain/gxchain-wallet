@@ -89,5 +89,9 @@ module.exports = {
         }
       }
     ]
+  },
+  externals:{
+    g2:'G2',
+    dataset:'DataSet'
   }
 }

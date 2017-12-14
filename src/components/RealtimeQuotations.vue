@@ -54,17 +54,17 @@
         </div>
         <div class="chart">
           <div class="buttons-row">
-            <a :class="{active:tabIndex==0}" @click="loadTimeData"
-              class="tab-link button">{{$t('realtime_quotations.time_sharing')}}</a>
-            <a :class="{active:tabIndex==1}" @click="loadKlineData"
-              class="tab-link button">{{$t('realtime_quotations.k_line')}}</a>
+            <a :class="{active:tabIndex==0}" @click="loadLineData"
+              class="tab-link button">{{$t('realtime_quotations.line')}}</a>
+            <a :class="{active:tabIndex==1}" @click="loadCandleData"
+              class="tab-link button">{{$t('realtime_quotations.candle')}}</a>
           </div>
           <div class="tabs">
             <div class="tab" :class="{active:tabIndex==0}">
-              <div id="time-sharing"></div>
+              <div id="line"></div>
             </div>
             <div class="tab" :class="{active:tabIndex==1}">
-              <div id="k-line"></div>
+              <div id="candle"></div>
             </div>
           </div>
           <div class="strategy">
@@ -90,13 +90,14 @@
     
 </template>
 <script>
-  import G2 from '@antv/g2'
-  import {View} from '@antv/data-set'
+  import G2 from 'g2'
+  import DataSet from 'dataset'
   import BinanceStrategy from '@/components/BinanceStrategy.vue'
   import BitzStrategy from '@/components/BitzStrategy.vue'
   import AllcoinStrategy from '@/components/AllcoinStrategy.vue'
   import BigoneStrategy from '@/components/BigoneStrategy.vue'
   import {get_realtime_quotation,get_chart_data} from '@/services/MarketService'
+  G2.track(false)
   export default {
     data() {
       return {
@@ -111,8 +112,8 @@
         volume:'',
         tabIndex:0,
         stopFetchingQuotation: false,
-        timeData:[],
-        klineData:[]
+        lineData:[],
+        candleData:[]
       }
     },
     methods: {
@@ -139,23 +140,23 @@
           }, 5000);
         })
       },
-      loadTimeData(){
+      loadLineData(){
         this.tabIndex = 0;
-        if(this.timeData.length == 0){
+        if(this.lineData.length == 0){
           get_chart_data(this.exchange_name,this.exchange_symbol,'1m').then((resp) => {
-          this.timeData = resp.map((item) => {
+          this.lineData = resp.map((item) => {
             item.price = parseFloat(item.price);
             return item;
           });
-          this.renderTimeSharingG2();
+          this.renderLine();
           })
         }
       },
-      loadKlineData(){
+      loadCandleData(){
         this.tabIndex = 1;
-        if(this.klineData.length == 0){
+        if(this.candleData.length == 0){
           get_chart_data(this.exchange_name,this.exchange_symbol,'1440m').then((resp) => {
-          this.klineData = resp.map((item) => {
+          this.candleData = resp.map((item) => {
             item.max = parseFloat(item.max);
             item.min = parseFloat(item.min);
             item.start = parseFloat(item.start);
@@ -164,13 +165,13 @@
             item.money = parseFloat(item.money);
             return item;
           });
-          this.renderKLineG2();
+          this.renderCandle();
           })
         }
       },
-      renderKLineG2(){
-        const dv = new View();
-        dv.source(this.klineData)
+      renderCandle(){
+        const dv = new DataSet.View();
+        dv.source(this.candleData)
         .transform({
           type: 'map',
           callback: obj => {
@@ -180,7 +181,7 @@
           }
         });
         const chart = new G2.Chart({
-          container: 'k-line',
+          container: 'candle',
           forceFit: true,
           height: 400,
           animate: true,
@@ -282,14 +283,14 @@
         });
         chart.render();
       },
-      renderTimeSharingG2(){
+      renderLine(){
         const chart = new G2.Chart({
-          container: 'time-sharing',
+          container: 'line',
           forceFit: true,
           height: 400,
           animate:true
         });
-        chart.source(this.timeData);
+        chart.source(this.lineData);
         chart.scale({
           time: {
             tickCount: 5,
@@ -306,17 +307,17 @@
         chart.render();
         setInterval(()=>{
           if(!this.stopFetchingQuotation){
-            if(this.timeData.length>0){
-              let last = this.timeData[this.timeData.length - 1];
+            if(this.lineData.length>0){
+              let last = this.lineData[this.lineData.length - 1];
               let now = new Date().format("hh:mm");
               if(last.time < now){
                 let obj = {};
                 obj.price = parseFloat(this.exchange_price);
                 obj.time = now;
-                this.timeData.push(obj);
+                this.lineData.push(obj);
               }
             }
-            chart.changeData(this.timeData);
+            chart.changeData(this.lineData);
           }
         },1000);
       },
@@ -330,7 +331,7 @@
     mounted() {
       $.init();
       this.loadRealtimeQuotation();
-      this.loadTimeData();
+      this.loadLineData();
     },
     components: {
       BinanceStrategy,
@@ -436,10 +437,10 @@
       width:100%;
       height:400px;
     }
-    #time-sharing{
+    #line{
       margin-top:1rem;
     }
-    #k-line{
+    #candle{
       margin-top:1rem;
     }
   }
