@@ -22,11 +22,13 @@
         </div>
         <div class="list-block">
           <ul>
-            <li class="item-content">
+            <li class="item-content item-link">
               <div class="item-inner">
                 <div class="item-title label">{{$t('transfer.from')}}</div>
-                <div class="item-input">
-                  <input type="text" maxlength="80" readonly :value="currentWallet.account">
+                <div class="item-select">
+                  <select @change="switchAccount">
+                    <option v-for="(w,i) in wallets" :value="i" :selected="i==currentWalletIndex">{{w.account}}</option>
+                  </select>
                 </div>
                 <div class="item-after">
                   <account-image :account="currentWallet.account" :size='14'></account-image>
@@ -92,7 +94,7 @@
 <script>
   import {mapGetters} from 'vuex'
   import AccountImage from './sub/AccountImage.vue'
-  import {get_wallets, get_wallet_index, fetch_account_balance, transfer} from '@/services/WalletService'
+  import {get_wallets, get_wallet_index, set_wallet_index, fetch_account_balance, transfer} from '@/services/WalletService'
   import {ChainStore} from 'gxbjs'
   import util from '@/common/util'
   import errorHandler from '@/common/errorHandler'
@@ -113,6 +115,7 @@
         password: '',
         wallets: wallets,
         currentWallet: wallets[get_wallet_index()],
+        currentWalletIndex: get_wallet_index(),
         error: {
           account: '',
           amount: '',
@@ -267,6 +270,12 @@
             $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
           }, 500)
         })
+      },
+      switchAccount(e) {
+        let index = e.target.value;
+        set_wallet_index(index);
+        this.currentWalletIndex = index;
+        this.currentWallet = this.wallets[index];
       }
     },
     computed: {
@@ -315,6 +324,10 @@
 
   .list-block .last .item-inner:after {
     height: 0;
+  }
+
+  .list-block .item-select{
+    width: 100%;
   }
 
 </style>
