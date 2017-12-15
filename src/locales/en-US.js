@@ -200,6 +200,7 @@ const locale = {
     to_placeholder: 'account name',
     amount: 'Amount',
     amount_placeholder: 'Amount to send',
+    receive_amount: 'Amount to receive',
     available: '<span class="color-danger">{amount}</span> GXS Available',
     memo: 'Memo',
     fee: 'Fee',

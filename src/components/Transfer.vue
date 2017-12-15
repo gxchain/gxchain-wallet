@@ -139,6 +139,7 @@
       $.init();
       $.initPullToRefresh(this.$el);
       this.account = this.$route.query.to || '';
+      this.amount = this.$route.query.amount || '';
       this.memo = this.$route.query.memo || '';
       this.fetch_balance();
       $(this.$el).on('refresh', '.pull-to-refresh-content', (e) => {
@@ -249,6 +250,7 @@
             if (result.indexOf('qr://transfer') > -1) {
               let query = util.query2Obj(result.replace('qr://transfer', ''));
               self.account = query.to || '';
+              self.amount = query.amount || '';
               self.memo = query.memo || '';
             }
             else {

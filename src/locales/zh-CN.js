@@ -200,6 +200,7 @@ const locale = {
     to_placeholder: '填写对方账号',
     amount: '发送数量',
     amount_placeholder: '填写GXS数量',
+    receive_amount:'填写接收GXS数量',
     available: '可用: <span class="color-danger">{amount}</span> GXS',
     memo: '备注(MEMO)',
     fee: '手续费',
