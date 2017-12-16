@@ -7,6 +7,10 @@
     <div class="content">
       <div class="center-content">
         <div class="content-block">
+          <div class="item-input">
+            <input class="input-amount" type="number" maxlength="80"
+                    :placeholder="$t('transfer.receive_amount')" v-model="amount">
+          </div>
           <div class="text-center">
             <qrcode :val="qrcode" :size="160"></qrcode>
             <p style="word-break: break-all;">{{$t('index.account_name')}}:&nbsp;{{this.account}}</p>
@@ -34,7 +38,8 @@
     },
     data() {
       return {
-        accountCopied: false
+        accountCopied: false,
+        amount:''
       }
     },
     methods: {
@@ -56,7 +61,7 @@
         isNative: 'isNative'
       }),
       qrcode() {
-        return `qr://transfer?to=${this.account}`
+        return `qr://transfer?to=${this.account}&amount=${this.amount}`
       }
     },
     components: {
@@ -73,6 +78,12 @@
     text-align: center;
     .content-block {
       width: 100%;
+      input{
+        text-align: center;
+        margin-bottom: 1rem;
+        &::-ms-input-placeholder{text-align: center;} 
+        &::-webkit-input-placeholder{text-align: center;} 
+      }
     }
   }
 </style>

@@ -180,6 +180,7 @@
       position: absolute;
       left: 0;
       top: 0;
+      bottom: 0;
       opacity: 0;
     }
   }

@@ -91,14 +91,23 @@
         let self = this;
         if (this.unlocked){
           if (!self.wallet.backup_date) {
-            $.confirm(this.$t('wallet_backup.detail.confirm'),
-              function () {
-                let wallet = self.wallet;
-                wallet.backup_date = new Date().getTime();
-                update_wallet(wallet);
-                self.$router.replace({path: returnURL});
+            $.modal({
+              text:this.$t('wallet_backup.detail.confirm'),
+              buttons:[{
+                text:this.$i18n.locale == 'zh-CN' ? '取消' : 'Cancel'
+              },
+              {
+                text:this.$i18n.locale == 'zh-CN' ? '确定' : 'Ok',
+                bold: true,
+                onClick:function(){
+                  let wallet = self.wallet;
+                  wallet.backup_date = new Date().getTime();
+                  update_wallet(wallet);
+                  self.$router.replace({path: returnURL});
+                }
               }
-            );
+              ]
+            });
           }else{
             this.$router.replace({path: returnURL});
           }

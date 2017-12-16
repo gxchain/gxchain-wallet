@@ -87,7 +87,7 @@ const locale = {
       confirm: 'Confirm'
     },
     placeholder: {
-      key: 'Enter your active key here',
+      key: 'Enter your active private key here',
       password: 'Not less than 6 characters'
     },
     confirm: 'Import Now',
@@ -96,7 +96,7 @@ const locale = {
       account_already_exist: 'Account already imported',
       account_not_found: 'Account not found',
       invalid_key: 'Incorrect key format',
-      no_reference_account: 'Import failed! No account for this active key was found.'
+      no_reference_account: 'Import failed! No account for this active private key was found.'
     },
     success: {
       title: 'Import Success',
@@ -200,6 +200,7 @@ const locale = {
     to_placeholder: 'account name',
     amount: 'Amount',
     amount_placeholder: 'Amount to send',
+    receive_amount: 'Amount to receive',
     available: '<span class="color-danger">{amount}</span> GXS Available',
     memo: 'Memo',
     fee: 'Fee',
