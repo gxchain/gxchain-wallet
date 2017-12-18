@@ -228,6 +228,10 @@
         return this.validateAmount() && this.rate;
       },
       validateAmount() {
+        if(!/^\d+(\.\d{0,5})?$/.test(this.amount)){
+          let index = this.amount.indexOf('.');
+          this.amount = this.amount.slice(0,index + 6);
+        }
         let amount = Number(this.amount);
         if (isNaN(amount) || amount == 0) {
           this.error.amount = this.$t('transfer.error.amount.invalid');
@@ -309,6 +313,12 @@
         }
         this.$refs.confirm.show();
       },
+      accMult(arg1,arg2){
+        let m = 0, s1 = arg1.toString(), s2 = arg2.toString();
+        try { m += s1.split(".")[1].length } catch (e) { }
+        try { m += s2.split(".")[1].length } catch (e) { }
+        return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
+      },
       unlocking(pwd) {
         let self = this;
         if (!pwd.trim()) {
@@ -317,7 +327,7 @@
           return;
         }
         this.submitting = true;
-        lock_balance(this.term.id, this.currentWallet.account, this.amount * 100000, this.term.interest_rate * 100, this.term.lock_days, '', pwd, true)
+        lock_balance(this.term.id, this.currentWallet.account, this.accMult(this.amount, 100000), this.term.interest_rate * 100, this.term.lock_days, '', pwd, true)
           .then(result => {
             self.submitting = false;
             self.$refs.confirm.unlocked();
