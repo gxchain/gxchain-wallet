@@ -228,6 +228,10 @@
         return this.validateAmount() && this.rate;
       },
       validateAmount() {
+        if(!/^\d+(\.\d{0,5})?$/.test(this.amount)){
+          let index = this.amount.indexOf('.');
+          this.amount = this.amount.slice(0,index + 6);
+        }
         let amount = Number(this.amount);
         if (isNaN(amount) || amount == 0) {
           this.error.amount = this.$t('transfer.error.amount.invalid');
