@@ -47,6 +47,7 @@ const dateTimeFormats = {
 }
 
 let locale = get_item('_locale') || navigator.language;
+locale = locale.split('-')[0].toLowerCase() + '-' + locale.split('-')[1].toUpperCase();
 set_item('_locale', locale)
 
 export default new VueI18n({
