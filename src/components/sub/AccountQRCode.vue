@@ -8,7 +8,7 @@
             <div class="center-content">
                 <div class="content-block">
                     <div class="item-input">
-                        <input class="input-amount" type="number" maxlength="80" :placeholder="$t('transfer.receive_amount')" v-model="amount">
+                        <input class="input-amount" type="number" maxlength="80" :placeholder="$t('transfer.receive_amount')" v-model="amount" @keyup="limitLength">
                     </div>
                     <div class="text-center">
                         <qrcode :val="qrcode" :size="160"></qrcode>
@@ -54,6 +54,12 @@
                         $.closeModal();
                     }, 1000);
                 }, null, 'ClipBoard', 'copy', [this.account]);
+            },
+            limitLength () {
+                if (!/^\d+(\.\d{0,5})?$/.test(this.amount)) {
+                    let index = this.amount.indexOf('.');
+                    this.amount = this.amount.slice(0, index + 6);
+                }
             }
         },
         computed: {
@@ -87,6 +93,10 @@
                 &::-webkit-input-placeholder {
                     text-align: center;
                 }
+                border-top-style: none;
+                border-left-style: none;
+                border-right-style: none;
+                border-bottom-style: thin;
             }
         }
     }
