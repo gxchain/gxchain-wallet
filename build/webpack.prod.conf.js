@@ -18,7 +18,7 @@ var webpackConfig = merge(baseWebpackConfig, {
             extract: true
         })
     },
-    devtool: config.build.productionSourceMap ? '#source-map' : false,
+    devtool: false,
     output: {
         path: config.build.assetsRoot,
         filename: utils.assetsPath('js/[name].[chunkhash].js'),
@@ -33,7 +33,7 @@ var webpackConfig = merge(baseWebpackConfig, {
             compress: {
                 warnings: false
             },
-            sourceMap: true
+            sourceMap: false
         }),
         // extract css into its own file
         new ExtractTextPlugin({

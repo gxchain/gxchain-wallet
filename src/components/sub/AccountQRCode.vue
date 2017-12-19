@@ -8,8 +8,7 @@
             <div class="center-content">
                 <div class="content-block">
                     <div class="item-input">
-                        <input class="input-amount" type="number" maxlength="80"
-                               :placeholder="$t('transfer.receive_amount')" v-model="amount" @keyup="limitLength">
+                        <input class="input-amount" type="number" maxlength="80" :placeholder="$t('transfer.receive_amount')" v-model="amount" @keyup="limitLength">
                     </div>
                     <div class="text-center">
                         <qrcode :val="qrcode" :size="160"></qrcode>
@@ -17,8 +16,7 @@
                     </div>
                     <div class="content-block">
                         <p v-if="isNative">
-                            <a @click="copyAccount()" class="button button-gxb"
-                               :class="{disabled:accountCopied}">{{accountCopied ? $t('index.copied') : $t('index.copy')}}</a>
+                            <a @click="copyAccount()" class="button button-gxb" :class="{disabled:accountCopied}">{{accountCopied ? $t('index.copied'):$t('index.copy')}}</a>
                         </p>
                     </div>
                 </div>
@@ -38,17 +36,17 @@
                 type: String
             }
         },
-        data() {
+        data () {
             return {
                 accountCopied: false,
                 amount: ''
             };
         },
         methods: {
-            show() {
+            show () {
                 $.popup(this.$el);
             },
-            copyAccount() {
+            copyAccount () {
                 cordova.exec(() => { // eslint-disable-line
                     this.accountCopied = true;
                     setTimeout(() => {
@@ -57,7 +55,7 @@
                     }, 1000);
                 }, null, 'ClipBoard', 'copy', [this.account]);
             },
-            limitLength() {
+            limitLength () {
                 if (!/^\d+(\.\d{0,5})?$/.test(this.amount)) {
                     let index = this.amount.indexOf('.');
                     this.amount = this.amount.slice(0, index + 6);
@@ -68,7 +66,7 @@
             ...mapGetters({
                 isNative: 'isNative'
             }),
-            qrcode() {
+            qrcode () {
                 return `qr://transfer?to=${this.account}&amount=${this.amount}`;
             }
         },
