@@ -66,8 +66,8 @@ const get_wallets = () => {
 
 const bak_wallet = () => {
     let localStorageWallets = get_wallets();
-    if (!(localStorage.getItem(`gxb_wallets_bak_${Apis.instance().chain_id}`))) {
-        localStorage.setItem(`gxb_wallets_bak_${Apis.instance().chain_id}`, JSON.stringify(localStorageWallets));
+    if (!(localStorage.getItem(`gxb_wallets_bak2_${Apis.instance().chain_id}`))) {
+        localStorage.setItem(`gxb_wallets_bak2_${Apis.instance().chain_id}`, JSON.stringify(localStorageWallets));
     }
 };
 
@@ -85,9 +85,7 @@ const merge_wallets = () => {
             return IndexedDB.getData(walletDB, 'wallet', `gxb_wallets_${Apis.instance().chain_id}`).then((res) => {
                 if (res) {
                     let localStorageWallets = get_wallets();
-                    if (!(localStorage.getItem(`gxb_wallets_bak_${Apis.instance().chain_id}`))) {
-                        localStorage.setItem(`gxb_wallets_bak_${Apis.instance().chain_id}`, JSON.stringify(localStorageWallets));
-                    }
+                    bak_wallet();
                     let unionWallets = unionBy(localStorageWallets, res.value, 'account');
                     localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(unionWallets));
                 }
