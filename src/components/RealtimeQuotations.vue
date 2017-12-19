@@ -238,11 +238,11 @@
                     .position('time*range')
                     .color('trend', val => {
                         if (val === '上涨') {
-                            return '#f04864';
+                            return '#2fc25b';
                         }
 
                         if (val === '下跌') {
-                            return '#2fc25b';
+                            return '#f04864';
                         }
                     })
                     .shape('candle')
@@ -281,11 +281,11 @@
                     .position('time*volumn')
                     .color('trend', val => {
                         if (val === '上涨') {
-                            return '#f04864';
+                            return '#2fc25b';
                         }
 
                         if (val === '下跌') {
-                            return '#2fc25b';
+                            return '#f04864';
                         }
                     })
                     .tooltip('time*volumn', (time, volumn) => {
