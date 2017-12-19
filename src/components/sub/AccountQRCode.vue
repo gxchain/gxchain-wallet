@@ -96,7 +96,7 @@
                 border-top-style: none;
                 border-left-style: none;
                 border-right-style: none;
-                border-bottom-style: thin;
+                border-bottom-width: thin;
             }
         }
     }
