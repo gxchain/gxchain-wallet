@@ -133,6 +133,7 @@
             },
             currentWallet () {
                 this.error.other = '';
+                this.fetch_balance();
             }
         },
         mounted () {
