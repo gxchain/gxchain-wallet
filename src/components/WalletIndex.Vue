@@ -93,7 +93,7 @@
                 <div class="table-exchanges">
                     <div class="list-block media-list">
                         <ul>
-                            <li v-for="exchange in exchanges" :key="exchange.name">
+                            <li v-for="(exchange, exchangekey) in exchanges" :key="exchangekey">
                                 <!-- <router-link :to="`/realtime-quotations/${exchange.name}/${exchange.symbol}`" href="javascript:;"> -->
                                 <router-link :to="link(`/realtime-quotations/${exchange.name}/${exchange.symbol}`)" href="javascript:;">
                                     <div class="item-content item-exchange">
