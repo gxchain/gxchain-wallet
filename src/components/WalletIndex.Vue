@@ -192,7 +192,7 @@
             //        this.$router.push({path: this.link('/loyalty-program')})
             //      },
             loadMarketInfo () {
-                get_market_info().then((resp) => {
+                get_market_info(localStorage.getItem('version')).then((resp) => {
                     this.exchanges = resp;
                     setTimeout(() => {
                         if (!this.stopFetchingMarket) {

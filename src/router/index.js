@@ -216,6 +216,10 @@ router.beforeEach((to, from, next) => {
     let platform = (from.name ? from.query.platform : to.query.platform) || 'browser';
     to.query.platform = platform;
     let isNative = platform == 'ios' || platform == 'android';
+    let version = from.query.platform || to.query.version;
+    if (version) {
+        localStorage.setItem('version', version);
+    }
     const goNext = () => {
         connect(() => {
             bak_wallet();
