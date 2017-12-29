@@ -260,6 +260,9 @@ const locale = {
             timestamp: 'Timestamp',
             fee: 'Fee(GXS)',
             memo: 'Memo'
+        },
+        modal: {
+            ok: 'OK'
         }
     },
     loyalty_program: {
