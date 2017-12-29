@@ -73,7 +73,7 @@
                         </swiper-slide>
                         <div class="swiper-pagination" slot="pagination" v-show="wallets&&wallets.length>1"></div>
                     </swiper>
-                    <router-link :to="link('/loyalty-program')" class="link-loyalty-program">
+                    <router-link :to="link('/loyalty-program')" class="link-loyalty-program" v-if="showLoyaltyProgram">
                         <img :src="`static/${$t('index.loyalty_program_icon')}`">
                     </router-link>
                 </div>
@@ -332,6 +332,9 @@
         },
 
         computed: {
+            showLoyaltyProgram() {
+                return localStorage.getItem('version') != '1.2.0';
+            },
             qrcode () {
                 return `qr://transfer?account=${this.currentWallet.account}`;
             },
