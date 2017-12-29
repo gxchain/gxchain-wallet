@@ -4,7 +4,7 @@
             <div ref="bar" class="bar bar-nav buttons-fixed" style="background: rgba(37, 40, 113, 0)">
                 <a href="javascript:;" class="icon gxicon gxicon-user pull-left" @click="openPanel"></a>
                 <a v-if="isNative" href="javascript:;" class="icon gxicon gxicon-scan pull-right" @click="openQRScaner">
-                    <input ref="qrfile" @change="onFileUpload" v-if="!isNative" type="file" class="file-selector" />
+                    <input ref="qrfile" @change="onFileUpload" v-if="!isNative" type="file" class="file-selector"/>
                 </a>
             </div>
             <div ref="bg" id="bg"></div>
@@ -42,7 +42,8 @@
                                         </a>
                                     </div>
                                     <p class="bak-tip">
-                                        <router-link :to="linkBackup(wallet.account)" class="btn-backup" :class="{visible:!wallet.backup_date}" href="javascript:;">
+                                        <router-link :to="linkBackup(wallet.account)" class="btn-backup"
+                                                     :class="{visible:!wallet.backup_date}" href="javascript:;">
                                             <small>{{$t('index.backup_wallet')}}&nbsp;
                                                 <span class="red-dot"></span>
                                                 <span class="icon icon-right"></span>
@@ -54,7 +55,8 @@
                                     <div class="item">
                                         <small>
                                             {{$t('index.asset_name')}}
-                                            <span v-if="wallet.isAssetHidden" class="gxicon gxicon-eye-off" @click="assetHideClick"></span>
+                                            <span v-if="wallet.isAssetHidden" class="gxicon gxicon-eye-off"
+                                                  @click="assetHideClick"></span>
                                             <span v-else class="gxicon gxicon-eye" @click="assetHideClick"></span>
                                         </small>
                                         <div v-if="wallet.isAssetHidden" class="digit balance">****</div>
@@ -95,7 +97,8 @@
                         <ul>
                             <li v-for="(exchange, exchangekey) in exchanges" :key="exchangekey">
                                 <!-- <router-link :to="`/realtime-quotations/${exchange.name}/${exchange.symbol}`" href="javascript:;"> -->
-                                <router-link :to="link(`/realtime-quotations/${exchange.name}/${exchange.symbol}`)" href="javascript:;">
+                                <router-link :to="link(`/realtime-quotations/${exchange.name}/${exchange.symbol}`)"
+                                             href="javascript:;">
                                     <div class="item-content item-exchange">
                                         <div class="item-inner">
                                             <div class="title-ex-name">
@@ -107,7 +110,8 @@
                                                     {{exchange.price}}
                                                 </div>
                                                 <div class="price_secondary">
-                                                    {{_i18n.locale == 'zh-CN' ? `￥${exchange.price_rmb}` : `$${exchange.price_dollar}`}}
+                                                    {{_i18n.locale == 'zh-CN' ? `￥${exchange.price_rmb}` :
+                                                    `$${exchange.price_dollar}`}}
                                                 </div>
                                             </div>
                                             <div class="quote" :class="{green:exchange.quote>0}">
@@ -127,23 +131,15 @@
     </div>
 </template>
 <script>
-    import {
-        swiper,
-        swiperSlide
-    } from 'vue-awesome-swiper';
+    import {swiper, swiperSlide} from 'vue-awesome-swiper';
     import AccountImage from './sub/AccountImage.vue';
     import LeftPanel from './sub/LeftPanel.vue';
     import AccountQRCode from './sub/AccountQRCode.vue';
-    import {
-        get_market_info
-    } from '@/services/MarketService';
+    import {get_market_info} from '@/services/MarketService';
     import util from '@/common/util';
 
     import {
-        get_wallets,
-        fetch_account_balance,
-        get_wallet_index,
-        set_wallet_index,
+        fetch_account_balance, get_wallet_index, get_wallets, set_wallet_index,
         set_wallets
     } from '@/services/WalletService';
     import filters from '@/filters';
@@ -152,12 +148,12 @@
         filters,
         data () {
             let self = this;
-            let wallets = get_wallets();
-            wallets = wallets.map((w) => {
-                w.balance = this.$t('index.balance_loading');
+            let wallets = get_wallets ();
+            wallets = wallets.map ((w) => {
+                w.balance = this.$t ('index.balance_loading');
                 return w;
             });
-            let wallet_index = get_wallet_index();
+            let wallet_index = get_wallet_index ();
             return {
                 accountCopied: false,
                 stopFetchingMarket: false,
@@ -171,10 +167,10 @@
                     paginationClickable: true,
                     initialSlide: wallet_index,
                     onSlideChangeEnd: function (s) {
-                        let wallets = get_wallets();
+                        let wallets = get_wallets ();
                         let wallet = wallets[s.activeIndex];
                         self.isAssetHidden = wallet.isAssetHidden;
-                        set_wallet_index(s.activeIndex);
+                        set_wallet_index (s.activeIndex);
                         self.currentWalletIndex = s.activeIndex;
                     }
                 },
@@ -183,74 +179,74 @@
         },
         watch: {
             currentWalletIndex () {
-                this.loadBalance(this.currentWallet);
+                this.loadBalance (this.currentWallet);
             }
         },
 
         methods: {
             loadMarketInfo () {
-                get_market_info(localStorage.getItem('version')).then((resp) => {
+                get_market_info (localStorage.getItem ('version')).then ((resp) => {
                     this.exchanges = resp;
-                    setTimeout(() => {
+                    setTimeout (() => {
                         if (!this.stopFetchingMarket) {
-                            this.loadMarketInfo();
+                            this.loadMarketInfo ();
                         }
                     }, 3000);
-                }).catch(ex => {
-                    console.error(ex);
-                    setTimeout(() => {
+                }).catch (ex => {
+                    console.error (ex);
+                    setTimeout (() => {
                         if (!this.stopFetchingMarket) {
-                            this.loadMarketInfo();
+                            this.loadMarketInfo ();
                         }
                     }, 3000);
                 });
             },
             loadWallets () {
                 if (this.wallets.length == 0) {
-                    this.$router.replace({
-                        path: this.link('/wallet-create')
+                    this.$router.replace ({
+                        path: this.link ('/wallet-create')
                     });
                 } else {
-                    this.wallets.forEach((wallet) => {
-                        this.loadBalance(wallet);
+                    this.wallets.forEach ((wallet) => {
+                        this.loadBalance (wallet);
                     });
                 }
-                setTimeout(() => {
-                    $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
+                setTimeout (() => {
+                    $.pullToRefreshDone ($ (this.$el).find ('.pull-to-refresh-content'));
                 }, 500);
             },
             loadBalance (wallet) {
                 if (wallet.account) {
-                    fetch_account_balance(wallet.account).then(function (balance) {
+                    fetch_account_balance (wallet.account).then (function (balance) {
                         wallet.balance = balance.amount / 100000;
-                    }).catch(ex => {
-                        console.error(ex);
+                    }).catch (ex => {
+                        console.error (ex);
                     });
                 }
             },
             getMarketCap (wallet) {
-                let balance = Number(wallet.balance);
+                let balance = Number (wallet.balance);
                 let price = this.price;
-                if (!isNaN(balance) && price != '-') {
+                if (!isNaN (balance) && price != '-') {
                     return wallet.balance * this.price;
                 }
                 return '-';
             },
             openPanel () {
-                this.$refs.panel.open();
+                this.$refs.panel.open ();
             },
             openQRScaner () {
                 let self = this;
                 if (this.isNative) {
-                    cordova.exec(function (result) {// eslint-disable-line
+                    cordova.exec (function (result) {// eslint-disable-line
                         let query = {
                             to: result
                         };
-                        if (result.indexOf('qr://transfer') == 0) {
-                            query = util.query2Obj(result.replace('qr://transfer', ''));
+                        if (result.indexOf ('qr://transfer') == 0) {
+                            query = util.query2Obj (result.replace ('qr://transfer', ''));
                         }
-                        self.$router.push({
-                            path: self.link('/transfer', query)
+                        self.$router.push ({
+                            path: self.link ('/transfer', query)
                         });
                     }, null, 'QRCode', 'scan', []);
                 }
@@ -260,80 +256,80 @@
                     account: this.currentWallet.account,
                     from: this.$route.fullPath
                 };
-                return this.link('/wallet-backup-detail', query);
+                return this.link ('/wallet-backup-detail', query);
             },
             // TODO upload a qrcode image
             onFileUpload (e) {
                 // let file = this.$refs.qrfile;
             },
             openQRCodeModal () {
-                this.$refs.qrcode.show();
+                this.$refs.qrcode.show ();
             },
             assetHideClick () {
                 this.isAssetHidden = !this.isAssetHidden;
-                this.wallets = this.wallets.map((w) => {
+                this.wallets = this.wallets.map ((w) => {
                     w.isAssetHidden = this.isAssetHidden;
                     return w;
                 });
-                set_wallets(this.wallets);
+                set_wallets (this.wallets);
             }
         },
         destroyed () {
             $.allowPanelOpen = true;
-            $(this.$el).off('refresh');
+            $ (this.$el).off ('refresh');
             //      $(this.$refs.content).off('scroll').off('touchmove').off('touchend');
             this.stopFetchingMarket = true;
         },
         mounted () {
-            $.init();
-            this.loadWallets();
+            $.init ();
+            this.loadWallets ();
             this.stopFetchingMarket = false;
             this.isAssetHidden = this.currentWallet.isAssetHidden;
-            this.loadMarketInfo();
+            this.loadMarketInfo ();
             if (this.isNative) {
                 window.webview = {
                     reload: () => {
-                        this.loadWallets();
+                        this.loadWallets ();
                     }
                 };
-                cordova.exec(null, null, 'statusBar', 'styleLightContent', []);// eslint-disable-line
+                cordova.exec (null, null, 'statusBar', 'styleLightContent', []);// eslint-disable-line
             }
-            $(this.$el).on('refresh', '.pull-to-refresh-content', (e) => {
-                this.loadWallets();
+            $ (this.$el).on ('refresh', '.pull-to-refresh-content', (e) => {
+                this.loadWallets ();
             });
-            $(this.$refs.content).on('scroll', () => {
-                let offset = $(this.$el).find('.row-top').offset().top;
+            $ (this.$refs.content).on ('scroll', () => {
+                let offset = $ (this.$el).find ('.row-top').offset ().top;
                 if (offset < -20) {
-                    let percent = Math.min((-40 - offset) / 40, 1);
-                    $(this.$refs.bar).css({
+                    let percent = Math.min ((-40 - offset) / 40, 1);
+                    $ (this.$refs.bar).css ({
                         background: `rgba(37, 40, 113, ${percent})`
                     });
                 } else {
-                    $(this.$refs.bar).css({
+                    $ (this.$refs.bar).css ({
                         background: 'rgba(37, 40, 113, 0)'
                     });
                 }
-            }).on('touchmove', (e) => {
-                $(this.$refs.bg).css({
-                    height: Math.max($(this.$refs.top).height() + $(this.$refs.top).offset().top, $(
-                        this.$refs.top).height()),
+            }).on ('touchmove', (e) => {
+                $ (this.$refs.bg).css ({
+                    height: Math.max ($ (this.$refs.top).height () + $ (this.$refs.top).offset ().top, $ (
+                        this.$refs.top).height ()),
                     transition: 'none',
                     webkitTransition: 'none'
                 });
                 return true;
-            }).on('touchend', () => {
+            }).on ('touchend', () => {
                 const end = () => {
-                    $(this.$refs.bg).attr('style', '');
-                    clearTimeout(timer);
+                    $ (this.$refs.bg).attr ('style', '');
+                    clearTimeout (timer);
                 };
-                let timer = setTimeout(end, 1000);
+                let timer = setTimeout (end, 1000);
             });
-            this.swiper.update();
+            this.swiper.update ();
         },
 
         computed: {
-            showLoyaltyProgram() {
-                return localStorage.getItem('version') != '1.2.0';
+            showLoyaltyProgram () {
+                return localStorage.getItem ('version') != '1.2.0';
             },
             qrcode () {
                 return `qr://transfer?account=${this.currentWallet.account}`;
@@ -349,11 +345,11 @@
                     return '-';
                 } else {
                     let best_price = 0;
-                    this.exchanges.forEach((exchange) => {
+                    this.exchanges.forEach ((exchange) => {
                         if (this.$i18n.locale == 'zh-CN') {
-                            best_price = Math.max(Number(exchange.price_rmb), best_price);
+                            best_price = Math.max (Number (exchange.price_rmb), best_price);
                         } else {
-                            best_price = Math.max(Number(exchange.price_dollar), best_price);
+                            best_price = Math.max (Number (exchange.price_dollar), best_price);
                         }
                     });
                     return best_price;
@@ -571,7 +567,7 @@
     .pull-to-refresh-layer {
         position: absolute;
         top: 1rem;
-        .line-scale>div {
+        .line-scale > div {
             background-color: #fff !important;
         }
     }

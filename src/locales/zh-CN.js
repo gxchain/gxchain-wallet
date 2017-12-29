@@ -260,6 +260,9 @@ const locale = {
             timestamp: '操作时间',
             fee: '手续费(GXS)',
             memo: '备注(MEMO)'
+        },
+        modal: {
+            ok: '好的'
         }
     },
     loyalty_program: {
