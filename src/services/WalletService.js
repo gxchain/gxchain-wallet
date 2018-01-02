@@ -1,5 +1,5 @@
-import { PrivateKey, key, Aes, TransactionBuilder, TransactionHelper } from 'gxbjs';
-import { Apis } from 'gxbjs-ws';
+import {Aes, key, PrivateKey, TransactionBuilder, TransactionHelper} from 'gxbjs';
+import {Apis} from 'gxbjs-ws';
 import Promise from 'bluebird';
 import uniq from 'lodash/uniq';
 import some from 'lodash/some';
@@ -7,6 +7,7 @@ import unionBy from 'lodash/unionBy';
 import Vue from 'vue';
 import i18n from '@/locales';
 import IndexedDB from './IndexedDBService';
+import find from 'lodash/find';
 
 /**
  * get objects by id
@@ -237,7 +238,7 @@ const del_wallet = (wallet) => {
 const unlock_wallet = (account, password) => {
     return new Promise((resolve, reject) => {
         let wallets = get_wallets();
-        let wallet = wallets.find(function (w) {
+        let wallet = find(wallets, function (w) {
             return w.account == account;
         });
         let password_private = PrivateKey.fromSeed(password);
@@ -391,7 +392,7 @@ const fetch_account_balance = (account_name) => {
     return new Promise((resolve, reject) => {
         resolve(fetch_account(account_name).then((account) => {
             return Apis.instance().db_api().exec('get_account_balances', [account.id, ['1.3.1']]).then(function (balances) {
-                return balances && balances.length > 0 ? balances[0] : { amount: 0, asset_id: '1.3.1' };
+                return balances && balances.length > 0 ? balances[0] : {amount: 0, asset_id: '1.3.1'};
             });
         }));
     });
@@ -461,7 +462,7 @@ const transfer = (from, to, amount, memo, password, broadcast = true) => {
                 },
                 from: fromAcc.id,
                 to: toAcc.id,
-                amount: { amount: amount * 100000, asset_id: '1.3.1' },
+                amount: {amount: amount * 100000, asset_id: '1.3.1'},
                 memo: memo_object
             }));
             return process_transaction(tr, from, password, broadcast);
