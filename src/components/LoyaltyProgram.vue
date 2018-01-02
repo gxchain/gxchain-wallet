@@ -61,7 +61,8 @@
                                     <div class="item-inner">
                                         <div class="item-title label">{{$t('loyalty_program.amount')}}</div>
                                         <div class="item-input">
-                                            <input :placeholder="$t('loyalty_program.placeholder.amount')" type="number" v-model="amount" @change="onAmountChange">
+                                            <input :placeholder="$t('loyalty_program.placeholder.amount')" type="number"
+                                                   v-model="amount" @change="onAmountChange">
                                         </div>
                                         <div class="item-after">GXS</div>
                                     </div>
@@ -82,7 +83,8 @@
                         </div>
                         <div class="content-block button-block" v-if="balance!=-1">
                             <p>
-                                <a @click="onSubmit" class="button button-gxb" :class="{disabled:!submitEnable}" v-html="submitting?submittingHTML:$t('loyalty_program.button_join',{bonus:rate})">
+                                <a @click="onSubmit" class="button button-gxb" :class="{disabled:!submitEnable}"
+                                   v-html="submitting?submittingHTML:$t('loyalty_program.button_join',{bonus:rate})">
                                 </a>
                             </p>
                         </div>
@@ -115,21 +117,19 @@
                 </div>
             </div>
         </div>
-        <password-confirm ref="confirm" @unlocking="unlocking" :tips="$t('loyalty_program.modal.message')"></password-confirm>
+        <password-confirm ref="confirm" @unlocking="unlocking"
+                          :tips="$t('loyalty_program.modal.message')"></password-confirm>
     </div>
 </template>
 
 <script>
     import {
-        fetch_full_account,
-        get_objects,
-        get_wallets,
-        get_wallet_index,
-        fetch_account_balance,
+        fetch_account_balance, fetch_full_account, get_objects, get_wallet_index, get_wallets,
         lock_balance
     } from '@/services/WalletService';
     import filters from '@/filters';
     import PasswordConfirm from './sub/PasswordConfirm.vue';
+    import find from 'lodash/find';
 
     export default {
         filters,
@@ -246,7 +246,7 @@
             },
             loadSettings () {
                 get_objects(['2.0.0']).then((results) => {
-                    let programSettings = results[0].parameters.extensions.find((item) => item[0] == 6);
+                    let programSettings = find(results[0].parameters.extensions, (item) => item[0] == 6);
                     if (programSettings) {
                         this.terms = programSettings[1].params.map(param => {
                             let lock_days = param[1].lock_days;
@@ -316,10 +316,12 @@
                 let s2 = arg2.toString();
                 try {
                     m += s1.split('.')[1].length;
-                } catch (e) {}
+                } catch (e) {
+                }
                 try {
                     m += s2.split('.')[1].length;
-                } catch (e) {}
+                } catch (e) {
+                }
                 return Number(s1.replace('.', '')) * Number(s2.replace('.', '')) / Math.pow(10, m);
             },
             unlocking (pwd) {
@@ -331,7 +333,7 @@
                 }
                 this.submitting = true;
                 lock_balance(this.term.id, this.currentWallet.account, this.accMult(this.amount, 100000), this.term.interest_rate *
-                        100, this.term.lock_days, '', pwd, true)
+                    100, this.term.lock_days, '', pwd, true)
                     .then(result => {
                         self.submitting = false;
                         self.$refs.confirm.unlocked();
