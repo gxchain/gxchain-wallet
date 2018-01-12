@@ -29,7 +29,7 @@
                     </ul>
                 </div>
                 <div class="copy-right">
-                    <p>Copyright © 2017 GXChain</p>
+                    <p>{{copyright}}</p>
                     <p>All rights reserved.</p>
                 </div>
             </div>
@@ -37,9 +37,7 @@
     </div>
 </template>
 <script>
-    import {
-        mapGetters
-    } from 'vuex';
+    import {mapGetters} from 'vuex';
 
     export default {
         mounted () {
@@ -54,6 +52,13 @@
                     from: this.$route.fullPath
                 });
                 return `/disclaimer?${$.param(query)}`;
+            },
+            copyright () {
+                if (localStorage.getItem('version') === '1.2.0') {
+                    return 'Copyright © 2018 Hangzhou Credit Data Technology CO., Ltd.';
+                } else {
+                    return 'Copyright © 2018 GXChain.';
+                }
             }
         }
     };
