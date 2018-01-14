@@ -23,98 +23,32 @@
                 <div class="content-block tips">
                     <p>{{$t('loyalty_program.tip3')}}</p>
                 </div>
-                <div class="buttons-tab">
-                    <a :class="{active:tabIndex==0}" @click="tabIndex=0" class="tab-link button">{{$t('loyalty_program.join')}}</a>
-                    <a :class="{active:tabIndex==1}" @click="tabIndex=1" class="tab-link button">{{$t('loyalty_program.history')}}</a>
+                <div class="content-block-title">
+                    {{$t('loyalty_program.history')}}
                 </div>
-                <div class="tabs">
-                    <div class="tab" :class="{active:tabIndex==0}">
-                        <div class="list-block history">
-                            <ul>
-                                <li class="item-content item-link">
-                                    <div class="item-inner">
-                                        <div class="item-title label">{{$t('loyalty_program.term')}}</div>
-                                        <div class="item-select">
-                                            <select v-model="term">
-                                                <option v-for="t in terms" :value="t" :key="t.text">{{t.text}}</option>
-                                            </select>
-                                        </div>
+                <div class="list-block history" v-if="histories.length>0">
+                    <ul>
+                        <li v-for="history in histories" :key="history.id">
+                            <router-link :to="link(`/loyalty-program/${history.id}`)" class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title-row">
+                                        <div class="item-title">{{history.amount | asset(2)}} GXS</div>
+                                        <div class="item-subtitle">{{$d(history.created_at,'long')}}</div>
                                     </div>
-                                </li>
-                                <li class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title label auto-width">{{$t('loyalty_program.bonus')}}</div>
-                                        <div class="item-after">
-                                            <span class="color-danger">{{rate | number(1)}}</span>%
-                                        </div>
+                                    <div class="item-after">
+                                        <small :class="{'color-primary':history.status=='can_unlock'}">
+                                            {{$t(`loyalty_program.status.${history.status}`)}}
+                                        </small>
                                     </div>
-                                </li>
-                                <li class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title label">{{$t('loyalty_program.due')}}</div>
-                                        <div class="item-after">
-                                            {{$d(due,'short')}}
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item-content last">
-                                    <div class="item-inner">
-                                        <div class="item-title label">{{$t('loyalty_program.amount')}}</div>
-                                        <div class="item-input">
-                                            <input :placeholder="$t('loyalty_program.placeholder.amount')" type="number"
-                                                   v-model="amount" @change="onAmountChange">
-                                        </div>
-                                        <div class="item-after">GXS</div>
-                                    </div>
-                                </li>
-                                <li class="tip-alert" v-if="error.amount">
-                                    <div>{{error.amount}}</div>
-                                </li>
-                                <li class="tip-alert" v-if="error.common">
-                                    <div>{{error.common}}</div>
-                                </li>
-                                <li class="tip-success" v-if="balance!=-1">
-                                    <div v-html="$t('loyalty_program.available', {amount: formattedBalance})"></div>
-                                </li>
-                                <li class="tip-info" v-if="bonus">
-                                    <div v-html="$t('loyalty_program.reward', {amount: bonus})"></div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="content-block button-block" v-if="balance!=-1">
-                            <p>
-                                <a @click="onSubmit" class="button button-gxb" :class="{disabled:!submitEnable}"
-                                   v-html="submitting?submittingHTML:$t('loyalty_program.button_join',{bonus:rate})">
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="tab" :class="{active:tabIndex==1}">
-                        <div class="list-block history" v-if="histories.length>0">
-                            <ul>
-                                <li v-for="history in histories" :key="history.id">
-                                    <router-link :to="link(`/loyalty-program/${history.id}`)" class="item-content">
-                                        <div class="item-inner">
-                                            <div class="item-title-row">
-                                                <div class="item-title">{{history.amount | asset(2)}} GXS</div>
-                                                <div class="item-subtitle">{{$d(history.created_at,'long')}}</div>
-                                            </div>
-                                            <div class="item-after">
-                                                <small :class="{'color-primary':history.status=='can_unlock'}">
-                                                    {{$t(`loyalty_program.status.${history.status}`)}}
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </router-link>
-                                </li>
-                            </ul>
-                        </div>
-                        <p class="no-reocrd text-center" v-else>
-                            <span class="icon icon-edit"></span>
-                            {{$t('loyalty_program.no_record')}}
-                        </p>
-                    </div>
+                                </div>
+                            </router-link>
+                        </li>
+                    </ul>
                 </div>
+                <p class="no-reocrd text-center" v-else>
+                    <span class="icon icon-edit"></span>
+                    {{$t('loyalty_program.no_record')}}
+                </p>
             </div>
         </div>
         <password-confirm ref="confirm" @unlocking="unlocking"
