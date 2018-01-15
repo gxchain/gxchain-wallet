@@ -14,16 +14,17 @@ let connect = function (callback) {
         connectionManager = new Manager({ url: witnesses[0], urls: witnesses });
     }
     connectionManager.connectWithFallback(true).then(() => {
-        ChainStore.subscribed = false;
-        ChainStore.subError = null;
-        ChainStore.clearCache();
-        ChainStore.head_block_time_string = null;
-        ChainStore.init().then(() => {
-            callback && callback(connected);
-        }).catch(ex => {
-            console.error(ex);
-            callback && callback(connected);
-        });
+        // ChainStore.subscribed = false;
+        // ChainStore.subError = null;
+        // ChainStore.clearCache();
+        // ChainStore.head_block_time_string = null;
+        // ChainStore.init().then(() => {
+        //     callback && callback(connected);
+        // }).catch(ex => {
+        //     console.error(ex);
+        //     callback && callback(connected);
+        // });
+        callback && callback(connected);
     });
 };
 

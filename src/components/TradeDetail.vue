@@ -70,6 +70,14 @@
                                 </div>
                             </div>
                         </li>
+                        <li class="item-content" v-if="txid">
+                            <div class="item-inner">
+                                <div class="item-title label">txid</div>
+                                <div class="item-after">
+                                    {{txid}}
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                 </div>
                 <p class="tip-error text-center" v-if="error.common">{{error.common}}</p>
