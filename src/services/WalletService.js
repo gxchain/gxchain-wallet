@@ -8,6 +8,7 @@ import Vue from 'vue';
 import i18n from '@/locales';
 import IndexedDB from './IndexedDBService';
 import find from 'lodash/find';
+import util from '@/common/util';
 
 /**
  * get objects by id
@@ -67,8 +68,8 @@ const get_wallets = () => {
 
 const bak_wallet = () => {
     let localStorageWallets = get_wallets();
-    if (!(localStorage.getItem(`gxb_wallets_bak2_${Apis.instance().chain_id}`))) {
-        localStorage.setItem(`gxb_wallets_bak2_${Apis.instance().chain_id}`, JSON.stringify(localStorageWallets));
+    if (!(localStorage.getItem(`gxb_wallets_bak3_${Apis.instance().chain_id}`))) {
+        localStorage.setItem(`gxb_wallets_bak3_${Apis.instance().chain_id}`, JSON.stringify(localStorageWallets));
     }
 };
 
@@ -78,23 +79,45 @@ const bak_wallet = () => {
 const merge_wallets = () => {
     return new Promise((resolve, reject) => {
         let walletDB = null;
-        return IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id}`, 1, walletDB, {
+        let query = util.query2Obj(location.hash);
+        let isNative = query.platform === 'ios' || query.platform === 'android';
+        IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id}`, 1, walletDB, {
             name: 'wallet',
             key: 'walletKey'
         }).then((db) => {
             let walletDB = db;
-            return IndexedDB.getData(walletDB, 'wallet', `gxb_wallets_${Apis.instance().chain_id}`).then((res) => {
+            IndexedDB.getData(walletDB, 'wallet', `gxb_wallets_${Apis.instance().chain_id}`).then((res) => {
                 if (res) {
                     let localStorageWallets = get_wallets();
-                    bak_wallet();
                     let unionWallets = unionBy(localStorageWallets, res.value, 'account');
                     localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(unionWallets));
                 }
                 IndexedDB.closeDB(walletDB);
-                resolve();
+                if (isNative) {
+                    get_wallet_native().then((wallets_native) => {
+                        let localStorageWallets = get_wallets();
+                        let unionWallets = unionBy(localStorageWallets, wallets_native, 'account');
+                        localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(unionWallets));
+                        resolve();
+                    }).catch(ex => {
+                        console.error('failed when merge wallets from native', ex);
+                        resolve();
+                    });
+                } else {
+                    resolve();
+                }
             });
         }).catch((ex) => {
-            resolve();
+            console.error('failed when merge wallets from indexed db', ex);
+            get_wallet_native().then((wallets_native) => {
+                let localStorageWallets = get_wallets();
+                let unionWallets = unionBy(localStorageWallets, wallets_native, 'account');
+                localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(unionWallets));
+                resolve();
+            }).catch(ex => {
+                console.error('failed when merge wallets from native', ex);
+                resolve();
+            });
         });
     });
 };
@@ -125,6 +148,49 @@ const set_wallets_db = (wallets) => {
 };
 
 /**
+ * save wallets to native storage
+ * @param wallets
+ * @returns {bluebird}
+ */
+const set_wallet_native = (wallets) => {
+    return new Promise((resolve, reject) => {
+        let query = util.query2Obj(location.hash);
+        let pluginName = 'AppConfig';
+        if (query.platform === 'ios') {
+            pluginName = 'KV';
+        }
+        cordova.exec(function () { //eslint-disable-line
+            console.log('wallets have been save to native storage successfully');
+            resolve();
+        }, function () {
+            reject();
+        }, pluginName, 'set', [`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(wallets)]);
+    });
+};
+
+/**
+ * load wallets from native storage
+ * @returns {bluebird}
+ */
+const get_wallet_native = () => {
+    return new Promise((resolve, reject) => {
+        let query = util.query2Obj(location.hash);
+        let pluginName = 'AppConfig';
+        if (query.platform === 'ios') {
+            pluginName = 'KV';
+        }
+        cordova.exec(function (result) { //eslint-disable-line
+            console.log('wallets from native storage:', result);
+            let wallets_str = ((result && result instanceof String) ? result : '[]') || '[]';
+            let wallets = JSON.parse(wallets_str);
+            resolve(wallets);
+        }, function () {
+            reject();
+        }, pluginName, 'get', [`gxb_wallets_${Apis.instance().chain_id}`]);
+    });
+};
+
+/**
  * save wallets into local storage
  * @param wallets
  */
@@ -133,6 +199,7 @@ const set_wallets = (wallets) => {
         localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(wallets));
         try {
             set_wallets_db(wallets);
+            set_wallet_native(wallets);
         } catch (ex) {
 
         } finally {
