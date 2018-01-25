@@ -73,20 +73,16 @@ const bak_wallet = () => {
     }
 };
 
-/**
- * merge wallets into localStorage
- */
 const merge_wallets = () => {
     return new Promise((resolve, reject) => {
-        let walletDB = null;
         let query = util.query2Obj(location.hash);
         let isNative = query.platform === 'ios' || query.platform === 'android';
-        IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id}`, 1, walletDB, {
+        resolve(IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id}`, 1, {
             name: 'wallet',
             key: 'walletKey'
         }).then((db) => {
             let walletDB = db;
-            IndexedDB.getData(walletDB, 'wallet', `gxb_wallets_${Apis.instance().chain_id}`).then((res) => {
+            return IndexedDB.getData(walletDB, 'wallet', `gxb_wallets_${Apis.instance().chain_id}`).then((res) => {
                 if (res) {
                     let localStorageWallets = get_wallets();
                     let unionWallets = unionBy(localStorageWallets, res.value, 'account');
@@ -94,31 +90,33 @@ const merge_wallets = () => {
                 }
                 IndexedDB.closeDB(walletDB);
                 if (isNative) {
-                    get_wallet_native().then((wallets_native) => {
+                    return get_wallet_native().then((wallets_native) => {
                         let localStorageWallets = get_wallets();
                         let unionWallets = unionBy(localStorageWallets, wallets_native, 'account');
                         localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(unionWallets));
-                        resolve();
+                        return null;
                     }).catch(ex => {
                         console.error('failed when merge wallets from native', ex);
-                        resolve();
+                        return null;
                     });
                 } else {
-                    resolve();
+                    return null;
                 }
+            }).catch(ex => {
+                return null;
             });
         }).catch((ex) => {
             console.error('failed when merge wallets from indexed db', ex);
-            get_wallet_native().then((wallets_native) => {
+            return get_wallet_native().then((wallets_native) => {
                 let localStorageWallets = get_wallets();
                 let unionWallets = unionBy(localStorageWallets, wallets_native, 'account');
                 localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(unionWallets));
-                resolve();
+                return null;
             }).catch(ex => {
                 console.error('failed when merge wallets from native', ex);
-                resolve();
+                return null;
             });
-        });
+        }));
     });
 };
 
