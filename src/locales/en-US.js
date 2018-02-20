@@ -12,7 +12,8 @@ const locale = {
         copy: 'Copy Account Name',
         copied: 'Copied',
         join_loyalty_program: 'Loyalty Program',
-        loyalty_program_icon: 'loyalty-program-btn-en.png'
+        loyalty_program_icon: 'loyalty-program-btn-en.png',
+        account_is_address: 'Account name is your address'
     },
     left_panel: {
         import_wallet: 'Import Wallet',

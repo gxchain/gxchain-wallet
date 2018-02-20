@@ -13,6 +13,7 @@
                     <div class="text-center">
                         <qrcode :val="qrcode" :size="160"></qrcode>
                         <p style="word-break: break-all;">{{$t('index.account_name')}}:&nbsp;{{this.account}}</p>
+                        <p style="color:#ec9708;font-size:.5rem;">{{$t('index.account_is_address')}}</p>
                     </div>
                     <div class="content-block">
                         <p v-if="isNative">
