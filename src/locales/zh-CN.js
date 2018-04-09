@@ -13,7 +13,7 @@ const locale = {
         copied: '已复制',
         join_loyalty_program: '参与忠诚者计划',
         loyalty_program_icon: 'loyalty-program-btn-zh.png',
-        account_is_address: '账户名既转账地址'
+        account_is_address: '账户名即转账地址'
     },
     left_panel: {
         import_wallet: '导入钱包',
