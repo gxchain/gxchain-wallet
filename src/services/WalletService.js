@@ -514,7 +514,7 @@ const transfer = (from, to, amount, memo, password, broadcast = true) => {
                         PrivateKey.fromWif(results[2].wifKey),
                         memo_to_public,
                         nonce,
-                        memo
+                        new Buffer(memo, 'utf-8')
                     )
                 };
             }
