@@ -9,6 +9,7 @@ import i18n from '@/locales';
 import IndexedDB from './IndexedDBService';
 import find from 'lodash/find';
 import util from '@/common/util';
+import {accMult} from './CommonService';
 
 /**
  * get objects by id
@@ -527,7 +528,7 @@ const transfer = (from, to, amount, memo, password, broadcast = true) => {
                 },
                 from: fromAcc.id,
                 to: toAcc.id,
-                amount: {amount: amount * 100000, asset_id: '1.3.1'},
+                amount: {amount: accMult(amount, 100000), asset_id: '1.3.1'},
                 memo: memo_object
             }));
             return process_transaction(tr, from, password, broadcast);
