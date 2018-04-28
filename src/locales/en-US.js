@@ -15,6 +15,13 @@ const locale = {
         loyalty_program_icon: 'loyalty-program-btn-en.png',
         account_is_address: 'Account name is your address'
     },
+    market: {
+        title: 'Market'
+    },
+    tabs: {
+        wallet: 'Wallet',
+        market: 'Market'
+    },
     left_panel: {
         import_wallet: 'Import Wallet',
         create_wallet: 'Create Wallet',
@@ -175,11 +182,11 @@ const locale = {
     disclaimer: {
         title: 'Disclaimer',
         content: '<h4 class="text-center">Notice to Use and Disclaimer</h4>' +
-            '<p>GXS Wallet is a decentralized blockchain application. Please acquire a full understanding of the blockchain technology before use. Make sure you have the basic competence to use and manage decentralized wallet on a reasonable level.</p>' +
-            '<p>1. Once GXS Wallet account or password is lost, it is unable to retrieve. Please keep properly your account and password, and make sure to back up your private key to the wallet, which is the only credential to get back your wallet. GXChain is not responsible for the loss or theft of the wallet due to your failure to back up the private key, safekeep or properly use the wallet.</p>' +
-            '<p>2. If you obtain GXS Wallet app or any other application under the same name of this sofeware from any unauthorized third party, GXB will not vouch for its security. You will be responsible for the loss inflicted thereby. </p>' +
-            '<p>3. By transferring GXS via GXS wallet, you understand the IRRETRIEVABLE attribute of blockchain-based operation and will be responsible for irreversible loss due to your misoperation.</p>' +
-            '<p>4. You shall comply with relevant state laws, policies and regulations when trading on GXS Wallet.</p>',
+        '<p>GXS Wallet is a decentralized blockchain application. Please acquire a full understanding of the blockchain technology before use. Make sure you have the basic competence to use and manage decentralized wallet on a reasonable level.</p>' +
+        '<p>1. Once GXS Wallet account or password is lost, it is unable to retrieve. Please keep properly your account and password, and make sure to back up your private key to the wallet, which is the only credential to get back your wallet. GXChain is not responsible for the loss or theft of the wallet due to your failure to back up the private key, safekeep or properly use the wallet.</p>' +
+        '<p>2. If you obtain GXS Wallet app or any other application under the same name of this sofeware from any unauthorized third party, GXB will not vouch for its security. You will be responsible for the loss inflicted thereby. </p>' +
+        '<p>3. By transferring GXS via GXS wallet, you understand the IRRETRIEVABLE attribute of blockchain-based operation and will be responsible for irreversible loss due to your misoperation.</p>' +
+        '<p>4. You shall comply with relevant state laws, policies and regulations when trading on GXS Wallet.</p>',
         accept: 'I have read and accept'
     },
     unlock: {

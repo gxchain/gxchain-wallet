@@ -15,6 +15,13 @@ const locale = {
         loyalty_program_icon: 'loyalty-program-btn-zh.png',
         account_is_address: '账户名即转账地址'
     },
+    market: {
+        title: '行情'
+    },
+    tabs: {
+        wallet: '钱包',
+        market: '行情'
+    },
     left_panel: {
         import_wallet: '导入钱包',
         create_wallet: '创建钱包',

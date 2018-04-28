@@ -19,6 +19,37 @@ const get_objects = (ids) => {
     return Apis.instance().db_api().exec('get_objects', [ids]);
 };
 
+let assetsMap = {};
+/***
+ * get assets by ids
+ * @param ids
+ * @returns {bluebird}
+ */
+const get_assets_by_ids = (ids) => {
+    return new Promise(function (resolve, reject) {
+        let new_ids = [];
+        ids.forEach(id => {
+            if (!assetsMap[id]) {
+                new_ids.push(id);
+            }
+        });
+        if (new_ids.length > 0) {
+            return get_objects(new_ids).then(assets => {
+                assets.forEach(asset => {
+                    assetsMap[asset.id] = asset;
+                });
+                resolve(ids.map(id => {
+                    return assetsMap[id];
+                }));
+            }).catch(reject);
+        } else {
+            resolve(ids.map(id => {
+                return assetsMap[id];
+            }));
+        }
+    });
+};
+
 /**
  * get account information by name
  * @param account_name
@@ -465,6 +496,21 @@ const fetch_account_balance = (account_name) => {
 };
 
 /**
+ * fetch account balances by account name or id
+ * @param account_name
+ * @returns {bluebird}
+ */
+const fetch_account_balances = (account_name) => {
+    return new Promise((resolve, reject) => {
+        resolve(fetch_account(account_name).then((account) => {
+            return Apis.instance().db_api().exec('get_account_balances', [account.id, []]).then(function (balances) {
+                return balances && balances.length > 0 ? balances : {amount: 0, asset_id: '1.3.1'};
+            });
+        }));
+    });
+};
+
+/**
  * send GXS to another account
  * @param from
  * @param to
@@ -649,10 +695,12 @@ export {
     import_account,
     create_account,
     fetch_account_balance,
+    fetch_account_balances,
     set_disclaimer_accepted,
     get_disclaimer_accepted,
     fetch_account_histroy,
     fetch_block,
     lock_balance,
-    unlock_balance
+    unlock_balance,
+    get_assets_by_ids
 };
