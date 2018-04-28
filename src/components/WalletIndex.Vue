@@ -503,6 +503,7 @@
     .table-assets {
         position: relative;
         height: 25rem;
+        background: #fff;
         .list-block {
             border-top: .2rem solid #e7e7e7;
             background: #e7e7e7;
