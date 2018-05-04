@@ -248,7 +248,8 @@ const locale = {
             tip1: '转账成功',
             tip2: '已收到你的转账',
             done: '完成'
-        }
+        },
+        memo_tip: '检测到你输入的是平台账号，请务必填写Memo'
     },
     trade_history: {
         title: '收发记录',

@@ -248,7 +248,8 @@ const locale = {
             tip1: 'Send successful',
             tip2: 'has received your transfer',
             done: 'Done'
-        }
+        },
+        memo_tip: 'Found that you entered the platform account, please be sure to fill in Memo'
     },
     trade_history: {
         title: 'Trade History',
