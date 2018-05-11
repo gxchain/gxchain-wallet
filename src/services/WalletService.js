@@ -519,7 +519,7 @@ const fetch_account_balances = (account_name) => {
  * @param password
  * @returns {*}
  */
-const transfer = (from, to, amount, memo, password, broadcast = true) => {
+const transfer = (from, to, asset, fee_id, amount, memo, password, broadcast = true) => {
     return new Promise((resolve, reject) => {
         resolve(Promise.all([fetch_account(from), fetch_account(to), unlock_wallet(from, password)]).then(results => {
             let fromAcc = results[0];
@@ -570,11 +570,11 @@ const transfer = (from, to, amount, memo, password, broadcast = true) => {
             tr.add_operation(tr.get_type_operation('transfer', {
                 fee: {
                     amount: 0,
-                    asset_id: '1.3.1'
+                    asset_id: fee_id
                 },
                 from: fromAcc.id,
                 to: toAcc.id,
-                amount: {amount: accMult(amount, 100000), asset_id: '1.3.1'},
+                amount: {amount: accMult(amount, asset.precision), asset_id: asset.id},
                 memo: memo_object
             }));
             return process_transaction(tr, from, password, broadcast);

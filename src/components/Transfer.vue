@@ -49,11 +49,18 @@
                         <li class="tip-alert" v-if="error.account">
                             <div>{{error.account}}</div>
                         </li>
-                        <li class="item-content last">
+                        <li class="item-content item-link last">
                             <div class="item-inner">
                                 <div class="item-title label">{{$t('transfer.amount')}}</div>
                                 <div class="item-input">
-                                    <input @change="onAmountChange" class="input-amount" v-model="amount" type="number" maxlength="80" :placeholder="$t('transfer.amount_placeholder')">
+                                    <input @change="onAmountChange" class="input-amount" v-model="amount" type="number" maxlength="80" :placeholder="$t('transfer.amount_placeholder', {symbol: currentAsset.symbol})">
+                                </div>
+                                <div class="item-after">
+                                    <div class="item-select">
+                                        <select @change="switchAsset">
+                                            <option v-for="(asset, i) in assetList" :key="i" :value="i" :selected="asset.id==currentAsset.id">{{asset.symbol}}</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </li>
@@ -61,7 +68,17 @@
                             <div>{{error.amount}}</div>
                         </li>
                         <li class="tip-success" v-if="balance!=-1">
-                            <div v-html="$t('transfer.available', {amount: formattedBalance})"></div>
+                            <div v-html="$t('transfer.available', {amount: formattedBalance, symbol: currentAsset.symbol})"></div>
+                        </li>
+                        <li class="item-content item-link">
+                            <div class="item-inner">
+                                <div class="item-title label">{{$t('transfer.fee')}}</div>
+                                <div class="item-select">
+                                    <select @change="switchFee">
+                                        <option v-for="(fee, i) in feeList" :key="i" :value="i" :selected="fee.id==currentFee.id">{{fee.symbol}}</option>
+                                    </select>
+                                </div>
+                            </div>
                         </li>
                         <li class="item-content align-top">
                             <div class="item-inner">
@@ -88,7 +105,7 @@
             </div>
         </div>
         <password-confirm ref="unlock" @unlocking="unlocking"></password-confirm>
-        <transfer-confirm :transaction="transaction" :account="currentWallet.account" :pwd="password" :amount="amount" :to="account"
+        <transfer-confirm :transaction="transaction" :account="currentWallet.account" :pwd="password" :currentAsset="currentAsset" :feeType="currentFee" :amount="amount" :to="account"
             :memo="memo" ref="confirm"></transfer-confirm>
     </div>
 </template>
@@ -98,7 +115,8 @@
         get_wallets,
         get_wallet_index,
         set_wallet_index,
-        fetch_account_balance,
+        fetch_account_balances,
+        get_assets_by_ids,
         transfer
     } from '@/services/WalletService';
     import util from '@/common/util';
@@ -118,6 +136,15 @@
                 memo: '',
                 balance: -1,
                 password: '',
+                assetList: [],
+                currentAsset: {},
+                currentAssetIndex: 0,
+                feeList: [
+                    {id: '1.3.0', precision: 5, symbol: 'GXC'},
+                    {id: '1.3.1', precision: 5, symbol: 'GXS'}
+                ],
+                currentFee: {id: '1.3.1', precision: 5, symbol: 'GXS'},
+                currentFeeIndex: 0,
                 wallets: wallets,
                 currentWallet: wallets[get_wallet_index()],
                 currentWalletIndex: get_wallet_index(),
@@ -178,7 +205,7 @@
                     this.$refs.unlock.unlocked();
                     return;
                 }
-                transfer(this.currentWallet.account, this.account, this.amount, this.memo, pwd, false).then((resp) => {
+                transfer(this.currentWallet.account, this.account, this.currentAsset, this.currentFee.id, this.amount, this.memo, pwd, false).then((resp) => {
                     self.transaction = resp;
                     self.password = pwd;
                     self.$refs.confirm.show();
@@ -255,7 +282,6 @@
                 }
                 return null;
             },
-
             openQRScaner () {
                 let self = this;
                 if (this.isNative) {
@@ -272,8 +298,31 @@
                 }
             },
             fetch_balance () {
-                fetch_account_balance(this.currentWallet.account).then((balance) => {
-                    this.balance = balance.amount / 100000;
+                let wallet_balances;
+                fetch_account_balances(this.currentWallet.account).then(function (balances) {
+                    if (!balances) {
+                        return;
+                    }
+                    if (!(balances instanceof Array)) {
+                        wallet_balances = [balances];
+                    } else {
+                        wallet_balances = balances;
+                    }
+                    let asset_ids = wallet_balances.map(b => {
+                        return b.asset_id;
+                    });
+                    return get_assets_by_ids(asset_ids);
+                }).then(assets => {
+                    let assetMap = {};
+                    assets.forEach(asset => {
+                        assetMap[asset.id] = asset;
+                    });
+                    this.assetList = assets;
+                    this.currentAsset = assets[this.currentAssetIndex];
+                    let amount = wallet_balances.filter(item => {
+                        return item.asset_id == this.currentAsset.id;
+                    })[0].amount;
+                    this.balance = amount / Math.pow(10, this.currentAsset.precision);
                     setTimeout(() => {
                         $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
                     }, 500);
@@ -290,6 +339,17 @@
                 this.currentWalletIndex = index;
                 this.currentWallet = this.wallets[index];
             },
+            switchAsset (e) {
+                let index = e.target.value;
+                this.currentAssetIndex = index;
+                this.currentAsset = this.assetList[index];
+                this.fetch_balance();
+            },
+            switchFee (e) {
+                let index = e.target.value;
+                this.currentFeeIndex = index;
+                this.currentFee = this.feeList[index];
+            },
             validateMemo () {
                 let accounts = this.needMemoAccounts;
                 if (accounts.indexOf(this.account) > -1) {
@@ -304,7 +364,7 @@
                 if (!this.balance) {
                     return '0';
                 }
-                return filters.asset(this.balance);
+                return filters.asset(this.balance, this.currentAsset.precision);
             },
             submitEnable () {
                 return this.account && this.amount && (this.validateMemo() || this.memo);
@@ -349,6 +409,11 @@
 
     .list-block .last .item-inner:after {
         height: 0;
+    }
+
+    .list-block .last .item-after{
+        justify-content: flex-end;
+        align-items: center;
     }
 
     .list-block .item-select {
