@@ -6,8 +6,8 @@
         </div>
         <div class="content">
             <div class="text-center">
-                GXS&nbsp;
-                <span class="asset">{{amount | asset(2)}}</span>
+                {{currentAsset.symbol}}&nbsp;
+                <span class="asset">{{amount | asset(currentAsset.precision)}}</span>
             </div>
             <div class="list-block">
                 <ul>
@@ -30,7 +30,7 @@
                         <div class="item-inner">
                             <div class="item-title label">{{$t('transfer.fee')}}</div>
                             <div class="item-after">
-                                <span class="color-danger">{{fee | asset(2)}}</span>&nbsp;GXS</div>
+                                <span class="color-danger">{{fee | asset(feeType.precision)}}</span>&nbsp;{{feeType.symbol}}</div>
                         </div>
                     </li>
                 </ul>
@@ -79,6 +79,12 @@
             account: {
                 type: String
             },
+            currentAsset: {
+                type: Object
+            },
+            feeType: {
+                type: Object
+            },
             amount: {
                 type: String,
                 default: 0
@@ -100,7 +106,7 @@
                 if (!this.transaction) {
                     return 0;
                 } else {
-                    return this.transaction.serialize().operations[0][1].fee.amount / 100000;
+                    return this.transaction.serialize().operations[0][1].fee.amount / Math.pow(10, this.feeType.precision);
                 }
             }
         },
@@ -117,7 +123,7 @@
                     return;
                 }
                 this.submitting = true;
-                transfer(this.account, this.to, this.amount, this.memo, this.pwd, true).then((resp) => {
+                transfer(this.account, this.to, this.currentAsset, this.feeType.id, this.amount, this.memo, this.pwd, true).then((resp) => {
                     let query = {
                         account: this.to,
                         amount: this.amount,

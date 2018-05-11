@@ -94,7 +94,7 @@
                                     </div>
                                     <div class="price">
                                         <div class="digital">
-                                            {{balance.amount|number(balance.precision)}}
+                                            {{balance.amount | number(balance.precision)}}
                                         </div>
                                         <small>
                                             ≈&nbsp;{{balance.value}}
@@ -179,26 +179,33 @@
             },
             loadBalances (wallet) {
                 if (wallet.account) {
+                    let wallet_balances;
                     fetch_account_balances(wallet.account).then(function (balances) {
                         if (!balances) {
                             return;
                         }
-                        let asset_ids = balances.map(b => {
+                        if (!(balances instanceof Array)) {
+                            wallet_balances = [balances];
+                        } else {
+                            wallet_balances = balances;
+                        }
+                        let asset_ids = wallet_balances.map(b => {
                             return b.asset_id;
                         });
-                        get_assets_by_ids(asset_ids).then(assets => {
-                            let assetMap = {};
-                            assets.forEach(asset => {
-                                assetMap[asset.id] = asset;
-                            });
-                            wallet.balances = balances.map(b => {
-                                return {
-                                    asset_id: b.asset_id,
-                                    amount: b.amount / Math.pow(10, assetMap[b.asset_id].precision),
-                                    symbol: assetMap[b.asset_id].symbol,
-                                    value: 0
-                                };
-                            });
+                        return get_assets_by_ids(asset_ids);
+                    }).then(assets => {
+                        let assetMap = {};
+                        assets.forEach(asset => {
+                            assetMap[asset.id] = asset;
+                        });
+                        wallet.balances = wallet_balances.map(b => {
+                            return {
+                                asset_id: b.asset_id,
+                                amount: b.amount / Math.pow(10, assetMap[b.asset_id].precision),
+                                precision: assetMap[b.asset_id].precision,
+                                symbol: assetMap[b.asset_id].symbol,
+                                value: 0
+                            };
                         });
                     }).catch(ex => {
                         console.error(ex);

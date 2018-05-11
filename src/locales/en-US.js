@@ -209,7 +209,7 @@ const locale = {
         amount: 'Amount',
         amount_placeholder: 'Amount to send',
         receive_amount: 'Amount to receive',
-        available: '<span class="color-danger">{amount}</span> GXS Available',
+        available: '<span class="color-danger">{amount}</span> {symbol} Available',
         memo: 'Memo',
         fee: 'Fee',
         memo_placeholder: 'Optional',
