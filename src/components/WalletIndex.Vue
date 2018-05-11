@@ -4,10 +4,11 @@
             <div ref="bar" class="bar bar-nav buttons-fixed" style="background: rgba(37, 40, 113, 0)">
                 <a href="javascript:;" class="icon gxicon gxicon-user pull-left" @click="openPanel"></a>
                 <a v-if="isNative" href="javascript:;" class="icon gxicon gxicon-scan pull-right" @click="openQRScaner">
-                    <input ref="qrfile" @change="onFileUpload" v-if="!isNative" type="file" class="file-selector" />
+                    <input ref="qrfile" @change="onFileUpload" v-if="!isNative" type="file" class="file-selector"/>
                 </a>
             </div>
             <div ref="bg" id="bg"></div>
+            <wallet-tab></wallet-tab>
             <div class="content pull-to-refresh-content" ref="content">
                 <div class="row-top" ref="top" :class="{ios:$route.query.platform=='ios'}">
                     <div class="pull-to-refresh-layer">
@@ -42,7 +43,8 @@
                                         </a>
                                     </div>
                                     <p class="bak-tip">
-                                        <router-link :to="linkBackup(wallet.account)" class="btn-backup" :class="{visible:!wallet.backup_date}" href="javascript:;">
+                                        <router-link :to="linkBackup(wallet.account)" class="btn-backup"
+                                                     :class="{visible:!wallet.backup_date}" href="javascript:;">
                                             <small>{{$t('index.backup_wallet')}}&nbsp;
                                                 <span class="red-dot"></span>
                                                 <span class="icon icon-right"></span>
@@ -51,29 +53,19 @@
                                     </p>
                                 </div>
                                 <div class="row-balance">
-                                    <div class="item">
-                                        <small>
-                                            {{$t('index.asset_name')}}
-                                            <span v-if="wallet.isAssetHidden" class="gxicon gxicon-eye-off" @click="assetHideClick"></span>
-                                            <span v-else class="gxicon gxicon-eye" @click="assetHideClick"></span>
-                                        </small>
-                                        <div v-if="wallet.isAssetHidden" class="digit balance">****</div>
-                                        <div v-else class="digit balance">{{wallet.balance | asset(2)}}</div>
+                                    <div>
+                                        <small>≈</small>
+                                        <span class="digit balance">{{totalValue}}</span>
                                     </div>
-                                    <div class="item item-middle">
-                                        <div>≈</div>
-                                    </div>
-                                    <div class="item value">
+                                    <div>
                                         <small>{{$t('index.value')}}</small>
-                                        <div v-if="wallet.isAssetHidden" class="digit balance">****</div>
-                                        <div v-else class="digit balance">{{getMarketCap(wallet) | number(2)}}</div>
                                     </div>
                                 </div>
                             </div>
                         </swiper-slide>
                         <div class="swiper-pagination" slot="pagination" v-show="wallets&&wallets.length>1"></div>
                     </swiper>
-                    <router-link :to="link('/loyalty-program')" class="link-loyalty-program">
+                    <router-link :to="link('/loyalty-program')" class="link-loyalty-program" v-if="showLoyaltyProgram">
                         <img :src="`static/${$t('index.loyalty_program_icon')}`">
                     </router-link>
                 </div>
@@ -89,33 +81,26 @@
                         <span class="item-text">{{$t('index.receive')}}</span>
                     </a>
                 </div>
-                <!--exchange list-->
-                <div class="table-exchanges">
+                <!--assets-->
+                <div class="table-assets" v-if="currentWallet">
                     <div class="list-block media-list">
                         <ul>
-                            <li v-for="exchange in exchanges" :key="exchange.name">
-                                <!-- <router-link :to="`/realtime-quotations/${exchange.name}/${exchange.symbol}`" href="javascript:;"> -->
-                                <router-link :to="link(`/realtime-quotations/${exchange.name}/${exchange.symbol}`)" href="javascript:;">
-                                    <div class="item-content item-exchange">
-                                        <div class="item-inner">
-                                            <div class="title-ex-name">
-                                                <div class="asset-name">{{exchange.symbol}}</div>
-                                                <div class="ex-name">{{exchange.name}}</div>
-                                            </div>
-                                            <div class="price">
-                                                <div class="price_primary">
-                                                    {{exchange.price}}
-                                                </div>
-                                                <div class="price_secondary">
-                                                    {{_i18n.locale == 'zh-CN' ? `￥${exchange.price_rmb}` : `$${exchange.price_dollar}`}}
-                                                </div>
-                                            </div>
-                                            <div class="quote" :class="{green:exchange.quote>0}">
-                                                {{(exchange.quote > 0 ? '+' : '') + (exchange.quote).toFixed(2) + '%'}}
-                                            </div>
-                                        </div>
+                            <li v-for="balance in currentWallet.balances" class="item-content item-asset"
+                                :key="balance.symbol">
+                                <div class="item-inner">
+                                    <div class="symbol">
+                                        <account-image :account="balance.symbol" :size="15"></account-image>
+                                        <div>&nbsp;&nbsp;{{balance.symbol}}</div>
                                     </div>
-                                </router-link>
+                                    <div class="price">
+                                        <div class="digital">
+                                            {{balance.amount|number(balance.precision)}}
+                                        </div>
+                                        <small>
+                                            ≈&nbsp;{{balance.value}}
+                                        </small>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -127,23 +112,15 @@
     </div>
 </template>
 <script>
-    import {
-        swiper,
-        swiperSlide
-    } from 'vue-awesome-swiper';
+    import {swiper, swiperSlide} from 'vue-awesome-swiper';
     import AccountImage from './sub/AccountImage.vue';
     import LeftPanel from './sub/LeftPanel.vue';
     import AccountQRCode from './sub/AccountQRCode.vue';
-    import {
-        get_market_info
-    } from '@/services/MarketService';
     import util from '@/common/util';
+    import WalletTab from './sub/WalletTab';
 
     import {
-        get_wallets,
-        fetch_account_balance,
-        get_wallet_index,
-        set_wallet_index,
+        fetch_account_balances, get_assets_by_ids, get_wallet_index, get_wallets, set_wallet_index,
         set_wallets
     } from '@/services/WalletService';
     import filters from '@/filters';
@@ -154,16 +131,14 @@
             let self = this;
             let wallets = get_wallets();
             wallets = wallets.map((w) => {
-                w.balance = this.$t('index.balance_loading');
+                w.balances = [];
                 return w;
             });
             let wallet_index = get_wallet_index();
             return {
                 accountCopied: false,
-                stopFetchingMarket: false,
                 wallets: wallets,
                 currentWalletIndex: wallet_index,
-                exchanges: [],
                 swiperOption: {
                     pagination: '.swiper-pagination',
                     autoplay: false,
@@ -183,31 +158,11 @@
         },
         watch: {
             currentWalletIndex () {
-                this.loadBalance(this.currentWallet);
+                this.loadBalances(this.currentWallet);
             }
         },
 
         methods: {
-            //      goLoyaltyProgram() {
-            //        this.$router.push({path: this.link('/loyalty-program')})
-            //      },
-            loadMarketInfo () {
-                get_market_info().then((resp) => {
-                    this.exchanges = resp;
-                    setTimeout(() => {
-                        if (!this.stopFetchingMarket) {
-                            this.loadMarketInfo();
-                        }
-                    }, 3000);
-                }).catch(ex => {
-                    console.error(ex);
-                    setTimeout(() => {
-                        if (!this.stopFetchingMarket) {
-                            this.loadMarketInfo();
-                        }
-                    }, 3000);
-                });
-            },
             loadWallets () {
                 if (this.wallets.length == 0) {
                     this.$router.replace({
@@ -215,23 +170,43 @@
                     });
                 } else {
                     this.wallets.forEach((wallet) => {
-                        this.loadBalance(wallet);
+                        this.loadBalances(wallet);
                     });
                 }
                 setTimeout(() => {
                     $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
                 }, 500);
             },
-            loadBalance (wallet) {
+            loadBalances (wallet) {
                 if (wallet.account) {
-                    fetch_account_balance(wallet.account).then(function (balance) {
-                        wallet.balance = balance.amount / 100000;
+                    fetch_account_balances(wallet.account).then(function (balances) {
+                        if (!balances) {
+                            return;
+                        }
+                        let asset_ids = balances.map(b => {
+                            return b.asset_id;
+                        });
+                        get_assets_by_ids(asset_ids).then(assets => {
+                            let assetMap = {};
+                            assets.forEach(asset => {
+                                assetMap[asset.id] = asset;
+                            });
+                            wallet.balances = balances.map(b => {
+                                return {
+                                    asset_id: b.asset_id,
+                                    amount: b.amount / Math.pow(10, assetMap[b.asset_id].precision),
+                                    symbol: assetMap[b.asset_id].symbol,
+                                    value: 0
+                                };
+                            });
+                        });
                     }).catch(ex => {
                         console.error(ex);
                     });
                 }
             },
             getMarketCap (wallet) {
+                wallet.balances;
                 let balance = Number(wallet.balance);
                 let price = this.price;
                 if (!isNaN(balance) && price != '-') {
@@ -290,9 +265,7 @@
         mounted () {
             $.init();
             this.loadWallets();
-            this.stopFetchingMarket = false;
             this.isAssetHidden = this.currentWallet.isAssetHidden;
-            this.loadMarketInfo();
             if (this.isNative) {
                 window.webview = {
                     reload: () => {
@@ -333,8 +306,13 @@
             });
             this.swiper.update();
         },
-
         computed: {
+            totalValue () {
+                return '-';
+            },
+            showLoyaltyProgram () {
+                return localStorage.getItem('version') != '1.2.0';
+            },
             qrcode () {
                 return `qr://transfer?account=${this.currentWallet.account}`;
             },
@@ -368,7 +346,8 @@
             swiperSlide,
             AccountImage,
             LeftPanel,
-            AccountQRCode
+            AccountQRCode,
+            WalletTab
         }
     };
 </script>
@@ -461,30 +440,13 @@
         }
 
         .row-balance {
-            display: flex;
-            flex-direction: row;
+            small {
+                font-size: .6rem;
+            }
             padding: 0 .75rem;
-            .item {
-                flex: 2;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                .gxicon-eye-off,
-                .gxicon-eye {
-                    border: 5px solid transparent;
-                    background-clip: padding-box;
-                }
-                .digit {
-                    font-family: bebas;
-                    font-size: 1.1rem;
-                }
-            }
-            .item-middle {
-                flex: 1;
-                align-items: center;
-            }
-            .value {
-                align-items: flex-end;
+            .digit {
+                font-family: bebas;
+                font-size: 1.1rem;
             }
         }
     }
@@ -517,61 +479,10 @@
         }
     }
 
-    .table-exchanges {
-        position: relative;
-        height: 25rem;
-        background: #fff;
-        .list-block {
-            border-top: .2rem solid #e7e7e7;
-            margin-top: 0;
-            margin-bottom: 0;
-        }
-
-        .item-exchange .item-inner {
-            display: flex;
-            flex-direction: row;
-            padding-top: .75rem;
-            padding-bottom: .65rem;
-            .title-ex-name {
-                text-align: left;
-                .asset-name {
-                    color: #3d3d3b;
-                }
-                .ex-name {
-                    font-size: .7rem;
-                    color: #888;
-                }
-            }
-
-            .price {
-                text-align: right;
-                .price_secondary {
-                    font-size: .7rem;
-                    color: #888;
-                }
-            }
-
-            .quote {
-                height: 1.2rem;
-                line-height: 1.2rem;
-                width: 3.5rem;
-                text-align: right;
-                padding: 0 .2rem;
-                font-weight: bold;
-                font-size: .65rem;
-                color: #fff;
-                background: #d63932;
-                &.green {
-                    background: #076f8a;
-                }
-            }
-        }
-    }
-
     .pull-to-refresh-layer {
         position: absolute;
         top: 1rem;
-        .line-scale>div {
+        .line-scale > div {
             background-color: #fff !important;
         }
     }
@@ -586,6 +497,34 @@
         img {
             width: 100%;
             height: 100%;
+        }
+    }
+
+    .table-assets {
+        position: relative;
+        height: 25rem;
+        background: #fff;
+        .list-block {
+            border-top: .2rem solid #e7e7e7;
+            background: #e7e7e7;
+            margin-top: 0;
+            margin-bottom: 0;
+            .item-asset {
+                .item-inner {
+                    display: flex;
+                    flex-direction: row;
+                    padding-top: .75rem;
+                    padding-bottom: .65rem;
+                    .symbol {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                    }
+                    .price {
+                        text-align: right;
+                    }
+                }
+            }
         }
     }
 </style>

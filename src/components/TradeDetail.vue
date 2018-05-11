@@ -22,7 +22,8 @@
                                 <div class="item-title label">{{$t('trade.label.from')}}</div>
                                 <div class="item-after">
                                     {{formatted_account(from)}}&nbsp;
-                                    <account-image class="sm-img" :account="formatted_account(from)" :size="10"></account-image>
+                                    <account-image class="sm-img" :account="formatted_account(from)"
+                                                   :size="10"></account-image>
                                 </div>
                             </div>
                         </li>
@@ -31,7 +32,8 @@
                                 <div class="item-title label">{{$t('trade.label.to')}}</div>
                                 <div class="item-after">
                                     {{formatted_account(to)}}&nbsp;
-                                    <account-image class="sm-img" :account="formatted_account(to)" :size="10"></account-image>
+                                    <account-image class="sm-img" :account="formatted_account(to)"
+                                                   :size="10"></account-image>
                                 </div>
                             </div>
                         </li>
@@ -55,7 +57,16 @@
                             <div class="item-inner">
                                 <div class="item-title label">{{$t('trade.label.memo')}}</div>
                                 <div class="item-after">
-                                    <span class="gxicon gxicon-lock" @click="unlock" v-if="!unlocked&&memo.message"></span>{{memo.decryptedMemo}}
+                                    <span class="gxicon gxicon-lock" @click="unlock"
+                                          v-if="!unlocked&&memo.message"></span>{{memo.decryptedMemo}}
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-content" v-if="txid">
+                            <div class="item-inner">
+                                <div class="item-title label">txid</div>
+                                <div class="item-after">
+                                    <a href="javascript:;" class="icon icon-search" @click="showTxid"></a>
                                 </div>
                             </div>
                         </li>
@@ -100,6 +111,7 @@
                 accounts: {},
                 items: {},
                 unlocked: false,
+                txid: '',
                 error: {
                     common: ''
                 }
@@ -110,6 +122,18 @@
             this.loadTradeInfo();
         },
         methods: {
+            showTxid () {
+                let self = this;
+                $.modal({
+                    title: 'txid',
+                    text: `<div style="word-break: break-all;">${self.txid}</div>`,
+                    buttons: [
+                        {
+                            text: self.$t('trade.modal.ok')
+                        }
+                    ]
+                });
+            },
             loadTradeInfo () {
                 Promise.all([
                     fetch_account(this.currentWallet.account),
@@ -127,6 +151,9 @@
                     }, operation.op[1].memo);
                     fetch_block(operation.block_num).then((block) => {
                         this.timestamp = new Date(block.timestamp + 'Z').toLocaleString();
+                        if (block.transaction_ids[operation.trx_in_block] != undefined) {
+                            this.txid = block.transaction_ids[operation.trx_in_block];
+                        }
                     });
                 });
             },

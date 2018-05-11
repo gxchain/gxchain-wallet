@@ -67,10 +67,14 @@
                             <div class="item-inner">
                                 <div class="item-title label">{{$t('transfer.memo')}}</div>
                                 <div class="item-input">
-                                    <textarea v-model="memo" :placeholder="$t('transfer.memo_placeholder')"></textarea>
+                                    <textarea v-model="memo" :placeholder="showMemoPlaceholder ? $t('transfer.memo_placeholder') : ''"></textarea>
                                 </div>
                             </div>
                         </li>
+                        <div class="alert-tip" v-if="!showMemoPlaceholder">
+                            <img src="static/alert.png" alt="">
+                            <span>{{$t('transfer.memo_tip')}}</span>
+                        </div>
                     </ul>
                 </div>
                 <div class="content-block">
@@ -101,7 +105,8 @@
     import filters from '@/filters';
     import PasswordConfirm from './sub/PasswordConfirm.vue';
     import TransferConfirm from './sub/TransferConfirm.vue';
-
+    import {get_need_memo_accounts} from '@/services/MarketService';
+    import errorHandler from '@/common/errorHandler';
     export default {
         filters,
         data () {
@@ -120,7 +125,8 @@
                     account: '',
                     amount: '',
                     other: ''
-                }
+                },
+                needMemoAccounts: []
             };
         },
         watch: {
@@ -133,6 +139,7 @@
             },
             currentWallet () {
                 this.error.other = '';
+                this.fetch_balance();
             }
         },
         mounted () {
@@ -144,6 +151,14 @@
             this.fetch_balance();
             $(this.$el).on('refresh', '.pull-to-refresh-content', (e) => {
                 this.fetch_balance();
+            });
+            get_need_memo_accounts().then((resp) => {
+                let result = resp.data;
+                if (result && result.data) {
+                    this.needMemoAccounts = result.data;
+                }
+            }).catch((ex) => {
+                errorHandler(ex);
             });
         },
         methods: {
@@ -274,6 +289,14 @@
                 set_wallet_index(index);
                 this.currentWalletIndex = index;
                 this.currentWallet = this.wallets[index];
+            },
+            validateMemo () {
+                let accounts = this.needMemoAccounts;
+                if (accounts.indexOf(this.account) > -1) {
+                    return false;
+                } else {
+                    return true;
+                }
             }
         },
         computed: {
@@ -284,7 +307,10 @@
                 return filters.asset(this.balance);
             },
             submitEnable () {
-                return this.account && this.amount;
+                return this.account && this.amount && (this.validateMemo() || this.memo);
+            },
+            showMemoPlaceholder () {
+                return this.validateMemo();
             }
         },
         components: {
@@ -327,5 +353,17 @@
 
     .list-block .item-select {
         width: 100%;
+    }
+    .alert-tip {
+        display: flex;
+        img {
+            width: 1rem;
+            margin-right: .6rem;
+        }
+        font-size: .7rem;
+        background-color: #f1d3d0;
+        color: #c2433b;
+        align-items: center;
+        padding: .75rem;
     }
 </style>

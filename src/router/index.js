@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import WalletIndex from '@/components/WalletIndex';
+import Market from '@/components/Market';
 import WalletCreateIndex from '@/components/WalletCreateIndex';
 import WalletCreateStep1 from '@/components/WalletCreateStep1';
 import WalletCreateStep2 from '@/components/WalletCreateStep2';
@@ -22,7 +23,7 @@ import LoyaltyProgramDetail from '@/components/LoyaltyProgramDetail';
 import store from '@/vuex/store';
 import connect from '@/common/connect';
 import cordovaLoader from '@/common/cordovaLoader';
-import { get_wallets, bak_wallet } from '@/services/WalletService';
+import {bak_wallet, get_wallets, merge_wallets} from '@/services/WalletService';
 import RouterTransition from '@/plugins/RouterTransition';
 import RealtimeQuotations from '@/components/RealtimeQuotations';
 
@@ -44,6 +45,14 @@ let router = new Router({
             },
             name: 'WalletIndex',
             component: WalletIndex
+        },
+        {
+            path: '/market',
+            meta: {
+                title: '行情'
+            },
+            name: 'Market',
+            component: Market
         },
         {
             path: '/wallet-create',
@@ -216,27 +225,42 @@ router.beforeEach((to, from, next) => {
     let platform = (from.name ? from.query.platform : to.query.platform) || 'browser';
     to.query.platform = platform;
     let isNative = platform == 'ios' || platform == 'android';
+    let version = from.query.version || to.query.version;
+    if (version) {
+        localStorage.setItem('version', version);
+    }
     const goNext = () => {
         connect(() => {
             bak_wallet();
-            // merge_wallets().then(()=>{
-            let wallets = get_wallets();
-            if ((!wallets || wallets.length == 0) && !inWhiteList(to)) {
-                let query = $.extend({ platform: platform }, to.query);
-                router.replace({
-                    path: `/wallet-create?${$.param(query)}`
-                });
-            } else {
-                store.commit('setLoading', { loading: false });
-                next();
-            }
-            // })
+            merge_wallets().then(() => {
+                let wallets = get_wallets();
+                if ((!wallets || wallets.length == 0) && !inWhiteList(to)) {
+                    let query = $.extend({platform: platform}, to.query);
+                    router.replace({
+                        path: `/wallet-create?${$.param(query)}`
+                    });
+                } else {
+                    store.commit('setLoading', {loading: false});
+                    next();
+                }
+            }).catch((ex) => {
+                let wallets = get_wallets();
+                if ((!wallets || wallets.length == 0) && !inWhiteList(to)) {
+                    let query = $.extend({platform: platform}, to.query);
+                    router.replace({
+                        path: `/wallet-create?${$.param(query)}`
+                    });
+                } else {
+                    store.commit('setLoading', {loading: false});
+                    next();
+                }
+            });
         });
     };
     $.hidePreloader();
     $.closePanel();
     $.closeModal();
-    store.commit('setIsNative', { isNative: isNative });
+    store.commit('setIsNative', {isNative: isNative});
     cordovaLoader.load(platform).then(function () {
         goNext();
     });

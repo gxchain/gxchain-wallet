@@ -3,7 +3,7 @@
         <div class="page">
             <header class="bar bar-nav">
                 <h3 class="title">{{$t('realtime_quotations.title')}}</h3>
-                <router-link :to="link('/')" replace class="icon icon-left"></router-link>
+                <router-link :to="link('/market')" replace class="icon icon-left"></router-link>
             </header>
             <div class="content">
                 <div class="exchange">

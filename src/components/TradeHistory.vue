@@ -34,7 +34,7 @@
                                 <div class="item-title-row">
                                     <account-image class="image" :size="20" :account="formatted_account(history.account)"></account-image>
                                     <div>
-                                        <div>{{formatted_account(history.account)}}</div>
+                                        <div class="history-account">{{formatted_account(history.account)}}</div>
                                         <div>
                                             <small class="color-light-gray">{{$t(`trade_history.${history.type}`)}}</small>
                                         </div>
@@ -209,5 +209,8 @@
         span {
             padding-right: 5px;
         }
+    }
+    .history-account {
+        word-break: break-all;
     }
 </style>

@@ -1,5 +1,5 @@
-import { PrivateKey, key, Aes, TransactionBuilder, TransactionHelper } from 'gxbjs';
-import { Apis } from 'gxbjs-ws';
+import {Aes, key, PrivateKey, TransactionBuilder, TransactionHelper} from 'gxbjs';
+import {Apis} from 'gxbjs-ws';
 import Promise from 'bluebird';
 import uniq from 'lodash/uniq';
 import some from 'lodash/some';
@@ -7,6 +7,9 @@ import unionBy from 'lodash/unionBy';
 import Vue from 'vue';
 import i18n from '@/locales';
 import IndexedDB from './IndexedDBService';
+import find from 'lodash/find';
+import util from '@/common/util';
+import {accMult} from './CommonService';
 
 /**
  * get objects by id
@@ -14,6 +17,37 @@ import IndexedDB from './IndexedDBService';
  */
 const get_objects = (ids) => {
     return Apis.instance().db_api().exec('get_objects', [ids]);
+};
+
+let assetsMap = {};
+/***
+ * get assets by ids
+ * @param ids
+ * @returns {bluebird}
+ */
+const get_assets_by_ids = (ids) => {
+    return new Promise(function (resolve, reject) {
+        let new_ids = [];
+        ids.forEach(id => {
+            if (!assetsMap[id]) {
+                new_ids.push(id);
+            }
+        });
+        if (new_ids.length > 0) {
+            return get_objects(new_ids).then(assets => {
+                assets.forEach(asset => {
+                    assetsMap[asset.id] = asset;
+                });
+                resolve(ids.map(id => {
+                    return assetsMap[id];
+                }));
+            }).catch(reject);
+        } else {
+            resolve(ids.map(id => {
+                return assetsMap[id];
+            }));
+        }
+    });
 };
 
 /**
@@ -66,18 +100,16 @@ const get_wallets = () => {
 
 const bak_wallet = () => {
     let localStorageWallets = get_wallets();
-    if (!(localStorage.getItem(`gxb_wallets_bak_${Apis.instance().chain_id}`))) {
-        localStorage.setItem(`gxb_wallets_bak_${Apis.instance().chain_id}`, JSON.stringify(localStorageWallets));
+    if (!(localStorage.getItem(`gxb_wallets_bak3_${Apis.instance().chain_id}`))) {
+        localStorage.setItem(`gxb_wallets_bak3_${Apis.instance().chain_id}`, JSON.stringify(localStorageWallets));
     }
 };
 
-/**
- * merge wallets into localStorage
- */
 const merge_wallets = () => {
     return new Promise((resolve, reject) => {
-        let walletDB = null;
-        return IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id}`, 1, walletDB, {
+        let query = util.query2Obj(location.hash);
+        let isNative = query.platform === 'ios' || query.platform === 'android';
+        resolve(IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id}`, 1, {
             name: 'wallet',
             key: 'walletKey'
         }).then((db) => {
@@ -85,18 +117,38 @@ const merge_wallets = () => {
             return IndexedDB.getData(walletDB, 'wallet', `gxb_wallets_${Apis.instance().chain_id}`).then((res) => {
                 if (res) {
                     let localStorageWallets = get_wallets();
-                    if (!(localStorage.getItem(`gxb_wallets_bak_${Apis.instance().chain_id}`))) {
-                        localStorage.setItem(`gxb_wallets_bak_${Apis.instance().chain_id}`, JSON.stringify(localStorageWallets));
-                    }
                     let unionWallets = unionBy(localStorageWallets, res.value, 'account');
                     localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(unionWallets));
                 }
                 IndexedDB.closeDB(walletDB);
-                resolve();
+                if (isNative) {
+                    return get_wallet_native().then((wallets_native) => {
+                        let localStorageWallets = get_wallets();
+                        let unionWallets = unionBy(localStorageWallets, wallets_native, 'account');
+                        localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(unionWallets));
+                        return null;
+                    }).catch(ex => {
+                        console.error('failed when merge wallets from native', ex);
+                        return null;
+                    });
+                } else {
+                    return null;
+                }
+            }).catch(ex => {
+                return null;
             });
         }).catch((ex) => {
-            resolve();
-        });
+            console.error('failed when merge wallets from indexed db', ex);
+            return get_wallet_native().then((wallets_native) => {
+                let localStorageWallets = get_wallets();
+                let unionWallets = unionBy(localStorageWallets, wallets_native, 'account');
+                localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(unionWallets));
+                return null;
+            }).catch(ex => {
+                console.error('failed when merge wallets from native', ex);
+                return null;
+            });
+        }));
     });
 };
 
@@ -126,6 +178,49 @@ const set_wallets_db = (wallets) => {
 };
 
 /**
+ * save wallets to native storage
+ * @param wallets
+ * @returns {bluebird}
+ */
+const set_wallet_native = (wallets) => {
+    return new Promise((resolve, reject) => {
+        let query = util.query2Obj(location.hash);
+        let pluginName = 'AppConfig';
+        if (query.platform === 'ios') {
+            pluginName = 'KV';
+        }
+        cordova.exec(function () { //eslint-disable-line
+            console.log('wallets have been save to native storage successfully');
+            resolve();
+        }, function () {
+            reject();
+        }, pluginName, 'set', [`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(wallets)]);
+    });
+};
+
+/**
+ * load wallets from native storage
+ * @returns {bluebird}
+ */
+const get_wallet_native = () => {
+    return new Promise((resolve, reject) => {
+        let query = util.query2Obj(location.hash);
+        let pluginName = 'AppConfig';
+        if (query.platform === 'ios') {
+            pluginName = 'KV';
+        }
+        cordova.exec(function (result) { //eslint-disable-line
+            console.log('wallets from native storage:', result);
+            let wallets_str = ((result && result instanceof String) ? result : '[]') || '[]';
+            let wallets = JSON.parse(wallets_str);
+            resolve(wallets);
+        }, function () {
+            reject();
+        }, pluginName, 'get', [`gxb_wallets_${Apis.instance().chain_id}`]);
+    });
+};
+
+/**
  * save wallets into local storage
  * @param wallets
  */
@@ -134,6 +229,7 @@ const set_wallets = (wallets) => {
         localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(wallets));
         try {
             set_wallets_db(wallets);
+            set_wallet_native(wallets);
         } catch (ex) {
 
         } finally {
@@ -239,7 +335,7 @@ const del_wallet = (wallet) => {
 const unlock_wallet = (account, password) => {
     return new Promise((resolve, reject) => {
         let wallets = get_wallets();
-        let wallet = wallets.find(function (w) {
+        let wallet = find(wallets, function (w) {
             return w.account == account;
         });
         let password_private = PrivateKey.fromSeed(password);
@@ -393,7 +489,22 @@ const fetch_account_balance = (account_name) => {
     return new Promise((resolve, reject) => {
         resolve(fetch_account(account_name).then((account) => {
             return Apis.instance().db_api().exec('get_account_balances', [account.id, ['1.3.1']]).then(function (balances) {
-                return balances && balances.length > 0 ? balances[0] : { amount: 0, asset_id: '1.3.1' };
+                return balances && balances.length > 0 ? balances[0] : {amount: 0, asset_id: '1.3.1'};
+            });
+        }));
+    });
+};
+
+/**
+ * fetch account balances by account name or id
+ * @param account_name
+ * @returns {bluebird}
+ */
+const fetch_account_balances = (account_name) => {
+    return new Promise((resolve, reject) => {
+        resolve(fetch_account(account_name).then((account) => {
+            return Apis.instance().db_api().exec('get_account_balances', [account.id, []]).then(function (balances) {
+                return balances && balances.length > 0 ? balances : {amount: 0, asset_id: '1.3.1'};
             });
         }));
     });
@@ -450,7 +561,7 @@ const transfer = (from, to, amount, memo, password, broadcast = true) => {
                         PrivateKey.fromWif(results[2].wifKey),
                         memo_to_public,
                         nonce,
-                        memo
+                        new Buffer(memo, 'utf-8')
                     )
                 };
             }
@@ -463,7 +574,7 @@ const transfer = (from, to, amount, memo, password, broadcast = true) => {
                 },
                 from: fromAcc.id,
                 to: toAcc.id,
-                amount: { amount: amount * 100000, asset_id: '1.3.1' },
+                amount: {amount: accMult(amount, 100000), asset_id: '1.3.1'},
                 memo: memo_object
             }));
             return process_transaction(tr, from, password, broadcast);
@@ -584,10 +695,12 @@ export {
     import_account,
     create_account,
     fetch_account_balance,
+    fetch_account_balances,
     set_disclaimer_accepted,
     get_disclaimer_accepted,
     fetch_account_histroy,
     fetch_block,
     lock_balance,
-    unlock_balance
+    unlock_balance,
+    get_assets_by_ids
 };
