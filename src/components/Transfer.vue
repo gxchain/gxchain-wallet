@@ -138,7 +138,7 @@
                 password: '',
                 assetList: [],
                 currentAsset: {},
-                currentAssetIndex: 0,
+                currentAssetId: '1.3.1',
                 feeList: [
                     {id: '1.3.0', precision: 5, symbol: 'GXC'},
                     {id: '1.3.1', precision: 5, symbol: 'GXS'}
@@ -318,7 +318,12 @@
                         assetMap[asset.id] = asset;
                     });
                     this.assetList = assets;
-                    this.currentAsset = assets[this.currentAssetIndex];
+                    for (let i = 0; i < this.assetList.length; i++) {
+                        if (this.currentAssetId == this.assetList[i].id) {
+                            this.currentAsset = this.assetList[i];
+                            break;
+                        }
+                    }
                     let amount = wallet_balances.filter(item => {
                         return item.asset_id == this.currentAsset.id;
                     })[0].amount;
@@ -340,9 +345,14 @@
                 this.currentWallet = this.wallets[index];
             },
             switchAsset (e) {
-                let index = e.target.value;
-                this.currentAssetIndex = index;
-                this.currentAsset = this.assetList[index];
+                let id = e.target.value;
+                this.currentAssetId = id;
+                for (let i = 0; i < this.assetList.length; i++) {
+                    if (this.currentAssetId == this.assetList[i].id) {
+                        this.currentAsset = this.assetList[i];
+                        break;
+                    }
+                }
                 this.fetch_balance();
             },
             switchFee (e) {
