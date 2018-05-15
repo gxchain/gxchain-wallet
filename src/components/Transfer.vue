@@ -58,7 +58,7 @@
                                 <div class="item-after">
                                     <div class="item-select">
                                         <select @change="switchAsset">
-                                            <option v-for="(asset, i) in assetList" :key="i" :value="i" :selected="asset.id==currentAsset.id">{{asset.symbol}}</option>
+                                            <option v-for="(asset, i) in assetList" :key="i" :value="asset.id" :selected="asset.id==currentAsset.id">{{asset.symbol}}</option>
                                         </select>
                                     </div>
                                 </div>
