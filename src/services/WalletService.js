@@ -577,7 +577,7 @@ const transfer = (from, to, asset, fee_id, amount, memo, password, broadcast = t
                 },
                 from: fromAcc.id,
                 to: toAcc.id,
-                amount: {amount: accMult(amount, asset.precision), asset_id: asset.id},
+                amount: {amount: accMult(amount, Math.pow(10, asset.precision)), asset_id: asset.id},
                 memo: memo_object
             }));
             return process_transaction(tr, from, password, broadcast);
