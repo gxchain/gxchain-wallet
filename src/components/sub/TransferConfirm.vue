@@ -7,7 +7,7 @@
         <div class="content">
             <div class="text-center">
                 {{currentAsset.symbol}}&nbsp;
-                <span class="asset">{{amount | asset(currentAsset.precision)}}</span>
+                <span class="asset">{{amount | asset(2)}}</span>
             </div>
             <div class="list-block">
                 <ul>
@@ -30,7 +30,7 @@
                         <div class="item-inner">
                             <div class="item-title label">{{$t('transfer.fee')}}</div>
                             <div class="item-after">
-                                <span class="color-danger">{{fee | asset(feeType.precision)}}</span>&nbsp;{{feeType.symbol}}</div>
+                                <span class="color-danger">{{fee | asset(2)}}</span>&nbsp;{{feeType.symbol}}</div>
                         </div>
                     </li>
                 </ul>
@@ -127,6 +127,7 @@
                     let query = {
                         account: this.to,
                         amount: this.amount,
+                        symbol: this.currentAsset.symbol,
                         from: this.$route.fullPath
                     };
                     this.$router.push({

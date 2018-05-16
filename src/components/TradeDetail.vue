@@ -12,7 +12,7 @@
                         <account-image :account="formatted_account(account)" :size="45"></account-image>
                     </p>
                     <p>
-                        <span class="asset">{{type == 'sent' ? '-' : '+'}}{{amount | asset(2)}}</span>&nbsp;GXS
+                        <span class="asset">{{type == 'sent' ? '-' : '+'}}{{amount | asset(2)}}</span>&nbsp;{{symbol}}
                     </p>
                 </div>
                 <div class="list-block">
@@ -39,7 +39,7 @@
                         </li>
                         <li class="item-content">
                             <div class="item-inner">
-                                <div class="item-title label">{{$t('trade.label.fee')}}</div>
+                                <div class="item-title label">{{$t('trade.label.fee', {symbol: fee_symbol})}}</div>
                                 <div class="item-after">
                                     {{fee}}
                                 </div>
@@ -88,6 +88,8 @@
         fetch_account,
         get_wallets,
         get_wallet_index,
+        get_assets_by_ids,
+        get_fee_list,
         unlock_wallet
     } from '@/services/WalletService';
     import {
@@ -102,7 +104,10 @@
                 account_id: '-unknown',
                 wallets: get_wallets(),
                 wallet_index: get_wallet_index(),
+                feeList: get_fee_list(),
                 amount: '',
+                symbol: '',
+                fee_symbol: '',
                 timestamp: '',
                 fee: '',
                 from: '',
@@ -139,16 +144,24 @@
                     fetch_account(this.currentWallet.account),
                     get_objects([this.$route.params.id])
                 ]).then((results) => {
+                    let feeMap = {};
+                    this.feeList.forEach(fee => {
+                        feeMap[fee.id] = fee;
+                    });
                     let account = results[0];
                     this.account_id = account.id;
                     let operation = results[1][0];
                     this.from = operation.op[1].from;
                     this.to = operation.op[1].to;
-                    this.fee = operation.op[1].fee.amount / 100000;
-                    this.amount = operation.op[1].amount.amount / 100000;
+                    this.fee = operation.op[1].fee.amount / Math.pow(10, feeMap[operation.op[1].fee.asset_id].precision);
+                    this.fee_symbol = feeMap[operation.op[1].fee.asset_id].symbol;
                     this.memo = $.extend({
                         decryptedMemo: ''
                     }, operation.op[1].memo);
+                    get_assets_by_ids([operation.op[1].amount.asset_id]).then(res => {
+                        this.amount = operation.op[1].amount.amount / Math.pow(10, res[0].precision);
+                        this.symbol = res[0].symbol;
+                    });
                     fetch_block(operation.block_num).then((block) => {
                         this.timestamp = new Date(block.timestamp + 'Z').toLocaleString();
                         if (block.transaction_ids[operation.trx_in_block] != undefined) {

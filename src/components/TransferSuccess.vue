@@ -15,7 +15,7 @@
                             <span>{{$t('transfer.success.tip2')}}</span>
                         </p>
                         <p class="text-center">
-                            <span class="asset">{{$route.query.amount | asset(2)}}</span>&nbsp;GXS</p>
+                            <span class="asset">{{$route.query.amount | asset(2)}}</span>&nbsp;{{$route.query.symbol}}</p>
                     </div>
                 </div>
                 <div class="content-block button-block">

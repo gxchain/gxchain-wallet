@@ -213,7 +213,6 @@
                 }
             },
             getMarketCap (wallet) {
-                wallet.balances;
                 let balance = Number(wallet.balance);
                 let price = this.price;
                 if (!isNaN(balance) && price != '-') {

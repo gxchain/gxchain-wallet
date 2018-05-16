@@ -117,6 +117,7 @@
         set_wallet_index,
         fetch_account_balances,
         get_assets_by_ids,
+        get_fee_list,
         transfer
     } from '@/services/WalletService';
     import util from '@/common/util';
@@ -139,11 +140,8 @@
                 assetList: [],
                 currentAsset: {},
                 currentAssetId: '1.3.1',
-                feeList: [
-                    {id: '1.3.0', precision: 5, symbol: 'GXC'},
-                    {id: '1.3.1', precision: 5, symbol: 'GXS'}
-                ],
-                currentFee: {id: '1.3.1', precision: 5, symbol: 'GXS'},
+                feeList: get_fee_list(),
+                currentFee: get_fee_list()[0],
                 currentFeeIndex: 0,
                 wallets: wallets,
                 currentWallet: wallets[get_wallet_index()],

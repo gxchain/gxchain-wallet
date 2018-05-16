@@ -26,7 +26,7 @@
             <div class="tip-info text-center">
                 {{$t('trade_history.currentAccount', {account: currentWallet.account})}}
             </div>
-            <div class="list-block history" v-if="histories.length>0">
+            <div class="list-block history" v-if="histories.length>0&&loaded">
                 <ul>
                     <li v-for="history in histories" :key="history.id">
                         <router-link :to="link(`/trade/${history.id}`)" class="item-content">
@@ -43,7 +43,7 @@
                                 <div class="item-after">
                                     <div>
                                         <span :class="{'color-positive':history.type == 'received','color-negative':history.type == 'sent'}">{{history.type == 'sent' ? '-' : '+'}}{{history.amount | asset(2)}}</span>
-                                        <small>GXS</small>
+                                        <small>{{history.symbol}}</small>
                                     </div>
                                     <div>
                                         <small class="color-light-gray">{{$d(history.timestamp,'long')}}</small>
@@ -54,7 +54,7 @@
                     </li>
                 </ul>
             </div>
-            <p class="no-reocrd text-center" v-if="histories.length==0">
+            <p class="no-reocrd text-center" v-if="histories.length==0&&loaded">
                 <span class="icon icon-edit"></span>{{$t('trade_history.empty')}}
             </p>
         </div>
@@ -68,7 +68,8 @@
         get_objects,
         get_wallets,
         get_wallet_index,
-        set_wallet_index
+        set_wallet_index,
+        get_assets_by_ids
     } from '@/services/WalletService';
     import AccountImage from './sub/AccountImage.vue';
     import Promise from 'bluebird';
@@ -78,6 +79,7 @@
         filters,
         data () {
             return {
+                loaded: false,
                 wallets: get_wallets(),
                 currentWalletIndex: get_wallet_index(),
                 histories: [],
@@ -90,14 +92,25 @@
                 if (!this.currentWallet && this.currentWallet.account) {
                     return;
                 }
+                let account = {};
+                let histories = [];
                 Promise.all([
                     fetch_account(this.currentWallet.account),
                     fetch_account_histroy(this.currentWallet.account)
                 ]).then((results) => {
-                    let account = results[0];
-                    let histories = results[1] || [];
+                    account = results[0];
+                    histories = results[1];
                     histories = histories.filter((hist) => {
-                        return hist.op[0] == 0 && hist.op[1].amount.asset_id == '1.3.1';
+                        return hist.op[0] == 0;
+                    });
+                    let asset_ids = histories.map(hist => {
+                        return hist.op[1].amount.asset_id;
+                    });
+                    return get_assets_by_ids(asset_ids);
+                }).then((assets) => {
+                    let assetMap = {};
+                    assets.forEach(asset => {
+                        assetMap[asset.id] = asset;
                     });
                     histories = histories.map((hist) => {
                         let type = hist.op[1].to == account.id ? 'received' : 'sent';
@@ -106,7 +119,9 @@
                             id: hist.id,
                             type: type,
                             account: acc,
-                            amount: hist.op[1].amount.amount / 100000,
+                            symbol: assetMap[hist.op[1].amount.asset_id].symbol,
+                            precision: assetMap[hist.op[1].amount.asset_id].precision,
+                            amount: hist.op[1].amount.amount / Math.pow(10, assetMap[hist.op[1].amount.asset_id].precision),
                             timestamp: ''
                         };
                         fetch_block(hist.block_num).then((block) => {
@@ -115,11 +130,14 @@
                         return result;
                     });
                     this.histories = histories;
+                    this.loaded = true;
+                    $.hideIndicator();
                     setTimeout(() => {
                         $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
                     }, 500);
                 }).catch(ex => {
                     console.log(ex);
+                    this.loaded = true;
                     setTimeout(() => {
                         $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
                     }, 500);
@@ -158,6 +176,7 @@
         },
         mounted () {
             $.init();
+            $.showIndicator();
             this.loadHistories();
             $.initPullToRefresh(this.$el);
             $(this.$el).on('refresh', '.pull-to-refresh-content', (e) => {

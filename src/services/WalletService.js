@@ -53,6 +53,16 @@ const get_assets_by_ids = (ids) => {
     });
 };
 
+/***
+ * get fee list
+ */
+const get_fee_list = () => {
+    return [
+        {id: '1.3.1', precision: 5, symbol: 'GXS'},
+        {id: '1.3.0', precision: 5, symbol: 'GXC'}
+    ];
+};
+
 /**
  * get account information by name
  * @param account_name
@@ -507,7 +517,17 @@ const fetch_account_balances = (account_name) => {
     return new Promise((resolve, reject) => {
         resolve(fetch_account(account_name).then((account) => {
             return Apis.instance().db_api().exec('get_account_balances', [account.id, []]).then(function (balances) {
-                return balances && balances.length > 0 ? balances : {amount: 0, asset_id: '1.3.1'};
+                if (balances && balances.length > 0) {
+                    // GXS order first
+                    if (balances[1].asset_id === '1.3.1') {
+                        let tmpObj = balances[0];
+                        balances[0] = balances[1];
+                        balances[1] = tmpObj;
+                    }
+                    return balances;
+                } else {
+                    return {amount: 0, asset_id: '1.3.1'};
+                }
             });
         }));
     });
@@ -705,5 +725,6 @@ export {
     fetch_block,
     lock_balance,
     unlock_balance,
-    get_assets_by_ids
+    get_assets_by_ids,
+    get_fee_list
 };

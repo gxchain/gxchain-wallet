@@ -267,7 +267,7 @@ const locale = {
             from: '发送账号',
             to: '接收账号',
             timestamp: '操作时间',
-            fee: '手续费(GXS)',
+            fee: '手续费({symbol})',
             memo: '备注(MEMO)'
         },
         modal: {

@@ -267,7 +267,7 @@ const locale = {
             from: 'Send Account',
             to: 'Receive Account',
             timestamp: 'Timestamp',
-            fee: 'Fee(GXS)',
+            fee: 'Fee({symbol})',
             memo: 'Memo'
         },
         modal: {
