@@ -519,14 +519,14 @@ const fetch_account_balances = (account_name) => {
             return Apis.instance().db_api().exec('get_account_balances', [account.id, []]).then(function (balances) {
                 if (balances && balances.length > 0) {
                     // GXS order first
-                    if (balances[1].asset_id === '1.3.1') {
+                    if (balances[1] && balances[1].asset_id === '1.3.1') {
                         let tmpObj = balances[0];
                         balances[0] = balances[1];
                         balances[1] = tmpObj;
                     }
                     return balances;
                 } else {
-                    return {amount: 0, asset_id: '1.3.1'};
+                    return [{amount: 0, asset_id: '1.3.1'}];
                 }
             });
         }));

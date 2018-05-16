@@ -301,11 +301,7 @@
                     if (!balances) {
                         return;
                     }
-                    if (!(balances instanceof Array)) {
-                        wallet_balances = [balances];
-                    } else {
-                        wallet_balances = balances;
-                    }
+                    wallet_balances = balances;
                     let asset_ids = wallet_balances.map(b => {
                         return b.asset_id;
                     });
