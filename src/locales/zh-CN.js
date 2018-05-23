@@ -5,6 +5,7 @@ const locale = {
         asset_name: 'GXS',
         asset_full_name: '',
         value: '价值(CNY)',
+        unit: '￥',
         transfer: '发送',
         receive: '接收',
         wallet: '钱包账户',

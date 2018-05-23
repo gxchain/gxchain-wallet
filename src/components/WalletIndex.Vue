@@ -54,11 +54,11 @@
                                 </div>
                                 <div class="row-balance">
                                     <div>
-                                        <small>≈</small>
-                                        <span class="digit balance">{{totalValue}}</span>
+                                        <small>{{$t('index.value')}}</small>
                                     </div>
                                     <div>
-                                        <small>{{$t('index.value')}}</small>
+                                        <small>≈</small>
+                                        <span class="digit balance">{{totalValue | number(2)}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -96,8 +96,8 @@
                                         <div class="digital">
                                             {{balance.amount | number(balance.precision)}}
                                         </div>
-                                        <small>
-                                            ≈&nbsp;{{balance.value}}
+                                        <small v-if="balance.value != 0">
+                                            ≈&nbsp;{{$t('index.unit')}}{{balance.value | number(2)}}
                                         </small>
                                     </div>
                                 </div>
@@ -123,6 +123,7 @@
         fetch_account_balances, get_assets_by_ids, get_wallet_index, get_wallets, set_wallet_index,
         set_wallets
     } from '@/services/WalletService';
+    import { get_market_asset_price } from '@/services/MarketService';
     import filters from '@/filters';
 
     export default {
@@ -136,6 +137,7 @@
             });
             let wallet_index = get_wallet_index();
             return {
+                totalValue: '-',
                 accountCopied: false,
                 wallets: wallets,
                 currentWalletIndex: wallet_index,
@@ -180,6 +182,9 @@
             loadBalances (wallet) {
                 if (wallet.account) {
                     let wallet_balances;
+                    let assetMap = {};
+                    let priceMap = {};
+                    this.totalValue = 0;
                     fetch_account_balances(wallet.account).then(function (balances) {
                         if (!balances) {
                             return;
@@ -190,10 +195,12 @@
                         });
                         return get_assets_by_ids(asset_ids);
                     }).then(assets => {
-                        let assetMap = {};
+                        let priceSymbol = '';
                         assets.forEach(asset => {
                             assetMap[asset.id] = asset;
+                            priceSymbol += asset.symbol + ',';
                         });
+                        priceSymbol = priceSymbol.substring(0, priceSymbol.length - 1);
                         wallet.balances = wallet_balances.map(b => {
                             return {
                                 asset_id: b.asset_id,
@@ -201,6 +208,22 @@
                                 precision: assetMap[b.asset_id].precision,
                                 symbol: assetMap[b.asset_id].symbol,
                                 value: 0
+                            };
+                        });
+                        return get_market_asset_price(priceSymbol);
+                    }).then(prices => {
+                        prices.forEach(price => {
+                            priceMap[price.symbol] = price;
+                        });
+                        wallet.balances = wallet_balances.map(b => {
+                            let assetValue = priceMap[assetMap[b.asset_id].symbol] ? b.amount / Math.pow(10, assetMap[b.asset_id].precision) * priceMap[assetMap[b.asset_id].symbol].price : 0;
+                            this.totalValue += assetValue;
+                            return {
+                                asset_id: b.asset_id,
+                                amount: b.amount / Math.pow(10, assetMap[b.asset_id].precision),
+                                precision: assetMap[b.asset_id].precision,
+                                symbol: assetMap[b.asset_id].symbol,
+                                value: assetValue
                             };
                         });
                     }).catch(ex => {
@@ -261,7 +284,6 @@
         destroyed () {
             $.allowPanelOpen = true;
             $(this.$el).off('refresh');
-            //      $(this.$refs.content).off('scroll').off('touchmove').off('touchend');
             this.stopFetchingMarket = true;
         },
         mounted () {
@@ -309,9 +331,6 @@
             this.swiper.update();
         },
         computed: {
-            totalValue () {
-                return '-';
-            },
             showLoyaltyProgram () {
                 return localStorage.getItem('version') != '1.2.0';
             },

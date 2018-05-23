@@ -5,6 +5,7 @@ const locale = {
         asset_name: 'GXS',
         asset_full_name: 'GXShares',
         value: 'Total Assets($)',
+        unit: '$',
         transfer: 'Send',
         receive: 'Receive',
         wallet: 'Wallet',

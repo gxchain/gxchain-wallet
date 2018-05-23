@@ -16,10 +16,18 @@ const get_chart_data = (name, symbol, interval) => {
 const get_need_memo_accounts = () => {
     return Vue.http.get(`${process.env.__SERVICE__}/customer/withdraw/need/memo`);
 };
+const get_market_asset_price = (symbols) => {
+    return Vue.http.getX(`${process.env.__SERVICE__}/market/asset/price`, {
+        params: {
+            symbols
+        }
+    }).then(resp => resp.data.data);
+};
 
 export {
     get_market_info,
     get_realtime_quotation,
     get_chart_data,
-    get_need_memo_accounts
+    get_need_memo_accounts,
+    get_market_asset_price
 };
