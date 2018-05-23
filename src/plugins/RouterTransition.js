@@ -20,12 +20,20 @@ export default {
         });
 
         router.prototype.replace = function replace (location, onComplete, onAbort) {
-            store.commit(moduleName + '/TRANSITION_CHANGED', { transitionName: backTransitionName });
+            let transitionName = backTransitionName;
+            if (location.query && (location.query.animate === 'false' || location.query.animate === false)) {
+                transitionName = '';
+            }
+            store.commit(moduleName + '/TRANSITION_CHANGED', { transitionName: transitionName });
             this.history.replace(location, onComplete, onAbort);
         };
 
         router.prototype.push = function push (location, onComplete, onAbort) {
-            store.commit(moduleName + '/TRANSITION_CHANGED', { transitionName: forwardTransitionName });
+            let transitionName = forwardTransitionName;
+            if (location.query && (location.query.animate === 'false' || location.query.animate === false)) {
+                transitionName = '';
+            }
+            store.commit(moduleName + '/TRANSITION_CHANGED', { transitionName: transitionName });
             this.history.push(location, onComplete, onAbort);
         };
     }

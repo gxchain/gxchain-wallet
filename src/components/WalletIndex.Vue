@@ -58,7 +58,7 @@
                                     </div>
                                     <div>
                                         <small>≈</small>
-                                        <span class="digit balance">{{totalValue | number(2)}}</span>
+                                        <span class="digit balance">{{currentWallet.totalValue | number(2)}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -137,7 +137,6 @@
             });
             let wallet_index = get_wallet_index();
             return {
-                totalValue: '-',
                 accountCopied: false,
                 wallets: wallets,
                 currentWalletIndex: wallet_index,
@@ -184,7 +183,7 @@
                     let wallet_balances;
                     let assetMap = {};
                     let priceMap = {};
-                    this.totalValue = 0;
+                    wallet.totalValue = '-';
                     fetch_account_balances(wallet.account).then(function (balances) {
                         if (!balances) {
                             return;
@@ -212,12 +211,13 @@
                         });
                         return get_market_asset_price(priceSymbol);
                     }).then(prices => {
+                        wallet.totalValue = 0;
                         prices.forEach(price => {
                             priceMap[price.symbol] = price;
                         });
                         wallet.balances = wallet_balances.map(b => {
                             let assetValue = priceMap[assetMap[b.asset_id].symbol] ? b.amount / Math.pow(10, assetMap[b.asset_id].precision) * priceMap[assetMap[b.asset_id].symbol].price : 0;
-                            this.totalValue += assetValue;
+                            wallet.totalValue += assetValue;
                             return {
                                 asset_id: b.asset_id,
                                 amount: b.amount / Math.pow(10, assetMap[b.asset_id].precision),
@@ -540,9 +540,14 @@
                         display: flex;
                         flex-direction: row;
                         align-items: center;
+                        color: #3d3d3b;
                     }
                     .price {
                         text-align: right;
+                        color: #3d3d3b;
+                        small {
+                            color: #888
+                        }
                     }
                 }
             }
