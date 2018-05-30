@@ -221,6 +221,8 @@ const locale = {
             amount: {
                 invalid: 'Invalid amount',
                 insufficient_balance: 'Insufficient balance, Please make sure your balance are more than amount and fee',
+                insufficient_diff_balance: 'Insufficient balance, Please make sure your balance are more than amount',
+                insufficient_diff_fee: 'Insufficient fee',
                 minimum: 'The minimum amount must not be less than 1'
             },
             account: {

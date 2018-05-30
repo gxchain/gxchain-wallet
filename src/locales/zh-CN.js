@@ -220,7 +220,9 @@ const locale = {
         error: {
             amount: {
                 invalid: '数量不正确',
-                insufficient_balance: '余额不足,请确认余额大于转账金额+手续费',
+                insufficient_balance: '余额不足，请确认余额大于转账金额+手续费',
+                insufficient_diff_balance: '余额不足，请确认余额大于转账金额',
+                insufficient_diff_fee: '手续费余额不足',
                 minimum: '最小数量不能少于1'
             },
             account: {

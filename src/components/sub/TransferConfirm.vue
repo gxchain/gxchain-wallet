@@ -135,7 +135,11 @@
                     });
                 }).catch(ex => {
                     if (ex.message.indexOf('Insufficient Balance') > -1) {
-                        this.error.transfer = this.$t('transfer.error.amount.insufficient_balance');
+                        if (this.feeType.id !== this.currentAsset.id) {
+                            this.error.transfer = this.$t('transfer.error.amount.insufficient_diff_fee');
+                        } else {
+                            this.error.transfer = this.$t('transfer.error.amount.insufficient_balance');
+                        }
                     } else {
                         this.error.transfer = ex.message;
                     }

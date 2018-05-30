@@ -238,7 +238,11 @@
                     this.error.amount = this.$t('transfer.error.amount.invalid');
                     return false;
                 } else if (amount > this.balance) {
-                    this.error.amount = this.$t('transfer.error.amount.insufficient_balance');
+                    if (this.currentFee.id !== this.currentAsset.id) {
+                        this.error.amount = this.$t('transfer.error.amount.insufficient_diff_balance');
+                    } else {
+                        this.error.amount = this.$t('transfer.error.amount.insufficient_balance');
+                    }
                     return false;
                 }
                 this.error.amount = '';
