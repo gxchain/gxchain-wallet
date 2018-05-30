@@ -318,6 +318,11 @@
                             break;
                         }
                     }
+                    // 有其他币种而没有GXS的钱包
+                    if (!this.currentAsset.id) {
+                        this.currentAssetId == this.assetList[0].id;
+                        this.currentAsset = this.assetList[0];
+                    }
                     let amount = wallet_balances.filter(item => {
                         return item.asset_id == this.currentAsset.id;
                     })[0].amount;

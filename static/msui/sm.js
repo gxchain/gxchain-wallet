@@ -743,7 +743,7 @@ Device/OS Detection
         var length;
 
         // Issue #160: on iOS 7, some input elements (e.g. date datetime month) throw a vague TypeError on setSelectionRange. These elements don't have an integer value for the selectionStart and selectionEnd properties, but unfortunately that can't be used for detection because accessing the properties also throws a TypeError. Just check the type instead. Filed as Apple bug #15122724.
-        var unsupportedType = ['date', 'time', 'month', 'number', 'email'];
+        var unsupportedType = ['text', 'textarea', 'date', 'time', 'month', 'number', 'email'];
         if (deviceIsIOS && targetElement.setSelectionRange && unsupportedType.indexOf(targetElement.type) === -1) {
             length = targetElement.value.length;
             targetElement.setSelectionRange(length, length);
@@ -1003,10 +1003,12 @@ Device/OS Detection
 
             // Select elements need the event to go through on iOS 4, otherwise the selector menu won't open.
             // Also this breaks opening selects when VoiceOver is active on iOS6, iOS7 (and possibly others)
-            if (!deviceIsIOS || targetTagName !== 'select') {
-                this.targetElement = null;
-                event.preventDefault();
-            }
+            // if (!deviceIsIOS || targetTagName !== 'select') {
+            //     this.targetElement = null;
+            //     event.preventDefault();
+            // }
+            this.targetElement = null;
+            event.preventDefault();
 
             return false;
         }
