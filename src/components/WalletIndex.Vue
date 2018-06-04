@@ -120,10 +120,10 @@
     import WalletTab from './sub/WalletTab';
 
     import {
-        fetch_account_balances, get_assets_by_ids, get_wallet_index, get_wallets, set_wallet_index,
-        set_wallets
+        fetch_account_balances, fetch_reference_accounts, get_assets_by_ids, get_wallet_index, get_wallets,
+        set_wallet_index, set_wallets
     } from '@/services/WalletService';
-    import { get_market_asset_price } from '@/services/MarketService';
+    import {get_market_asset_price} from '@/services/MarketService';
     import filters from '@/filters';
 
     export default {
@@ -289,6 +289,11 @@
         mounted () {
             $.init();
             this.loadWallets();
+            fetch_reference_accounts(this.wallets.filter(wallet => {
+                return !wallet.partial;
+            }).map(wallet => {
+                return wallet.account;
+            }));
             this.isAssetHidden = this.currentWallet.isAssetHidden;
             if (this.isNative) {
                 window.webview = {

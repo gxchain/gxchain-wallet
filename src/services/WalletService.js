@@ -3,6 +3,7 @@ import {Apis} from 'gxbjs-ws';
 import Promise from 'bluebird';
 import uniq from 'lodash/uniq';
 import some from 'lodash/some';
+import flatten from 'lodash/flatten';
 import unionBy from 'lodash/unionBy';
 import Vue from 'vue';
 import i18n from '@/locales';
@@ -69,6 +70,14 @@ const get_fee_list = () => {
  */
 const fetch_account = (account_name) => {
     return Apis.instance().db_api().exec('get_account_by_name', [account_name]);
+};
+
+/**
+ * get accounts by names
+ * @param account_names
+ */
+const fetch_accounts = (account_names) => {
+    return Apis.instance().db_api().exec('lookup_account_names', [account_names]);
 };
 
 const fetch_full_account = (account) => {
@@ -450,6 +459,70 @@ const import_account = (wifKey, password) => {
 };
 
 /**
+ * fetch accounts by public keys
+ * @param publicKeys
+ */
+const fetch_reference_accounts = (account_names) => {
+    return new Promise((resolve, reject) => {
+        fetch_accounts(account_names).then((accounts) => {
+            let accountArr = [];
+            accounts.forEach(account => {
+                accountArr.push({
+                    account_id: account.id,
+                    name: account.name,
+                    public_key: account.active.key_auths[0][0]
+                });
+            });
+            let uniqPublickeys = uniq(accountArr.map(item => item.public_key));
+            Apis.instance().db_api().exec('get_key_references', [uniqPublickeys]).then((resp) => {
+                if (resp.length > 0) {
+                    let account_maps = {};
+                    resp.forEach((ids, i) => {
+                        ids.forEach(id => {
+                            account_maps[id] = uniqPublickeys[i];
+                        });
+                    });
+                    let account_ids = uniq(flatten(resp));
+                    let new_account_ids = account_ids.filter(account_id => {
+                        return !some(accountArr, (item) => {
+                            return item.account_id == account_id;
+                        });
+                    });
+                    get_objects(new_account_ids).then(function (accounts) {
+                        let wallets = get_wallets();
+                        accounts.forEach((account) => {
+                            let alreadyExist = some(wallets, function (wallet) {
+                                return wallet.account == account.name;
+                            });
+                            if (!alreadyExist) {
+                                let publicKey = account_maps[account.id];
+                                let sameAccountName = accountArr.find(account => account.public_key === publicKey).name;
+                                let wallet = JSON.parse(JSON.stringify(wallets.find(wallet => wallet.account === sameAccountName)));
+                                wallet.account = account.name;
+                                let weight_threshold = account.active.weight_threshold;
+                                // available key should have enough weight
+                                let isKeyAvailable = some(account.active.key_auths, function (key) {
+                                    if (key[0] == publicKey && key[1] >= weight_threshold) {
+                                        return true;
+                                    }
+                                    return false;
+                                });
+                                wallet.partial = !isKeyAvailable;
+                                wallets.push(wallet);
+                            }
+                        });
+                        set_wallets(wallets);
+                        resolve(wallets);
+                    }).catch(reject);
+                } else {
+                    throw new Error(i18n.t('wallet_import.error.account_not_found'));
+                }
+            }).catch(reject);
+        }).catch(reject);
+    });
+};
+
+/**
  * create an account by faucet api and import
  * @param account
  * @param password
@@ -726,5 +799,6 @@ export {
     lock_balance,
     unlock_balance,
     get_assets_by_ids,
-    get_fee_list
+    get_fee_list,
+    fetch_reference_accounts
 };
