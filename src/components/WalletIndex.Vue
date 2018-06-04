@@ -293,7 +293,13 @@
                 return !wallet.partial;
             }).map(wallet => {
                 return wallet.account;
-            }));
+            })).then((wallets) => {
+                if (wallets.length > this.wallets.length) {
+                    location.reload();
+                }
+            }).catch(ex => {
+                console.error(ex);
+            });
             this.isAssetHidden = this.currentWallet.isAssetHidden;
             if (this.isNative) {
                 window.webview = {
