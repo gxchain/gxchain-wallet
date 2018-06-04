@@ -35,7 +35,3 @@ new Vue({
     template: '<App/>',
     components: { App }
 });
-
-FastClick.attach(document.body, {// eslint-disable-line
-    tapDelay: 1
-});
