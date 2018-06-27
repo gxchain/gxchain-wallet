@@ -26,6 +26,7 @@ import cordovaLoader from '@/common/cordovaLoader';
 import {bak_wallet, get_wallets, merge_wallets} from '@/services/WalletService';
 import RouterTransition from '@/plugins/RouterTransition';
 import RealtimeQuotations from '@/components/RealtimeQuotations';
+import AddAssets from '@/components/AddAssets';
 
 RouterTransition.use(store, Router, {
     moduleName: 'route',
@@ -212,6 +213,14 @@ let router = new Router({
             },
             name: 'RealtimeQuotations',
             component: RealtimeQuotations
+        },
+        {
+            path: '/add-assets',
+            meta: {
+                title: '添加新资产'
+            },
+            name: 'AddAssets',
+            component: AddAssets
         }
 
     ]

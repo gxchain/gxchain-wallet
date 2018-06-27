@@ -54,11 +54,19 @@
                                 </div>
                                 <div class="row-balance">
                                     <div>
-                                        <small>{{$t('index.value')}}</small>
+                                        <div>
+                                            <small>{{$t('index.value')}}</small>
+                                        </div>
+                                        <div>
+                                            <small>≈</small>
+                                            <span class="digit balance">{{currentWallet.totalValue | number(2)}}</span>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <small>≈</small>
-                                        <span class="digit balance">{{currentWallet.totalValue | number(2)}}</span>
+                                    <div class="asset-button" @click="goAddAssets">
+                                        <!-- <router-link :to="link('/add-assets')" href="javascript:;">
+                                            <img src="../assets/images/asset_btn.png">
+                                        </router-link> -->
+                                        <img src="../assets/images/asset_btn.png">
                                     </div>
                                 </div>
                             </div>
@@ -89,7 +97,8 @@
                                 :key="balance.symbol">
                                 <div class="item-inner">
                                     <div class="symbol">
-                                        <account-image :account="balance.symbol" :size="15"></account-image>
+                                        <img :src="balance.icon" style="width: 1.5rem" v-if="balance.icon">
+                                        <account-image :account="balance.symbol" :size="15" v-else></account-image>
                                         <div>&nbsp;&nbsp;{{balance.symbol}}</div>
                                     </div>
                                     <div class="price">
@@ -123,9 +132,10 @@
         fetch_account_balances, fetch_reference_accounts, get_assets_by_ids, get_wallet_index, get_wallets,
         set_wallet_index, set_wallets
     } from '@/services/WalletService';
-    import {get_market_asset_price} from '@/services/MarketService';
+    import {get_market_asset_price, get_market_asset_list} from '@/services/MarketService';
     import filters from '@/filters';
-
+    import some from 'lodash/some';
+    import unionBy from 'lodash/unionBy';
     export default {
         filters,
         data () {
@@ -154,7 +164,8 @@
                         self.currentWalletIndex = s.activeIndex;
                     }
                 },
-                isAssetHidden: ''
+                isAssetHidden: '',
+                assetIconMap: {}
             };
         },
         watch: {
@@ -170,8 +181,21 @@
                         path: this.link('/wallet-create')
                     });
                 } else {
-                    this.wallets.forEach((wallet) => {
-                        this.loadBalances(wallet);
+                    get_market_asset_list().then(resp => {
+                        let assetList = resp || [];
+                        let assetIconMap = {};
+                        assetList.forEach(asset => {
+                            assetIconMap[asset.symbol] = asset.icon;
+                        });
+                        this.assetIconMap = assetIconMap;
+                        this.wallets.forEach((wallet) => {
+                            this.loadBalances(wallet);
+                        });
+                    }).catch(ex => {
+                        console.error(ex);
+                        this.wallets.forEach((wallet) => {
+                            this.loadBalances(wallet);
+                        });
                     });
                 }
                 setTimeout(() => {
@@ -226,6 +250,62 @@
                                 value: assetValue
                             };
                         });
+                        return wallet.balances;
+                    }).then((balances) => {
+                        let wallet_balances = balances.map(b => {
+                            return {
+                                asset_id: b.asset_id,
+                                amount: b.amount,
+                                precision: b.precision,
+                                value: b.value,
+                                symbol: b.symbol,
+                                icon: this.assetIconMap[b.symbol],
+                                status: true
+                            };
+                        });
+                        // 将当前钱包账号已有资产存入localStorage
+                        let assetsArray = localStorage.getItem('assets_array');
+                        if (!assetsArray) {
+                            assetsArray = [];
+                        } else {
+                            assetsArray = JSON.parse(assetsArray);
+                        }
+                        let asset = {
+                            account: wallet.account,
+                            list: wallet_balances.filter((item) => {
+                                return item.symbol != 'GXS' && item.symbol != 'GXC';
+                            })
+                        };
+                        let alreadyExist = some(assetsArray, (item) => {
+                            return item.account == wallet.account;
+                        });
+
+                        if (alreadyExist) {
+                            assetsArray = assetsArray.map((item) => {
+                                if (item.account == wallet.account) {
+                                    item.list.forEach((i) => {
+                                        wallet_balances = wallet_balances.map(b => {
+                                            if (i.symbol == b.symbol) {
+                                                b.status = i.status;
+                                            }
+                                            return b;
+                                        });
+                                    });
+                                    let list = unionBy(wallet_balances, item.list, 'symbol');
+                                    wallet.balances = list.filter((item) => {
+                                        return item.status == true;
+                                    });
+                                    item.list = list.filter((item) => {
+                                        return item.symbol != 'GXS' && item.symbol != 'GXC';
+                                    });
+                                }
+                                return item;
+                            });
+                        } else {
+                            wallet.balances = wallet_balances;
+                            assetsArray.push(asset);
+                        }
+                        localStorage.setItem('assets_array', JSON.stringify(assetsArray));
                     }).catch(ex => {
                         console.error(ex);
                     });
@@ -279,6 +359,15 @@
                     return w;
                 });
                 set_wallets(this.wallets);
+            },
+            goAddAssets () {
+                let query = {
+                    account: this.currentWallet.account,
+                    from: this.$route.fullPath
+                };
+                this.$router.push({
+                    path: this.link('/add-assets', query)
+                });
             }
         },
         destroyed () {
@@ -472,6 +561,17 @@
         }
 
         .row-balance {
+            display: flex;
+            justify-content: space-between;
+            .asset-button {
+                padding: .4rem 0;
+                img {
+                    width: 1.4rem;
+                }
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+            }
             small {
                 font-size: .6rem;
             }

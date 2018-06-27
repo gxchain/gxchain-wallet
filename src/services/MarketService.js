@@ -23,11 +23,15 @@ const get_market_asset_price = (symbols) => {
         }
     }).then(resp => resp.data.data);
 };
+const get_market_asset_list = () => {
+    return Vue.http.getX(`${process.env.__SERVICE__}/market/asset/list`).then(resp => resp.data.data);
+};
 
 export {
     get_market_info,
     get_realtime_quotation,
     get_chart_data,
     get_need_memo_accounts,
-    get_market_asset_price
+    get_market_asset_price,
+    get_market_asset_list
 };

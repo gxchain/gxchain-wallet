@@ -117,7 +117,6 @@
         set_wallet_index,
         fetch_account_balances,
         get_assets_by_ids,
-        get_fee_list,
         transfer
     } from '@/services/WalletService';
     import util from '@/common/util';
@@ -140,8 +139,10 @@
                 assetList: [],
                 currentAsset: {},
                 currentAssetId: '1.3.1',
-                feeList: get_fee_list(),
-                currentFee: get_fee_list()[0],
+                // feeList: get_fee_list(),
+                // currentFee: get_fee_list()[0],
+                feeList: [],
+                currentFee: {},
                 currentFeeIndex: 0,
                 wallets: wallets,
                 currentWallet: wallets[get_wallet_index()],
@@ -316,6 +317,8 @@
                         assetMap[asset.id] = asset;
                     });
                     this.assetList = assets;
+                    this.feeList = assets;
+                    this.currentFee = assets[0];
                     for (let i = 0; i < this.assetList.length; i++) {
                         if (this.currentAssetId == this.assetList[i].id) {
                             this.currentAsset = this.assetList[i];

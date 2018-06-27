@@ -399,6 +399,10 @@ const locale = {
         bitz_step3_img6: 'bitz_step3_img6.png',
         bitz_step3_img7: 'bitz_step3_img7.png',
         bitz_step3_img8: 'bitz_step3_img8.png'
+    },
+    add_assets: {
+        title: 'Add Assets',
+        tip: 'The asset balance is greater than 0, it cannot be closed'
     }
 };
 
