@@ -740,16 +740,7 @@ Device/OS Detection
      * @param {EventTarget|Element} targetElement
      */
     FastClick.prototype.focus = function(targetElement) {
-        var length;
-
-        // Issue #160: on iOS 7, some input elements (e.g. date datetime month) throw a vague TypeError on setSelectionRange. These elements don't have an integer value for the selectionStart and selectionEnd properties, but unfortunately that can't be used for detection because accessing the properties also throws a TypeError. Just check the type instead. Filed as Apple bug #15122724.
-        var unsupportedType = ['text', 'textarea', 'date', 'time', 'month', 'number', 'email'];
-        if (deviceIsIOS && targetElement.setSelectionRange && unsupportedType.indexOf(targetElement.type) === -1) {
-            length = targetElement.value.length;
-            targetElement.setSelectionRange(length, length);
-        } else {
-            targetElement.focus();
-        }
+        targetElement.focus();
     };
 
 
@@ -859,8 +850,13 @@ Device/OS Detection
         this.touchStartX = touch.pageX;
         this.touchStartY = touch.pageY;
 
+        if (!this.lastClickTime || (this.lastClickTime > 0 && event.timeStamp < 0) || (this.lastClickTime < 0 && event.timeStamp > 0)){
+            // reset click time if time stamp values switch between negative and positive  (iOS 11.3+)
+            this.lastClickTime = 0;
+        }
+
         // Prevent phantom clicks on fast double-tap (issue #36)
-        if ((event.timeStamp - this.lastClickTime) < this.tapDelay) {
+        if (Math.abs(event.timeStamp - this.lastClickTime) < this.tapDelay) {
             event.preventDefault();
         }
 
@@ -944,23 +940,19 @@ Device/OS Detection
         }
 
         // Prevent phantom clicks on fast double-tap (issue #36)
-        if ((event.timeStamp - this.lastClickTime) < this.tapDelay) {
+        if (Math.abs(event.timeStamp - this.lastClickTime) < this.tapDelay) {
             this.cancelNextClick = true;
+            this.lastClickTime = event.timeStamp; // always reset
+            return true;
+        }
+        this.lastClickTime = event.timeStamp;
+
+        if (Math.abs(event.timeStamp - this.trackingClickStart) > this.tapTimeout) {
             return true;
         }
 
-        if ((event.timeStamp - this.trackingClickStart) > this.tapTimeout) {
-            return true;
-        }
-        //修复安卓微信下，input type="date" 的bug，经测试date,time,month已没问题
-        var unsupportedType = ['date', 'time', 'month'];
-        if(unsupportedType.indexOf(event.target.type) !== -1){
-            　　　　return false;
-            　　}
         // Reset to prevent wrong click cancel on input (issue #156).
         this.cancelNextClick = false;
-
-        this.lastClickTime = event.timeStamp;
 
         trackingClickStart = this.trackingClickStart;
         this.trackingClick = false;
