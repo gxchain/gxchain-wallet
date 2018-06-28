@@ -89,7 +89,6 @@
         get_wallets,
         get_wallet_index,
         get_assets_by_ids,
-        get_fee_list,
         unlock_wallet
     } from '@/services/WalletService';
     import {
@@ -104,7 +103,6 @@
                 account_id: '-unknown',
                 wallets: get_wallets(),
                 wallet_index: get_wallet_index(),
-                feeList: get_fee_list(),
                 amount: '',
                 symbol: '',
                 fee_symbol: '',
@@ -144,17 +142,15 @@
                     fetch_account(this.currentWallet.account),
                     get_objects([this.$route.params.id])
                 ]).then((results) => {
-                    let feeMap = {};
-                    this.feeList.forEach(fee => {
-                        feeMap[fee.id] = fee;
-                    });
                     let account = results[0];
                     this.account_id = account.id;
                     let operation = results[1][0];
+                    get_assets_by_ids([operation.op[1].fee.asset_id]).then((resp) => {
+                        this.fee = operation.op[1].fee.amount / Math.pow(10, resp[0].precision);
+                        this.fee_symbol = resp[0].symbol;
+                    });
                     this.from = operation.op[1].from;
                     this.to = operation.op[1].to;
-                    this.fee = operation.op[1].fee.amount / Math.pow(10, feeMap[operation.op[1].fee.asset_id].precision);
-                    this.fee_symbol = feeMap[operation.op[1].fee.asset_id].symbol;
                     this.memo = $.extend({
                         decryptedMemo: ''
                     }, operation.op[1].memo);
