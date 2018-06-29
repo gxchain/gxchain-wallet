@@ -98,11 +98,12 @@
             },
             delWallet () {
                 this.error.common = '';
-                if (this.balance === 0) {
-                    this.$refs.confirm.show();
-                } else {
-                    this.error.common = this.$t('wallet_del.error.invalid_delete');
-                }
+                this.$refs.confirm.show();
+                // if (this.balance === 0) {
+                //     this.$refs.confirm.show();
+                // } else {
+                //     this.error.common = this.$t('wallet_del.error.invalid_delete');
+                // }
             },
             unlocking (pwd) {
                 let self = this;
