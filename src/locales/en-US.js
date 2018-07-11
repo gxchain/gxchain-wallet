@@ -274,7 +274,9 @@ const locale = {
             memo: 'Memo'
         },
         modal: {
-            ok: 'OK'
+            ok: 'OK',
+            copy: 'Copy',
+            copy_success: 'Copy successfully'
         }
     },
     loyalty_program: {

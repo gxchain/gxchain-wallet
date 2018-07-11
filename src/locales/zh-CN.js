@@ -274,7 +274,9 @@ const locale = {
             memo: '备注(MEMO)'
         },
         modal: {
-            ok: '好的'
+            ok: '好的',
+            copy: '复制',
+            copy_success: '复制成功'
         }
     },
     loyalty_program: {
