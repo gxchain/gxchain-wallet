@@ -128,11 +128,18 @@
             showTxid () {
                 let self = this;
                 $.modal({
-                    title: 'txid',
+                    title: '<div><span>txid</span><a href="javascript:;" class="pull-right icon icon-close close-popup" onclick="$.closeModal()">&times;</a></div>',
                     text: `<div style="word-break: break-all;">${self.txid}</div>`,
                     buttons: [
                         {
-                            text: self.$t('trade.modal.ok')
+                            text: self.$t('trade.modal.copy'),
+                            onClick: function () {
+                                cordova.exec(() => {// eslint-disable-line
+                                    setTimeout(() => {
+                                        $.toast(self.$t('trade.modal.copy_success'));
+                                    }, 1000);
+                                }, null, 'ClipBoard', 'copy', [self.txid]);
+                            }
                         }
                     ]
                 });
