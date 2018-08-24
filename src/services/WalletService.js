@@ -3,6 +3,7 @@ import {Apis} from 'gxbjs-ws';
 import Promise from 'bluebird';
 import uniq from 'lodash/uniq';
 import some from 'lodash/some';
+import map from 'lodash/map';
 import flatten from 'lodash/flatten';
 import unionBy from 'lodash/unionBy';
 import Vue from 'vue';
@@ -230,8 +231,8 @@ const get_wallet_native = () => {
         }
         cordova.exec(function (result) { //eslint-disable-line
             console.log('wallets from native storage:', result);
-            let wallets_str = ((result && result instanceof String) ? result : '[]') || '[]';
-            let wallets = JSON.parse(wallets_str);
+            let wallets_str = ((result && typeof result === 'string') ? result : '[]') || '[]';
+            let wallets = result instanceof Array ? result : JSON.parse(wallets_str);
             resolve(wallets);
         }, function () {
             reject();
@@ -417,25 +418,31 @@ const import_account = (wifKey, password) => {
                             return false;
                         });
                         if (isKeyAvailable) {
-                            // do not import a duplicate account
                             let alreadyExist = some(wallets, function (wallet) {
                                 return wallet.account == account.name;
                             });
+                            let wallet = {
+                                account: account.name,
+                                password_pubkey,
+                                encryption_key,
+                                encrypted_wifkey,
+                                backup_date: null
+                            };
                             if (!alreadyExist) {
-                                let wallet = {
-                                    account: account.name,
-                                    password_pubkey,
-                                    encryption_key,
-                                    encrypted_wifkey,
-                                    backup_date: null
-                                };
                                 wallets.push(wallet);
                                 imported.push(wallet);
                             } else {
-                                console.log('account:', account.name, 'already exist');
-                                exist.push({
-                                    account: account.name
+                                wallets = map(wallets, w => {
+                                    if (w.account === account.name) {
+                                        return wallet;
+                                    }
+                                    return w;
                                 });
+                                imported.push(wallet);
+                                // console.log('account:', account.name, 'already exist');
+                                // exist.push({
+                                //     account: account.name
+                                // });
                             }
                         }
                     });
