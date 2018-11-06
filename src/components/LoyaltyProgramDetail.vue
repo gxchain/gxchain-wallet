@@ -30,7 +30,7 @@
                         </li>
                         <li class="item-content">
                             <div class="item-inner">
-                                <div class="item-title">{{$t('loyalty_program.expected_bonus')}}(GXS)</div>
+                                <div class="item-title">{{$t('loyalty_program.expected_bonus')}}(GXC)</div>
                                 <div class="item-after">
                                     <span class="color-primary">{{bonus}}</span>
                                 </div>

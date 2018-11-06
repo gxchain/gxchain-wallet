@@ -38,7 +38,7 @@
                                 <div class="item-title"></div>
                                 <div class="item-after">
                                     <span class="color-primary price">{{wallet.balance}}</span>&nbsp;
-                                    <small>GXS
+                                    <small>GXC
                                     </small>
                                 </div>
                             </div>

@@ -32,7 +32,7 @@
                             <router-link :to="link(`/loyalty-program/${history.id}`)" class="item-content">
                                 <div class="item-inner">
                                     <div class="item-title-row">
-                                        <div class="item-title">{{history.amount | asset(2)}} GXS</div>
+                                        <div class="item-title">{{history.amount | asset(2)}} GXC</div>
                                         <div class="item-subtitle">{{$d(history.created_at,'long')}}</div>
                                     </div>
                                     <div class="item-after">

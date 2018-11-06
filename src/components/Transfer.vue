@@ -325,7 +325,7 @@
                             break;
                         }
                     }
-                    // 有其他币种而没有GXS的钱包
+                    // 有其他币种而没有GXC的钱包
                     if (!this.currentAsset.id) {
                         this.currentAssetId == this.assetList[0].id;
                         this.currentAsset = this.assetList[0];

@@ -1,6 +1,6 @@
-# gxs-wallet
+# gxchain-wallet
 
-> GXS Wallet for mobile
+> GXChain Wallet for mobile
 
 ## Build Setup
 

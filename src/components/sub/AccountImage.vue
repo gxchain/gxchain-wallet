@@ -44,7 +44,7 @@
                         this.imgSrc = 'https://gxs-wallet.oss-cn-shanghai.aliyuncs.com/symbols/gxs.png';
                     }
                     if (this.account === 'GXC') {
-                        this.imgSrc = 'https://gxs-wallet.oss-cn-shanghai.aliyuncs.com/symbols/gxc.png';
+                        this.imgSrc = 'https://gxs-wallet.oss-cn-shanghai.aliyuncs.com/symbols/gxs.png';
                     }
                 } else {
                     this.imgShow = false;
