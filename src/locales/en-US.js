@@ -2,8 +2,8 @@ const locale = {
     index: {
         balance_loading: 'loading..',
         backup_wallet: 'backup private key',
-        asset_name: 'GXS',
-        asset_full_name: 'GXShares',
+        asset_name: 'GXC',
+        asset_full_name: 'GX Coin',
         value: 'Total Assets($)',
         unit: '$',
         transfer: 'Send',
@@ -34,7 +34,7 @@ const locale = {
     wallet_create: {
         index: {
             title: 'Wallet',
-            tip_empty: 'GXS Wallet was not created',
+            tip_empty: 'GXC Wallet was not created',
             button_create: 'Create Wallet',
             button_import: 'Import Wallet',
             tip_how: 'How to import wallet'
@@ -127,7 +127,7 @@ const locale = {
             tip: 'When APP is deleted and used on another device, you need to import backed-up private key of the current wallet, or assets in the wallet could be lost permanently. Please make sure your wallet is backed up and backed-up info is kept in good care.',
             label: {
                 account: 'Account',
-                asset: 'Asset(GXS)',
+                asset: 'Asset(GXC)',
                 private_key: 'Private Key'
             },
             button_backup: 'Backup Now',
@@ -174,20 +174,20 @@ const locale = {
         title: 'About us',
         version: 'V1.0.1',
         desc: {
-            line1: 'GXS Wallet is a lite mobile wallet APP ',
-            line2: 'to facilitate GXS transfer, collection, wallet management',
-            line3: 'and review of updates on GXS at any time.'
+            line1: 'GXC Wallet is a lite mobile wallet APP ',
+            line2: 'to facilitate GXC transfer, collection, wallet management',
+            line3: 'and review of updates on GXC at any time.'
         },
         disclaimer: 'Disclaimer'
     },
     disclaimer: {
         title: 'Disclaimer',
         content: '<h4 class="text-center">Notice to Use and Disclaimer</h4>' +
-        '<p>GXS Wallet is a decentralized blockchain application. Please acquire a full understanding of the blockchain technology before use. Make sure you have the basic competence to use and manage decentralized wallet on a reasonable level.</p>' +
-        '<p>1. Once GXS Wallet account or password is lost, it is unable to retrieve. Please keep properly your account and password, and make sure to back up your private key to the wallet, which is the only credential to get back your wallet. GXChain is not responsible for the loss or theft of the wallet due to your failure to back up the private key, safekeep or properly use the wallet.</p>' +
-        '<p>2. If you obtain GXS Wallet app or any other application under the same name of this sofeware from any unauthorized third party, GXB will not vouch for its security. You will be responsible for the loss inflicted thereby. </p>' +
-        '<p>3. By transferring GXS via GXS wallet, you understand the IRRETRIEVABLE attribute of blockchain-based operation and will be responsible for irreversible loss due to your misoperation.</p>' +
-        '<p>4. You shall comply with relevant state laws, policies and regulations when trading on GXS Wallet.</p>',
+        '<p>GXC Wallet is a decentralized blockchain application. Please acquire a full understanding of the blockchain technology before use. Make sure you have the basic competence to use and manage decentralized wallet on a reasonable level.</p>' +
+        '<p>1. Once GXC Wallet account or password is lost, it is unable to retrieve. Please keep properly your account and password, and make sure to back up your private key to the wallet, which is the only credential to get back your wallet. GXChain is not responsible for the loss or theft of the wallet due to your failure to back up the private key, safekeep or properly use the wallet.</p>' +
+        '<p>2. If you obtain GXC Wallet app or any other application under the same name of this sofeware from any unauthorized third party, GXB will not vouch for its security. You will be responsible for the loss inflicted thereby. </p>' +
+        '<p>3. By transferring GXC via GXC wallet, you understand the IRRETRIEVABLE attribute of blockchain-based operation and will be responsible for irreversible loss due to your misoperation.</p>' +
+        '<p>4. You shall comply with relevant state laws, policies and regulations when trading on GXC Wallet.</p>',
         accept: 'I have read and accept'
     },
     unlock: {
@@ -283,7 +283,7 @@ const locale = {
         title: 'Loyalty Program',
         tip1: 'Grow with GXB',
         tip2: 'Benefit for value investors, extra bonus for long-run holders',
-        tip3: 'GXB\'s Loyalty Program is a benefit program designed for investors to lock up certain amount of GXS (GX Share). During the lockup period, the capital is frozen, meanwhile investors are entitled to extra bonus. For example, lock up 10,000 GXS for 9 months; calculating by 6% annualized return,  you may get 450 GXS for bonus on the due date. GXS would like our investors to join the Loyalty Program and enjoy the long-term benefits brought by GXB\'s growth in the future.',
+        tip3: 'GXB\'s Loyalty Program is a benefit program designed for investors to lock up certain amount of GXC (GX Coin). During the lockup period, the capital is frozen, meanwhile investors are entitled to extra bonus. For example, lock up 10,000 GXC for 9 months; calculating by 6% annualized return,  you may get 450 GXC for bonus on the due date. GXC would like our investors to join the Loyalty Program and enjoy the long-term benefits brought by GXB\'s growth in the future.',
         banner: 'loyalty-program-banner-en.jpg',
         term: 'Lockup Term',
         bonus: 'Annualized Bonus',
@@ -292,13 +292,13 @@ const locale = {
         day: '{day} day|{day} days',
         due: 'Due Date',
         amount: 'Lockup Amount',
-        available: '<span class="color-danger">{amount}</span> GXS Available',
-        reward: '<span class="color-danger">{amount}</span> GXS Reward',
+        available: '<span class="color-danger">{amount}</span> GXC Available',
+        reward: '<span class="color-danger">{amount}</span> GXC Reward',
         join: 'Setup',
         history: 'History',
         no_record: 'No record',
         locked_at: 'Locked At',
-        locked_amount: 'Locked Amount(GXS)',
+        locked_amount: 'Locked Amount(GXC)',
         button_join: 'Earn <span class="asset">{bonus}</span>% by joining our Loyalty Program',
         placeholder: {
             amount: 'Amount to lock'
@@ -312,7 +312,7 @@ const locale = {
         error: {
             insufficient_balance: 'Insufficient balance',
             invalid_amount: 'Invalid amount',
-            too_less: 'At least 1 GXS'
+            too_less: 'At least 1 GXC'
         },
         status: {
             title: 'Status',
@@ -321,13 +321,13 @@ const locale = {
         },
         success: {
             title: 'Success',
-            message: 'Congratulations,{amount} GXS were locked for join loyalty program'
+            message: 'Congratulations,{amount} GXC were locked for join loyalty program'
         },
         detail: {
             title: 'Program Details',
             success: {
                 title: 'Success',
-                message: 'Congratulations,{amount} GXS were unlocked.'
+                message: 'Congratulations,{amount} GXC were unlocked.'
             }
         }
     },

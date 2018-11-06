@@ -2,7 +2,7 @@ const locale = {
     index: {
         balance_loading: '**',
         backup_wallet: '备份私钥',
-        asset_name: 'GXS',
+        asset_name: 'GXC',
         asset_full_name: '',
         value: '价值(CNY)',
         unit: '￥',
@@ -34,7 +34,7 @@ const locale = {
     wallet_create: {
         index: {
             title: '钱包',
-            tip_empty: '暂未绑定GXS钱包',
+            tip_empty: '暂未绑定GXC钱包',
             button_create: '创建钱包',
             button_import: '导入钱包',
             tip_how: '如何导入钱包?'
@@ -127,7 +127,7 @@ const locale = {
             tip: '当APP被删后在其他手机上使用钱包时，需导入当前钱包备份私钥，否则可能永久丢失钱包资产，请务必备份好钱包，并妥善保管备份信息。',
             label: {
                 account: '钱包账号',
-                asset: '钱包资产(GXS)',
+                asset: '钱包资产(GXC)',
                 private_key: '私钥'
             },
             button_backup: '备份私钥',
@@ -174,20 +174,20 @@ const locale = {
         title: '关于我们',
         version: 'V1.0.1',
         desc: {
-            line1: 'GXS Wallet是一款移动端轻钱包APP，',
-            line2: '通过它能实现GXS的转账、收款和钱包管理，',
-            line3: '并及时掌握GXS的最新动态。'
+            line1: 'GXC Wallet是一款移动端轻钱包APP，',
+            line2: '通过它能实现GXC的转账、收款和钱包管理，',
+            line3: '并及时掌握GXC的最新动态。'
         },
         disclaimer: '免责声明'
     },
     disclaimer: {
         title: '免责声明',
         content: '<h4 class="text-center">使用须知和免责声明</h4>' +
-        '<p>GXS钱包是去中心化区块链应用，在您使用之前，请充分了解区块链科技知识，具备合理使用和管理去中心化钱包的基本能力。</p>' +
-        '<p>一、GXS钱包账户和密码一旦丢失不可找回，请妥善保管好您的账户和密码，并务必备份好钱包的私钥。私钥是找回钱包的唯一凭证！因未备份私钥、未妥善保管或因操作不当而造成钱包丢失或被盗的情况，公信宝概不负责。</p>' +
-        '<p>二、如果您从未经授权的第三方获取GXS钱包APP或与本软件名称相同的应用程序，公信宝将无法保证软件的安全性，因此造成的损失由您自行承担。</p>' +
-        '<p>三、使用GXS钱包发送GXS等功能时，您应理解区块链操作“不可撤销”属性，并自行承担因操作失误而导致结果不可逆的损失。\n</p>' +
-        '<p>四、在GXS钱包上交易时，您应当遵循有关国家政策、法律法规的要求。</p>',
+        '<p>GXC钱包是去中心化区块链应用，在您使用之前，请充分了解区块链科技知识，具备合理使用和管理去中心化钱包的基本能力。</p>' +
+        '<p>一、GXC钱包账户和密码一旦丢失不可找回，请妥善保管好您的账户和密码，并务必备份好钱包的私钥。私钥是找回钱包的唯一凭证！因未备份私钥、未妥善保管或因操作不当而造成钱包丢失或被盗的情况，公信宝概不负责。</p>' +
+        '<p>二、如果您从未经授权的第三方获取GXC钱包APP或与本软件名称相同的应用程序，公信宝将无法保证软件的安全性，因此造成的损失由您自行承担。</p>' +
+        '<p>三、使用GXC钱包发送GXC等功能时，您应理解区块链操作“不可撤销”属性，并自行承担因操作失误而导致结果不可逆的损失。\n</p>' +
+        '<p>四、在GXC钱包上交易时，您应当遵循有关国家政策、法律法规的要求。</p>',
         accept: '我已阅读并同意'
     },
     unlock: {
@@ -209,7 +209,7 @@ const locale = {
         to_placeholder: '填写对方账号',
         amount: '发送数量',
         amount_placeholder: '填写{symbol}数量',
-        receive_amount: '填写接收GXS数量',
+        receive_amount: '填写接收GXC数量',
         available: '可用: <span class="color-danger">{amount}</span> {symbol}',
         memo: '备注(MEMO)',
         fee: '手续费',
@@ -283,7 +283,7 @@ const locale = {
         title: '忠诚计划',
         tip1: '与公信宝一起成长',
         tip2: '价值投资者的福利，长线持有还送奖励',
-        tip3: '忠诚计划是公信宝推出的一项福利计划，投资者可锁定一定额度的GXS，锁定期间金额冻结，同时享受对应的奖励。如锁定1万GXS9个月，按年化6%，到期后可获得450个GXS的奖励。公信宝希望投资者通过忠诚计划，享受未来公信宝发展所带来的长期效益！',
+        tip3: '忠诚计划是公信宝推出的一项福利计划，投资者可锁定一定额度的GXC，锁定期间金额冻结，同时享受对应的奖励。如锁定1万GXC9个月，按年化6%，到期后可获得450个GXC的奖励。公信宝希望投资者通过忠诚计划，享受未来公信宝发展所带来的长期效益！',
         banner: 'loyalty-program-banner-zh.jpg',
         term: '锁定期限',
         bonus: '年化奖励',
@@ -292,13 +292,13 @@ const locale = {
         day: '{day}日 | {day}日',
         due: '到期时间',
         amount: '锁定金额',
-        available: '可用: <span class="color-danger">{amount}</span> GXS',
-        reward: '奖励: <span class="color-danger">{amount}</span> GXS',
+        available: '可用: <span class="color-danger">{amount}</span> GXC',
+        reward: '奖励: <span class="color-danger">{amount}</span> GXC',
         join: '设置计划',
         history: '锁定记录',
         no_record: '无记录',
         locked_at: '锁定时间',
-        locked_amount: '锁定金额(GXS)',
+        locked_amount: '锁定金额(GXC)',
         button_join: '加入忠诚计划 赚 <span class="big">{bonus}</span>%',
         placeholder: {
             amount: '填写锁定金额'
@@ -312,7 +312,7 @@ const locale = {
         error: {
             insufficient_balance: '余额不足',
             invalid_amount: '金额错误',
-            too_less: '最少锁仓金额为1GXS'
+            too_less: '最少锁仓金额为1GXC'
         },
         status: {
             title: '状态',
@@ -321,13 +321,13 @@ const locale = {
         },
         success: {
             title: '参与成功',
-            message: '成功锁定 {amount} GXS'
+            message: '成功锁定 {amount} GXC'
         },
         detail: {
             title: '锁定详情',
             success: {
                 title: '提示',
-                message: '恭喜，成功解锁 {amount} GXS'
+                message: '恭喜，成功解锁 {amount} GXC'
             }
         }
     },
