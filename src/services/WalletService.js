@@ -58,7 +58,7 @@ const get_assets_by_ids = (ids) => {
 const get_fee_list = () => {
     return [
         {id: '1.3.1', precision: 5, symbol: 'GXS'},
-        {id: '1.3.0', precision: 5, symbol: 'GXC'}
+        {id: '1.3.1', precision: 5, symbol: 'GXC'}
     ];
 };
 
@@ -595,7 +595,7 @@ const fetch_account_balances = (account_name) => {
         resolve(fetch_account(account_name).then((account) => {
             return Apis.instance().db_api().exec('get_account_balances', [account.id, []]).then(function (balances) {
                 if (balances && balances.length > 0) {
-                    // GXS order first
+                    // GXC order first
                     if (balances[1] && balances[1].asset_id === '1.3.1') {
                         let tmpObj = balances[0];
                         balances[0] = balances[1];
@@ -611,7 +611,7 @@ const fetch_account_balances = (account_name) => {
 };
 
 /**
- * send GXS to another account
+ * send GXC to another account
  * @param from
  * @param to
  * @param amount
