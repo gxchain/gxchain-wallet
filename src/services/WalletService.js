@@ -21,6 +21,14 @@ const get_objects = (ids) => {
     return Apis.instance().db_api().exec('get_objects', [ids]);
 };
 
+/**
+ * get asset by symbol
+ * @param {*} symbol
+ */
+const get_asset = (symbol) => {
+    return Apis.instance().db_api().exec('lookup_asset_symbols', [[symbol]]);
+};
+
 let assetsMap = {};
 /***
  * get assets by ids
@@ -777,6 +785,97 @@ const fetch_block = (block_num) => {
     return Apis.instance().db_api().exec('get_block', [block_num]);
 };
 
+/**
+ * get trust nodes
+ * @returns {*}
+ */
+const get_trust_nodes = () => {
+    return new Promise((resolve, reject) => {
+        Apis.instance().db_api().exec('get_trust_nodes', []).then((results) => {
+            let accounts = [];
+            for (let i = 0; i < results.length; i++) {
+                Apis.instance().db_api().exec('get_witness_by_account', [results[i]]).then(account => {
+                    Apis.instance().db_api().exec('get_objects', [[account.witness_account]]).then(res => {
+                        account.name = res[0].name;
+                        accounts.push(account);
+                    }).catch(ex => {
+                        reject(ex);
+                    });
+                }).catch(ex => {
+                    reject(ex);
+                });
+            }
+            resolve(accounts);
+        }).catch(ex => {
+            reject(ex);
+        });
+    });
+};
+
+/**
+ * vote for accounts
+ * @param account_ids - An array of account_id to vote
+ * @param fee_paying_asset - The asset to pay the fee
+ * @param broadcast
+ * @returns {Promise<any>}
+ */
+const vote_for_accounts = (accounts, fee_paying_asset = 'GXC', account, password, broadcast = false) => {
+    return new Promise((resolve, reject) => {
+        resolve(Promise.all([
+            fetch_account(account),
+            get_objects(['2.0.0']),
+            get_asset(fee_paying_asset)
+        ]).then(results => {
+            let acc = results[0];
+            let globalObject = results[1][0];
+            let fee_asset = results[2][0];
+            if (!acc) {
+                throw Error(`account_id ${account} not exist`);
+            }
+            if (!fee_asset) {
+                throw Error(`asset ${fee_paying_asset} not exist`);
+            }
+
+            let new_options = {
+                memo_key: acc.options.memo_key,
+                voting_account: acc.options.voting_account || '1.2.5'
+            };
+
+            // filter empty records since some of the account are not witness or committee
+            new_options.votes = accounts.filter(r => r).map(r => r.vote_id);
+            let num_witness = 0;
+            let num_committee = 0;
+            new_options.votes.forEach(v => {
+                let vote_type = v.split(':')[0];
+                if (vote_type == '0') {
+                    num_committee += 1;
+                }
+                if (vote_type == 1) {
+                    num_witness += 1;
+                }
+            });
+            new_options.num_committee = Math.min(num_committee, globalObject.parameters.maximum_committee_count);
+            new_options.num_witness = Math.min(num_witness, globalObject.parameters.maximum_witness_count);
+            new_options.votes = new_options.votes.sort((a, b) => {
+                let a_split = a.split(':');
+                let b_split = b.split(':');
+                return parseInt(a_split[1]) - parseInt(b_split[1]);
+            });
+
+            let tr = new TransactionBuilder();
+            tr.add_operation(tr.get_type_operation('account_update', {
+                fee: {
+                    amount: 0,
+                    asset_id: fee_asset.id
+                },
+                account: acc.id,
+                new_options: new_options
+            }));
+            return process_transaction(tr, account, password, broadcast);
+        }));
+    });
+};
+
 export {
     bak_wallet,
     get_objects,
@@ -802,7 +901,11 @@ export {
     fetch_block,
     lock_balance,
     unlock_balance,
+    get_asset,
     get_assets_by_ids,
     get_fee_list,
-    fetch_reference_accounts
+    fetch_reference_accounts,
+    get_trust_nodes,
+    vote_for_accounts
+
 };

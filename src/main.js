@@ -9,10 +9,12 @@ import store from '@/vuex/store';
 import locales from '@/locales';
 import GlobalPalrams from './plugins/GlobalParams';
 import Authorization from './plugins/Authorization';
+import UIPlugin from './plugins/UIPlugin';
 
 Vue.use(VueResource);
 Vue.use(GlobalPalrams);
 Vue.use(Authorization);
+Vue.use(UIPlugin);
 
 Vue.http.interceptors.push(
     function (request, next) {

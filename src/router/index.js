@@ -27,6 +27,7 @@ import {bak_wallet, get_wallets, merge_wallets} from '@/services/WalletService';
 import RouterTransition from '@/plugins/RouterTransition';
 import RealtimeQuotations from '@/components/RealtimeQuotations';
 import AddAssets from '@/components/AddAssets';
+import VoteIndex from '@/components/VoteIndex';
 
 RouterTransition.use(store, Router, {
     moduleName: 'route',
@@ -221,8 +222,15 @@ let router = new Router({
             },
             name: 'AddAssets',
             component: AddAssets
+        },
+        {
+            path: '/vote-index',
+            meta: {
+                title: '节点投票'
+            },
+            name: 'VoteIndex',
+            component: VoteIndex
         }
-
     ]
 });
 

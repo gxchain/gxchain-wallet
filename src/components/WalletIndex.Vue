@@ -73,6 +73,10 @@
                         </swiper-slide>
                         <div class="swiper-pagination" slot="pagination" v-show="wallets&&wallets.length>1"></div>
                     </swiper>
+                    <router-link :to="link('/vote-index')" class="link-vote-index">
+                        <img src='../assets/images/vote_icon.png'>
+                    </router-link>
+
                     <router-link :to="link('/loyalty-program')" class="link-loyalty-program" v-if="showLoyaltyProgram">
                         <img :src="`static/${$t('index.loyalty_program_icon')}`">
                     </router-link>
@@ -616,6 +620,19 @@
         top: 1rem;
         .line-scale > div {
             background-color: #fff !important;
+        }
+    }
+
+    .link-vote-index {
+        z-index: 2;
+        position: absolute;
+        top: 5.5rem;
+        left: 1rem;
+        width: 1.6rem;
+        height: 1.6rem;
+        img {
+            width: 100%;
+            height: 100%;
         }
     }
 
