@@ -1,4 +1,7 @@
 {
   "presets": ["env", "stage-2"],
-  "plugins": []
+  "plugins": [["import", {
+    "libraryName": "gxb-ui",
+    "libraryDirectory": "src/components"
+  }]]
 }

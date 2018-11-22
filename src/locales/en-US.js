@@ -331,6 +331,26 @@ const locale = {
             }
         }
     },
+    node_vote: {
+        index: {
+            title: 'Node Voting',
+            intro: 'The TrustNode is the producer of the block in GXChain. They validate transaction data and maintain network security. You can vote for the person you trust to become a public trust node. When you vote, the candidate you choose will receive the same number of votes you cast.',
+            name: 'TrustNode candidate',
+            no_record: 'No records',
+            vote_num: 'Number of votes',
+            btn_vote: 'Confirm',
+            btn_update: 'Update'
+        },
+        confirm: {
+            title: 'Confirm the vote',
+            account: 'Account',
+            proxy_account: 'Proxy account',
+            selected_node: 'Selected',
+            fee: 'Fee',
+            btn_confirm: 'Confirm',
+            success: 'Successful vote'
+        }
+    },
     realtime_quotations: {
         title: 'Real Time Quotes',
         high: '24h High',
