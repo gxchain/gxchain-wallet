@@ -165,6 +165,13 @@
                         }
                     }
                 }
+                if (this.isFirst && this.selected_accounts.length === 0) {
+                    return;
+                }
+                if (this.selected_accounts.length === 1) {
+                    $.toast(this.$t('node.vote.count.min'));
+                    return;
+                }
                 this.$refs.unlock.show();
             },
             unlocking (pwd) {

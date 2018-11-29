@@ -352,6 +352,13 @@ const locale = {
             success: 'Successful vote'
         }
     },
+    node: {
+        vote: {
+            count: {
+                min: 'Support at least 2 nodes'
+            }
+        }
+    },
     realtime_quotations: {
         title: 'Real Time Quotes',
         high: '24h High',

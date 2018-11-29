@@ -352,6 +352,13 @@ const locale = {
             success: '投票成功'
         }
     },
+    node: {
+        vote: {
+            count: {
+                min: '请至少支持两个节点'
+            }
+        }
+    },
     realtime_quotations: {
         title: '实时行情',
         high: '24h最高价',
