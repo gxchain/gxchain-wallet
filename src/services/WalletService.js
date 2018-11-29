@@ -798,6 +798,9 @@ const get_trust_nodes = () => {
                     Apis.instance().db_api().exec('get_objects', [[account.witness_account]]).then(res => {
                         account.name = res[0].name;
                         accounts.push(account);
+                        if (accounts.length === results.length) {
+                            resolve(accounts);
+                        }
                     }).catch(ex => {
                         reject(ex);
                     });
@@ -805,7 +808,6 @@ const get_trust_nodes = () => {
                     reject(ex);
                 });
             }
-            resolve(accounts);
         }).catch(ex => {
             reject(ex);
         });

@@ -36,7 +36,7 @@
                                 <div class="account-item-left">
                                     <account-image :size="15" :account="option.witness_account" slot="left"></account-image>
                                     <div class="account-info">
-                                        <div class="account-name">{{option.name}}</div>
+                                        <div class="account-name">{{index + 1}}. {{option.name}}</div>
                                         <div class="account-url">{{option.url}}</div>
                                     </div>
                                 </div>
@@ -75,6 +75,7 @@
         get_wallet_index,
         get_wallets
     } from '@/services/WalletService';
+    import sortBy from 'lodash/sortBy';
     import AccountImage from '@/components/sub/AccountImage.vue';
     import PasswordConfirm from '@/components/sub/PasswordConfirm.vue';
     import VoteConfirm from '@/components/sub/VoteConfirm.vue';
@@ -138,7 +139,11 @@
                     if (this.currentValue.length > 0) {
                         this.isFirst = false;
                     }
-                    this.accounts = results[1] || [];
+                    if (results[1].length > 0) {
+                        this.accounts = sortBy(results[1], (item) => {
+                            return -parseInt(item.total_votes);
+                        });
+                    }
                     this.loaded = true;
                     setTimeout(() => {
                         $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
