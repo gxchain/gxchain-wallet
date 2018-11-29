@@ -40,7 +40,7 @@
                                         <div class="account-url">{{option.url}}</div>
                                     </div>
                                 </div>
-                                <div class="account-item-center">{{$t('node_vote.index.vote_num')}}: {{parseInt(option.total_votes / 10000)}}</div>
+                                <div class="account-item-center">{{$t('node_vote.index.vote_num')}}: {{parseInt(option.total_votes / 100000)}}</div>
                                 <div class="account-item-right">
                                     <div class="gxb-checkbox is-right">
                                         <input class="gxb-checkbox__input"
