@@ -335,6 +335,7 @@ const locale = {
         index: {
             title: 'Node Voting',
             intro: 'The TrustNode is the producer of the block in GXChain. They validate transaction data and maintain network security. You can vote for the person you trust to become a public trust node. When you vote, the candidate you choose will receive the same number of votes you cast.',
+            tips: '*The number of votes is updated every hour.',
             name: 'TrustNode candidate',
             no_record: 'No records',
             vote_num: 'Number of votes',

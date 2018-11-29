@@ -19,6 +19,7 @@
                 </div>
                 <div class="content-block tips">
                     <p>{{$t('node_vote.index.intro')}}</p>
+                    <p style="text-align: right">{{$t('node_vote.index.tips')}}</p>
                 </div>
                 <div class="content-block-title">
                     <div class="left">{{$t('node_vote.index.name')}}</div>
@@ -209,10 +210,10 @@
                     this.$refs.confirm.cancel();
                     $.toast(this.$t('node_vote.confirm.success'));
                 }).catch(ex => {
-                    console.error(ex);
+                    let msg = ex.message.split('gxb-crypto') && ex.message.split('gxb-crypto')[0] || this.$t('system.error.default_msg');
                     this.submitting = false;
                     this.$refs.confirm.cancel();
-                    $.toast(ex.message);
+                    $.toast(msg);
                 });
             }
         }

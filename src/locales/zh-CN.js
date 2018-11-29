@@ -335,6 +335,7 @@ const locale = {
         index: {
             title: '节点投票',
             intro: '公信节点(TrustNode)是GXChain中区块的生产者。他们验证交易数据并维护网络安全。你可以投票选举你信任的人成为公信节点。投票时，你选择的候选人将获得你投出的相同票数。',
+            tips: '*票数每小时更新一次',
             name: '公信节点候选人',
             no_record: '暂无记录',
             vote_num: '票数',
