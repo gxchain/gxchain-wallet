@@ -26,6 +26,7 @@ const locale = {
     left_panel: {
         import_wallet: '导入钱包',
         create_wallet: '创建钱包',
+        node_vote: '节点投票',
         manage_wallets: '管理钱包',
         history: '收发记录',
         language: 'Language',
