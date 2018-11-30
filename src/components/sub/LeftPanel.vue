@@ -32,6 +32,16 @@
                     </li>
                 </ul>
                 <ul>
+                    <li v-if="new Date() > new Date('2018-12-03 19:00:00')">
+                        <router-link :to="link('/vote-index')" class="item-content">
+                            <div class="item-media">
+                                <i class="gxicon gxicon-user-check"></i>
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title">{{$t('left_panel.node_vote')}}</div>
+                            </div>
+                        </router-link>
+                    </li>
                     <li>
                         <router-link :to="link('/wallet-manage')" class="item-content">
                             <div class="item-media">

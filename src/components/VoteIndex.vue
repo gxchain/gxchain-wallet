@@ -19,15 +19,10 @@
                 </div>
                 <div class="content-block tips">
                     <p>{{$t('node_vote.index.intro')}}</p>
-                    <p style="text-align: right">{{$t('node_vote.index.tips')}}</p>
                 </div>
                 <div class="content-block-title">
                     <div class="left">{{$t('node_vote.index.name')}}</div>
-                    <div class="right">
-                        <div class="btn-vote" :class="{'disabled': !selected}" @click="unlock">
-                            {{isFirst ? $t('node_vote.index.btn_vote') : $t('node_vote.index.btn_update')}}
-                        </div>
-                    </div>
+                    <div class="right">{{$t('node_vote.index.tips')}}</div>
                 </div>
                 <div class="list-block accounts" v-if="accounts.length>0&&loaded">
                     <div class="gxb-checklist">
@@ -59,6 +54,11 @@
                     {{$t('node_vote.index.no_record')}}
                 </p>
             </div>
+            <nav class="bar bar-tab">
+                <div class="tab-item tab-vote" :class="{'disabled': !selected}" @click="unlock">
+                    <div class="tip1">{{isFirst ? $t('node_vote.index.btn_vote') : $t('node_vote.index.btn_update')}}</div>
+                </div>
+            </nav>
         </div>
         <password-confirm ref="unlock" @unlocking="unlocking"></password-confirm>
         <vote-confirm ref="confirm" :account="currentWallet.account" :pwd="password" :fee="fee" :proxyAccount="proxyAccount" :voteAccounts="voteAccountsStr" @confirm="confirmVote"></vote-confirm>
@@ -140,8 +140,49 @@
                         this.isFirst = false;
                     }
                     if (results[1].length > 0) {
-                        this.accounts = sortBy(results[1], (item) => {
+                        // 过滤保护节点和vote_id为空的节点
+                        let accounts = results[1].filter(item => {
+                            let nodes = [
+                                'aaron',
+                                'caitlin',
+                                'kairos',
+                                'sakura',
+                                'taffy',
+                                'miner1',
+                                'miner2',
+                                'miner3',
+                                'miner4',
+                                'miner5',
+                                'miner6',
+                                'miner7',
+                                'miner8',
+                                'miner9',
+                                'miner10',
+                                'miner11',
+                                'hrrs',
+                                'dennis1',
+                                'david12',
+                                'marks-lee',
+                                'robin-green'
+                            ];
+                            let tmp = false;
+                            for (let i = 0; i < nodes.length; i++) {
+                                if (item.vote_id === '') {
+                                    tmp = true;
+                                    break;
+                                }
+                                if (item.name === nodes[i]) {
+                                    tmp = true;
+                                    break;
+                                }
+                            }
+                            return !tmp;
+                        });
+                        // 票数排序，票数相同vote_id越早的靠前
+                        this.accounts = sortBy(accounts, (item) => {
                             return -parseInt(item.total_votes);
+                        }, (item) => {
+                            return parseInt(item.witness_account.slice(2));
                         });
                     }
                     this.loaded = true;
@@ -236,6 +277,13 @@
         background-color: #fff;
     }
 
+    .content {
+        padding-bottom: 2.5rem;
+    }
+    .native-ios-x .content {
+        padding-bottom: 3.7rem;
+    }
+
     .tip-info,
     .tip-alert,
     .tip-success {
@@ -267,18 +315,10 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        .btn-vote {
-            height: 1.2rem;
-            width: 4rem;
-            line-height: 1.2rem;
-            border-radius: .6rem;
-            text-align: center;
-            background: #6699ff;
-            color: #fff;
-            font-size: .65rem;
-        }
-        .btn-vote.disabled {
-            background-color: #c8c9cb;
+        .right {
+            font-size: .6rem !important;
+            color: #6699ff;
+            font-weight: bold;
         }
     }
 
@@ -323,6 +363,11 @@
                     .account-url {
                         color: #808695;
                         font-size: .6rem;
+                        height: 13px;
+                        max-width: 8rem;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                     }
                 }
             }
@@ -346,5 +391,16 @@
 
     .button-gxb {
         font-size: .7rem;
+    }
+
+    .tab-vote {
+        background: #6699ff;
+        color: #fff;
+    }
+    .tab-vote:active {
+        color: #fff;
+    }
+    .tab-vote.disabled {
+        background-color: #c8c9cb;
     }
 </style>

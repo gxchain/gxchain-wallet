@@ -73,7 +73,7 @@
                         </swiper-slide>
                         <div class="swiper-pagination" slot="pagination" v-show="wallets&&wallets.length>1"></div>
                     </swiper>
-                    <router-link :to="link('/vote-index')" class="link-vote-index">
+                    <router-link :to="link('/vote-index')" class="link-vote-index" v-if="new Date() > new Date('2018-12-03 19:00:00')">
                         <img src='../assets/images/vote_icon.png'>
                     </router-link>
 
