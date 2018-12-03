@@ -395,11 +395,10 @@
 
     .tab-vote {
         background: #6699ff;
-        color: #fff;
+        color: #fff !important;
     }
     .tab-vote:active {
-        color: #fff;
-    }
+        color: #fff !important;
     .tab-vote.disabled {
         background-color: #c8c9cb;
     }
