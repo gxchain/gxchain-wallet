@@ -182,7 +182,7 @@
                         this.accounts = sortBy(accounts, (item) => {
                             return -parseInt(item.total_votes);
                         }, (item) => {
-                            return parseInt(item.witness_account.slice(2));
+                            return parseInt(item.vote_id.split(':')[1]);
                         });
                     }
                     this.loaded = true;
