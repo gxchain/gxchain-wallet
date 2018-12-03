@@ -399,6 +399,7 @@
     }
     .tab-vote:active {
         color: #fff !important;
+    }
     .tab-vote.disabled {
         background-color: #c8c9cb;
     }
