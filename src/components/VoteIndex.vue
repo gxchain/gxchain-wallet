@@ -4,6 +4,7 @@
             <header class="bar bar-nav">
                 <router-link class="icon icon-left pull-left" :to="link('/')" replace></router-link>
                 <h3 class="title">{{$t('node_vote.index.title')}}</h3>
+                <div class="button button-link button-nav pull-right" @click="goVoteHistory">{{$t('node_vote.index.records')}}</div>
             </header>
             <div class="content pull-to-refresh-content">
                 <div class="pull-to-refresh-layer">
@@ -268,11 +269,23 @@
                     this.$refs.confirm.cancel();
                     $.toast(msg);
                 });
+            },
+            goVoteHistory () {
+                let self = this;
+                let url = 'https://block.gxb.io/#/account/' + this.currentWallet.account;
+                cordova.exec(null, null, "Controller", "push", ['url', url, self.$t('node_vote.index.records')]); // eslint-disable-line
             }
         }
     };
 </script>
 <style lang="scss" scoped>
+    .pull-right {
+        font-size: .65rem;
+        color: #6699ff;
+    }
+    .bar .button-nav.pull-right {
+        margin-right: 0;
+    }
     .page {
         background-color: #fff;
     }
