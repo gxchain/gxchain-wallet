@@ -1,0 +1,310 @@
+{
+    "list": [
+    {
+        "nodeName": "gf.network（分布式资本）",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/1.png",
+        "nodeDesc": "gf.network生态包括分布式资本、Fenbushi Digital、Block Asset和众多优质区块链项目，至今已是60多个项目的最早期投资人，包括Etheruem、Vechain、GXChain、Ontology、Kyber Network等\n分布式资本：分布式资本是中国首家专注于投资区块链技术相关企业的风险投资企业，在2017年被硅谷著名投资咨询公司CB insights评为全球Top 5的区块链风险投资机构。分布式资本为众多的区块链相关初创企业提供支持，并且推动区块链经济和可编程金融的发展。\nFenbushi Digital成立于2017年，汇集了区块链行业中一批最早的先驱者，投资前沿的区块链项目，通过全新的经济模式和商业形态重构众多行业。Fenbushi Digital将自己定位为项目的长期战略合作伙伴，多方赋能项目建立全新的去中心化的生态系统。迄今为止，Fenbushi Digital已经在数字资产行业投资了50多个项目。",
+        "voteChainId": "gxc-gf"
+    },
+    {
+        "nodeName": "LinkNode(LinkVC)",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/2.png",
+        "nodeDesc": "Linknode is operated by LinkVC which is a token fund committed to serving outstanding companies and developers in the field of blockchain with global commercial resources and professional financial services. In the past two years, linkVC invested dozens projects worldwide including Aicoin, BBEX, aelf, Zilliqa, Blockv, Certik, Oasis labs, etc.\nLinkVC is a new cutting-edge venture capital with global view, founded in 2016 by Jiapeng Lin. From our headquarter in Singapore all the way to offices in Beijing,HongKong and the US, we are dedicated to investing in blockchain technology, cryptocurrency and Fin-Tech.",
+        "voteChainId": "linknode1"
+    },
+    {
+        "nodeName": "火币矿池",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/3.png",
+        "nodeDesc": "火币矿池是火币集团子品牌，是火币全球生态战略的重要组成部分。火币矿池革命性的将矿池业务重新定义为“数字资产生产平台”，向包括以POW、 POS、DPOS等为诸多生产机制的持有者提供从生产到销售的一站式服务。",
+        "voteChainId": "gx-huobipool"
+    },
+    {
+        "nodeName": "引力矿池",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/4.png",
+        "nodeDesc": "引力矿池是隶属于引力区块链名下的业务子品牌，我们致力于成为区块链行业的基础服务运营商与服务商，为不同属性的客户提供最佳的服务并为之创造价值，与之共同打造属于区块链的明日世界。\n1、引力矿池目前正为EOS、GOC、Worbli、Ulord、FinChain等区块链项目提供节点部署、维护服务，具有丰富的节点运维经验。\n2、引力矿池参与了多个公链项目的启动、发展过程，具有丰富的区块链项目实践经验。\n3、依托于引力区块链及其名下的另一个业务子品牌EOS引力区，引力矿池具有广泛的社群基础和区块链行业知名度。",
+        "voteChainId": "gravity-pool"
+    },
+    {
+        "nodeName": "Bit-Z集团",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/5.png",
+        "nodeDesc": "Bit-Z2016年创立于香港，面向全球提供专业的数字资产交易及OTC(场外交易)服务，是全球著名的区块链资产交易平台之一。平台拥有在线币种100+，交易对总数200+。 目前累计超 130万注册用户，24小时同时在线超25万用户。Bit-Z团队来自国际数字货币行业的顶尖人才，还包括金融、社交、游戏和电子商务等各领域的多样化专业人士。",
+        "voteChainId": "bitz-node"
+    },
+    {
+        "nodeName": "GXChain Wifire",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/6.png",
+        "nodeDesc": "光载无限（北京）科技有限公司是网络基础设施创新服务提供商，由启迪控股和世纪互联共同投资创立。目前在分布式 IDC 上拥有中国三大电信接口、数 T 流量资源，在 CDN 方面拥有三百多个节点，旗下牛盾云具备抗 DDoS、连线运维及大带宽的管理能力。在中国、欧美、亚太地区，拥有可控节点数十处，在国内拥有网络节点 300 余处，遍布全国重点省市，跨越中国电信、移动、联通、铁通、教育网、科技网、长城宽带等各大运营商，带宽总量超过 3TB。",
+        "voteChainId": "wifire0"
+    },
+    {
+        "nodeName": "CertiK",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/7.png",
+        "nodeDesc": "CertiK 致力于通过全球领先的深度规范技术，利用形式化验证重构大家对于智能合约和区块链的信任。CertiK能提供最有竞争力的规模化智能合约验证服务，来保证智能合约和区块链系统的安全性与可靠性。CertiK的服务，目前主要是针对智能合约(smart contract)进行形式化验证(formal verification)，力争从理论上证明代码实现的正确性，从而巩固合约的安全。CertiK与Binance,Huobi,Bgogo等知名交易所建立了战略合作关系，并为近百家区块链公司提供了智能合约安全审核服务。\n\nCertiK是由来自于耶鲁大学，哥伦比亚大学和硅谷的精英团队组成，联合创始人邵中是耶鲁大学计算机系系主任、终身冠名教授，30余年安全领域经验。联合创始人顾荣辉是哥伦比亚大学计算机系助理教授。",
+
+        "voteChainId": "certik-gxc"
+    },
+    {
+        "nodeName": "时戳资本",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/8.png",
+        "nodeDesc": "时戳资本是依托于巴比特的专业区块链投资机构，聚焦于区块链领域的研究、投资及咨询服务，是最早专注于区块链与数字货币资产领域的风险投资机构之一，致力于服务区块链创业者，以发现价值，创造价值，分享价值的理念共建区块链生态。\n时戳资本为区块链项目团队提供一体化的综合服务，优化经济模型选型、协助合规架构搭建、加速全球社区建设等，助推区块链项目应用落地并服务于实体产业。已投项目包括:本体、FCoin、比原链、AELF等",
+
+        "voteChainId": "time-stamp"
+    },
+    {
+        "nodeName": "哈佛肯尼迪政府学院区块链与数字货币协会",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/9.png",
+        "nodeDesc": "The Blockchain and Cryptocurrency PIC will bring crypto-entrepreneurs and thought leaders to campus to discuss how cryptocurrencies are transforming policy fields as diverse as financial regulation, international development, and national security.",
+
+        "voteChainId": "gxharvard"
+    },
+    {
+        "nodeName": "GXCLaoMao",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/10.png",
+        "nodeDesc": "EOSLaoMao 由区块链行业知名投资人老猫发起。 旨在维护一个公平稳定的 GXC 节点，该项目所有的收益在扣除必要的开支之后，将被用于促进 gxc 社区的建设。 具体方式包括但不限于奖励开发者，开展线上/线下活。",
+
+        "voteChainId": "laomao-bp"
+    },
+    {
+        "nodeName": "BEPAL",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/11.png",
+        "nodeDesc": "BEPAL（币派）是一家提供数字资产管理服务的公司，在区块链安全及数字资产安全管理方面有着丰富经验，现已成功推出BEPAL Wallet个人数字资产钱包、BEPAL Pro、Q、Card系列安全硬件、BEPAL Enterprise企业数字资产管理平台等产品。其中，Bepal Pro S硬件钱包斩获“中国最佳硬件钱包”、“区块链最受关注安全 硬件”等多个奖项。未来，BEPAL将继续致力于推动数字资产管理服务生态。",
+
+        "voteChainId": "bepal"
+    },
+    {
+        "nodeName": "深圳市星际大陆科技有限公司",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/12.png",
+        "nodeDesc": "IPFSMAIN星际大陆是坚定的IPFS生态建设者、去中心化存储践行者，主要业务有存储矿机研发生产、矿场建设托管、矿池软件开发、应用开发等，地处深圳--全球硬件之都，拥有成熟完整的产业供应链。星际大陆成立于2018年初，技术团队由原金蝶产品总监、创维存储服务部门总监、中兴研发负责人、华为资深存储工程师等互联网巨头高管组成，5月份获华迎基金3000万天使轮投资，矿机获得深圳宝安十大精品奖，公司获得硅谷商学院颁发“全球区块链企业之星”奖，自成立以来，星际大陆一直重金投入技术研发，与IPFS官方密切接触沟通，为市场带来正确的知识见解，获得IPFS团队多次公开赞扬，我们坚持“真诚到永远·专业到极致”的为人做事理念，为构建信息自由的新世界而努力，我们坚信IPFS将为世界带来更好的体验，为商业创造更大的价值。",
+
+        "voteChainId": "ipfsmain-wallet"
+    },
+    {
+        "nodeName": "麦子钱包",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/13.png",
+
+        "voteChainId": "math-wallet"
+    },
+    {
+        "nodeName": "慢雾区（SlowMistZone）",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/14.png",
+        "nodeDesc": "慢雾区是一个专注区块链生态安全的社区，由慢雾科技创建并引导发展。慢雾科技是一家专注区块链生态安全的公司，核心能力包括安全审计、安全顾问、防御部署、威胁情报等，已为全球多家交易所、钱包、链、智能合约等做了安全审计与防御部署，并通过独有的地下黑客风向标追踪引擎，持续为合作公司及国家相关部门提供威胁情报。",
+
+        "voteChainId": "slowmist1"
+    },
+    {
+        "nodeName": "全球石墨烯区块链应用中心",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/15.png",
+        "nodeDesc": "石墨烯应用中心（http://gbacenter.org/）是由国内外石墨烯生态的核心人士共同发起，涵盖开发者社区、区块链研发企业、投资机构、媒体、交易所、垂直社区、网络安全团队等资源。石墨烯应用中心秉持“技术赋能石墨烯区块链生态”的初心，通过聚集国内外顶尖石墨烯区块链开发者、打造技术社区、开展技术研究、组织开发者大会及黑客松活动等形式向开发者为主的公众推广和宣传石墨烯区块链技术。\n2018年上半年，主办2次石墨烯区块链开发者大会，包含GXChain在内的30+项目技术负责人参与演讲，规模超千人(http://blockgeek.io/graphene/index.html)。\n未来，石墨烯应用中心将继续推动以下三个方面的发展\n一 石墨烯区块链+实体经济实验室，与工业界结合赋能实体经济。\n二 成立实体的分布式服务器基地，让区块链项目实现真正的安全、可靠的分布式布局。\n三 推进与政府、学界、开发者群体等的合作，将包含GXChain在内的石墨烯生态发展壮大。",
+
+        "voteChainId": "gbac-gxc"
+    },
+    {
+        "nodeName": "GXCDAC",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/16.png",
+        "nodeDesc": "2018年末，比特币即将度过他的第一个十年。在这十年中，数字货币发生了翻天覆地的变化，从最初的价值传递发展到了现在以智能合约为典型特征的公链时代。今天我们秉承着Code is Low.的信念，坚信智能合约必将改变权力过度集中、合约无法保障的现状。共识机制也将重塑社会信任，从而带给我们一个更好的时代。\n公链的发展必然离不开超级节点。做节点并不单纯是为了利益，是为了一种信仰，是一种荣誉和担当。如果说未来公链会像现在的操作系统一样重要，那么作为公链的一个节点便是一种理想付诸实践的喜悦。\nGXCDAC是一个基于公信宝社群的一个分布式自治小组，由区块链早期投资人周晨发起,并由王维、币小胖共同组织筹建。",
+
+        "voteChainId": "gxcdac"
+    },
+    {
+        "nodeName": "信来节点",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/17.png",
+        "nodeDesc": "公信宝的深度爱好者、铁杆支持者和重仓持有者，经历了公信宝诞生、起步、壮大的每一步，创建了公信宝俱乐部社群，在全国各地组织过多次线下公信宝的宣传活动，熟悉和认同公信宝的使命愿景价值观，愿意同公信宝团队一起用区块链技术重构信用社会，让个人真正成为自己数据的主人。",
+
+        "voteChainId": "xinlai-bp"
+    },
+    {
+        "nodeName": "祝雪娇",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/18.png",
+        "nodeDesc": "祝雪娇，Kcash创始人，Kcash与公信宝是战略合作伙伴。毕业于清华大学，获得硕士学位。8 年技术研 发经验，全栈工程师，连续创业者；2011 年开始接触研究比特币和区块链技术， 随后联合创建 YardWallet，自主开发了比特币支付网关、比特币钱包以及版权 认证系统，具有深厚的区块链技术积累和行业认知。",
+
+        "voteChainId": "gxc-kcash"
+    },
+    {
+        "nodeName": "成都游茶科技",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/19.png",
+        "nodeDesc": "游戏茶馆(www.youxichaguan.com)是中国知名移动游戏行业媒体和资源对接平台，总部位于四川成都，面向全球手游行业人士，覆盖国内数千家手机游戏研发商，关注全球移动游戏最新动态，对接手机游戏研发与发行商和渠道商之间的合作。\n旗下品牌活动问道沙成为游戏行业内最关注的沙龙活动之一，游戏产品DEMO秀已经成为中小CP的新游发布会，每期亮相20款新游产品，与数十家发行商渠道商和投资机构面对面，已经产生千万流水产品和千万投资案例，大部分游戏产品在公布之后都能获得数十家的发行商合作邀约，已经分别在成都，厦门，武汉，杭州，上海和北京成功举办，目前共举办20场，参与人数超过万人，发布产品超过200款，参与的发行商超过300家，实现上百款产品的发行代理合作",
+
+        "voteChainId": "lianchaguan028"
+    },
+    {
+        "nodeName": "石楠(moon)",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/20.png",
+        "nodeDesc": "公信链社区早期开发者。参与公信链前期开源项目测试、对公信链的技术文档以及布洛克城的技术文档进行了部分完善和测试。公信链github项目上的贡献者，例：core、exploer、wallet、des等。贡献了baas-sdk 、common-sdk php版",
+
+        "voteChainId": "gxcmoon"
+    },
+    {
+        "nodeName": "矢量计算",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/21.png",
+        "nodeDesc": "杭州矢量计算科技有限公司为 杭州区动科技有限公司与杭州龙修网络科技有限公司合资的区块链技术服务公司.\n杭州区动科技旗下区分平台，是国内最大的分布式项目评测平台，目前注册用户17万+，聚合全网200+区块链项目分析师，覆盖全球2100+区块链项目，是工信部下属CBI研究院（http://www.cbcit.org.cn/）授权的区块链评测研究中心，同时获得创始资本、GBLS等币圈知名机构战略投资，在行业内拥有丰富的配套资源。\n杭州龙修网络科技成立于2015年4月，核心团队由前阿里、华为和IBM的员工组成，在电商、供应链、支付、大数据、区块链领域积累了丰富的经验，服务的客户超过一百家，其中百亿以上市值的企业三家。\n公司有完善的安全、运维和质量保障体系，在企业上云和云上架构设计上有丰富的经验和落地案例。荣获工信部下属CBI研究院授予的 “2018年度最具落地性区块链技术服务公司” 的称号。\n矢量计算为区动科技的运营团队与龙修网络科技的技术团队相结合，“强强联合” ，能为公信宝的主节点及其生态提供更具竞争力的服务",
+
+        "voteChainId": "vctech"
+    },
+    {
+        "nodeName": "中原区块链社区",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/22.png",
+        "nodeDesc": "中原区块链社区由翟东明先生于2016年9月建立，至今已成立了两周年。中原区块链社区由众多区块链爱好者组成，目前以微信群运营为主，电报群运营为辅。社区中包含经常有大咖分享区块链知识的交流群外，还有可提供OTC服务的交易群、区块链媒体合作群和优质区块链项目技术交流群。\n中原区块链创始人翟东明先生，还是一道资本创始人、麦子钱包联合创始人、Medishares 项目战略顾问及架构师，河南农业大学区块链选修课主讲人。\n两年前，在中原区块链建立之初，社区的整个规模还非常小。但在创始人翟东明先生的带领之下以及随着区块链行业的快速发展，中原区块链也在快速扩张，以知识分享与优质服务，吸引了大量区块链爱好者的加入。经过两年的发展，如今的中原区块链在圈内已经形成了一定的规模，获得了不小的名气。",
+
+        "voteChainId": "ccbc"
+    },
+    {
+        "nodeName": "GXC Pacific",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/23.png",
+        "nodeDesc": "节点亚太科技是亚洲领先的区块链公司。我们以亚太地区为基地，为那些对亚太地区感兴趣的人建立本地和全球社区。我们为全球开发者提供亚太接入和一站式解决方案。我们目前正在推广石墨烯技术，并致力于成为众多公链的区块生产者。",
+
+        "voteChainId": "gxcpacific"
+    },
+    {
+        "nodeName": "预言家Prophet",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/24.png",
+        "nodeDesc": "Prophet Set Technology Ltd（以下简称”Prophet Set”）于2018年5月在英属维尔京群岛BVI成立，团队共有20人，其中技术团队10人、运营团队5人。目前旗下开发及运营基于GXChain的移动社交类预测平台——预言家Prophet。平台充分利用分布式公开账本增加预测市场的透明度，通过数字代币经济激励开发者在平台发布预测项目，将自己的智慧进行社区共享，为用户提供不同类型的预测事件,汇聚用户群体智慧从而有效的预测未来。\n预言家Prophet是布洛克城上的明星产品之一，目前拥有注册用户51万，平台每月充值流水达50000GXC以上，在微信、Telegram、Kakao Talk（韩国）均有稳固和丰富的社群基础。同时，Prophet也与业内30余家优质项目及流量入口达成战略合作，共建社群，共享生态资源。\nProphet Set于今年6月份完成机构轮融资，由公信宝、公信资本、了得资本、分布式资本沈波、哈希资本、星合资本及bit-z领投。",
+
+        "voteChainId": "gxc-prophet"
+    },
+    {
+        "nodeName": "BitAsset Group Limited",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/25.png",
+        "nodeDesc": "BitAsset是全球领先的数字金融服务平台，支持多种法币入金，提供现货、期货及衍生品、ETF指数等多种专业的数字资产交易品种，以及钱包托管、融资融币等衍生服务。BitAsset拥有完整的数字私人银行服务体系，超过1000人的客户经理团队为平台用户提供7*24小时全天候投资咨询服务。平台部署自动化行情监测系统提前预警市场及交易风险，全方位保证用户的资产安全。  ",
+
+        "voteChainId": "bitasset-gxc"
+    },
+    {
+        "nodeName": "币得CoinGet",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/26.png",
+        "nodeDesc": "币得（CoinGet）是一个基于GXChain的去中心化娱乐平台，通过“区块链+智能合约”技术解决信息不对称、信任难等问题，打造公平、公正、公开的娱乐游戏生态。我们是第一个在公信链生态上线的DAPP，已成功上线多个爆款游戏，用户数超过50万。",
+
+        "voteChainId": "coinget-bp"
+    },
+    {
+        "nodeName": "GxBean",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/28.png",
+        "nodeDesc": "星火区块链，致力于围绕区块链技术，为项目提供顶尖投资机构融资对接、北美优质人才挖掘、线下区块链流量聚合、市场推广等服务，建立各个环节有机连结的完整区块链项目孵化生态体系。星火区块链拥有丰富的超级节点运维技术和经验，旗下有 EOS 超级节点 EOS Bean。",
+
+        "voteChainId": "gxbean"
+    },
+    {
+        "nodeName": "猩力量（Lucia）",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/29.png",
+        "nodeDesc": "上海凤浩智能科技有限公司，于今年三月份成立。公司主要项目为Lucia，旨在用区块链技术解决长租线上租赁假房源、不履约、押金高等信任问题。3月与公信宝达成战略合作，并获公信宝千万天使投资。\nLucia在项目早期得到了各行各业的认可与支持。Lucia区块链+长",
+
+        "voteChainId": "lucia-committee"
+    },
+    {
+        "nodeName": "币须达摩",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/30.png",
+        "nodeDesc": "公元2018年，我们进入一个激动人心的时代，这个新时代将依靠区块链的DPoS共识算法共治未来的全球社区，没有低效中心化权威部门，没有落后、不透明的选举与弹劾，没有边界含糊不清的法律与法院，代码即法律。这是一场人人可以参与的链上治理机制，我们尊重每一个人的选择，凡是参与投票的朋友都是洞见了未来的有识之士，是先行者，都值得历史记录。\n币须达摩是公信资本天使投资的社群育成平台，币须达摩团队与社区志愿者非常有诚意参与公信链节点竞选，为公信链生态贡献自己的一份力量！\n如果以币须达摩团队为核心的节点能够成为记帐节点，我们承诺除了服务器与运维成本外，余下的所有节点收入给投票人50%的分红，另外50%用于社群的生态建设与育成，为公信链生态项目做社群资源支持。",
+
+        "voteChainId": "damo-witness"
+    },
+    {
+        "nodeName": "石溪大学区块链实验室",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/31.png",
+        "nodeDesc": "石溪大学区块链实验室是石溪大学（Stony Brook University）新成立的区块链研究中心，位于石溪大学本校区，与公信宝团队、BNY Mellon等国内外著名企业及团队建立了良好的合作关系，又邻近美国布鲁克黑文国家实验室、冷泉港实验室及众多著名研究机构，为实验室提供了良好的研究氛围，便利的交流环境以及雄厚的科研及技术资本。\n石溪大学，又称纽约州立大学石溪分校，坐落于纽约市郊风景区长岛，是美国著名的研究型公立大学，在世界范围内享有很高的学术声誉。石溪大学是北美顶尖大学联盟美国大学协会（AAU）的62个成员之一，享有公立常春藤的美誉。\n石溪大学在2019 U.S. News美国大学本科综合排名中位居第80名，世界大学综合排名中居第166名 。卡内基基金会（Carnegie Foundation）将石溪分校列为全美最优秀的研究机构之一，约翰·霍普金斯大学（Johns Hopkins University）亦十分推崇石溪分校在学术研究方面的成果。该校的许多学院入学竞争尤为激烈，如牙医学院录取率更低至3.5% 。石溪大学拥有许多一流学者，其教学品质和研究成果享誉国际，石溪的教授队伍中聚集着各领域的顶尖研究人员，著名核物理学家、诺贝尔物理奖获得者杨振宁在该校执教37年。世界上第一张核磁共振图像诞生于此。自1957年成立后，已经培养出多位著名人物，包括7位诺贝尔奖得主，1位图灵奖得主及菲尔茨奖、沃尔夫奖和阿贝尔奖得主约翰·米尔诺等。",
+        "voteChainId": ""
+    },
+    {
+        "nodeName": "杭州超乐网络科技有限公司",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/32.png",
+        "nodeDesc": "Unitopia 是基于区块链公链的去中心化泛娱乐社群平台。它向社群组织者和社群参与者提 供一个数据透明、规则透明的社群基础环境。它将保证社群数据的绝对安全，它将保证用 户的数据隐私。它将颠覆传统的社群规则，以去中心化的结构直接将整个社群生态链上的 每一份子连接起来，实现每个社群参与者的利益保证。",
+
+        "voteChainId": "wanlima-team"
+    },
+    {
+        "nodeName": "BlockBoost",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/33.png",
+        "nodeDesc": "BlockBoost 是一家核心团队扎根于硅谷，为技术驱动型区块链项目提供海外用户增长服务，尤其是海外开发者社区的增长服务，进而为区块链项目方打造全球性竞争力的专业机构。",
+
+        "voteChainId": "blockboost123"
+    },
+    {
+        "nodeName": "富吉科技（91社区节点）",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/34.png",
+        "nodeDesc": "富吉科技运营区块链专业媒体玖壹财经（91cj.top）微信公众号：jycj91 ；新浪财经博主“百万兄-” 等，并和国内50多家媒体建立了合作关系，是“币报道”的商务合伙人，“链动资讯”、”字节财经““链球财经”等战略合伙人。国内专业媒体的合作，自有财经媒体的生态布局，共享行业资源，链接全球。\n公司和生态源头共识矿业合作，算力部署顶层设计，拥有专业矿场，大量低价电费的电力资源。\n公司秉承在人类从移动互联网时代向区块链时代进发的今天逐步布局区块链生态，为区块链项目提供专业解决方案，公司区块链项目专业顾问团队是国内及韩国、新加坡等区块链项目的专业顾问。\n富吉科技创始人，长期看好公信宝项目，并且加入了社区志愿者，参与了项目的社群建设和维护，达成了对公信宝发展的共识。\n技术负责人三一曾经开发了比原（BTM）浏览器，并且开发和运营了行业第一app\"行者\"。",
+
+        "voteChainId": "gxc91"
+    },
+    {
+        "nodeName": "区块链研习社",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/35.png",
+        "nodeDesc": "区块链研习社ChainClub成立于2017年1月，是国内最早的区块链学习创业社群，也是最早开始践行DAC理念的社群。区块链研习社的价值观是“求知，协作，链接”，历经一年多的打磨，打造了行业全体系课程，累积超100节。区块链研习社在国内建立了30个城市分社节点，社群规模2万人，优质付费群体6000。在未进行商业运作情况下已有超60名CXO创始人才，超100名区块链技术人才，超50名社区运营人才从这里走出，为整个区块链行业做出巨大贡献。未来，区块链研习社将继续利用区块链思维和通证经济进行社群建设，将在游戏化学习社区、个人技能共享平台、分布式协作网络上进行建设，打造一个可以让个体实现自我价值的生态网络。",
+
+        "voteChainId": "chainclub-bp"
+    },
+    {
+        "nodeName": "渡鸦实验室Duya Blockchain Lab",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/36.png",
+        "nodeDesc": "Duya Labs,是一家致力于区块链基础网络建设的技术性企业,在全球范围内为区块链项目开发者提供专业技术服务,为公链和DApp的开发者解决技术上的担忧，节约开发者的时间和资源成本，协助开发者快速部署和运营全球网络。\n\nDuya Labs由瑞士加密谷精英及区块链投资人、独立董事、联合区块链技术先驱团队及IT科技领域知名人士共同打造。Duya Labs核心创始团队具有显著的大型IT项目建设运营背景,核心雇员来自中国电信、世纪互联、Dell、Google、腾讯、IBM、华为、Yahoo等高科技公司的技术运营部门,具有多年的大型网络运营经验。顶级的网络技术、顶级的IT工程经验、顶级的行业理解,组成了我们顶级的区块链基础网络建设团队。Duya Labs团队分布全球多地,包括中国、香港、美国、澳大利亚等,现在团队规模20余人,主要成员是IT运营维护工程师和区块链早期技术的共同开发者。\n\nDuya Labs基于遍布全球的Duya服务器节点，让区块链项目获得更加稳定的连接。区块链项目提供算力服务、节点服务、存储服务。Duya Labs在全球建立了分布式服务器集群，为全球的超级节点用户提供高速稳定的网络连接。\nDuya Labs在美国、保加利亚、中国、香港、日本、新加坡、澳大利亚7个国家和地区部署有8个专属IDC机房，自有超过300台高性能服务器和存储设备。Duya Labs自建的服务器集群以1000M高速光纤网络与主网进行连接，采用多层交换技术保证了网络的快速稳定。\n截至目前，Duya Lab为全球16个区块链项目提供超级节点服务，包括了Dash、Loki、ZEN、SYS等项目。\nDuya Labs将会为越来越多的区块链项目开发者提供更加强大的算力、快速的网络节点、稳定的硬件环境，帮助区块链开发者快速部署公链、DApp和超级节点，让区块链项目的网络环境更加安全稳定。\n",
+
+        "voteChainId": "duya-io-2018"
+    },
+    {
+        "nodeName": "LendChain",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/37.png",
+        "nodeDesc": "LendChain是由GXChain开发的数字资产金融服务平台，即加密数字货币银行。该平台已经运营了六个月，目前已上线BTC，ETH，BCH、GXC和QKC等多个主流币种的抵押借贷服务，即加密数字货币的p2p。在融资端，LendChain提供抵押类和信用类融资服务，在投资端，LendChain拥有专业投研团队，为理财用户提供固定收益、浮动收益等多样化的投资产品。\n目前，公司专注于中国，韩国和亚洲市场的发展。截止现在，已拥有全球有170,000多名注册用户和6万多名持币用户。\n一、从技术层面：LendChain是基于GXChain开发的数字资产金融服务平台，将配合公信宝给予技术支持，保证服务器和技术运维上以及节点的运行稳定；\n二、从业务、运营层面：\n1､LendChain上线了GXC并与布洛克城共享着一批生态用户，同LendChain也滋养着布洛克城用户，这让双方的项目将有一个更好的用户粘性；\n2､LendChain目前上线了BCH、EOS、DACC和QKC等币种，并和他们建立了良好的生态社区合作，共享社区用户，未来也将不断的和其他主流币种合作壮大社区用户，同时也为公信宝带来宣传和引流；",
+
+        "voteChainId": "lendchain"
+    },
+    {
+        "nodeName": "GXFormulA",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/38.png",
+        "nodeDesc": "FormulA（FML）致力于建立一个可信的真实资产价值交换网络IoA（Internet of Asset）。基于FormulA的“Asset Digitalization Protocal”协议，无论个人或还是机构都可以在去中心化的区块链资产网络上登记或交易自己的资产。让真实的资产可以被可信、安全、高效的登记和流通，从而实现实物资产数字化",
+
+        "voteChainId": "fmlgx"
+    },
+    {
+        "nodeName": "https://gxc.im 公信社区",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/39.png",
+        "nodeDesc": "liuxufei 所属团队是专注于比特币、以太坊、量子、EOS、比特股、公信宝等数字资产的一个团队，专注于互联网为代表的新经济领域的早期投资。于2012年起开始涉足比特币等相关数字货币领域，早期参与了比特币、莱特币、比特股等数字货币的挖矿、见证人、投资与对冲套利，拥有一支专注于数字货币领域的精英团队。",
+
+        "voteChainId": "liuxufei"
+    },
+    {
+        "nodeName": "TLAB",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/40.png",
+        "nodeDesc": "TLAB，数字券商（持有香港证券全牌照），以研究为基础，辐射投资、投行、资产管理以及财务咨询等业务，形成标准化的区块链金融服务范式，将从数字金融服务出发，助力公信宝生态发展。",
+
+        "voteChainId": "tlab"
+    },
+    {
+        "nodeName": "GenaroNetwork",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/41.png",
+        "nodeDesc": "Genaro Network，首个结合存储和公有链的双底层智能数据生态，独创SPoR（Sentinel Proof of Retrievability）+ PoS (Proof of Stake) 低能耗可持续的混合共识机制，在确保安全的同时提升性能。Genaro为开发者提供一站式开发平台，可以同时部署智能合约并存储DApp所需数据，并为每个人提供一个可信任的互联网，通过数据联通现实世界与区块链世界。",
+
+        "voteChainId": "genaronetwork2016"
+    },
+    {
+        "nodeName": "BitGxc",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/42.png",
+        "nodeDesc": "The “Bit Dimensions” are positioned at the global blockchain digital asset intelligence station, providing global 7*24 hour intelligence information to blockchain industry practitioners and digital asset (digital currency) investors through news sites , media interactive APP platforms,Data market, interactive communication, training and education services and products. Strive to build a world-class international, professional, valued blockchain third-party financial media and data market service brand, to do the future blockchain new business world of Bloomberg.\n",
+
+        "voteChainId": "biteweidu1"
+    },
+    {
+        "nodeName": "布洛克城",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/43.png",
+        "nodeDesc": "布洛克城是全球用户进入区块链世界的入口，是基于GXChain开发的大型个人移动端应用。布洛克城通过数据挖宝模式吸引了海量用户，并入驻了丰富的精品区块链应用，为全球用户提供多元化服务，帮助用户探索独特的区块链世界。布洛克城旨在打造流量最大最活跃的区块链应用平台，赋能区块链应用落地，并让区块链落地民生。在未来，布洛克城将致力于服务可信数据经济，让公民成为自己数据的主人，让数据为公民自己所用，在用户授权的情况下，充分激活数据潜力，丰富数据的应用场景。打造尊重用户隐私的区块链应用生态，用区块链重建可信的数据经济社会。",
+
+        "voteChainId": "blockcitybp"
+    },
+    {
+        "nodeName": "公信大陆",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/44.png",
+        "nodeDesc": "公信大陆（EOSLand）是一个源于加拿大温哥华的通证化社区，信奉“区块链的事用区块链来做”！前期是温哥华EOS超级节点候选人，现为全球通证发展提供稳定币、STO证卷型代币、UTO功能型代币发行与交易服务。公信大陆为更好地推动公信链全球化，特此参加公信节点竞选，同时承诺将本社区收益与每一位公信大陆的投票人分享！",
+
+        "voteChainId": "ecslew8"
+    },
+    {
+        "nodeName": "优得节点",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/45.png",
+        "nodeDesc": "优得社区作为国内一流的独立区块链社区，依托现已成型的30+城市分社和国外社区，将充分利用自身资源与能力优势，为公信宝生态建设提供一站式社区服务，成为公信宝面向传统行业的连接器，为GXChain生态助力。并呼吁业内优质项目携手并进，在币圈寒冬共同推进行业发展，利用数字经济赋能全社会发展",
+
+        "voteChainId": "gxc-uldfans"
+    },
+    {
+        "nodeName": "非小号",
+        "logo": "https://static.gxb.io/dapp/blockcity/nodevote/46.png",
+        "nodeDesc": "币圈行情资讯龙头企业，为数百万专业人士提供行情服务。",
+
+        "voteChainId": "fxhjd"
+    }]
+}

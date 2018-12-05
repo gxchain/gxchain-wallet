@@ -878,6 +878,12 @@ const vote_for_accounts = (accounts, fee_paying_asset = 'GXC', account, password
     });
 };
 
+const get_nodes_detail = () => {
+    return Vue.http.get(`../../static/trustNodes.json?t=${Date.parse(new Date())}`).then(resp => {
+        return resp.data.list || [];
+    });
+};
+
 export {
     bak_wallet,
     get_objects,
@@ -908,6 +914,6 @@ export {
     get_fee_list,
     fetch_reference_accounts,
     get_trust_nodes,
-    vote_for_accounts
-
+    vote_for_accounts,
+    get_nodes_detail
 };

@@ -30,10 +30,15 @@
                         <gxb-cell v-for="(option, index) in accounts" :key="index">
                             <label class="account-item gxb-checklist__label" slot="title">
                                 <div class="account-item-left">
-                                    <account-image :size="15" :account="option.witness_account" slot="left"></account-image>
+                                    <div class="account-avatar" v-if="option.logo">
+                                        <img :src="option.logo" class="logo">
+                                    </div>
+                                    <div class="account-avatar" v-else>
+                                        <account-image :size="15" :account="option.witness_account" slot="left"></account-image>
+                                    </div>
                                     <div class="account-info">
                                         <div class="account-name">{{index + 1}}. {{option.name}}</div>
-                                        <div class="account-url">{{option.url}}</div>
+                                        <div class="account-url">{{option.nodeName}}</div>
                                     </div>
                                 </div>
                                 <div class="account-item-center">{{$t('node_vote.index.vote_num')}}: {{parseInt(option.total_votes / 100000)}}</div>
@@ -74,7 +79,8 @@
         vote_for_accounts,
         get_assets_by_ids,
         get_wallet_index,
-        get_wallets
+        get_wallets,
+        get_nodes_detail
     } from '@/services/WalletService';
     import sortBy from 'lodash/sortBy';
     import AccountImage from '@/components/sub/AccountImage.vue';
@@ -134,7 +140,8 @@
             loadData () {
                 Promise.all([
                     fetch_account(this.currentWallet.account),
-                    get_trust_nodes()
+                    get_trust_nodes(),
+                    get_nodes_detail()
                 ]).then(results => {
                     this.currentValue = results[0].options.votes || [];
                     if (this.currentValue.length > 0) {
@@ -185,6 +192,16 @@
                         }, (item) => {
                             return parseInt(item.vote_id.split(':')[1]);
                         });
+                    }
+                    let nodeInfoList = results[2] || [];
+                    for (let i = 0; i < this.accounts.length; i++) {
+                        for (let j = 0; j < nodeInfoList.length; j++) {
+                            if (this.accounts[i].name === nodeInfoList[j].voteChainId) {
+                                this.accounts[i].nodeName = nodeInfoList[j].nodeName;
+                                this.accounts[i].logo = nodeInfoList[j].logo;
+                                break;
+                            }
+                        }
                     }
                     this.loaded = true;
                     setTimeout(() => {
@@ -362,6 +379,14 @@
                 flex-direction: row;
                 justify-content: flex-start;
                 align-items: center;
+                .account-avatar {
+                    .logo {
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 100%;
+                        border: 1px solid #f2f2f2;
+                    }
+                }
                 .account-info {
                     margin-left: .75rem;
                     height: 30px;
