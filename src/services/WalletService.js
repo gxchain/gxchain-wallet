@@ -879,7 +879,7 @@ const vote_for_accounts = (accounts, fee_paying_asset = 'GXC', account, password
 };
 
 const get_nodes_detail = () => {
-    return Vue.http.get(`../../static/trustNodes.json?t=${Date.parse(new Date())}`).then(resp => {
+    return Vue.http.get(`https://raw.githubusercontent.com/gxchain/TrustNodes/master/trustNodes.json?t=${Date.parse(new Date())}`).then(resp => {
         return resp.data.list || [];
     });
 };

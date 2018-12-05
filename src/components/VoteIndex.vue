@@ -196,7 +196,7 @@
                     let nodeInfoList = results[2] || [];
                     for (let i = 0; i < this.accounts.length; i++) {
                         for (let j = 0; j < nodeInfoList.length; j++) {
-                            if (this.accounts[i].name === nodeInfoList[j].voteChainId) {
+                            if (this.accounts[i].name === nodeInfoList[j].accountName) {
                                 this.accounts[i].nodeName = nodeInfoList[j].nodeName;
                                 this.accounts[i].logo = nodeInfoList[j].logo;
                                 break;
