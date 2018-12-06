@@ -1,7 +1,9 @@
 <template>
     <div class="popup popup-vote-confirm">
         <div class="bar bar-nav normal-nav">
-            <h3 class="title">{{$t('node_vote.confirm.title')}}</h3>
+            <h3 class="title">
+                {{ confirmType == 1 ? $t('node_vote.confirm.title') : $t('node_vote.confirm.title2') }}
+            </h3>
             <a href="javascript:;" class="pull-right icon icon-close close-popup" @click="cancel">&times;</a>
         </div>
         <div class="content">
@@ -24,12 +26,12 @@
                         <div class="item-inner">
                             <div class="item-title label">{{$t('node_vote.confirm.proxy_account')}}</div>
                             <div class="item-after">
-                                <account-image :account="proxyAccount.name" :size='14'></account-image>
-                                <span class="account-name">{{proxyAccount.name}}</span>
+                                <account-image :account="proxyAccount" :size='14'></account-image>
+                                <span class="account-name">{{proxyAccount}}</span>
                             </div>
                         </div>
                     </li>
-                    <li class="item-content">
+                    <li class="item-content" v-if="confirmType == 1">
                         <div class="item-inner">
                             <div class="item-title label">{{$t('node_vote.confirm.selected_node')}}</div>
                             <div class="item-after" style="max-height: 100%">
@@ -78,6 +80,9 @@
             return $.extend({}, defaultData);
         },
         props: {
+            confirmType: {
+                type: Number
+            },
             account: {
                 type: String
             },
@@ -85,7 +90,7 @@
                 type: Object
             },
             proxyAccount: {
-                type: Object
+                type: String
             },
             voteAccounts: {
                 type: String

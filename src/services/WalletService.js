@@ -821,7 +821,7 @@ const get_trust_nodes = () => {
  * @param broadcast
  * @returns {Promise<any>}
  */
-const vote_for_accounts = (accounts, fee_paying_asset = 'GXC', account, password, broadcast = false) => {
+const vote_for_accounts = (accounts, fee_paying_asset = 'GXC', account, proxy_account, password, broadcast = false) => {
     return new Promise((resolve, reject) => {
         resolve(Promise.all([
             fetch_account(account),
@@ -840,7 +840,7 @@ const vote_for_accounts = (accounts, fee_paying_asset = 'GXC', account, password
 
             let new_options = {
                 memo_key: acc.options.memo_key,
-                voting_account: acc.options.voting_account || '1.2.5'
+                voting_account: proxy_account || '1.2.5'
             };
 
             // filter empty records since some of the account are not witness or committee

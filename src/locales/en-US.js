@@ -333,10 +333,15 @@ const locale = {
         }
     },
     node_vote: {
+        tab: {
+            tab1: 'TrustNodes',
+            tab2: 'Proxy Voting'
+        },
         index: {
             title: 'Node Voting',
             records: 'Voting record',
             intro: 'The TrustNode is the producer of the block in GXChain. They validate transaction data and maintain network security. You can vote for the person you trust to become a public trust node. When you vote, the candidate you choose will receive the same number of votes you cast.',
+            proxy_tip: '*Voting rights are taken over by proxy voting account.',
             tips: '*updated every hour',
             name: 'TrustNode candidate',
             no_record: 'No records',
@@ -344,14 +349,26 @@ const locale = {
             btn_vote: 'Confirm',
             btn_update: 'Update'
         },
+        proxy: {
+            intro: 'After setting up a proxy voting account, the proxy voting account will exercise voting power on your behalf.',
+            input_label: 'Account',
+            input_placeholder: 'please enter proxy account',
+            btn_submit: 'Save changes',
+            btn_remove: 'Remove Proxy'
+        },
         confirm: {
             title: 'Confirm the vote',
+            title2: 'Update proxy account',
             account: 'Account',
             proxy_account: 'Proxy account',
             selected_node: 'Selected',
             fee: 'Fee',
             btn_confirm: 'Confirm',
-            success: 'Successful vote'
+            success: 'Successful Vote',
+            success2: 'Successful Update'
+        },
+        error: {
+            cannot_proxy_to_yourself: 'Cannot proxy to yourself'
         }
     },
     node: {

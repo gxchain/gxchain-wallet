@@ -333,10 +333,15 @@ const locale = {
         }
     },
     node_vote: {
+        tab: {
+            tab1: '公信节点',
+            tab2: '代理投票'
+        },
         index: {
             title: '节点投票',
             records: '投票记录',
             intro: '公信节点(TrustNode)是GXChain中区块的生产者。他们验证交易数据并维护网络安全。你可以投票选举你信任的人成为公信节点。投票时，你选择的候选人将获得你投出的相同票数。',
+            proxy_tip: '*投票权由投票代理账户接管',
             tips: '*票数每小时更新一次',
             name: '公信节点候选人',
             no_record: '暂无记录',
@@ -344,14 +349,26 @@ const locale = {
             btn_vote: '提交投票',
             btn_update: '更新投票'
         },
+        proxy: {
+            intro: '设置了代理投票账户之后，代理投票账户将代表你行使投票权力。',
+            input_label: '代理投票账户',
+            input_placeholder: '请输入账户名',
+            btn_submit: '保存修改',
+            btn_remove: '移除投票代理'
+        },
         confirm: {
             title: '请确认投票',
+            title2: '更新代理投票账户',
             account: '账户',
             proxy_account: '代理投票账户',
             selected_node: '所选节点',
             fee: '手续费',
             btn_confirm: '确认',
-            success: '投票成功'
+            success: '投票成功',
+            success2: '更新成功'
+        },
+        error: {
+            cannot_proxy_to_yourself: '不能代理自己账号'
         }
     },
     node: {
