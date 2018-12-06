@@ -67,7 +67,14 @@
                             <p class="no-reocrd text-center" v-if="accounts.length==0&&loaded">
                                 <span class="icon icon-edit"></span>
                                 {{$t('node_vote.index.no_record')}}
-                            </p>       
+                            </p>   
+                            <div class="line-scale-pulse-out" v-if="!loaded">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div> 
                         </gxb-tab-container-item>
                         <gxb-tab-container-item id="tab-container2">
                             <div class="content-block tips">
@@ -95,17 +102,17 @@
                     </gxb-tab-container>
                 </div> 
             </div>
-            <nav class="bar bar-tab" v-show="tabIndex === 'tab-container1' && !isProxyed && loaded">
-                <div class="tab-item tab-vote" :class="{'disabled': !selected}" @click="unlock(1)">
+            <nav class="bar bar-tab" v-show="tabIndex === 'tab-container1' && loaded">
+                <div class="tab-item tab-vote" v-if="!isProxyed" :class="{'disabled': !selected}" @click="unlock(1)">
                     <div class="tip1">{{isFirst ? $t('node_vote.index.btn_vote') : $t('node_vote.index.btn_update')}}</div>
+                </div>
+                 <div class="tab-item tab-remove" v-if="isProxyCanRmoved" @click="onRemoveProxyAccount">
+                    <div class="tip1">{{$t('node_vote.proxy.btn_remove')}}</div>
                 </div>
             </nav>
             <nav class="bar bar-tab" v-show="tabIndex === 'tab-container2' && loaded">
                 <div class="tab-item tab-modify" :class="{'disabled': !proxyAccount.id || !validProxyAccount}" @click="unlock(2)">
                     <div class="tip1">{{$t('node_vote.proxy.btn_submit')}}</div>
-                </div>
-                <div class="tab-item tab-remove" v-if="isProxyCanRmoved" @click="onRemoveProxyAccount">
-                    <div class="tip1">{{$t('node_vote.proxy.btn_remove')}}</div>
                 </div>
             </nav>
         </div>
@@ -300,6 +307,10 @@
                         $.toast(this.$t('node.vote.count.min'));
                         return;
                     }
+                    if (this.proxyAccount.id !== '1.2.5') {
+                        this.proxyAccount.id = '1.2.5';
+                        this.proxyAccount.name = '';
+                    }
                     this.$refs.unlock.show();
                 }
                 if (type === 2) {
@@ -307,18 +318,6 @@
                     if (!this.validProxyAccount) {
                         return;
                     }
-                    this.selected_accounts = [];
-                    for (let i = 0; i < this.currentValue.length; i++) {
-                        for (let j = 0; j < this.accounts.length; j++) {
-                            if (this.currentValue[i] == this.accounts[j].vote_id) {
-                                this.selected_accounts.push(this.accounts[j]);
-                                continue;
-                            }
-                        }
-                    }
-                    this.$refs.unlock.show();
-                }
-                if (type === 3) {
                     this.selected_accounts = [];
                     for (let i = 0; i < this.currentValue.length; i++) {
                         for (let j = 0; j < this.accounts.length; j++) {
@@ -339,14 +338,13 @@
                 }
                 this.password = pwd;
                 this.submitting = true;
-                let proxy_account_id = this.confirmType == 3 ? '1.2.5' : this.proxyAccount.id;
-                vote_for_accounts(this.selected_accounts, 'GXC', this.currentWallet.account, proxy_account_id, this.password, false).then(res => {
+                vote_for_accounts(this.selected_accounts, 'GXC', this.currentWallet.account, this.proxyAccount.id, this.password, false).then(res => {
                     this.submitting = false;
                     this.$refs.unlock.unlocked();
                     this.fee = res.operations[0][1].fee;
                     return Promise.all([
                         get_assets_by_ids([this.fee.asset_id]),
-                        get_objects([proxy_account_id])
+                        get_objects([this.proxyAccount.id])
                     ]);
                 }).then(results => {
                     this.fee.symbol = results[0][0].symbol;
@@ -370,21 +368,18 @@
                     return;
                 }
                 this.submitting = true;
-                let proxy_account_id = this.confirmType == 3 ? '1.2.5' : this.proxyAccount.id;
-                vote_for_accounts(this.selected_accounts, 'GXC', this.currentWallet.account, proxy_account_id, this.password, true).then(res => {
+                vote_for_accounts(this.selected_accounts, 'GXC', this.currentWallet.account, this.proxyAccount.id, this.password, true).then(res => {
                     this.submitting = false;
                     this.$refs.confirm.cancel();
                     if (this.confirmType == 1) {
                         $.toast(this.$t('node_vote.confirm.success'));
                     } else {
-                        if (proxy_account_id === '1.2.5') {
+                        if (this.proxyAccount.id === '1.2.5') {
                             this.proxyAccount.name = '';
-                            this.proxyAccount.id = proxy_account_id;
                             this.validProxyAccount = false;
                             this.isProxyed = false;
                             this.isProxyCanRmoved = false;
                         } else {
-                            this.proxyAccount.id = proxy_account_id;
                             this.validProxyAccount = false;
                             this.isProxyed = true;
                             this.isProxyCanRmoved = true;
@@ -470,7 +465,10 @@
                 return null;
             },
             onRemoveProxyAccount () {
-                this.unlock(3);
+                this.proxyAccount.id = '1.2.5';
+                this.proxyAccount.name = '';
+                this.isProxyCanRmoved = false;
+                this.isProxyed = false;
             }
         }
     };
@@ -492,6 +490,17 @@
     }
     .native-ios-x .content {
         padding-bottom: 3.7rem;
+    }
+
+    .line-scale-pulse-out {
+        margin-top: 2.5rem;
+        text-align: center;
+    }
+    .line-scale-pulse-out > div {
+        background: #6699ff;
+        width: 2px;
+        height: 18px;
+        
     }
 
     .tab-nav {
