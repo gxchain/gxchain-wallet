@@ -794,7 +794,12 @@ const get_trust_nodes = () => {
         Apis.instance().db_api().exec('get_trust_nodes', []).then((results) => {
             let accounts = [];
             for (let i = 0; i < results.length; i++) {
-                Apis.instance().db_api().exec('get_witness_by_account', [results[i]]).then(account => {
+                Promise.all([
+                    Apis.instance().db_api().exec('get_witness_by_account', [results[i]]),
+                    Apis.instance().db_api().exec('get_committee_member_by_account', [results[i]])
+                ]).then(results => {
+                    let account = results[0];
+                    account.vote_ids = [account.vote_id, results[1].vote_id];
                     Apis.instance().db_api().exec('get_objects', [[account.witness_account]]).then(res => {
                         account.name = res[0].name;
                         accounts.push(account);
@@ -844,7 +849,13 @@ const vote_for_accounts = (accounts, fee_paying_asset = 'GXC', account, proxy_ac
             };
 
             // filter empty records since some of the account are not witness or committee
-            new_options.votes = accounts.filter(r => r).map(r => r.vote_id);
+            let votes = [];
+            accounts.forEach(a => {
+                if (a) {
+                    votes = votes.concat(a.vote_ids);
+                }
+            });
+            new_options.votes = votes;
             let num_witness = 0;
             let num_committee = 0;
             new_options.votes.forEach(v => {
