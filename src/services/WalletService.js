@@ -890,7 +890,7 @@ const vote_for_accounts = (accounts, fee_paying_asset = 'GXC', account, proxy_ac
 };
 
 const get_nodes_detail = () => {
-    return Vue.http.get(`https://raw.githubusercontent.com/gxchain/TrustNodes/master/trustNodes.json?t=${Date.parse(new Date())}`).then(resp => {
+    return Vue.http.get('https://walletgateway.gxb.io/node/vote/trust_nodes').then(resp => {
         return resp.data.list || [];
     });
 };
