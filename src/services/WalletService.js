@@ -791,19 +791,19 @@ const fetch_block = (block_num) => {
  */
 const get_trust_nodes = () => {
     return new Promise((resolve, reject) => {
-        Apis.instance().db_api().exec('get_trust_nodes', []).then((results) => {
+        Apis.instance().db_api().exec('get_trust_nodes', []).then((nodes) => {
             let accounts = [];
-            for (let i = 0; i < results.length; i++) {
+            for (let i = 0; i < nodes.length; i++) {
                 Promise.all([
-                    Apis.instance().db_api().exec('get_witness_by_account', [results[i]]),
-                    Apis.instance().db_api().exec('get_committee_member_by_account', [results[i]])
+                    Apis.instance().db_api().exec('get_witness_by_account', [nodes[i]]),
+                    Apis.instance().db_api().exec('get_committee_member_by_account', [nodes[i]])
                 ]).then(results => {
                     let account = results[0];
                     account.vote_ids = [account.vote_id, results[1].vote_id];
                     Apis.instance().db_api().exec('get_objects', [[account.witness_account]]).then(res => {
                         account.name = res[0].name;
                         accounts.push(account);
-                        if (accounts.length === results.length) {
+                        if (accounts.length === nodes.length) {
                             resolve(accounts);
                         }
                     }).catch(ex => {
