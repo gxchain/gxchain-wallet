@@ -117,7 +117,7 @@ const fetch_dictionary = () => {
  * get wallets from local storage
  */
 const get_wallets = () => {
-    let wallets = localStorage.getItem(`gxb_wallets_${Apis.instance().chain_id}`);
+    let wallets = localStorage.getItem(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`);
     if (!wallets) {
         wallets = [];
     } else {
@@ -128,8 +128,8 @@ const get_wallets = () => {
 
 const bak_wallet = () => {
     let localStorageWallets = get_wallets();
-    if (!(localStorage.getItem(`gxb_wallets_bak3_${Apis.instance().chain_id}`))) {
-        localStorage.setItem(`gxb_wallets_bak3_${Apis.instance().chain_id}`, JSON.stringify(localStorageWallets));
+    if (!(localStorage.getItem(`gxb_wallets_bak3_${Apis.instance().chain_id || process.env.chain_id}`))) {
+        localStorage.setItem(`gxb_wallets_bak3_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(localStorageWallets));
     }
 };
 
@@ -137,23 +137,23 @@ const merge_wallets = () => {
     return new Promise((resolve, reject) => {
         let query = util.query2Obj(location.hash);
         let isNative = query.platform === 'ios' || query.platform === 'android';
-        resolve(IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id}`, 1, {
+        resolve(IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, 1, {
             name: 'wallet',
             key: 'walletKey'
         }).then((db) => {
             let walletDB = db;
-            return IndexedDB.getData(walletDB, 'wallet', `gxb_wallets_${Apis.instance().chain_id}`).then((res) => {
+            return IndexedDB.getData(walletDB, 'wallet', `gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`).then((res) => {
                 if (res) {
                     let localStorageWallets = get_wallets();
                     let unionWallets = unionBy(localStorageWallets, res.value, 'account');
-                    localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(unionWallets));
+                    localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(unionWallets));
                 }
                 IndexedDB.closeDB(walletDB);
                 if (isNative) {
                     return get_wallet_native().then((wallets_native) => {
                         let localStorageWallets = get_wallets();
                         let unionWallets = unionBy(localStorageWallets, wallets_native, 'account');
-                        localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(unionWallets));
+                        localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(unionWallets));
                         return null;
                     }).catch(ex => {
                         console.error('failed when merge wallets from native', ex);
@@ -170,7 +170,7 @@ const merge_wallets = () => {
             return get_wallet_native().then((wallets_native) => {
                 let localStorageWallets = get_wallets();
                 let unionWallets = unionBy(localStorageWallets, wallets_native, 'account');
-                localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(unionWallets));
+                localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(unionWallets));
                 return null;
             }).catch(ex => {
                 console.error('failed when merge wallets from native', ex);
@@ -187,13 +187,13 @@ const merge_wallets = () => {
 const set_wallets_db = (wallets) => {
     return new Promise((resolve, reject) => {
         let walletDB = null;
-        return IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id}`, 1, walletDB, {
+        return IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, 1, walletDB, {
             name: 'wallet',
             key: 'walletKey'
         }).then((db) => {
             let walletDB = db;
             return IndexedDB.putJSON(walletDB, 'wallet', {
-                walletKey: `gxb_wallets_${Apis.instance().chain_id}`,
+                walletKey: `gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`,
                 value: wallets
             }).then(() => {
                 IndexedDB.closeDB(walletDB);
@@ -222,7 +222,7 @@ const set_wallet_native = (wallets) => {
             resolve();
         }, function () {
             reject();
-        }, pluginName, 'set', [`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(wallets)]);
+        }, pluginName, 'set', [`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(wallets)]);
     });
 };
 
@@ -244,7 +244,7 @@ const get_wallet_native = () => {
             resolve(wallets);
         }, function () {
             reject();
-        }, pluginName, 'get', [`gxb_wallets_${Apis.instance().chain_id}`]);
+        }, pluginName, 'get', [`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`]);
     });
 };
 
@@ -254,7 +254,7 @@ const get_wallet_native = () => {
  */
 const set_wallets = (wallets) => {
     return new Promise((resolve, reject) => {
-        localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id}`, JSON.stringify(wallets));
+        localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(wallets));
         try {
             set_wallets_db(wallets);
             set_wallet_native(wallets);
@@ -272,7 +272,7 @@ const set_wallets = (wallets) => {
  */
 const get_wallet_index = () => {
     let wallets = get_wallets();
-    let index = localStorage.getItem(`gxb_wallet_index_${Apis.instance().chain_id}`);
+    let index = localStorage.getItem(`gxb_wallet_index_${Apis.instance().chain_id || process.env.chain_id}`);
     if (!index) {
         return 0;
     }
@@ -291,7 +291,7 @@ const get_wallet_index = () => {
 const set_wallet_index = (index) => {
     index = Number(index);
     let wallets = get_wallets();
-    localStorage.setItem(`gxb_wallet_index_${Apis.instance().chain_id}`, Math.min(wallets.length - 1, index));
+    localStorage.setItem(`gxb_wallet_index_${Apis.instance().chain_id || process.env.chain_id}`, Math.min(wallets.length - 1, index));
 };
 
 /**
@@ -299,7 +299,7 @@ const set_wallet_index = (index) => {
  * @returns {boolean}
  */
 const get_disclaimer_accepted = () => {
-    let result = localStorage.getItem(`gxb_disclaimer_accepted_${Apis.instance().chain_id}`);
+    let result = localStorage.getItem(`gxb_disclaimer_accepted_${Apis.instance().chain_id || process.env.chain_id}`);
     return !!Number(result);
 };
 
@@ -309,9 +309,9 @@ const get_disclaimer_accepted = () => {
  */
 const set_disclaimer_accepted = (accepted) => {
     if (accepted) {
-        localStorage.setItem(`gxb_disclaimer_accepted_${Apis.instance().chain_id}`, accepted ? 1 : 0);
+        localStorage.setItem(`gxb_disclaimer_accepted_${Apis.instance().chain_id || process.env.chain_id}`, accepted ? 1 : 0);
     } else {
-        localStorage.removeItem(`gxb_disclaimer_accepted_${Apis.instance().chain_id}`);
+        localStorage.removeItem(`gxb_disclaimer_accepted_${Apis.instance().chain_id || process.env.chain_id}`);
     }
 };
 
@@ -456,7 +456,7 @@ const import_account = (wifKey, password) => {
                     });
                     if (imported.length > 0) {
                         set_wallets(wallets);
-                        localStorage.setItem(`gxb_wallet_index_${Apis.instance().chain_id}`, wallets.length - 1);
+                        localStorage.setItem(`gxb_wallet_index_${Apis.instance().chain_id || process.env.chain_id}`, wallets.length - 1);
                     }
                     return {
                         imported,
@@ -571,7 +571,7 @@ const create_account = (account, password) => {
                 };
                 wallets.push(wallet);
                 set_wallets(wallets);
-                localStorage.setItem(`gxb_wallet_index_${Apis.instance().chain_id}`, wallets.length - 1);
+                localStorage.setItem(`gxb_wallet_index_${Apis.instance().chain_id || process.env.chain_id}`, wallets.length - 1);
                 return wallet;
             });
         }));

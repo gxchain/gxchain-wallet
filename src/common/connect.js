@@ -1,4 +1,4 @@
-import {Manager} from 'gxbjs-ws';
+import {Apis, Manager} from 'gxbjs-ws';
 
 let witnesses = process.env.witnesses;
 let connectionManager = null;
@@ -10,8 +10,8 @@ let connect = function (callback) {
             // empty logic
         };
     }
-    if (connected) {
-        return callback(connected);
+    if (connectionManager && connectionManager.isConnected) {
+        return callback(connectionManager.isConnected);
     }
     if (!connectionManager) {
         connectionManager = new Manager({url: witnesses[0], urls: witnesses, autoFallback: true});
@@ -19,6 +19,7 @@ let connect = function (callback) {
     connectionManager.connectWithFallback(true).then(() => {
         callback && callback(connected);
     }).catch(ex => {
+        connected = false;
         console.error(ex);
         setTimeout(() => {
             console.log('>>> reconnect');
@@ -28,20 +29,8 @@ let connect = function (callback) {
 };
 
 // websocket 状态处理
-// Apis.setRpcConnectionStatusCallback(function (status) {
-//     console.log('Witness status:', status);
-//     if (!connected && status == 'open') {
-//         connected = true;
-//     }
-//
-//     if (connected && (status == 'closed' || status == 'error')) { // 出错重连
-//         Apis.reset();
-//         console.log('Connection failed,try another connection');
-//         connected = false;
-//         setTimeout(() => {
-//             connect();
-//         }, 1000);
-//     }
-// });
+Apis.setRpcConnectionStatusCallback(function (status) {
+    console.log('Witness status:', status);
+});
 
 export default connect;
