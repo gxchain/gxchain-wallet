@@ -2,7 +2,6 @@ var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
-var FaviconWebpackPlugin = require('favicons-webpack-plugin')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -27,21 +26,7 @@ module.exports = {
     }
   },
   plugins: [
-    new FaviconWebpackPlugin({
-      logo:path.resolve(__dirname,'../static/logo1024.png'),
-      icons: {
-        android: true,
-        appleIcon: true,
-        appleStartup: false,
-        coast: false,
-        favicons: true,
-        firefox: true,
-        opengraph: false,
-        twitter: false,
-        yandex: false,
-        windows: false
-      }
-    }),
+
   ],
   module: {
     rules: [
