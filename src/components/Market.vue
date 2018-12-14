@@ -68,6 +68,7 @@
             };
         },
         destroyed () {
+            this.stopFetchingMarket = true;
             $(this.$el).off('refresh');
         },
         mounted () {
