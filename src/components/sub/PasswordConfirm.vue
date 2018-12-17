@@ -87,6 +87,7 @@
     }
 
     .popup-transfer-confirm {
+        position: fixed !important;
         max-height: 8rem;
         bottom: 0;
         top: initial;

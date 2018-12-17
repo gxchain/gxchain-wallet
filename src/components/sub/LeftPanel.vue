@@ -63,7 +63,7 @@
                         </router-link>
                     </li>
                 </ul>
-                <ul class="last">
+                <ul class="last" v-if="$route.query.channel !== 'blockcity'">
                     <li>
                         <router-link :to="link('/language-setting')" class="item-content">
                             <div class="item-media">

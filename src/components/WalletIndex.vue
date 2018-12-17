@@ -2,13 +2,14 @@
     <div class="page-group">
         <div class="page" id="page-wallet-index">
             <div ref="bar" class="bar bar-nav buttons-fixed" style="background: rgba(37, 40, 113, 0)">
-                <a href="javascript:;" class="icon gxicon gxicon-user pull-left" @click="openPanel"></a>
-                <a v-if="isNative" href="javascript:;" class="icon gxicon gxicon-scan pull-right" @click="openQRScaner">
+                <a href="javascript:;" class="icon gxicon gxicon-user pull-right" @click="openPanel"></a>
+                <a v-if="isNative && channel !== 'blockcity'" href="javascript:;" class="icon gxicon gxicon-scan pull-left" @click="openQRScaner">
                     <input ref="qrfile" @change="onFileUpload" v-if="!isNative" type="file" class="file-selector"/>
                 </a>
+                <a v-if="isNative && channel === 'blockcity'" href="javascript:;" @click="backToBlockCity" class="icon icon-left"></a>
             </div>
             <div ref="bg" id="bg"></div>
-            <wallet-tab></wallet-tab>
+            <wallet-tab v-if="channel !== 'blockcity'"></wallet-tab>
             <div class="content pull-to-refresh-content" ref="content">
                 <div class="row-top" ref="top" :class="{ios:$route.query.platform=='ios'}">
                     <div class="pull-to-refresh-layer">
@@ -169,7 +170,8 @@
                     }
                 },
                 isAssetHidden: '',
-                assetIconMap: {}
+                assetIconMap: {},
+                channel: ''
             };
         },
         watch: {
@@ -349,10 +351,6 @@
                 };
                 return this.link('/wallet-backup-detail', query);
             },
-            // TODO upload a qrcode image
-            onFileUpload (e) {
-                // let file = this.$refs.qrfile;
-            },
             openQRCodeModal () {
                 this.$refs.qrcode.show();
             },
@@ -372,14 +370,19 @@
                 this.$router.push({
                     path: this.link('/add-assets', query)
                 });
+            },
+            backToBlockCity () {
+                cordova.exec(null, null, 'Controller', 'pop', []); //eslint-disable-line
             }
         },
         destroyed () {
             $.allowPanelOpen = true;
             $(this.$el).off('refresh');
-            this.stopFetchingMarket = true;
         },
         mounted () {
+            if (this.$route.query.channel) {
+                this.channel = this.$route.query.channel;
+            }
             $.init();
             this.loadWallets();
             fetch_reference_accounts(this.wallets.filter(wallet => {

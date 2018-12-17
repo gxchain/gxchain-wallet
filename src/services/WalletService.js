@@ -8,7 +8,6 @@ import flatten from 'lodash/flatten';
 import unionBy from 'lodash/unionBy';
 import Vue from 'vue';
 import i18n from '@/locales';
-import IndexedDB from './IndexedDBService';
 import find from 'lodash/find';
 import util from '@/common/util';
 import {accMult} from './CommonService';
@@ -135,73 +134,22 @@ const bak_wallet = () => {
 
 const merge_wallets = () => {
     return new Promise((resolve, reject) => {
+        let chain_id = Apis.instance().chain_id || process.env.chain_id;
         let query = util.query2Obj(location.hash);
         let isNative = query.platform === 'ios' || query.platform === 'android';
-        resolve(IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, 1, {
-            name: 'wallet',
-            key: 'walletKey'
-        }).then((db) => {
-            let walletDB = db;
-            return IndexedDB.getData(walletDB, 'wallet', `gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`).then((res) => {
-                if (res) {
-                    let localStorageWallets = get_wallets();
-                    let unionWallets = unionBy(localStorageWallets, res.value, 'account');
-                    localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(unionWallets));
-                }
-                IndexedDB.closeDB(walletDB);
-                if (isNative) {
-                    return get_wallet_native().then((wallets_native) => {
-                        let localStorageWallets = get_wallets();
-                        let unionWallets = unionBy(localStorageWallets, wallets_native, 'account');
-                        localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(unionWallets));
-                        return null;
-                    }).catch(ex => {
-                        console.error('failed when merge wallets from native', ex);
-                        return null;
-                    });
-                } else {
-                    return null;
-                }
-            }).catch(ex => {
-                return null;
-            });
-        }).catch((ex) => {
-            console.error('failed when merge wallets from indexed db', ex);
-            return get_wallet_native().then((wallets_native) => {
+        if (isNative) {
+            get_wallet_native().then((wallets_native) => {
                 let localStorageWallets = get_wallets();
                 let unionWallets = unionBy(localStorageWallets, wallets_native, 'account');
-                localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(unionWallets));
-                return null;
+                localStorage.setItem(`gxb_wallets_${chain_id}`, JSON.stringify(unionWallets));
+                resolve();
             }).catch(ex => {
                 console.error('failed when merge wallets from native', ex);
-                return null;
+                reject(ex);
             });
-        }));
-    });
-};
-
-/**
- * save wallets into indexedDB
- * @param wallets
- */
-const set_wallets_db = (wallets) => {
-    return new Promise((resolve, reject) => {
-        let walletDB = null;
-        return IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, 1, walletDB, {
-            name: 'wallet',
-            key: 'walletKey'
-        }).then((db) => {
-            let walletDB = db;
-            return IndexedDB.putJSON(walletDB, 'wallet', {
-                walletKey: `gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`,
-                value: wallets
-            }).then(() => {
-                IndexedDB.closeDB(walletDB);
-                resolve();
-            });
-        }).catch((ex) => {
+        } else {
             resolve();
-        });
+        }
     });
 };
 
@@ -256,10 +204,9 @@ const set_wallets = (wallets) => {
     return new Promise((resolve, reject) => {
         localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(wallets));
         try {
-            set_wallets_db(wallets);
             set_wallet_native(wallets);
         } catch (ex) {
-
+            reject(ex);
         } finally {
             resolve();
         }

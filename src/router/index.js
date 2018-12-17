@@ -28,6 +28,8 @@ import RouterTransition from '@/plugins/RouterTransition';
 import RealtimeQuotations from '@/components/RealtimeQuotations';
 import AddAssets from '@/components/AddAssets';
 import VoteIndex from '@/components/VoteIndex';
+import { set_item } from '@/services/CommonService';
+import i18n from '@/locales';
 
 RouterTransition.use(store, Router, {
     moduleName: 'route',
@@ -240,7 +242,14 @@ const inWhiteList = (component) => {
 
 router.beforeEach((to, from, next) => {
     let platform = (from.name ? from.query.platform : to.query.platform) || 'browser';
+    let channel = (from.name ? from.query.channel : to.query.channel) || '';
+    let locale = (from.name ? from.query.locale : to.query.locale) || '';
+    if (locale) {
+        i18n.locale = locale;
+        set_item('_locale', locale);
+    }
     to.query.platform = platform;
+    to.query.channel = channel;
     let isNative = platform == 'ios' || platform == 'android';
     let version = from.query.version || to.query.version;
     if (version) {
