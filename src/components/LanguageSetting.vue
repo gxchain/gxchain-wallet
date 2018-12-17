@@ -41,6 +41,10 @@
                 {
                     text: 'English',
                     id: 'en-US'
+                },
+                {
+                    text: '한국어',
+                    id: 'ko-KR'
                 }
                 ]
             };
@@ -57,10 +61,7 @@
         computed: {
             ...mapGetters({
                 isNative: 'isNative'
-            }),
-            currentLanguage () {
-
-            }
+            })
         }
     };
 </script>

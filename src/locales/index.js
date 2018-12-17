@@ -4,12 +4,14 @@ import { set_item, get_item } from '@/services/CommonService';
 
 import en from './en-US';
 import zh from './zh-CN';
+import ko from './ko-KR';
 
 Vue.use(VueI18n);
 
 const messages = {
     'en-US': en,
-    'zh-CN': zh
+    'zh-CN': zh,
+    'ko-KR': ko
 };
 
 const numberFormats = {
@@ -21,6 +23,11 @@ const numberFormats = {
     'zh-CN': {
         currency: {
             style: 'currency', currency: 'CNY', currencyDisplay: 'symbol'
+        }
+    },
+    'ko-KR': {
+        currency: {
+            style: 'currency', currency: 'USD', currencyDisplay: 'symbol'
         }
     }
 };
@@ -50,6 +57,28 @@ const dateTimeFormats = {
             hour: 'numeric',
             minute: 'numeric',
             hour12: false
+        }
+    },
+    'ko-KR': {
+        short: {
+            year: 'numeric', month: 'short', day: 'numeric', hour12: true
+        },
+        long: {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true
+        },
+        longlong: {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+            hour12: true
         }
     }
 };

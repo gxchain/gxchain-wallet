@@ -20,7 +20,7 @@
                 <img :src="`static/strategy_img/${$t('realtime_quotations.binance_step3_img1')}`" width="100%">
                 <p>点击【资产管理】进入【充值提现】页面</p>
                 <img :src="`static/strategy_img/${$t('realtime_quotations.binance_step3_img2')}`" width="100%">
-                <p>点击「GXS」充值，会出现一栏警示，点击【我已知晓，确认使用】</p>
+                <p>点击「GXC」充值，会出现一栏警示，点击【我已知晓，确认使用】</p>
                 <img :src="`static/strategy_img/${$t('realtime_quotations.binance_step3_img3')}`" width="100%">
                 <p>账户：binance-1</p>
                 <p>MEMO:(每个账户的MEMO不一样，请务必填写MEMO)</p>
@@ -30,7 +30,7 @@
                 </p>
                 <img :src="`static/strategy_img/${$t('realtime_quotations.binance_step3_img4')}`" width="100%">
                 <p>进入界面后：</p>
-                <p>第一栏选择【GXS】</p>
+                <p>第一栏选择【GXC】</p>
                 <p>第二栏备注，建议填写【binance平台交易账户】</p>
                 <p>第三栏输入平台交易的账户：binance-1</p>
                 <img :src="`static/strategy_img/${$t('realtime_quotations.binance_step3_img5')}`" width="100%">

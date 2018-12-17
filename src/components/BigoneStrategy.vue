@@ -17,7 +17,7 @@
                 <p>手机下载谷歌身份验证器Authenticator，输入验证码，输入密码，创建账户，注册成功。</p>
                 <p class="step">第二步：如何充值</p>
                 <img :src="`static/strategy_img/${$t('realtime_quotations.bigone_step2_img1')}`" width="100%">
-                <p>进入资产页往下来找到【gxs】</p>
+                <p>进入资产页往下来找到【GXC】</p>
                 <img :src="`static/strategy_img/${$t('realtime_quotations.bigone_step2_img2')}`" width="100%">
                 <p>点击充值</p>
                 <img :src="`static/strategy_img/${$t('realtime_quotations.bigone_step2_img3')}`" width="100%">
@@ -29,7 +29,7 @@
                 </p>
                 <img :src="`static/strategy_img/${$t('realtime_quotations.bigone_step2_img4')}`" width="100%">
                 <p>进入界面后：</p>
-                <p>第一栏选择【GXS】</p>
+                <p>第一栏选择【GXC】</p>
                 <p>第二栏备注，建议填写【bigone平台交易账户】</p>
                 <p>第三栏输入平台交易的账户：e0c0fdcd673dca790e53afd2bf570bda</p>
                 <img :src="`static/strategy_img/${$t('realtime_quotations.bigone_step2_img5')}`" width="100%">
