@@ -30,7 +30,8 @@ const locale = {
         manage_wallets: 'Manage Wallets',
         history: 'History',
         language: 'Language',
-        about: 'About'
+        about: 'About',
+        disclaimer: 'Disclaimer'
     },
     wallet_create: {
         index: {

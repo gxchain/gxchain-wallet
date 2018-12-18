@@ -30,7 +30,8 @@ const locale = {
         manage_wallets: '管理钱包',
         history: '收发记录',
         language: 'Language',
-        about: '关于我们'
+        about: '关于我们',
+        disclaimer: '免责声明'
     },
     wallet_create: {
         index: {
