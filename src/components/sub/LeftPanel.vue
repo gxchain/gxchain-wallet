@@ -85,6 +85,18 @@
                         </router-link>
                     </li>
                 </ul>
+                <ul class="last" v-else>
+                    <li>
+                        <router-link :to="link('/disclaimer')" class="item-content">
+                            <div class="item-media">
+                                <i class="gxicon gxicon-users"></i>
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title">{{$t('left_panel.disclaimer')}}</div>
+                            </div>
+                        </router-link>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
