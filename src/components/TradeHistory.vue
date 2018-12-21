@@ -62,7 +62,7 @@
 </template>
 <script>
     import {
-        fetch_account_histroy,
+        fetch_account_history,
         fetch_account,
         fetch_block,
         get_objects,
@@ -96,7 +96,7 @@
                 let histories = [];
                 Promise.all([
                     fetch_account(this.currentWallet.account),
-                    fetch_account_histroy(this.currentWallet.account)
+                    fetch_account_history(this.currentWallet.account)
                 ]).then((results) => {
                     account = results[0];
                     histories = results[1];

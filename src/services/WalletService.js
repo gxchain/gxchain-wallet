@@ -94,7 +94,7 @@ const fetch_full_account = (account) => {
  * @param account_name
  * @returns {Promise.<TResult>|*}
  */
-const fetch_account_histroy = (account_name) => {
+const fetch_account_history = (account_name) => {
     return fetch_account(account_name).then((account) => {
         return Apis.instance().history_api().exec('get_account_history', [account.id, '1.11.0', 100, '1.11.0']);
     });
@@ -232,6 +232,28 @@ const get_wallet_index = () => {
 };
 
 /**
+ * save wallet index to native storage
+ * @param index
+ * @returns {bluebird}
+ */
+const set_wallet_index_native = (index) => {
+    return new Promise((resolve, reject) => {
+        let query = util.query2Obj(location.hash);
+        let chain_id = Apis.instance().chain_id || process.env.chain_id;
+        let pluginName = 'AppConfig';
+        if (query.platform === 'ios') {
+            pluginName = 'KV';
+        }
+        cordova.exec(function () { //eslint-disable-line
+            console.log('wallet index have been save to native storage successfully');
+            resolve();
+        }, function () {
+            reject();
+        }, pluginName, 'set', [`gxb_wallet_index_${chain_id}`, index]);
+    });
+};
+
+/**
  * set index of current wallet
  * @param index
  */
@@ -239,6 +261,7 @@ const set_wallet_index = (index) => {
     index = Number(index);
     let wallets = get_wallets();
     localStorage.setItem(`gxb_wallet_index_${Apis.instance().chain_id || process.env.chain_id}`, Math.min(wallets.length - 1, index));
+    set_wallet_index_native(Math.min(wallets.length - 1, index));
 };
 
 /**
@@ -852,6 +875,7 @@ export {
     set_wallets,
     get_wallet_index,
     set_wallet_index,
+    set_wallet_index_native,
     unlock_wallet,
     update_wallet,
     del_wallet,
@@ -863,7 +887,7 @@ export {
     fetch_account_balances,
     set_disclaimer_accepted,
     get_disclaimer_accepted,
-    fetch_account_histroy,
+    fetch_account_history,
     fetch_block,
     lock_balance,
     unlock_balance,
