@@ -372,7 +372,9 @@
                 });
             },
             backToBlockCity () {
-                cordova.exec(null, null, 'Controller', 'pop', []); //eslint-disable-line
+                if (this.isNative) {
+                    cordova.exec(null, null, 'Controller', 'pop', []); //eslint-disable-line
+                }
             }
         },
         destroyed () {
