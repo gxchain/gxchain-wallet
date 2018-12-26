@@ -60,7 +60,7 @@
                                         </div>
                                         <div>
                                             <small>≈</small>
-                                            <span class="digit balance">{{currentWallet.totalValue | number(2)}}</span>
+                                            <span class="digit balance">{{currentWallet.totalValue || '-' | number(2)}}</span>
                                         </div>
                                     </div>
                                     <div class="asset-button" @click="goAddAssets">
