@@ -232,6 +232,16 @@ let router = new Router({
             },
             name: 'VoteIndex',
             component: VoteIndex
+        },
+        {
+            path: '/contract/call',
+            meta: {
+                title: '调用智能合约',
+                needsCordova: false,
+                needsConnection: true
+            },
+            name: 'CallContract',
+            component: resolve => { require(['@/components/contract/Controller'], resolve) }
         }
     ]
 });

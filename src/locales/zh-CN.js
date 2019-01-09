@@ -246,7 +246,8 @@ const locale = {
         confirm: {
             title: '确认转账',
             title_password: '密码',
-            enter_password: '请输入密码'
+            enter_password: '请输入密码',
+            remember_password: '应用运行期间记住密码'
         },
         success: {
             title: '转账成功',
@@ -375,7 +376,11 @@ const locale = {
     node: {
         vote: {
             count: {
+                max: '最多支持十个节点',
                 min: '请至少支持两个节点'
+            },
+            gxc: {
+                lack: '投票账户GXC余额不足,至少需要0.1GXC'
             }
         }
     },
@@ -453,6 +458,75 @@ const locale = {
     add_assets: {
         title: '添加新资产',
         tip: '该资产余额大于0，不能关闭'
+    },
+    smart_contract: {
+        title: '智能合约',
+        params: {
+            method_type: '函数类型',
+            request_data: '请求数据'
+        },
+        tabs: {
+            detail: '详情',
+            data: '数据'
+        },
+        btn: {
+            confirm: '确认',
+            cancel: '取消'
+        }
+    },
+    pick_wallet: {
+        title: {
+            step1: '选择公信链钱包账户',
+            step2: '输入钱包密码解锁',
+            no_wallet: '没有钱包'
+        },
+        empty_tip: '暂无绑定钱包，请前往公信链钱包创建',
+        btn: {
+            confirm: '确认',
+            next: '下一步'
+        }
+    },
+    oauth: {
+        authorize: {
+            title: '服务授权',
+            error: {
+                default: '请在布洛克城客户端打开',
+                response_type: 'response_type参数不合法',
+                client_id: 'client_id参数不合法',
+                redirect_uri: 'redirect_uri参数不合法',
+                login_status: '获取用户登录状态异常'
+            },
+            chain: {
+                data: '链上数据',
+                wechat: '微信信息',
+                confirm_tip1: '系统检测到你的',
+                confirm_tip2: '还未上传区块链，应用方无法获取你的信息',
+                confirm: '去完成数据上链',
+                datakey: {
+                    lost: '系统检测到你还未生成Data-Key或Data-Key已经丢失，应用方无法获取到你的信息',
+                    confirm: '生成或者找回Data-Key'
+                }
+            },
+            current_app: '当前应用',
+            confirm_tip1: '你同意',
+            confirm_tip2: '获取以下权限',
+            confirm_tip3: '确认授权并同意',
+            confirm_tip4: '《用户授权协议》',
+            wallet_account: '获取GXChain钱包帐户的名称',
+            wallet_pubkey: '获取GXChain钱包帐户的公钥',
+            btn: {
+                confirm: '确认授权',
+                cancel: '暂不'
+            }
+        },
+        maintenance: {
+            title: '应用维护中',
+            tips: '该应用目前正在维护中。维护期间，您在应用内的资产不受影响。布洛克城官方已责成应用方加紧处理，尽快恢复运营，请耐心等待。'
+        }
+    },
+    transactionConfirm: {
+        transfer: '转账',
+        vote: '投票'
     }
 };
 
