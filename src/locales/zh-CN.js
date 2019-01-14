@@ -247,7 +247,7 @@ const locale = {
             title: '确认转账',
             title_password: '密码',
             enter_password: '请输入密码',
-            remember_password: '应用运行期间记住密码'
+            remember_password: '记住密码'
         },
         success: {
             title: '转账成功',

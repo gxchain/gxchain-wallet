@@ -1,13 +1,12 @@
 <template>
-    <div class="popup popup-transfer-confirm">
-        <div class="bar bar-nav normal-nav">
-            <h3 class="title">{{$t('transfer.confirm.enter_password')}}</h3>
-            <a href="javascript:;" class="pull-right icon icon-close close-popup" @click="onPasswordCancel">&times;</a>
+    <Modal v-if="visibility" class="pwdConfirm">
+        <div class="header" slot="header">
+            {{$t('pick_wallet.title.step2')}}
+            <div class="closeBtn" @click="onPasswordCancel()"></div>
         </div>
-        <div class="content">
-            <div class="list-block">
-                <p class="info-alert" v-if="tips">{{tips}}</p>
-                <div class="password-confirm">
+        <div class="body" slot="body">
+            <div class="cont">
+                <div class="unlocked-wallet list-block">
                     <div class="password-confirm-input">
                         <ul>
                             <li class="item-content">
@@ -20,31 +19,31 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="password-confirm-btn">
-                        <a href="javascript:;" @click="onPasswordConfirm" class="button button-gxb">
-                            <div class="line-scale-pulse-out" v-if="submitting">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                            </div>
-                            <span v-if="!submitting">{{$t('transfer.next')}}</span>
-                        </a>
+                    <div class="checkbox-wrap">
+                        <label>
+                            <input class="checkbox" type="checkbox" v-model="isRemember"><span class="checkbox-text">{{$t('transfer.confirm.remember_password')}}</span>
+                        </label>
                     </div>
                 </div>
-                <div class="checkbox-wrap">
-                    <label>
-                        <input class="checkbox" type="checkbox" v-model="isRemember"><span class="checkbox-text">{{$t('transfer.confirm.remember_password')}}</span>
-                    </label>
+                <div class="btn-wallet" @click="onPasswordConfirm($event)">
+                    <div class="line-scale-pulse-out" v-if="submitting">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <span v-if="!submitting">{{$t('pick_wallet.btn.confirm')}}</span>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="footer" slot="footer"></div>
+    </Modal>
 </template>
 <script>
     import {unlock_wallet} from '@/services/WalletService';
     import util from '@/common/util';
+    import Modal from '@/components/sub/Modal.vue';
 
     let defaultData = {
         password: '',
@@ -52,9 +51,13 @@
     };
 
     export default {
+        components: {
+            Modal
+        },
         data () {
             return $.extend({
-                isRemember: false
+                isRemember: false,
+                visibility: false
             }, defaultData);
         },
         props: {
@@ -70,7 +73,7 @@
             show () {
                 this.password = '';
                 this.submitting = false;
-                $.popup($(this.$el));
+                this.visibility = true;
                 setTimeout(() => {
                     $(this.$refs.password).focus();
                 }, 500);
@@ -95,70 +98,177 @@
             },
             unlocked () {
                 this.submitting = false;
-                $.closeModal($(this.$el));
+                this.visibility = false;
             }
         }
     };
 </script>
 <style lang="scss" type="text/scss" scoped>
-    .checkbox-wrap{
+    .checkbox-wrap {
         margin: 10px;
     }
 
-    .bar.bar-nav {
-        background: transparent;
-
-        .title {
-            font-weight: normal;
-            color: #3d3d3b;
+    .pwdConfirm /deep/ .modal-wrapper {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        .modal-container {
+            color: #333;
+            background-color: #fff;
+            padding: 0;
+            .modal-header {
+                .header {
+                    position: relative;
+                    padding: 15px 0;
+                    margin: 0 15px;
+                    border-bottom: 1px solid #ddd;
+                    color: #344961;
+                    text-align: center;
+                    font-size: 16px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    .closeBtn {
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        width: 20px;
+                        height: 20px;
+                        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAABPUlEQVRoQ+2XUQ6CQAxEy828iXoy9SbeTFMDyYaAtjOzEGL5UmPLvJntLgx28Gs4uH4rgL0TrAQqAdKBWkKkgXR5JUBbSDaoBEgD6fK/T+BuZi8zu4JWsvXUw5zf/DwK989ZCLb+c2tmCbUCvFcGYl77MLMLkiIDMImeUohCyMSzCUyGZZKQilcBRJOQi1cC/ILoIl4NsAbhc9bOCTywS0PODvFSz7nb7X+k4nsksDbY/rtc/NYAmXMifCRsvYTkEGqApd3G3cwedrsk8G2rzBx2YfHKGYjs810gFEsoIh557AglwQJkxHeBYAAQ8XIIBsCf32+jIuSQag3wlyH/nr4YAL+ZQ5zQl5FR9BMVr9yF0s6pCtgEVDrgPgUAWycqrARERsJtKgHYOlFhJSAyEm5TCcDWiQorAZGRcJs3kqZFMRtRkakAAAAASUVORK5CYII=");
+                        background-size: 100% 100%;
+                    }
+                }
+            }
+            .modal-body {
+                margin: 0;
+                .body {
+                    text-align: center;
+                    font-size: .7rem;
+                    line-height: 1.25rem;
+                    .cont {
+                        padding: 15px;
+                        min-height: 36px;
+                        position: relative;
+                    }
+                    .list-block {
+                        margin: 0;
+                        height: 8rem;
+                        overflow: auto;
+                    }
+                    .unlocked-wallet {
+                        height: auto;
+                        margin-bottom: 15px;
+                    }
+                    .list-block ul {
+                        margin: 0 .75rem;
+                        background-color: transparent;
+                        &::before {
+                            height: 0;
+                        }
+                        .item-content {
+                            color: #6699ff;
+                            padding-left: 0;
+                            min-height: 1.8rem;
+                            .item-inner {
+                                min-height: 1.8rem;
+                                padding: 0;
+                            }
+                        }
+                    }
+                    .empty-placeholder {
+                        margin-top: 1rem;
+                    }
+                    .gxicon-bind {
+                        font-size: 4.5rem;
+                        color: #d5d5d5;
+                    }
+                    .btn-wallet {
+                        background-color: #6699ff;
+                        color: #fff;
+                        width: 70%;
+                        margin: 0 auto .5rem auto;
+                        border-radius: 4rem;
+                        font-size: 16px;
+                        line-height: 2rem;
+                        height: 2rem;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        .line-scale-pulse-out {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            div {
+                                width: 2px;
+                                height: 18px;
+                            }
+                        }
+                    }
+                }
+            }
+            .modal-footer {
+                .footer {
+                    display: flex;
+                    flex-direction: row;
+                    // border-top: 1px solid #484b53;
+                    position: relative;
+                    &::before {
+                        display: block;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        border-top: 1px solid #484b53;
+                        content: ' ';
+                    }
+                    .btn {
+                        position: relative;
+                        flex: 1;
+                        height: 2rem;
+                        line-height: 2rem;
+                        font-size: .16px;
+                        text-align: center;
+                    }
+                    .btn:nth-child(2):after {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                        right: auto;
+                        top: auto;
+                        height: 100%;
+                        width: 1px;
+                        background-color: #484b53;
+                        display: block;
+                        transform-origin: 100% 50%;
+                    }
+                    .highlight {
+                        color: #6699ff;
+                        font-weight: bold;
+                    }
+                }
+            }
+            .icon-check {
+                color: #6699ff;
+                font-weight: bold;
+            }
         }
+    }
 
-        .icon {
-            color: #3d3d3b;
+    @media (-webkit-min-device-pixel-ratio: 2), (min-device-pixel-ratio: 2) {
+        .header {
+            &::after {
+                -webkit-transform: scaleY(0.5);
+                transform: scaleY(0.5);
+            }
         }
-
-    }
-
-    .popup-transfer-confirm {
-        position: fixed !important;
-        max-height: 8rem;
-        bottom: 0;
-        top: initial;
-        background: #fff;
-        transition-duration: .2s;
-    }
-
-    .list-block {
-        margin-top: 0;
-    }
-
-    .list-block .item-title.label {
-        width: 4.5rem;
-    }
-
-    .list-block .info-alert {
-        font-size: .6rem;
-        padding: 0 .75rem;
-        text-align: center;
-        margin-top: 0;
-        color: #ed3f14;
-    }
-
-    .list-block .password-confirm {
-        display: flex;
-        flex-direction: row;
-    }
-
-    .list-block .password-confirm .password-confirm-input {
-        flex: 1;
-    }
-
-    .list-block .password-confirm .password-confirm-btn {
-        width: 3rem;
-    }
-
-    .list-block .password-confirm .password-confirm-btn .button {
-        font-size: .6rem;
-        border-radius: 0;
+        .footer {
+            &::before {
+                -webkit-transform: scaleY(0.5);
+                transform: scaleY(0.5);
+            }
+        }
     }
 </style>

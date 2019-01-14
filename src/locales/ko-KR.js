@@ -247,7 +247,7 @@ const locale = {
             title: '계죄이체 확인',
             title_password: '비밀번호',
             enter_password: '지갑 비밀번호를 입력해주세요',
-            remember_password: 'Remember password before blockcity app close'
+            remember_password: 'Remember Password'
         },
         success: {
             title: '계좌이체가 성공했습니다',

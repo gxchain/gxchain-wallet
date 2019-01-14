@@ -247,7 +247,7 @@ const locale = {
             title: 'Confirm',
             title_password: 'Password',
             enter_password: 'Enter Password',
-            remember_password: 'Remember password before blockcity app close'
+            remember_password: 'Remember Password'
         },
         success: {
             title: 'Success',
