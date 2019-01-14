@@ -104,11 +104,13 @@
                 });
             },
             confirmAccount (account, index, pwd) {
-                // 展示交易确认: to 、memo、fee、amount、data
+                $.showIndicator();
                 this.getTransactionData(pwd).then((fee) => {
+                    $.hideIndicator();
                     this.buildInfo();
                     this.unlocked = true;
                 }).catch(err => {
+                    $.hideIndicator();
                     console.error(err);
                     this.unlocked = true;
                 });
