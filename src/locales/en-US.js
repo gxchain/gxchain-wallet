@@ -484,7 +484,8 @@ const locale = {
         btn: {
             confirm: 'Confirm',
             next: 'Next'
-        }
+        },
+        remember_pwd: 'remember password during app lifetime'
     },
     oauth: {
         authorize: {

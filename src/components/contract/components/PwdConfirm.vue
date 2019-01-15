@@ -20,9 +20,11 @@
                         </ul>
                     </div>
                     <div class="checkbox-wrap">
-                        <label>
-                            <input class="checkbox" type="checkbox" v-model="isRemember"><span class="checkbox-text">{{$t('transfer.confirm.remember_password')}}</span>
-                        </label>
+                        <gxb-switch :value="isRemember" @input="updateSwitch"><span class="checkbox-text">{{$t('transfer.confirm.remember_password')}}</span>
+                        </gxb-switch>
+                        <!--<label>-->
+                        <!--<input class="checkbox" type="checkbox" v-model="isRemember"><span class="checkbox-text">{{$t('transfer.confirm.remember_password')}}</span>-->
+                        <!--</label>-->
                     </div>
                 </div>
                 <div class="btn-wallet" @click="onPasswordConfirm($event)">
@@ -44,6 +46,7 @@
     import {unlock_wallet} from '@/services/WalletService';
     import util from '@/common/util';
     import Modal from '@/components/sub/Modal.vue';
+    import {Toast} from 'gxb-ui';
 
     let defaultData = {
         password: '',
@@ -70,6 +73,16 @@
             }
         },
         methods: {
+            updateSwitch (val) {
+                this.isRemember = val;
+                if (val) {
+                    Toast({
+                        message: this.$t('pick_wallet.remember_pwd'),
+                        position: 'top',
+                        duration: 3000
+                    });
+                }
+            },
             show () {
                 this.password = '';
                 this.submitting = false;

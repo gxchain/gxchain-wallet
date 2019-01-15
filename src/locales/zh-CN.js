@@ -484,7 +484,8 @@ const locale = {
         btn: {
             confirm: '确认',
             next: '下一步'
-        }
+        },
+        remember_pwd: '在app生命周期内记住密码'
     },
     oauth: {
         authorize: {
