@@ -145,6 +145,7 @@
                     return;
                 }
                 this.submiting = true;
+                $.showIndicator();
                 this.sendTransaction(this.pwd).then((res) => {
                     let data = {
                         trx_id: res[0].id,
