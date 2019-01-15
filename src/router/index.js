@@ -28,7 +28,7 @@ import RouterTransition from '@/plugins/RouterTransition';
 import RealtimeQuotations from '@/components/RealtimeQuotations';
 import AddAssets from '@/components/AddAssets';
 import VoteIndex from '@/components/VoteIndex';
-import { set_item } from '@/services/CommonService';
+import {set_item} from '@/services/CommonService';
 import i18n from '@/locales';
 
 RouterTransition.use(store, Router, {
@@ -241,7 +241,9 @@ let router = new Router({
                 needsConnection: true
             },
             name: 'CallContract',
-            component: resolve => { require(['@/components/contract/Controller'], resolve) }
+            component: resolve => {
+                require(['@/components/contract/Controller'], resolve);
+            }
         }
     ]
 });
@@ -251,6 +253,7 @@ const inWhiteList = (component) => {
 };
 
 router.beforeEach((to, from, next) => {
+    const name = to.name ? to.name.toLowerCase() : '';
     let platform = (from.name ? from.query.platform : to.query.platform) || 'browser';
     let channel = (from.name ? from.query.channel : to.query.channel) || '';
     let locale = (from.name ? from.query.locale : to.query.locale) || '';
@@ -270,7 +273,8 @@ router.beforeEach((to, from, next) => {
             bak_wallet();
             merge_wallets().then(() => {
                 let wallets = get_wallets();
-                if ((!wallets || wallets.length == 0) && !inWhiteList(to)) {
+                // 如果是callContract，则走默认逻辑
+                if ((!wallets || wallets.length == 0) && !inWhiteList(to) && name !== 'callcontract') {
                     let query = $.extend({platform: platform}, to.query);
                     router.replace({
                         path: `/wallet-create?${$.param(query)}`
