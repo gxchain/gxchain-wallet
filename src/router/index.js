@@ -254,6 +254,7 @@ const inWhiteList = (component) => {
 
 router.beforeEach((to, from, next) => {
     const name = to.name ? to.name.toLowerCase() : '';
+    const isGscatter = name === 'callcontract' && (to.query && to.query.type);
     let platform = (from.name ? from.query.platform : to.query.platform) || 'browser';
     let channel = (from.name ? from.query.channel : to.query.channel) || '';
     let locale = (from.name ? from.query.locale : to.query.locale) || '';
@@ -274,7 +275,7 @@ router.beforeEach((to, from, next) => {
             merge_wallets().then(() => {
                 let wallets = get_wallets();
                 // 如果是callContract，则走默认逻辑
-                if ((!wallets || wallets.length == 0) && !inWhiteList(to) && name !== 'callcontract') {
+                if ((!wallets || wallets.length == 0) && !inWhiteList(to) && !isGscatter) {
                     let query = $.extend({platform: platform}, to.query);
                     router.replace({
                         path: `/wallet-create?${$.param(query)}`
