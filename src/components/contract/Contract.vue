@@ -35,6 +35,13 @@
                         </div>
                     </div>
                     <div class="tab-container" v-show="currentTab === 1">
+                        <!-- 若amount存在，则展示amount -->
+                        <div class="tab-item" v-if="asset.amount > 0">
+                            <div class="name">AMOUNT</div>
+                            <div class="asset">
+                                <div class="amount">{{asset.amount}}&nbsp;&nbsp;{{asset.symbol}}</div>
+                            </div>
+                        </div>
                         <div class="tab-item fee">
                             <div class="name">FEE</div>
                             <div class="asset">
@@ -167,6 +174,7 @@
             };
             this.methodName = this.$route.query.method_name || '';
             this.methodParams = this.$route.query.params && JSON.parse(decodeURIComponent(this.$route.query.params)) || '';
+            this.callOptions = this.$route.query.options && JSON.parse(decodeURIComponent(this.$route.query.options)) || {};
             let loadTimer = setTimeout(() => {
                 $.showIndicator();
             }, 500);
@@ -223,7 +231,7 @@
             confirmAccount (account, index, pwd) {
                 $.showIndicator();
                 this.pwd = pwd;
-                call_contract(this.currentWallet.account, this.contractName, this.methodName, this.methodParams, this.amount, pwd, false).then(res => {
+                call_contract(this.currentWallet.account, this.contractName, this.methodName, this.methodParams, this.amount, pwd, false, this.callOptions).then(res => {
                     let op = res && res.operations && res.operations[0];
                     this.fee = op[1].fee;
                     return get_assets_by_ids([this.fee.asset_id || '1.3.1']);
@@ -272,7 +280,7 @@
                     $.showIndicator();
                 }, 500);
                 this.submiting = true;
-                call_contract(this.currentWallet.account, this.contractName, this.methodName, this.methodParams, this.amount, this.pwd, true).then(res => {
+                call_contract(this.currentWallet.account, this.contractName, this.methodName, this.methodParams, this.amount, this.pwd, true, this.callOptions).then(res => {
                     let data = {
                         trx_id: res[0].id,
                         block_num: res[0].block_num

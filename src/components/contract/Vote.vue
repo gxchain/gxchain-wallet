@@ -69,10 +69,10 @@
             this.currentWallet.account = this.extra.account;
             this.accounts = this.extra.accounts;
             this.feeAssetSymbol = this.extra.feeAssetSymbol;
-
             document.title = this.$t('vote');
         },
         mounted () {
+            this.callOptions = this.$route.query.options && JSON.parse(decodeURIComponent(this.$route.query.options)) || {};
             this.initStep();
         },
         methods: {
@@ -124,7 +124,7 @@
                 });
             },
             sendTransaction (pwd, broadcast = true) {
-                return simpleVote(this.currentWallet.account, this.accounts, 'GXC', pwd, broadcast);
+                return simpleVote(this.currentWallet.account, this.accounts, 'GXC', pwd, broadcast, this.callOptions);
             },
             handleConfirm () {
                 if (this.submiting) {
