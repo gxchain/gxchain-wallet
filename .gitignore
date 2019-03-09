@@ -8,8 +8,9 @@ logs
 .bak
 .data
 dist
-tools
+tools/*.sh
 *.zip
+static/json/*.json
 
 # IDE
 .idea
