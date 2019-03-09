@@ -1,5 +1,5 @@
-import {Aes, key, PrivateKey, TransactionBuilder, TransactionHelper} from 'gxbjs';
-import {Apis} from 'gxbjs-ws';
+import { Aes, key, PrivateKey, TransactionBuilder, TransactionHelper } from 'gxbjs';
+import { Apis } from 'gxbjs-ws';
 import Promise from 'bluebird';
 import uniq from 'lodash/uniq';
 import some from 'lodash/some';
@@ -10,8 +10,8 @@ import Vue from 'vue';
 import i18n from '@/locales';
 import find from 'lodash/find';
 import util from '@/common/util';
-import {accMult} from './CommonService';
-import {serializeCallData} from '@/common/serializer';
+import { accMult } from './CommonService';
+import { serializeCallData } from '@/common/serializer';
 
 /**
  * get objects by id
@@ -65,8 +65,8 @@ const get_assets_by_ids = (ids) => {
  */
 const get_fee_list = () => {
     return [
-        {id: '1.3.1', precision: 5, symbol: 'GXS'},
-        {id: '1.3.1', precision: 5, symbol: 'GXC'}
+        { id: '1.3.1', precision: 5, symbol: 'GXS' },
+        { id: '1.3.1', precision: 5, symbol: 'GXC' }
     ];
 };
 
@@ -598,7 +598,13 @@ const fetch_account_balances = (account_name) => {
  * @param password
  * @returns {*}
  */
-const transfer = (from, to, asset, fee_id = '1.3.1', amount, memo, password, broadcast = true) => {
+const transfer = async (from, to, asset, fee_id = '1.3.1', amount, memo, password, broadcast = true, options = {}) => {
+    let feeInfo = {};
+    if (options.fee_symbol) {
+        feeInfo = await get_asset(options.fee_symbol);
+        feeInfo = feeInfo ? feeInfo[0] : {};
+    }
+
     return new Promise((resolve, reject) => {
         resolve(Promise.all([fetch_account(from), fetch_account(to), unlock_wallet(from, password)]).then(results => {
             let fromAcc = results[0];
@@ -649,7 +655,7 @@ const transfer = (from, to, asset, fee_id = '1.3.1', amount, memo, password, bro
             tr.add_operation(tr.get_type_operation('transfer', {
                 fee: {
                     amount: 0,
-                    asset_id: fee_id
+                    asset_id: feeInfo.id || fee_id
                 },
                 from: fromAcc.id,
                 to: toAcc.id,
@@ -770,9 +776,14 @@ const fetch_block = (block_num) => {
  * @param broadcast
  * @returns {*}
  */
-const call_contract = (account_name, contract_name, method_name, params, amount, password, broadcast = false) => {
+const call_contract = async (account_name, contract_name, method_name, params, amount, password, broadcast = false, options = {}) => {
     if (!amount) {
-        amount = {amount: 0, asset_id: '1.3.1'};
+        amount = { amount: 0, asset_id: '1.3.1' };
+    }
+    let feeInfo = {};
+    if (options.fee_symbol) {
+        feeInfo = await get_asset(options.fee_symbol);
+        feeInfo = feeInfo ? feeInfo[0] : {};
     }
     return fetch_account(account_name).then(account => {
         return fetch_account(contract_name).then(contract => {
@@ -780,7 +791,7 @@ const call_contract = (account_name, contract_name, method_name, params, amount,
             let opts = {
                 'fee': {
                     'amount': 0,
-                    'asset_id': amount.asset_id
+                    'asset_id': feeInfo.id || amount.asset_id
                 },
                 'account': account.id,
                 'contract_id': contract.id,
@@ -908,7 +919,13 @@ const vote_for_accounts = (accounts, fee_paying_asset = 'GXC', account, proxy_ac
  * simple vote
  * @returns {*}
  */
-const simpleVote = function (account, accounts, fee_paying_asset = 'GXC', password, broadcast = false) {
+const simpleVote = async function (account, accounts, fee_paying_asset = 'GXC', password, broadcast = false, options = {}) {
+    let feeInfo = {};
+    if (options.fee_symbol) {
+        feeInfo = await get_asset(options.fee_symbol);
+        feeInfo = feeInfo ? feeInfo[0] : {};
+    }
+
     return new Promise((resolve) => {
         let accountPromises = accounts.map(a => fetch_account(a));
         const pa = Promise.all(accountPromises).then((accounts) => {
@@ -970,7 +987,7 @@ const simpleVote = function (account, accounts, fee_paying_asset = 'GXC', passwo
                     tr.add_operation(tr.get_type_operation('account_update', {
                         fee: {
                             amount: 0,
-                            asset_id: fee_asset.id
+                            asset_id: feeInfo.id || fee_asset.id
                         },
                         account: acc.id,
                         new_options: new_options

@@ -87,6 +87,7 @@
             document.title = this.$t('transfer');
         },
         mounted () {
+            this.callOptions = this.$route.query.options && JSON.parse(decodeURIComponent(this.$route.query.options)) || {};
             this.initStep();
         },
         methods: {
@@ -138,7 +139,7 @@
                 });
             },
             sendTransaction (pwd, broadcast = true) {
-                return transfer(this.currentWallet.account, this.toAccount, null, '1.3.1', this.amount, this.memo, pwd, broadcast);
+                return transfer(this.currentWallet.account, this.toAccount, null, '1.3.1', this.amount, this.memo, pwd, broadcast, this.callOptions);
             },
             handleConfirm () {
                 if (this.submiting) {
