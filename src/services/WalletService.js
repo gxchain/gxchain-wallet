@@ -8,10 +8,10 @@ import flatten from 'lodash/flatten';
 import unionBy from 'lodash/unionBy';
 import Vue from 'vue';
 import i18n from '@/locales';
-import IndexedDB from './IndexedDBService';
 import find from 'lodash/find';
 import util from '@/common/util';
 import {accMult} from './CommonService';
+import {serializeCallData} from '@/common/serializer';
 
 /**
  * get objects by id
@@ -95,7 +95,7 @@ const fetch_full_account = (account) => {
  * @param account_name
  * @returns {Promise.<TResult>|*}
  */
-const fetch_account_histroy = (account_name) => {
+const fetch_account_history = (account_name) => {
     return fetch_account(account_name).then((account) => {
         return Apis.instance().history_api().exec('get_account_history', [account.id, '1.11.0', 100, '1.11.0']);
     });
@@ -135,73 +135,44 @@ const bak_wallet = () => {
 
 const merge_wallets = () => {
     return new Promise((resolve, reject) => {
+        let chain_id = Apis.instance().chain_id || process.env.chain_id;
         let query = util.query2Obj(location.hash);
         let isNative = query.platform === 'ios' || query.platform === 'android';
-        resolve(IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, 1, {
-            name: 'wallet',
-            key: 'walletKey'
-        }).then((db) => {
-            let walletDB = db;
-            return IndexedDB.getData(walletDB, 'wallet', `gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`).then((res) => {
-                if (res) {
-                    let localStorageWallets = get_wallets();
-                    let unionWallets = unionBy(localStorageWallets, res.value, 'account');
-                    localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(unionWallets));
-                }
-                IndexedDB.closeDB(walletDB);
-                if (isNative) {
-                    return get_wallet_native().then((wallets_native) => {
-                        let localStorageWallets = get_wallets();
-                        let unionWallets = unionBy(localStorageWallets, wallets_native, 'account');
-                        localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(unionWallets));
-                        return null;
-                    }).catch(ex => {
-                        console.error('failed when merge wallets from native', ex);
-                        return null;
-                    });
-                } else {
-                    return null;
-                }
-            }).catch(ex => {
-                return null;
-            });
-        }).catch((ex) => {
-            console.error('failed when merge wallets from indexed db', ex);
-            return get_wallet_native().then((wallets_native) => {
+        if (isNative) {
+            get_wallet_native().then((wallets_native) => {
                 let localStorageWallets = get_wallets();
                 let unionWallets = unionBy(localStorageWallets, wallets_native, 'account');
-                localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(unionWallets));
-                return null;
+                localStorage.setItem(`gxb_wallets_${chain_id}`, JSON.stringify(unionWallets));
+                resolve();
             }).catch(ex => {
                 console.error('failed when merge wallets from native', ex);
-                return null;
+                reject(ex);
             });
-        }));
+        } else {
+            resolve();
+        }
     });
 };
 
 /**
- * save wallets into indexedDB
- * @param wallets
+ * save wallet index to native storage
+ * @param index
+ * @returns {bluebird}
  */
-const set_wallets_db = (wallets) => {
+const set_wallet_index_native = (index) => {
     return new Promise((resolve, reject) => {
-        let walletDB = null;
-        return IndexedDB.openDB(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, 1, walletDB, {
-            name: 'wallet',
-            key: 'walletKey'
-        }).then((db) => {
-            let walletDB = db;
-            return IndexedDB.putJSON(walletDB, 'wallet', {
-                walletKey: `gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`,
-                value: wallets
-            }).then(() => {
-                IndexedDB.closeDB(walletDB);
-                resolve();
-            });
-        }).catch((ex) => {
+        let query = util.query2Obj(location.hash);
+        let chain_id = Apis.instance().chain_id || process.env.chain_id;
+        let pluginName = 'AppConfig';
+        if (query.platform === 'ios') {
+            pluginName = 'KV';
+        }
+        cordova.exec(function () { //eslint-disable-line
+            console.log('wallet index have been save to native storage successfully');
             resolve();
-        });
+        }, function () {
+            reject();
+        }, pluginName, 'set', [`gxb_wallet_index_${chain_id}`, index]);
     });
 };
 
@@ -256,10 +227,9 @@ const set_wallets = (wallets) => {
     return new Promise((resolve, reject) => {
         localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(wallets));
         try {
-            set_wallets_db(wallets);
             set_wallet_native(wallets);
         } catch (ex) {
-
+            reject(ex);
         } finally {
             resolve();
         }
@@ -292,6 +262,7 @@ const set_wallet_index = (index) => {
     index = Number(index);
     let wallets = get_wallets();
     localStorage.setItem(`gxb_wallet_index_${Apis.instance().chain_id || process.env.chain_id}`, Math.min(wallets.length - 1, index));
+    set_wallet_index_native(Math.min(wallets.length - 1, index));
 };
 
 /**
@@ -627,7 +598,7 @@ const fetch_account_balances = (account_name) => {
  * @param password
  * @returns {*}
  */
-const transfer = (from, to, asset, fee_id, amount, memo, password, broadcast = true) => {
+const transfer = (from, to, asset, fee_id = '1.3.1', amount, memo, password, broadcast = true) => {
     return new Promise((resolve, reject) => {
         resolve(Promise.all([fetch_account(from), fetch_account(to), unlock_wallet(from, password)]).then(results => {
             let fromAcc = results[0];
@@ -682,7 +653,10 @@ const transfer = (from, to, asset, fee_id, amount, memo, password, broadcast = t
                 },
                 from: fromAcc.id,
                 to: toAcc.id,
-                amount: {amount: accMult(amount, Math.pow(10, asset.precision)), asset_id: asset.id},
+                amount: typeof amount === 'object' ? amount : {
+                    amount: accMult(amount, Math.pow(10, asset.precision)),
+                    asset_id: asset.id
+                },
                 memo: memo_object
             }));
             return process_transaction(tr, from, password, broadcast);
@@ -783,6 +757,47 @@ const process_transaction = (tr, account, password, broadcast) => {
  */
 const fetch_block = (block_num) => {
     return Apis.instance().db_api().exec('get_block', [block_num]);
+};
+
+/**
+ * call smart contract method
+ * @param account_name
+ * @param contract_name
+ * @param method_name
+ * @param params
+ * @param amount
+ * @param password
+ * @param broadcast
+ * @returns {*}
+ */
+const call_contract = (account_name, contract_name, method_name, params, amount, password, broadcast = false) => {
+    if (!amount) {
+        amount = {amount: 0, asset_id: '1.3.1'};
+    }
+    return fetch_account(account_name).then(account => {
+        return fetch_account(contract_name).then(contract => {
+            let tr = new TransactionBuilder();
+            let opts = {
+                'fee': {
+                    'amount': 0,
+                    'asset_id': amount.asset_id
+                },
+                'account': account.id,
+                'contract_id': contract.id,
+                'method_name': method_name,
+                'data': serializeCallData(method_name, params, contract.abi)
+            };
+            contract.abi.actions.forEach((item) => {
+                if (item.name == method_name) {
+                    if (amount.amount && item.payable) {
+                        opts.amount = amount;
+                    }
+                }
+            });
+            tr.add_operation(tr.get_type_operation('call_contract', opts));
+            return process_transaction(tr, account_name, password, broadcast);
+        });
+    });
 };
 
 /**
@@ -889,6 +904,87 @@ const vote_for_accounts = (accounts, fee_paying_asset = 'GXC', account, proxy_ac
     });
 };
 
+/**
+ * simple vote
+ * @returns {*}
+ */
+const simpleVote = function (account, accounts, fee_paying_asset = 'GXC', password, broadcast = false) {
+    return new Promise((resolve) => {
+        let accountPromises = accounts.map(a => fetch_account(a));
+        const pa = Promise.all(accountPromises).then((accounts) => {
+            let account_ids = accounts.map(a => a.id);
+            return Promise.all([fetch_account(account), get_objects(['2.0.0']), get_asset(fee_paying_asset)]).then(results => {
+                const acc = results[0];
+                let globalObject = results[1][0];
+                let fee_asset = results[2][0];
+                if (!acc) {
+                    throw Error(`account_id ${acc.id} not exist`);
+                }
+                if (!fee_asset) {
+                    throw Error(`asset ${fee_paying_asset} not exist`);
+                }
+
+                let new_options = {
+                    memo_key: acc.options.memo_key,
+                    voting_account: acc.options.voting_account || '1.2.5'
+                };
+
+                let promises = [];
+
+                account_ids.forEach(account_id => {
+                    promises.push(Apis.instance().db_api().exec('get_witness_by_account', [account_id]));
+                    promises.push(Apis.instance().db_api().exec('get_committee_member_by_account', [account_id]));
+                });
+
+                // fetch vote_ids
+                return Promise.all(promises).then(results => {
+                    // filter empty records since some of the account are not witness or committee
+                    let votes = results.filter(r => r).map(r => r.vote_id);
+
+                    // only merge you votes into current selections
+                    // if you want cancel your votes, please operate it in your wallet
+                    // eg. Visit https://wallet.gxb.io
+                    new_options.votes = uniq(votes.concat(acc.options.votes));
+
+                    let num_witness = 0;
+                    let num_committee = 0;
+                    new_options.votes.forEach(v => {
+                        let vote_type = v.split(':')[0];
+                        if (vote_type == '0') {
+                            num_committee += 1;
+                        }
+                        if (vote_type == 1) {
+                            num_witness += 1;
+                        }
+                    });
+                    new_options.num_committee = Math.min(num_committee, globalObject.parameters.maximum_committee_count);
+                    new_options.num_witness = Math.min(num_witness, globalObject.parameters.maximum_witness_count);
+                    new_options.votes = new_options.votes.sort((a, b) => {
+                        let a_split = a.split(':');
+                        let b_split = b.split(':');
+                        return parseInt(a_split[1]) - parseInt(b_split[1]);
+                    });
+
+                    let tr = new TransactionBuilder();
+
+                    tr.add_operation(tr.get_type_operation('account_update', {
+                        fee: {
+                            amount: 0,
+                            asset_id: fee_asset.id
+                        },
+                        account: acc.id,
+                        new_options: new_options
+                    }));
+
+                    return process_transaction(tr, account, password, broadcast);
+                });
+            });
+        });
+
+        resolve(pa);
+    });
+};
+
 const get_nodes_detail = () => {
     return Vue.http.get('https://walletgateway.gxb.io/node/vote/trust_nodes').then(resp => {
         return resp.data.list || [];
@@ -916,7 +1012,7 @@ export {
     fetch_account_balances,
     set_disclaimer_accepted,
     get_disclaimer_accepted,
-    fetch_account_histroy,
+    fetch_account_history,
     fetch_block,
     lock_balance,
     unlock_balance,
@@ -924,7 +1020,10 @@ export {
     get_assets_by_ids,
     get_fee_list,
     fetch_reference_accounts,
+    call_contract,
     get_trust_nodes,
     vote_for_accounts,
-    get_nodes_detail
+    simpleVote,
+    get_nodes_detail,
+    set_wallet_index_native
 };

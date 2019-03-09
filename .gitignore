@@ -10,7 +10,6 @@ logs
 dist
 tools/*.sh
 *.zip
-static/json/*.json
 
 # IDE
 .idea

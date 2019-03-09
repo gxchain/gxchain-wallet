@@ -30,7 +30,8 @@ const locale = {
         manage_wallets: 'Manage Wallets',
         history: 'History',
         language: 'Language',
-        about: 'About'
+        about: 'About',
+        disclaimer: 'Disclaimer'
     },
     wallet_create: {
         index: {
@@ -245,7 +246,8 @@ const locale = {
         confirm: {
             title: 'Confirm',
             title_password: 'Password',
-            enter_password: 'Enter Password'
+            enter_password: 'Enter Password',
+            remember_password: 'Remember Password'
         },
         success: {
             title: 'Success',
@@ -374,7 +376,11 @@ const locale = {
     node: {
         vote: {
             count: {
+                max: 'Support up to 10 nodes',
                 min: 'Support at least 2 nodes'
+            },
+            gxc: {
+                lack: 'The voting account GXC balance is insufficient, at least 0.1GXC is required.'
             }
         }
     },
@@ -452,6 +458,76 @@ const locale = {
     add_assets: {
         title: 'Add Assets',
         tip: 'The asset balance is greater than 0, it cannot be closed'
+    },
+    smart_contract: {
+        title: 'Smart Contract',
+        params: {
+            method_type: 'Method Type',
+            request_data: 'Request Data'
+        },
+        tabs: {
+            detail: 'Detail',
+            data: 'Data'
+        },
+        btn: {
+            confirm: 'Confirm',
+            cancel: 'Cancel'
+        }
+    },
+    pick_wallet: {
+        title: {
+            step1: 'Choose a GXC Wallet account',
+            step2: 'Enter password to unlock',
+            no_wallet: 'No Wallet'
+        },
+        empty_tip: 'No binding wallet, please go to the GXC Wallet to create',
+        btn: {
+            confirm: 'Confirm',
+            next: 'Next'
+        },
+        remember_pwd: 'remember password during app lifetime'
+    },
+    oauth: {
+        authorize: {
+            title: 'Authorization',
+            error: {
+                default: 'Please open in the BlockCity client',
+                response_type: 'response_type parameter is invalid.',
+                client_id: 'client_id parameter is invalid.',
+                redirect_uri: 'redirect_uri parameter is invalid.',
+                login_status: 'Get the user login status is abnormal.'
+            },
+            chain: {
+                data: 'Data on the chain',
+                wechat: 'WeChat information',
+                confirm_tip1: 'The system detected your ',
+                confirm_tip2: ', the blockchain has not been uploaded and the app can\'t get your information.',
+                confirm: 'To Upload',
+                datakey: {
+                    lost: 'The system detects that you have not generated a Data-Key or the Data-Key has been lost, and the application cannot obtain your information.',
+                    confirm: 'Generate or retrieve Data-Key'
+                }
+            },
+            current_app: 'This DApp',
+            confirm_tip1: 'You agree',
+            confirm_tip2: 'get the following permissions',
+            confirm_tip3: 'Confirm and agree',
+            confirm_tip4: '《User License Agreement》',
+            wallet_account: 'Get the name of the GXChain wallet account.',
+            wallet_pubkey: 'Get the PublicKey of the GXChain wallet account.',
+            btn: {
+                confirm: 'Confirm',
+                cancel: 'Not yet'
+            }
+        },
+        maintenance: {
+            title: 'Application maintenance',
+            tips: 'The app is currently under maintenance. Your assets within the app are not affected during maintenance. The official of BlockCity has instructed the application side to step up processing and resume operations as soon as possible. Please be patient.'
+        }
+    },
+    transactionConfirm: {
+        transfer: 'Transfer',
+        vote: 'Vote'
     }
 };
 

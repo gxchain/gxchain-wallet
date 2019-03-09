@@ -24,7 +24,7 @@
                 <img :src="`static/strategy_img/${$t('realtime_quotations.bitz_step2_img4')}`" width="100%">
                 <p class="step">第三步：</p>
                 <img :src="`static/strategy_img/${$t('realtime_quotations.bitz_step3_img1')}`" width="100%">
-                <p>进入【进入资产中心】GXS这栏点击【充币】</p>
+                <p>进入【进入资产中心】GXC这栏点击【充币】</p>
                 <img :src="`static/strategy_img/${$t('realtime_quotations.bitz_step3_img2')}`" width="100%">
                 <p>账户：bit-z</p>
                 <p>MEMO:(每个账户的MEMO不一样，请务必填写MEMO)</p>
@@ -34,7 +34,7 @@
                 </p>
                 <img :src="`static/strategy_img/${$t('realtime_quotations.bitz_step3_img3')}`" width="100%">
                 <p>进入界面后：</p>
-                <p>第一栏选择【GXS】</p>
+                <p>第一栏选择【GXC】</p>
                 <p>第二栏备注，建议填写【bit-z平台交易账户】</p>
                 <p>第三栏输入平台交易的账户：bitz-1</p>
                 <img :src="`static/strategy_img/${$t('realtime_quotations.bitz_step3_img4')}`" width="100%">

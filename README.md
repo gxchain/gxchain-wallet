@@ -1,6 +1,15 @@
 # gxchain-wallet
 
-> GXChain Wallet for mobile
+GXChain Wallet for mobile
+
+<p>
+    <a href="javascript:;">
+        <img width="300px" src='https://raw.githubusercontent.com/gxchain/gxips/master/assets/images/task-mwallet.png'/>
+    </a>
+    <a href="javascript:;">
+        <img width="300px" src='https://raw.githubusercontent.com/gxchain/gxips/master/assets/images/task-mwallet-en.png'/>
+    </a>
+</p>
 
 ## Build Setup
 

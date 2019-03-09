@@ -28,6 +28,8 @@ import RouterTransition from '@/plugins/RouterTransition';
 import RealtimeQuotations from '@/components/RealtimeQuotations';
 import AddAssets from '@/components/AddAssets';
 import VoteIndex from '@/components/VoteIndex';
+import {set_item} from '@/services/CommonService';
+import i18n from '@/locales';
 
 RouterTransition.use(store, Router, {
     moduleName: 'route',
@@ -230,6 +232,18 @@ let router = new Router({
             },
             name: 'VoteIndex',
             component: VoteIndex
+        },
+        {
+            path: '/contract/call',
+            meta: {
+                title: '调用智能合约',
+                needsCordova: false,
+                needsConnection: true
+            },
+            name: 'CallContract',
+            component: resolve => {
+                require(['@/components/contract/Controller'], resolve);
+            }
         }
     ]
 });
@@ -239,8 +253,17 @@ const inWhiteList = (component) => {
 };
 
 router.beforeEach((to, from, next) => {
+    const name = to.name ? to.name.toLowerCase() : '';
+    const isGscatter = name === 'callcontract' && (to.query && to.query.type);
     let platform = (from.name ? from.query.platform : to.query.platform) || 'browser';
+    let channel = (from.name ? from.query.channel : to.query.channel) || '';
+    let locale = (from.name ? from.query.locale : to.query.locale) || '';
+    if (locale) {
+        i18n.locale = locale;
+        set_item('_locale', locale);
+    }
     to.query.platform = platform;
+    to.query.channel = channel;
     let isNative = platform == 'ios' || platform == 'android';
     let version = from.query.version || to.query.version;
     if (version) {
@@ -251,7 +274,8 @@ router.beforeEach((to, from, next) => {
             bak_wallet();
             merge_wallets().then(() => {
                 let wallets = get_wallets();
-                if ((!wallets || wallets.length == 0) && !inWhiteList(to)) {
+                // 如果是callContract，则走默认逻辑
+                if ((!wallets || wallets.length == 0) && !inWhiteList(to) && !isGscatter) {
                     let query = $.extend({platform: platform}, to.query);
                     router.replace({
                         path: `/wallet-create?${$.param(query)}`

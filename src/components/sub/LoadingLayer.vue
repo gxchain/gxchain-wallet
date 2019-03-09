@@ -28,22 +28,21 @@
         height: 100%;
         left: 0;
         top: 0;
-        background: $THEME_BG_COLOR;
+        background: #ffffff;
         z-index: 99;
         display: flex;
         justify-content: center;
         align-items: center;
 
-        .ball-clip-rotate-multiple {
-            >div {
-                border: 2px solid $THEME_TINT_COLOR;
-                border-bottom-color: transparent;
-                border-top-color: transparent;
-                height: 150px;
-                width: 150px;
-                left: -75px;
-                top: -75px;
-            }
+        .line-scale > div {
+            background-color: #6699ff;
+            width: 4px;
+            height: 35px;
+            border-radius: 2px;
+            margin: 2px;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            display: inline-block;
         }
     }
 </style>

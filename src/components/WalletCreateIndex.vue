@@ -6,6 +6,7 @@
                 <a @click="switchLanguage" class="pull-right icon">
                     <img width="25px" :src="imgFlag">
                 </a>
+                <a v-if="isNative && channel === 'blockcity'" href="javascript:;" @click="backToBlockCity" class="icon icon-left"></a>
             </header>
             <div class="content">
                 <div class="center-content">
@@ -44,6 +45,11 @@
     } from '@/services/CommonService';
 
     export default {
+        data () {
+            return {
+                channel: ''
+            };
+        },
         methods: {
             loadWallets () {
                 if (get_wallets().length > 0) {
@@ -59,9 +65,17 @@
                     this.$i18n.locale = 'zh-CN';
                 }
                 set_item('_locale', this.$i18n.locale);
+            },
+            backToBlockCity () {
+                if (this.isNative) {
+                    cordova.exec(null, null, 'Controller', 'pop', []); //eslint-disable-line
+                }
             }
         },
         mounted () {
+            if (this.$route.query.channel) {
+                this.channel = this.$route.query.channel;
+            }
             $.init();
             this.loadWallets();
             if (this.isNative) {

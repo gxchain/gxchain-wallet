@@ -31,7 +31,7 @@
                 <p>注：【一般中国大陆用户初级验证即可，如果需要充提美元需要通过高级验证】</p>
                 <p class="step">第三步：</p>
                 <img :src="`static/strategy_img/${$t('realtime_quotations.allcoin_step3_img1')}`" width="100%">
-                <p>进入【我的账户】GXS这栏点击【充币】</p>
+                <p>进入【我的账户】GXC这栏点击【充币】</p>
                 <img :src="`static/strategy_img/${$t('realtime_quotations.allcoin_step3_img2')}`" width="100%">
                 <p>allcoin的备注信息和转入地址</p>
                 <img :src="`static/strategy_img/${$t('realtime_quotations.allcoin_step3_img3')}`" width="100%">
@@ -43,7 +43,7 @@
                 </p>
                 <img :src="`static/strategy_img/${$t('realtime_quotations.allcoin_step3_img4')}`" width="100%">
                 <p>进入界面后：</p>
-                <p>第一栏选择【GXS】</p>
+                <p>第一栏选择【GXC】</p>
                 <p>第二栏备注，建议填写【allcoin平台交易账户】</p>
                 <p>第三栏输入平台交易的账户：wallet-allcoin</p>
                 <img :src="`static/strategy_img/${$t('realtime_quotations.allcoin_step3_img5')}`" width="100%">
