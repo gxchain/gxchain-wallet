@@ -2878,10 +2878,11 @@ gxbjs-ws@^1.2.0:
   dependencies:
     ws "^4.1.0"
 
-gxbjs@^1.3.5:
-  version "1.3.11"
-  resolved "https://registry.yarnpkg.com/gxbjs/-/gxbjs-1.3.11.tgz#59fa627e20a08c87cbdd4100e188624a21cdc495"
+gxbjs@^1.3.24:
+  version "1.3.24"
+  resolved "https://registry.yarnpkg.com/gxbjs/-/gxbjs-1.3.24.tgz#0ac3b4be8fcb18c3fddab7d0d3d3db7a3cf1c5b8"
   dependencies:
+    babel-runtime "^6.26.0"
     bigi "^1.4.1"
     bs58 "^3.0.0"
     bytebuffer "^5.0.0"

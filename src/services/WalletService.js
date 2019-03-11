@@ -11,7 +11,7 @@ import i18n from '@/locales';
 import find from 'lodash/find';
 import util from '@/common/util';
 import { accMult } from './CommonService';
-import { serializeCallData } from '@/common/serializer';
+import { serializeCallData } from 'gxbjs/dist/tx_serializer';
 
 /**
  * get objects by id
