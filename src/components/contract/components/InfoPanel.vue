@@ -4,7 +4,8 @@
             <!--<div class="func-name">Method: {{methodName}}</div>-->
             <!--<div class="func-total">{{asset.amount}}&nbsp;&nbsp;{{asset.symbol}}</div>-->
             <div class="tab-bar">
-                <div class="tab-bar-item" :class="currentTab === 1 ? 'active' : ''" @click="handleTab(1)">
+                <div class="tab-bar-item" v-if="isShowTab1" :class="currentTab === 1 ? 'active' : ''"
+                        @click="handleTab(1)">
                     {{$t('smart_contract.tabs.detail')}}
                 </div>
                 <div class="tab-bar-item" :class="currentTab === 2 ? 'active' : ''" @click="handleTab(2)">
@@ -41,12 +42,17 @@
         },
         props: {
             items: {
-                default: [],
+                default: function () {
+                    return [];
+                },
                 type: Array
             },
-            data: {
-                default: {},
-                type: Object
+            data: [String, Object],
+            isShowTab1: true
+        },
+        created () {
+            if (!this.isShowTab1) {
+                this.currentTab = 2;
             }
         },
         methods: {

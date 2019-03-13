@@ -9,6 +9,7 @@
     import Transfer from './Trans.vue';
     import Contract from './Contract.vue';
     import Vote from './Vote.vue';
+    import Signature from './Signature.vue';
     import NoAccount from './NoAccount.vue';
 
     function getQueryObject (str) {
@@ -25,6 +26,7 @@
             contract: Contract,
             transfer: Transfer,
             vote: Vote,
+            arbitrarysignature: Signature,
             noidentity: NoAccount
         },
         data () {

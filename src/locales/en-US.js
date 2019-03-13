@@ -527,7 +527,8 @@ const locale = {
     },
     transactionConfirm: {
         transfer: 'Transfer',
-        vote: 'Vote'
+        vote: 'Vote',
+        signature: 'Signature'
     }
 };
 

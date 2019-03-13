@@ -1,5 +1,5 @@
-import { Aes, key, PrivateKey, TransactionBuilder, TransactionHelper } from 'gxbjs';
-import { Apis } from 'gxbjs-ws';
+import {Aes, key, PrivateKey, TransactionBuilder, TransactionHelper, Signature} from 'gxbjs';
+import {Apis} from 'gxbjs-ws';
 import Promise from 'bluebird';
 import uniq from 'lodash/uniq';
 import some from 'lodash/some';
@@ -10,8 +10,8 @@ import Vue from 'vue';
 import i18n from '@/locales';
 import find from 'lodash/find';
 import util from '@/common/util';
-import { accMult } from './CommonService';
-import { serializeCallData } from 'gxbjs/dist/tx_serializer';
+import {accMult} from './CommonService';
+import {serializeCallData} from 'gxbjs/dist/tx_serializer';
 
 /**
  * get objects by id
@@ -65,8 +65,8 @@ const get_assets_by_ids = (ids) => {
  */
 const get_fee_list = () => {
     return [
-        { id: '1.3.1', precision: 5, symbol: 'GXS' },
-        { id: '1.3.1', precision: 5, symbol: 'GXC' }
+        {id: '1.3.1', precision: 5, symbol: 'GXS'},
+        {id: '1.3.1', precision: 5, symbol: 'GXC'}
     ];
 };
 
@@ -778,7 +778,7 @@ const fetch_block = (block_num) => {
  */
 const call_contract = async (account_name, contract_name, method_name, params, amount, password, broadcast = false, options = {}) => {
     if (!amount) {
-        amount = { amount: 0, asset_id: '1.3.1' };
+        amount = {amount: 0, asset_id: '1.3.1'};
     }
     let feeInfo = {};
     if (options.fee_symbol) {
@@ -1008,6 +1008,22 @@ const get_nodes_detail = () => {
     });
 };
 
+const getArbitrarySignature = (account, data, pwd) => {
+    return new Promise((resolve, reject) => {
+        resolve(unlock_wallet(account, pwd).then(info => {
+            const buf = Buffer.from(data, 'utf8');
+            if (buf.length > 64) {
+                throw new Error('limit data size is 64 byte');
+            }
+
+            var private_key = PrivateKey.fromWif(info.wifKey);
+            let sig = Signature.signBuffer(buf, private_key);
+
+            return sig.toBuffer().toString('hex');
+        }));
+    });
+};
+
 export {
     bak_wallet,
     get_objects,
@@ -1042,5 +1058,6 @@ export {
     vote_for_accounts,
     simpleVote,
     get_nodes_detail,
-    set_wallet_index_native
+    set_wallet_index_native,
+    getArbitrarySignature
 };

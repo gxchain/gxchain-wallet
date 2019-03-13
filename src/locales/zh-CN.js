@@ -527,7 +527,8 @@ const locale = {
     },
     transactionConfirm: {
         transfer: '转账',
-        vote: '投票'
+        vote: '投票',
+        signature: '签名'
     }
 };
 
