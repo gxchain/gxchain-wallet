@@ -63,7 +63,6 @@
         created () {
             this.currentWallet.account = this.extra.account;
             this.sigdata = this.extra.data;
-            this.isHash = this.extra.isHash;
             document.title = this.$t('signature');
         },
         mounted () {
@@ -92,7 +91,7 @@
                     return;
                 }
                 this.submiting = true;
-                getArbitrarySignature(this.currentWallet.account, this.sigdata, this.pwd, this.isHash).then((sig) => {
+                getArbitrarySignature(this.currentWallet.account, this.sigdata, this.pwd).then((sig) => {
                     this.endContract({code: 1, msg: 'success', data: sig});
                 }).catch(ex => {
                     this.endContract(new Error(undefined, encodeURIComponent(`sig error:${ex.message}`)));
