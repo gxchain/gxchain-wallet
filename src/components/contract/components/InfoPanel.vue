@@ -48,7 +48,10 @@
                 type: Array
             },
             data: [String, Object],
-            isShowTab1: true
+            isShowTab1: {
+                type: Boolean,
+                default: true
+            }
         },
         created () {
             if (!this.isShowTab1) {
