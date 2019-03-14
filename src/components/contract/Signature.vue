@@ -92,7 +92,8 @@
                 }
                 this.submiting = true;
                 getArbitrarySignature(this.currentWallet.account, this.sigdata, this.pwd).then((sig) => {
-                    this.endContract({code: 1, msg: 'success', data: sig});
+                    const data = JSON.stringify({signature: sig});
+                    this.endContract({code: 1, msg: 'success', data: data});
                 }).catch(ex => {
                     this.endContract(new Error(undefined, encodeURIComponent(`sig error:${ex.message}`)));
                 });
