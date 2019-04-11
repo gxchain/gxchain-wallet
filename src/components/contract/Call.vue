@@ -223,13 +223,9 @@
                 this.endContract({code: -1, msg: self.$t('unlock.error.invalid_password')});
             },
             confirmAccount (pwd) {
-                let self = this;
                 this.pwd = pwd;
                 if (this.plugin === 'contract') {
-                    if (!pwd.trim()) {
-                        this.endContract({code: -1, msg: self.$t('unlock.error.invalid_password')});
-                        return;
-                    }
+                    $.showIndicator();
                     call_contract(this.currentWallet.account, this.contractName, this.methodName, this.methodParams, this.amount, pwd, false).then(res => {
                         let op = res && res.operations && res.operations[0];
                         this.fee = op[1].fee;
@@ -240,6 +236,7 @@
                         this.fee.symbol = assets[0].symbol;
                         return fetch_account(this.currentWallet.account);
                     }).then(account => {
+                        $.hideIndicator();
                         this.contractData = {
                             fee: {
                                 amount: this.fee.realAmount,
@@ -260,6 +257,7 @@
                         this.contractData = JSON.stringify(this.contractData, null, 2);
                         this.unlocked = true;
                     }).catch(ex => {
+                        $.hideIndicator();
                         console.error(ex);
                         let message = ex.message && ex.message.replace(/\'/g, '') || '';
                         if (message.split('gxb-crypto').length > 1) {
