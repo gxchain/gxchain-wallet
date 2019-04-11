@@ -24,7 +24,7 @@ export default {
                     if (platform === 'ios' || platform === 'android') {
                         /* clear remember pwd in localStorage */
                         get_item_native('clear_remember_pwd').then(res => {
-                            if (res) {
+                            if (res == true) {
                                 localStorage.setItem('gxb_contract_remember_pwd', '');
                                 set_item_native('clear_remember_pwd', false);
                                 resolve();
