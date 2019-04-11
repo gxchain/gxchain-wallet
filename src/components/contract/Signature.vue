@@ -30,6 +30,7 @@
     import {
         getArbitrarySignature
     } from '@/services/WalletService';
+    import {get_item_native} from '@/services/CommonService';
     import AccountImage from '@/components/sub/AccountImage.vue';
     import util from '@/common/util';
     import PasswordConfirm from './components/PwdConfirm.vue';
@@ -73,13 +74,15 @@
                 util.callNative('endContract', params);
             },
             initStep () {
-                util.callNative('getScatterPWD', {}, (pwd) => {
+                get_item_native('gxb_contract_remember_pwd').then(pwd => {
                     if (!pwd) {
                         this.$refs.confirm.show();
                     } else {
                         this.pwd = pwd;
                         this.confirmAccount(this.extra.account, 0, pwd);
                     }
+                }).catch(ex => {
+                    this.$refs.confirm.show();
                 });
             },
             confirmAccount (account, index, pwd) {

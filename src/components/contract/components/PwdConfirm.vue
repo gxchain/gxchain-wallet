@@ -22,9 +22,6 @@
                     <div class="checkbox-wrap">
                         <gxb-switch :value="isRemember" @input="updateSwitch"><span class="checkbox-text">{{$t('transfer.confirm.remember_password')}}</span>
                         </gxb-switch>
-                        <!--<label>-->
-                        <!--<input class="checkbox" type="checkbox" v-model="isRemember"><span class="checkbox-text">{{$t('transfer.confirm.remember_password')}}</span>-->
-                        <!--</label>-->
                     </div>
                 </div>
                 <div class="btn-wallet" @click="onPasswordConfirm($event)">
@@ -43,8 +40,8 @@
     </Modal>
 </template>
 <script>
+    import {set_item_native} from '@/services/CommonService';
     import {unlock_wallet} from '@/services/WalletService';
-    import util from '@/common/util';
     import Modal from '@/components/sub/Modal.vue';
     import {Toast} from 'gxb-ui';
 
@@ -99,7 +96,7 @@
 
                 unlock_wallet(this.account, this.password).then(res => {
                     if (this.isRemember) {
-                        util.callNative('setScatterPWD', {pwd: this.password});
+                        set_item_native('gxb_contract_remember_pwd', this.password);
                     }
                     this.$emit('unlocking', this.password);
                 }).catch(err => {

@@ -236,9 +236,7 @@ let router = new Router({
         {
             path: '/contract/call',
             meta: {
-                title: '调用智能合约',
-                needsCordova: false,
-                needsConnection: true
+                title: '调用智能合约'
             },
             name: 'CallContract',
             component: resolve => {

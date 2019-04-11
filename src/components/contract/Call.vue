@@ -84,39 +84,39 @@
                     </div>
                     <div class="authorize-footer">
                         <div class="confirm-tip"></div>
-                        <a href="javascript:;" class="button button-gxb" @click="chooseAccount">{{$t('oauth.authorize.btn.confirm')}}</a>
+                        <a href="javascript:;" class="button button-gxb" @click="initStep">{{$t('oauth.authorize.btn.confirm')}}</a>
                         <div class="button-reject" @click="handleCancel">{{$t('oauth.authorize.btn.cancel')}}</div>
                     </div>
                 </div>
             </div>
         </div>
-        <PickWallet :show="pickWallet.show"
-                    :options="pickWallet.options"
-                    @onCancel="handleCancel"
-                    @onConfirm="confirmAccount">
-        </PickWallet>
+        <password-confirm ref="confirm" :account="currentWallet.account" @fail="unlockFail" @cancel="handleCancel"
+                @unlocking="unlocking"></password-confirm>
     </div>
 </template>
 <script>
     import {
         get_wallets,
+        get_wallet_index,
         fetch_account,
         get_assets_by_ids,
         call_contract
     } from '@/services/WalletService';
-    import PickWallet from '@/components/sub/PickWallet.vue';
+    import {get_item_native} from '@/services/CommonService';
+    import PasswordConfirm from './components/PwdConfirm.vue';
     import AccountImage from '@/components/sub/AccountImage.vue';
     import util from '@/common/util';
     export default {
         data () {
             let wallets = get_wallets();
+            let walletIndex = get_wallet_index();
             return {
                 unlocked: false,
                 network: process.env.network,
                 currentTab: 1,
                 wallets: wallets,
                 currentWallet: {
-                    account: ''
+                    account: wallets[walletIndex].account
                 },
                 contractName: '',
                 contractAccount: {},
@@ -127,14 +127,6 @@
                 fee: {},
                 amount: {},
                 pwd: '',
-                pickWallet: {
-                    show: false,
-                    options: {
-                        listData: wallets,
-                        plugin: 'contract',
-                        showCloseBtn: true
-                    }
-                },
                 plugin: 'contract',
                 version: '',
                 submiting: false
@@ -142,7 +134,6 @@
         },
         created () {
             this.plugin = this.$route.query.plugin || 'contract';
-            this.pickWallet.options.plugin = this.plugin;
             switch (this.plugin) {
                 case 'contract':
                     document.title = this.$t('smart_contract.title');
@@ -179,7 +170,7 @@
                     this.asset = results[0][0];
                     this.asset.amount = (this.amount.amount || 0) / Math.pow(10, this.asset.precision);
                     this.contractAccount = results[1];
-                    this.chooseAccount();
+                    this.initStep();
                 }).catch(ex => {
                     console.error(ex);
                     clearTimeout(loadTimer);
@@ -211,13 +202,29 @@
             handleTab (index) {
                 this.currentTab = index;
             },
-            chooseAccount () {
-                this.pickWallet.show = true;
+            initStep () {
+                get_item_native('gxb_contract_remember_pwd').then(pwd => {
+                    if (!pwd) {
+                        this.$refs.confirm.show();
+                    } else {
+                        this.pwd = pwd;
+                        this.confirmAccount(pwd);
+                    }
+                }).catch(ex => {
+                    this.$refs.confirm.show();
+                });
             },
-            confirmAccount (account, index, pwd) {
+            unlocking (pwd) {
+                this.$refs.confirm.unlocked();
+                this.confirmAccount(pwd);
+            },
+            unlockFail () {
+                let self = this;
+                this.endContract({code: -1, msg: self.$t('unlock.error.invalid_password')});
+            },
+            confirmAccount (pwd) {
                 let self = this;
                 this.pwd = pwd;
-                this.currentWallet.account = account;
                 if (this.plugin === 'contract') {
                     if (!pwd.trim()) {
                         this.endContract({code: -1, msg: self.$t('unlock.error.invalid_password')});
@@ -252,7 +259,6 @@
                         });
                         this.contractData = JSON.stringify(this.contractData, null, 2);
                         this.unlocked = true;
-                        this.pickWallet.show = false;
                     }).catch(ex => {
                         console.error(ex);
                         let message = ex.message && ex.message.replace(/\'/g, '') || '';
@@ -264,8 +270,7 @@
                     });
                 }
                 if (this.plugin === 'auth') {
-                    let data = { account: account };
-                    this.endContract({code: 1, msg: 'success', data: JSON.stringify(data)});
+                    this.endContract({code: 1, msg: 'success', data: JSON.stringify(this.currentWallet)});
                 }
             },
             handleConfirm () {
@@ -304,7 +309,7 @@
         },
         components: {
             AccountImage,
-            PickWallet
+            PasswordConfirm
         }
     };
 </script>

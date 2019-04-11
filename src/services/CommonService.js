@@ -1,3 +1,5 @@
+import util from '@/common/util';
+
 let fallbackStore = {};
 export const set_item = (key, val) => {
     try {
@@ -14,6 +16,36 @@ export const get_item = (key) => {
     } catch (ex) {
         return fallbackStore[key];
     }
+};
+
+export const get_item_native = (key) => {
+    return new Promise((resolve, reject) => {
+        let query = util.query2Obj(location.hash);
+        let pluginName = 'AppConfig';
+        if (query.platform === 'ios') {
+            pluginName = 'KV';
+        }
+        cordova.exec(function (result) { //eslint-disable-line
+            resolve(result);
+        }, function () {
+            reject(new Error('cordova exec failed'));
+        }, pluginName, 'get', [key]);
+    });
+};
+
+export const set_item_native = (key, value) => {
+    return new Promise((resolve, reject) => {
+        let query = util.query2Obj(location.hash);
+        let pluginName = 'AppConfig';
+        if (query.platform === 'ios') {
+            pluginName = 'KV';
+        }
+        cordova.exec(function (result) { //eslint-disable-line
+            resolve(result);
+        }, function () {
+            reject(new Error('cordova exec failed'));
+        }, pluginName, 'set', [key, value]);
+    });
 };
 
 export const accMult = (arg1, arg2) => {
