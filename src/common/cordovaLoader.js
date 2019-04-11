@@ -27,6 +27,7 @@ export default {
                             if (res) {
                                 localStorage.setItem('gxb_contract_remember_pwd', '');
                                 set_item_native('clear_remember_pwd', false);
+                                resolve();
                             }
                         });
                     } else {
