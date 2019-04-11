@@ -285,7 +285,7 @@ router.beforeEach((to, from, next) => {
             }).catch((ex) => {
                 let wallets = get_wallets();
                 if ((!wallets || wallets.length == 0) && !inWhiteList(to)) {
-                    let query = $.extend({platform: platform}, to.query);
+                    let query = $.extend({platform: platform, channel: channel}, to.query);
                     router.replace({
                         path: `/wallet-create?${$.param(query)}`
                     });
