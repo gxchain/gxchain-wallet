@@ -40,7 +40,6 @@
     </Modal>
 </template>
 <script>
-    import {set_item_native} from '@/services/CommonService';
     import {unlock_wallet} from '@/services/WalletService';
     import Modal from '@/components/sub/Modal.vue';
     import {Toast} from 'gxb-ui';
@@ -96,7 +95,7 @@
 
                 unlock_wallet(this.account, this.password).then(res => {
                     if (this.isRemember) {
-                        set_item_native('gxb_contract_remember_pwd', this.password);
+                        localStorage.setItem('gxb_contract_remember_pwd', this.password);
                     }
                     this.$emit('unlocking', this.password);
                 }).catch(err => {

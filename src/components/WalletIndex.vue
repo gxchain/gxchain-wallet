@@ -135,7 +135,7 @@
 
     import {
         fetch_account_balances, fetch_reference_accounts, get_assets_by_ids, get_wallet_index, get_wallets,
-        set_wallet_index, set_wallets
+        set_wallet_index
     } from '@/services/WalletService';
     import {get_market_asset_price, get_market_asset_list} from '@/services/MarketService';
     import filters from '@/filters';
@@ -353,14 +353,6 @@
             },
             openQRCodeModal () {
                 this.$refs.qrcode.show();
-            },
-            assetHideClick () {
-                this.isAssetHidden = !this.isAssetHidden;
-                this.wallets = this.wallets.map((w) => {
-                    w.isAssetHidden = this.isAssetHidden;
-                    return w;
-                });
-                set_wallets(this.wallets);
             },
             goAddAssets () {
                 let query = {

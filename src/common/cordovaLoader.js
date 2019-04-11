@@ -1,3 +1,5 @@
+import {get_item_native, set_item_native} from '@/services/CommonService';
+
 function isIphoneX () {
     return /iphone/gi.test(navigator.userAgent) && (screen.height == 812 && screen.width == 375);
 }
@@ -6,7 +8,6 @@ export default {
     load (platform) {
         return new Promise((resolve, reject) => {
             if ($('#js-cdv').length == 0) {
-                let start = new Date();
                 $('html').removeClass('with-statusbar-overlay');
                 if (platform == 'ios') {
                     $('html').addClass('native-ios');
@@ -20,10 +21,17 @@ export default {
                 }
                 document.write(`<script id="js-cdv" type="text/javascript" src="static/cordova/cordova.${platform}.js"></script>`);
                 document.addEventListener('deviceready', function () {
-                    let timeout = (new Date() - start) > 1000 ? 0 : 500;
-                    setTimeout(() => {
+                    if (platform === 'ios' || platform === 'android') {
+                        /* clear remember pwd in localStorage */
+                        get_item_native('clear_remember_pwd').then(res => {
+                            if (res) {
+                                localStorage.setItem('gxb_contract_remember_pwd', '');
+                                set_item_native('clear_remember_pwd', false);
+                            }
+                        });
+                    } else {
                         resolve();
-                    }, timeout);
+                    }
                 });
             } else {
                 resolve();

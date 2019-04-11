@@ -12,7 +12,6 @@ import find from 'lodash/find';
 import util from '@/common/util';
 import {accMult} from './CommonService';
 import {serializeCallData} from 'gxbjs/dist/tx_serializer';
-import {set_item_native} from '@/services/CommonService';
 
 /**
  * get objects by id
@@ -227,6 +226,8 @@ const get_wallet_native = () => {
 const set_wallets = (wallets) => {
     return new Promise((resolve, reject) => {
         localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(wallets));
+        /* clear remember pwd in localStorage */
+        localStorage.setItem('gxb_contract_remember_pwd', '');
         try {
             set_wallet_native(wallets);
             set_wallet_index_native(wallets.length - 1);
@@ -265,7 +266,8 @@ const set_wallet_index = (index) => {
     let wallets = get_wallets();
     localStorage.setItem(`gxb_wallet_index_${Apis.instance().chain_id || process.env.chain_id}`, Math.min(wallets.length - 1, index));
     set_wallet_index_native(Math.min(wallets.length - 1, index));
-    set_item_native('gxb_contract_remember_pwd', '');
+    /* clear remember pwd in localStorage */
+    localStorage.setItem('gxb_contract_remember_pwd', '');
 };
 
 /**

@@ -102,7 +102,6 @@
         get_assets_by_ids,
         call_contract
     } from '@/services/WalletService';
-    import {get_item_native} from '@/services/CommonService';
     import PasswordConfirm from './components/PwdConfirm.vue';
     import AccountImage from '@/components/sub/AccountImage.vue';
     import util from '@/common/util';
@@ -203,16 +202,13 @@
                 this.currentTab = index;
             },
             initStep () {
-                get_item_native('gxb_contract_remember_pwd').then(pwd => {
-                    if (!pwd) {
-                        this.$refs.confirm.show();
-                    } else {
-                        this.pwd = pwd;
-                        this.confirmAccount(pwd);
-                    }
-                }).catch(ex => {
+                let pwd = localStorage.getItem('gxb_contract_remember_pwd');
+                if (!pwd) {
                     this.$refs.confirm.show();
-                });
+                } else {
+                    this.pwd = pwd;
+                    this.confirmAccount(pwd);
+                }
             },
             unlocking (pwd) {
                 this.$refs.confirm.unlocked();
