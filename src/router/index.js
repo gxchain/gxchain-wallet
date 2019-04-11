@@ -255,6 +255,9 @@ router.beforeEach((to, from, next) => {
     const isGscatter = name === 'callcontract' && (to.query && to.query.type);
     let platform = (from.name ? from.query.platform : to.query.platform) || 'browser';
     let channel = (from.name ? from.query.channel : to.query.channel) || '';
+    if (name === 'callcontract') {
+        channel = 'blockcity';
+    }
     let locale = (from.name ? from.query.locale : to.query.locale) || '';
     if (locale) {
         i18n.locale = locale;
