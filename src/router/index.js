@@ -274,7 +274,7 @@ router.beforeEach((to, from, next) => {
                 let wallets = get_wallets();
                 // 如果是callContract，则走默认逻辑
                 if ((!wallets || wallets.length == 0) && !inWhiteList(to) && !isGscatter) {
-                    let query = $.extend({platform: platform}, to.query);
+                    let query = $.extend({platform: platform, channel: channel}, to.query);
                     router.replace({
                         path: `/wallet-create?${$.param(query)}`
                     });
