@@ -200,6 +200,7 @@
 </template>
 <script>
     import Modal from '@/components/sub/Modal.vue';
+    import {set_wallet_index} from '@/services/WalletService';
     export default {
         name: 'pick-wallet',
         props: {
@@ -234,6 +235,7 @@
             },
             chooseWallet (account, index) {
                 this.pickedAccount = account;
+                set_wallet_index(index);
             }
         },
         components: {
