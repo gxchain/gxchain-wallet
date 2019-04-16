@@ -98,7 +98,6 @@
                         let wallet = {};
                         wallet[this.account] = this.password;
                         localStorage.setItem('gxb_contract_remember_pwd', JSON.stringify(wallet));
-                        return false;
                     }
                     this.$emit('unlocking', this.password);
                 }).catch(err => {
