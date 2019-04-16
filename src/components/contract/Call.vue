@@ -90,6 +90,7 @@
                 </div>
             </div>
         </div>
+        <pick-wallet ref="pickWallet" :account="currentWallet.account" :wallets="wallets" @cancel="handleCancel" @confirm="handlePicked"></pick-wallet>
         <password-confirm ref="confirm" :account="currentWallet.account" @fail="unlockFail" @cancel="handleCancel"
                 @unlocking="unlocking"></password-confirm>
     </div>
@@ -102,6 +103,7 @@
         get_assets_by_ids,
         call_contract
     } from '@/services/WalletService';
+    import PickWallet from './components/PickWallet.vue';
     import PasswordConfirm from './components/PwdConfirm.vue';
     import AccountImage from '@/components/sub/AccountImage.vue';
     import util from '@/common/util';
@@ -201,13 +203,34 @@
             handleTab (index) {
                 this.currentTab = index;
             },
-            initStep () {
-                let pwd = localStorage.getItem('gxb_contract_remember_pwd');
+            handlePicked (account) {
+                this.currentWallet.account = account;
+                // 验证是否记住密码
+                let pwdStr = localStorage.getItem('gxb_contract_remember_pwd') || '{}';
+                let pwdArr = JSON.parse(pwdStr);
+                let pwd = pwdArr[this.currentWallet.account] || '';
                 if (!pwd) {
                     this.$refs.confirm.show();
                 } else {
                     this.pwd = pwd;
                     this.confirmAccount(pwd);
+                }
+            },
+            initStep () {
+                if (this.wallets.length > 1) {
+                    // 多钱包 - 选择钱包
+                    this.$refs.pickWallet.show();
+                } else {
+                    // 验证是否记住密码
+                    let pwdStr = localStorage.getItem('gxb_contract_remember_pwd') || '{}';
+                    let pwdArr = JSON.parse(pwdStr);
+                    let pwd = pwdArr[this.currentWallet.account] || '';
+                    if (!pwd) {
+                        this.$refs.confirm.show();
+                    } else {
+                        this.pwd = pwd;
+                        this.confirmAccount(pwd);
+                    }
                 }
             },
             unlocking (pwd) {
@@ -303,6 +326,7 @@
         },
         components: {
             AccountImage,
+            PickWallet,
             PasswordConfirm
         }
     };

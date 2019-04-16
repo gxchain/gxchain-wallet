@@ -95,7 +95,10 @@
 
                 unlock_wallet(this.account, this.password).then(res => {
                     if (this.isRemember) {
-                        localStorage.setItem('gxb_contract_remember_pwd', this.password);
+                        let wallet = {};
+                        wallet[this.account] = this.password;
+                        localStorage.setItem('gxb_contract_remember_pwd', JSON.stringify(wallet));
+                        return false;
                     }
                     this.$emit('unlocking', this.password);
                 }).catch(err => {

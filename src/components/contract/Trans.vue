@@ -95,15 +95,18 @@
                 util.callNative('endContract', params);
             },
             initStep () {
-                let pwd = localStorage.getItem('gxb_contract_remember_pwd');
+                // 验证是否记住密码
+                let pwdStr = localStorage.getItem('gxb_contract_remember_pwd') || '{}';
+                let pwdArr = JSON.parse(pwdStr);
+                let pwd = pwdArr[this.currentWallet.account] || '';
                 if (!pwd) {
                     this.$refs.confirm.show();
                 } else {
                     this.pwd = pwd;
-                    this.confirmAccount(this.extra.account, 0, pwd);
+                    this.confirmAccount(pwd);
                 }
             },
-            confirmAccount (account, index, pwd) {
+            confirmAccount (pwd) {
                 $.showIndicator();
                 this.getTransactionData(pwd).then((fee) => {
                     $.hideIndicator();
