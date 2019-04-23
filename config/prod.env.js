@@ -38,8 +38,8 @@ module.exports = (function () {
     else {
         return {
             NODE_ENV: '"production"',
-            __HOST__: '"http://47.96.164.78/#"',
-            __SERVICE__: '"http://47.96.164.78:9218"',
+            __HOST__: '"http://mwallet.dev.gxchain.cn/#"',
+            __SERVICE__: '"http://dev.gxchain.cn/gateway"',
             witnesses: JSON.stringify(['ws://47.96.164.78:28090']),
             faucet_addr: '"http://47.96.164.78:8888"',
             chain_id: '"bc59e6e7f500fa56504ce7101f7df8eb74151398f62167567adcf18a026928d1"',
