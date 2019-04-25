@@ -124,6 +124,7 @@
                 contractData: '',
                 methodName: '',
                 methodParams: {},
+                specifiedAccount: '',
                 asset: {},
                 fee: {},
                 amount: {},
@@ -159,6 +160,8 @@
                 this.amount = this.$route.query.amount && JSON.parse(decodeURIComponent(this.$route.query.amount)) || {amount: 0, asset_id: '1.3.1'};
                 this.methodName = this.$route.query.method_name || '';
                 this.methodParams = this.$route.query.params && JSON.parse(decodeURIComponent(this.$route.query.params)) || '';
+                this.specifiedAccount = this.$route.query.specified_account || '';
+
                 let loadTimer = setTimeout(() => {
                     $.showIndicator();
                 }, 500);
@@ -205,6 +208,9 @@
             },
             handlePicked (account) {
                 this.currentWallet.account = account;
+                if (this.specifiedAccount !== '' && this.specifiedAccount !== this.currentWallet.account) {
+                    this.endContract({code: -1, msg: encodeURIComponent('Inconsistent with the specified account of the contract.')});
+                }
                 // 验证是否记住密码
                 let pwdStr = localStorage.getItem('gxb_contract_remember_pwd') || '{}';
                 let pwdArr = JSON.parse(pwdStr);
@@ -221,6 +227,9 @@
                     // 多钱包 - 选择钱包
                     this.$refs.pickWallet.show();
                 } else {
+                    if (this.specifiedAccount !== '' && this.specifiedAccount !== this.currentWallet.account) {
+                        this.endContract({code: -1, msg: encodeURIComponent('Inconsistent with the specified account of the contract.')});
+                    }
                     // 验证是否记住密码
                     let pwdStr = localStorage.getItem('gxb_contract_remember_pwd') || '{}';
                     let pwdArr = JSON.parse(pwdStr);
