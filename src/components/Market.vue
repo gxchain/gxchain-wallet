@@ -32,11 +32,10 @@
                                             </div>
                                             <div class="price">
                                                 <div class="price_primary">
-                                                    {{exchange.price}}
+                                                    {{exchange.price | number(5)}}
                                                 </div>
                                                 <div class="price_secondary">
-                                                    {{_i18n.locale == 'zh-CN' ? `￥${exchange.price_rmb}` :
-                                                    `$${exchange.price_dollar}`}}
+                                                    {{$t('index.unit')}}{{getPrice(exchange) | number(5)}}
                                                 </div>
                                             </div>
                                             <div class="quote" :class="{green:exchange.quote>0}">
@@ -56,8 +55,9 @@
 <script>
     import {get_market_info} from '@/services/MarketService';
     import WalletTab from './sub/WalletTab';
-
+    import filters from '@/filters';
     export default {
+        filters,
         components: {
             WalletTab
         },
@@ -102,6 +102,18 @@
                         $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
                     }, 500);
                 });
+            },
+            getPrice (exchange) {
+                switch (this._i18n.locale) {
+                    case 'zh-CN':
+                        return exchange.price_rmb;
+                    case 'en-US':
+                        return exchange.price_dollar;
+                    case 'ko-KR':
+                        return exchange.price_krw;
+                    default:
+                        return '';
+                }
             }
         }
     };

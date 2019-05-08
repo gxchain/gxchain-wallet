@@ -16,7 +16,7 @@
                             {{exchange_price}}
                         </div>
                         <div class="price-secondary">
-                            {{_i18n.locale == 'zh-CN' ? `￥${exchange_price_rmb}` : `$${exchange_price_dollar}`}}
+                            {{$t('index.unit')}}{{displayPrice | number(5)}}
                         </div>
                     </div>
                     <div class="exchange-quote">
@@ -98,15 +98,16 @@
         get_realtime_quotation,
         get_chart_data
     } from '@/services/MarketService';
+    import filters from '@/filters';
     G2.track(false);
     export default {
+        filters,
         data () {
             return {
                 exchange_name: this.$route.params.exchange_name,
                 exchange_symbol: this.$route.params.exchange_symbol,
                 exchange_price: '',
-                exchange_price_rmb: '',
-                exchange_price_dollar: '',
+                displayPrice: '',
                 exchange_quote: '',
                 high: '',
                 low: '',
@@ -121,12 +122,11 @@
             loadRealtimeQuotation () {
                 get_realtime_quotation(this.exchange_name, this.exchange_symbol).then((resp) => {
                     this.exchange_price = resp.price;
-                    this.exchange_price_rmb = resp.price_rmb;
-                    this.exchange_price_dollar = resp.price_dollar;
                     this.exchange_quote = resp.quote;
                     this.high = resp.high;
                     this.low = resp.low;
                     this.volume = resp.volume;
+                    this.displayPrice = this.getPrice(resp);
                     setTimeout(() => {
                         if (!this.stopFetchingQuotation) {
                             this.loadRealtimeQuotation();
@@ -336,6 +336,18 @@
             },
             showStrategyModal () {
                 this.$refs.strategy.show();
+            },
+            getPrice (exchange) {
+                switch (this._i18n.locale) {
+                    case 'zh-CN':
+                        return exchange.price_rmb;
+                    case 'en-US':
+                        return exchange.price_dollar;
+                    case 'ko-KR':
+                        return exchange.price_krw;
+                    default:
+                        return '';
+                }
             }
         },
         destroyed () {
