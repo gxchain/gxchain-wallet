@@ -172,7 +172,7 @@
             unlocking (pwd) {
                 this.pwd = pwd;
                 this.$refs.confirm.unlocked();
-                this.confirmAccount(this.extra.account, 0, pwd);
+                this.confirmAccount(pwd);
             },
             unlockFail () {
                 this.endContract(Error.passwordError(this.$t('unlock.error.invalid_password')));
