@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 const state = {
     loading: true,
-    isNative: false
+    isNative: false,
+    symbolsMap: {}
 };
 
 const mutations = {
@@ -14,6 +15,9 @@ const mutations = {
     },
     setIsNative (state, payload) {
         state.isNative = payload.isNative;
+    },
+    setSymbolsMap (state, payload) {
+        state.symbolsMap = payload.symbolsMap;
     }
 };
 
@@ -23,12 +27,16 @@ const actions = {
     },
     setIsNative ({ commit }, payload) {
         commit('setIsNative', payload);
+    },
+    setSymbolsMap ({commit}, payload) {
+        commit('setSymbolsMap', payload);
     }
 };
 
 const getters = {
     loading: state => state.loading,
-    isNative: state => state.isNative
+    isNative: state => state.isNative,
+    symbolsMap: state => state.symbolsMap
 };
 
 export default new Vuex.Store({

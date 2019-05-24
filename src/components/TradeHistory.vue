@@ -72,7 +72,6 @@
         get_assets_by_ids
     } from '@/services/WalletService';
     import AccountImage from './sub/AccountImage.vue';
-    import Promise from 'bluebird';
     import filters from '@/filters';
 
     export default {

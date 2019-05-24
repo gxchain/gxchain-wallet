@@ -102,8 +102,7 @@
                                 :key="balance.symbol">
                                 <div class="item-inner">
                                     <div class="symbol">
-                                        <img :src="balance.icon" style="width: 1.5rem" v-if="balance.icon">
-                                        <account-image :account="balance.symbol" :size="15" v-else></account-image>
+                                        <account-image :account="balance.symbol" :size="15"></account-image>
                                         <div>&nbsp;&nbsp;{{balance.symbol}}</div>
                                     </div>
                                     <div class="price">
@@ -137,7 +136,7 @@
         fetch_account_balances, fetch_reference_accounts, get_assets_by_ids, get_wallet_index, get_wallets,
         set_wallet_index
     } from '@/services/WalletService';
-    import {get_market_asset_price, get_market_asset_list} from '@/services/MarketService';
+    import {get_market_asset_price} from '@/services/MarketService';
     import filters from '@/filters';
     import some from 'lodash/some';
     import unionBy from 'lodash/unionBy';
@@ -170,7 +169,6 @@
                     }
                 },
                 isAssetHidden: '',
-                assetIconMap: {},
                 channel: ''
             };
         },
@@ -187,21 +185,8 @@
                         path: this.link('/wallet-create')
                     });
                 } else {
-                    get_market_asset_list().then(resp => {
-                        let assetList = resp || [];
-                        let assetIconMap = {};
-                        assetList.forEach(asset => {
-                            assetIconMap[asset.symbol] = asset.icon;
-                        });
-                        this.assetIconMap = assetIconMap;
-                        this.wallets.forEach((wallet) => {
-                            this.loadBalances(wallet);
-                        });
-                    }).catch(ex => {
-                        console.error(ex);
-                        this.wallets.forEach((wallet) => {
-                            this.loadBalances(wallet);
-                        });
+                    this.wallets.forEach((wallet) => {
+                        this.loadBalances(wallet);
                     });
                 }
                 setTimeout(() => {
@@ -265,7 +250,6 @@
                                 precision: b.precision,
                                 value: b.value,
                                 symbol: b.symbol,
-                                icon: this.assetIconMap[b.symbol],
                                 status: true
                             };
                         });

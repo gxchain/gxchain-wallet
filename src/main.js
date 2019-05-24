@@ -21,7 +21,12 @@ Vue.http.interceptors.push(
     function (request, next) {
         next(function (response) {
             if (!response.headers['content-type'] || (response.headers['content-type'].indexOf('application/json') > -1 && typeof response.data == 'string')) {
-                response.data = JSON.parse(response.bodyText);
+                if (response.bodyText !== '') {
+                    response.data = JSON.parse(response.bodyText);
+                } else {
+                    // 接口调用失败，没有返回data
+                    response.data = {};
+                }
             }
         });
     }

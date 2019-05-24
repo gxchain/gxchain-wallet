@@ -5,6 +5,7 @@
 <script>
     import jdenticon from 'jdenticon';
     import sha256 from 'js-sha256';
+    import { mapGetters } from 'vuex';
 
     export default {
         props: {
@@ -24,6 +25,9 @@
             };
         },
         computed: {
+            ...mapGetters({
+                symbolsMap: 'symbolsMap'
+            }),
             hash: function () {
                 return this.account ? sha256(this.account) : '';
             }
@@ -38,14 +42,9 @@
         },
         methods: {
             drawCanvas () {
-                if ((this.account === 'GXS') || (this.account === 'GXC')) {
+                if (this.symbolsMap[this.account]) {
                     this.imgShow = true;
-                    if (this.account === 'GXS') {
-                        this.imgSrc = 'https://gxs-wallet.oss-cn-shanghai.aliyuncs.com/symbols/gxs.png';
-                    }
-                    if (this.account === 'GXC') {
-                        this.imgSrc = 'https://gxs-wallet.oss-cn-shanghai.aliyuncs.com/symbols/gxs.png';
-                    }
+                    this.imgSrc = this.symbolsMap[this.account];
                 } else {
                     this.imgShow = false;
                     if (this.account) {

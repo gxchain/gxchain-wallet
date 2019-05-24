@@ -14,7 +14,8 @@
     import LoadingLayer from './components/sub/LoadingLayer';
     import '@/assets/font-icons/icons.css';
     import {
-        mapGetters
+        mapGetters,
+        mapActions
     } from 'vuex';
 
     export default {
@@ -29,7 +30,14 @@
             })
         },
         methods: {
-
+            ...mapActions({
+                setSymbolsMap: 'setSymbolsMap'
+            })
+        },
+        created () {
+            this.$http.get('//static.gxb.io/gxs/symbols/maps.json?v=' + new Date().getTime()).then(resp => {
+                this.setSymbolsMap({symbolsMap: resp.body || {}});
+            }).catch(ex => { console.error(ex) });
         },
         components: {
             LoadingLayer

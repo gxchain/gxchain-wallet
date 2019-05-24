@@ -60,6 +60,30 @@ const get_assets_by_ids = (ids) => {
     });
 };
 
+/**
+ * 链上资产列表
+ */
+const fetch_assets = function () {
+    return new Promise(function (resolve, reject) {
+        return Apis.instance().db_api().exec('list_assets', ['A', 100]).then(function (assets) {
+            let ids = [];
+            assets.forEach(asset => {
+                ids.push(asset.dynamic_asset_data_id);
+                ids.push(asset.issuer);
+            });
+            Apis.instance().db_api().exec('get_objects', [ids]).then(objs => {
+                assets.forEach((asset, i) => {
+                    asset.detail = objs[2 * i];
+                    asset.issuer = objs[2 * i + 1];
+                });
+                resolve(assets);
+            });
+        }).catch(function (ex) {
+            reject(ex);
+        });
+    });
+};
+
 /***
  * get fee list
  */
@@ -1052,6 +1076,7 @@ export {
     unlock_balance,
     get_asset,
     get_assets_by_ids,
+    fetch_assets,
     get_fee_list,
     fetch_reference_accounts,
     call_contract,
