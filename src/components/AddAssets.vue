@@ -38,7 +38,7 @@
 <script>
     import AccountImage from './sub/AccountImage.vue';
     import {mapGetters} from 'vuex';
-    import {fetch_assets} from '@/services/WalletService';
+    import {get_market_asset_list} from '@/services/MarketService';
     import some from 'lodash/some';
     import unionBy from 'lodash/unionBy';
     export default {
@@ -74,46 +74,30 @@
             },
             loadAssetList () {
                 $.showIndicator();
-                fetch_assets().then(resp => {
+                get_market_asset_list().then(resp => {
                     let assetList = resp || [];
                     assetList = assetList.filter((item) => {
-                        return item.symbol != 'GXS' && item.symbol != 'GXC' && item.symbol != 'NULL';
+                        return item.symbol != 'GXS' && item.symbol != 'GXC';
                     });
+                    let describeMap = {};
+                    assetList.forEach(asset => {
+                        describeMap[asset.symbol] = asset.describe;
+                    });
+                    this.describeMap = describeMap;
                     let localArray = this.localAssetsArray.filter((item) => {
                         return item.account == this.account;
                     });
                     let unionByList = unionBy(localArray[0].list, assetList, 'symbol');
-                    this.assetList = unionByList;
+                    this.assetList = unionByList.map((item) => {
+                        item.describe = this.describeMap[item.symbol];
+                        return item;
+                    });
                     $.hideIndicator();
                     this.loaded = true;
                 }).catch(ex => {
                     $.hideIndicator();
                     console.error(ex);
                 });
-                // get_market_asset_list().then(resp => {
-                //     let assetList = resp || [];
-                //     assetList = assetList.filter((item) => {
-                //         return item.symbol != 'GXS' && item.symbol != 'GXC';
-                //     });
-                //     let describeMap = {};
-                //     assetList.forEach(asset => {
-                //         describeMap[asset.symbol] = asset.describe;
-                //     });
-                //     this.describeMap = describeMap;
-                //     let localArray = this.localAssetsArray.filter((item) => {
-                //         return item.account == this.account;
-                //     });
-                //     let unionByList = unionBy(localArray[0].list, assetList, 'symbol');
-                //     this.assetList = unionByList.map((item) => {
-                //         item.describe = this.describeMap[item.symbol];
-                //         return item;
-                //     });
-                //     $.hideIndicator();
-                //     this.loaded = true;
-                // }).catch(ex => {
-                //     $.hideIndicator();
-                //     console.error(ex);
-                // });
             },
             assetClick (e, asset) {
                 if (asset.status) {
