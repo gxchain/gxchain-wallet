@@ -252,7 +252,7 @@ const set_wallets = (wallets) => {
         localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(wallets));
         try {
             set_wallet_native(wallets);
-            set_wallet_index_native(wallets.length - 1);
+            set_wallet_index(wallets.length - 1);
         } catch (ex) {
             reject(ex);
         } finally {
