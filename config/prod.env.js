@@ -40,10 +40,10 @@ module.exports = (function () {
           NODE_ENV: '"production"',
           __HOST__: '"http://mwallet.dev.gxchain.cn/#"',
           __SERVICE__: '"http://dev.gxchain.cn/gateway"',
-          witnesses: JSON.stringify(['ws://47.96.164.78:28090']),
-          faucet_addr: '"http://dev.gxchain.cn/faucet"',
-          chain_id: '"bc59e6e7f500fa56504ce7101f7df8eb74151398f62167567adcf18a026928d1"',
-          network: '"Dev Network"'
+          witnesses: JSON.stringify(['wss://testnet.gxchain.org']),
+          faucet_addr: '"https://testnet.faucet.gxchain.org"',
+          chain_id: '"c2af30ef9340ff81fd61654295e98a1ff04b23189748f86727d0b26b40bb0ff4"',
+          network: '"Test Network"'
         };
     }
 })();
