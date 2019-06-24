@@ -16,8 +16,7 @@ $.fn.data = function (b, c) {
             }
         }
         // eslint-disable-next-line
-        h.__eleData || (h.__eleData = {}),
-            h.__eleData[b] = c;
+        h.__eleData || (h.__eleData = {}), h.__eleData[b] = c;
     }
     return this;
 };
