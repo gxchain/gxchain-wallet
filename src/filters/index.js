@@ -25,7 +25,7 @@ export default {
             value = '0';
         }
         value = value + '';
-        precision = value.indexOf('.') > -1 && value.split('.')[1].length || precision;
+        precision = (value.indexOf('.') > -1 && value.split('.')[1].length) || precision;
         if (precision > 5) {
             precision = 5;
         }
