@@ -195,7 +195,7 @@ const set_wallet_index_native = (index) => {
             console.log('wallet index have been save to native storage successfully');
             resolve();
         }, function () {
-            reject();
+            reject(new Error('cordova exec failed'));
         }, pluginName, 'set', [`gxb_wallet_index_${chain_id}`, index]);
     });
 };
@@ -216,7 +216,7 @@ const set_wallet_native = (wallets) => {
             console.log('wallets have been save to native storage successfully');
             resolve();
         }, function () {
-            reject();
+            reject(new Error('cordova exec failed'));
         }, pluginName, 'set', [`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(wallets)]);
     });
 };
@@ -238,7 +238,7 @@ const get_wallet_native = () => {
             let wallets = result instanceof Array ? result : JSON.parse(wallets_str);
             resolve(wallets);
         }, function () {
-            reject();
+            reject(new Error('cordova exec failed'));
         }, pluginName, 'get', [`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`]);
     });
 };
@@ -671,7 +671,7 @@ const transfer = async (from, to, asset, fee_id = '1.3.1', amount, memo, passwor
                         PrivateKey.fromWif(results[2].wifKey),
                         memo_to_public,
                         nonce,
-                        new Buffer(memo, 'utf-8')
+                        Buffer.from(memo, 'utf-8')
                     )
                 };
             }
