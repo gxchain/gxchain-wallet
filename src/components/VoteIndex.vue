@@ -18,7 +18,7 @@
                         </div>
                     </div>
                 </div>
-        
+
                 <div class="tab-nav">
                     <div :class="tabIndex === 'tab-container1' ? 'tab-nav-item active' : 'tab-nav-item'" @click="tabIndex = 'tab-container1'">{{$t('node_vote.tab.tab1')}}</div>
                     <div :class="tabIndex === 'tab-container2' ? 'tab-nav-item active' : 'tab-nav-item'" @click="tabIndex = 'tab-container2'">{{$t('node_vote.tab.tab2')}}</div>
@@ -67,14 +67,14 @@
                             <p class="no-reocrd text-center" v-if="accounts.length==0&&loaded">
                                 <span class="icon icon-edit"></span>
                                 {{$t('node_vote.index.no_record')}}
-                            </p>   
+                            </p>
                             <div class="line-scale-pulse-out" v-if="!loaded">
                                 <div></div>
                                 <div></div>
                                 <div></div>
                                 <div></div>
                                 <div></div>
-                            </div> 
+                            </div>
                         </gxb-tab-container-item>
                         <gxb-tab-container-item id="tab-container2">
                             <div class="content-block tips">
@@ -100,7 +100,7 @@
                             </div>
                         </gxb-tab-container-item>
                     </gxb-tab-container>
-                </div> 
+                </div>
             </div>
             <nav class="bar bar-tab" v-show="tabIndex === 'tab-container1' && loaded">
                 <div class="tab-item tab-vote" v-if="!isProxyed" :class="{'disabled': !selected}" @click="unlock(1)">
@@ -387,7 +387,7 @@
                         $.toast(this.$t('node_vote.confirm.success2'));
                     }
                 }).catch(ex => {
-                    let msg = ex.message.split('gxb-crypto') && ex.message.split('gxb-crypto')[0] || this.$t('system.error.default_msg');
+                    let msg = (ex.message.split('gxb-crypto') && ex.message.split('gxb-crypto')[0]) || this.$t('system.error.default_msg');
                     this.submitting = false;
                     this.$refs.confirm.cancel();
                     $.toast(msg);
@@ -500,7 +500,7 @@
         background: #6699ff;
         width: 2px;
         height: 18px;
-        
+
     }
 
     .tab-nav {

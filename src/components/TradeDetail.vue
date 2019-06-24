@@ -83,18 +83,10 @@
     import AccountImage from './sub/AccountImage.vue';
     import filters from '@/filters';
     import {
-        get_objects,
-        fetch_block,
-        fetch_account,
-        get_wallets,
-        get_wallet_index,
-        get_assets_by_ids,
+        fetch_account, fetch_block, get_assets_by_ids, get_objects, get_wallet_index, get_wallets,
         unlock_wallet
     } from '@/services/WalletService';
-    import {
-        Aes,
-        PrivateKey
-    } from 'gxbjs';
+    import {Aes, PrivateKey} from 'gxbjs';
 
     export default {
         filters,
@@ -202,7 +194,7 @@
                     self.unlocked = true;
                     let private_key = PrivateKey.fromWif(info.wifKey);
                     self.memo.decryptedMemo = Aes.decrypt_with_checksum(private_key, self.type == 'receive'
-                    ? self.memo.from : self.memo.to, self.memo.nonce, self.memo.message).toString('utf-8');
+                        ? self.memo.from : self.memo.to, self.memo.nonce, self.memo.message).toString('utf-8');
                     self.$refs.confirm.unlocked();
                 }).catch((ex) => {
                     self.$refs.confirm.unlocked();

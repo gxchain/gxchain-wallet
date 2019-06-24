@@ -123,7 +123,7 @@
                 let wif_regex = /^5[HJK][1-9A-Za-z]{49}$/;
                 if (wif_regex.test(wifKey)) {
                     try {
-                        let private_key = PrivateKey.fromWif(wifKey);   // could throw and error
+                        let private_key = PrivateKey.fromWif(wifKey); // could throw and error
                         let public_key = private_key.toPublicKey(); // S L O W
                         let public_key_string = public_key.toPublicKeyString();
                         if (public_key_string.indexOf('GXC') > -1) {

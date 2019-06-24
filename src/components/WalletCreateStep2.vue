@@ -3,7 +3,8 @@
         <div class="page" id="page-wallet-create-step-2">
             <header class="bar bar-nav">
                 <h3 class="title">{{$t('wallet_create.step2.title')}}</h3>
-                <router-link :to="$route.query.from||link('/wallet-create-step-1')" replace class="icon icon-left"></router-link>
+                <router-link :to="$route.query.from||link('/wallet-create-step-1')" replace
+                             class="icon icon-left"></router-link>
             </header>
             <div class="content">
                 <div class="content-block text-center">
@@ -17,7 +18,8 @@
                                 <div class="item-inner">
                                     <div class="item-title label">{{$t('wallet_create.step2.label.password')}}</div>
                                     <div class="item-input">
-                                        <input v-model="pwd1" type="password" maxlength="30" :placeholder="$t('wallet_create.step2.placeholder.password')">
+                                        <input v-model="pwd1" type="password" maxlength="30"
+                                               :placeholder="$t('wallet_create.step2.placeholder.password')">
                                     </div>
                                 </div>
                             </div>
@@ -41,7 +43,8 @@
                 </div>
                 <div class="content-block button-block">
                     <p>
-                        <a href="javascript:;" @click="onSubmit" class="button button-gxb" :class="{disabled:!isCommitEnable}">{{$t('wallet_create.step2.done')}}</a>
+                        <a href="javascript:;" @click="onSubmit" class="button button-gxb"
+                           :class="{disabled:!isCommitEnable}">{{$t('wallet_create.step2.done')}}</a>
                     </p>
                 </div>
             </div>
@@ -51,9 +54,7 @@
 <script>
     import AccountImage from './sub/AccountImage.vue';
     import errorHandler from '@/common/errorHandler';
-    import {
-        create_account
-    } from '@/services/WalletService';
+    import {create_account} from '@/services/WalletService';
 
     export default {
         data () {
@@ -93,15 +94,14 @@
                     }
                 }).catch(ex => {
                     $.hidePreloader();
-                    if (ex.data && ex.data.error && ex.data.error.base && ex.data.error.base[0].indexOf(
-                            'current_account_itr') > -1) {
+                    if (ex.data && ex.data.error && ex.data.error.base && ex.data.error.base[0].indexOf('current_account_itr') > -1) {
                         $.alert(this.$t('wallet_create.step2.error.account_has_been_registered'), this.$t(
                             'wallet_create.step2.notice'), () => {
-                                this.$router.replace({
-                                    path: this.$route.query.from || this.link(
-                                        '/wallet-create-step-1')
-                                });
+                            this.$router.replace({
+                                path: this.$route.query.from || this.link(
+                                    '/wallet-create-step-1')
                             });
+                        });
                     } else {
                         console.error(ex);
                         errorHandler(ex, this.$t('wallet_create.step2.error.account_create_failed'));
