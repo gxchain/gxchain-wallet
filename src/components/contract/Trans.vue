@@ -87,7 +87,7 @@
             document.title = this.$t('transfer');
         },
         mounted () {
-            this.callOptions = this.$route.query.options && JSON.parse(decodeURIComponent(this.$route.query.options)) || {};
+            this.callOptions = (this.$route.query.options && JSON.parse(decodeURIComponent(this.$route.query.options))) || {};
             this.initStep();
         },
         methods: {
@@ -132,7 +132,7 @@
                     this.fee.symbol = assets[0].symbol;
                     return this.fee;
                 }).catch(ex => {
-                    let message = ex.message && ex.message.replace(/\'/g, '') || '';
+                    let message = (ex.message && ex.message.replace(/\'/g, '')) || '';
                     if (message.split('gxb-crypto').length > 1) {
                         message = message.split('gxb-crypto')[0];
                         message = message.substring(0, message.length - 1);
@@ -158,7 +158,7 @@
                     this.endContract({code: 1, msg: 'success', data: JSON.stringify(data)});
                 }).catch(ex => {
                     this.submiting = false;
-                    let message = ex.message && ex.message.replace(/\'/g, '') || '';
+                    let message = (ex.message && ex.message.replace(/\'/g, '')) || '';
                     if (message.split('gxb-crypto').length > 1) {
                         message = message.split('gxb-crypto')[0];
                         message = message.substring(0, message.length - 1);

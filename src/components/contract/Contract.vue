@@ -69,7 +69,8 @@
                 </div>
                 <div class="btn-box" v-show="unlocked">
                     <a href="javascript:;" class="button button-gxb disabled" @click="handleCancel">{{$t('smart_contract.btn.cancel')}}</a>
-                    <a href="javascript:;" class="button button-gxb" :class="{disabled: submiting}" @click="handleConfirm">{{$t('smart_contract.btn.confirm')}}</a>
+                    <a href="javascript:;" class="button button-gxb" :class="{disabled: submiting}"
+                       @click="handleConfirm">{{$t('smart_contract.btn.confirm')}}</a>
                 </div>
             </div>
             <div class="content" v-show="plugin === 'auth'">
@@ -108,16 +109,11 @@
             </div>
         </div>
         <password-confirm ref="confirm" :account="currentWallet.account" @fail="unlockFail" @cancel="handleCancel"
-                @unlocking="unlocking"></password-confirm>
+                          @unlocking="unlocking"></password-confirm>
     </div>
 </template>
 <script>
-    import {
-        get_wallets,
-        fetch_account,
-        get_assets_by_ids,
-        call_contract
-    } from '@/services/WalletService';
+    import {call_contract, fetch_account, get_assets_by_ids, get_wallets} from '@/services/WalletService';
     import AccountImage from '@/components/sub/AccountImage.vue';
     import util from '@/common/util';
     import PasswordConfirm from './components/PwdConfirm.vue';
@@ -168,13 +164,13 @@
                     this.contractName = tmpArr[1];
                 }
             }
-            this.amount = this.$route.query.amount && JSON.parse(decodeURIComponent(this.$route.query.amount)) || {
+            this.amount = (this.$route.query.amount && JSON.parse(decodeURIComponent(this.$route.query.amount))) || {
                 amount: 0,
                 asset_id: '1.3.1'
             };
             this.methodName = this.$route.query.method_name || '';
-            this.methodParams = this.$route.query.params && JSON.parse(decodeURIComponent(this.$route.query.params)) || '';
-            this.callOptions = this.$route.query.options && JSON.parse(decodeURIComponent(this.$route.query.options)) || {};
+            this.methodParams = (this.$route.query.params && JSON.parse(decodeURIComponent(this.$route.query.params))) || '';
+            this.callOptions = (this.$route.query.options && JSON.parse(decodeURIComponent(this.$route.query.options))) || {};
             let loadTimer = setTimeout(() => {
                 $.showIndicator();
             }, 500);
@@ -192,7 +188,7 @@
                 console.error(ex);
                 clearTimeout(loadTimer);
                 $.hideIndicator();
-                let message = ex.message && ex.message.replace(/\'/g, '') || '';
+                let message = (ex.message && ex.message.replace(/\'/g, '')) || '';
                 if (message.split('gxb-crypto').length > 1) {
                     message = message.split('gxb-crypto')[0];
                     message = message.substring(0, message.length - 1);
@@ -266,7 +262,7 @@
                 }).catch(ex => {
                     $.hideIndicator();
                     console.error(ex);
-                    let message = ex.message && ex.message.replace(/\'/g, '') || '';
+                    let message = (ex.message && ex.message.replace(/\'/g, '')) || '';
                     if (message.split('gxb-crypto').length > 1) {
                         message = message.split('gxb-crypto')[0];
                         message = message.substring(0, message.length - 1);
@@ -296,7 +292,7 @@
                     clearTimeout(loadTimer);
                     $.hideIndicator();
                     this.submiting = false;
-                    let message = ex.message && ex.message.replace(/\'/g, '') || '';
+                    let message = (ex.message && ex.message.replace(/\'/g, '')) || '';
                     if (message.split('gxb-crypto').length > 1) {
                         message = message.split('gxb-crypto')[0];
                         message = message.substring(0, message.length - 1);

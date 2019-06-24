@@ -157,9 +157,9 @@
                         this.contractName = tmpArr[1];
                     }
                 }
-                this.amount = this.$route.query.amount && JSON.parse(decodeURIComponent(this.$route.query.amount)) || {amount: 0, asset_id: '1.3.1'};
+                this.amount = (this.$route.query.amount && JSON.parse(decodeURIComponent(this.$route.query.amount))) || {amount: 0, asset_id: '1.3.1'};
                 this.methodName = this.$route.query.method_name || '';
-                this.methodParams = this.$route.query.params && JSON.parse(decodeURIComponent(this.$route.query.params)) || '';
+                this.methodParams = (this.$route.query.params && JSON.parse(decodeURIComponent(this.$route.query.params))) || '';
                 this.specifiedAccount = this.$route.query.specified_account || '';
 
                 let loadTimer = setTimeout(() => {
@@ -179,7 +179,7 @@
                     console.error(ex);
                     clearTimeout(loadTimer);
                     $.hideIndicator();
-                    let message = ex.message && ex.message.replace(/\'/g, '') || '';
+                    let message = (ex.message && ex.message.replace(/\'/g, '')) || '';
                     if (message.split('gxb-crypto').length > 1) {
                         message = message.split('gxb-crypto')[0];
                         message = message.substring(0, message.length - 1);
@@ -287,7 +287,7 @@
                     }).catch(ex => {
                         $.hideIndicator();
                         console.error(ex);
-                        let message = ex.message && ex.message.replace(/\'/g, '') || '';
+                        let message = (ex.message && ex.message.replace(/\'/g, '')) || '';
                         if (message.split('gxb-crypto').length > 1) {
                             message = message.split('gxb-crypto')[0];
                             message = message.substring(0, message.length - 1);
@@ -320,7 +320,7 @@
                     console.error(ex);
                     clearTimeout(loadTimer);
                     $.hideIndicator();
-                    let message = ex.message && ex.message.replace(/\'/g, '') || '';
+                    let message = (ex.message && ex.message.replace(/\'/g, '')) || '';
                     if (message.split('gxb-crypto').length > 1) {
                         message = message.split('gxb-crypto')[0];
                         message = message.substring(0, message.length - 1);
