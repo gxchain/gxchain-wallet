@@ -3,9 +3,9 @@ export default {
     indexedDB: window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB,
     openDB: function (dbname, version, db, newStore) {
         return new Promise(function (resolve, reject) {
-            var version = version || 1;
+            var ver = version || 1;
             var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-            var request = indexedDB.open(dbname, version);
+            var request = indexedDB.open(dbname, ver);
             request.onerror = function (event) {
                 reject(new Error('open db error'));
             };
