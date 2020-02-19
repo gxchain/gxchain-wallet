@@ -56,12 +56,18 @@ const locale = {
                 empty_account: 'Account name should not be empty',
                 account_should_be_longer: 'Account name be longer',
                 account_should_be_shorter: 'Account name be shorter',
-                account_should_start_with_a_letter: 'Each account segment should start with a letter',
-                account_format_error: 'Each account segment should have only letters, digits, or dashes',
-                account_one_dash_error: 'Each account segment should have only one dash in a row',
-                account_end_error: 'Each account segment should end with a letter or digit',
-                account_segment_should_be_longer: 'Each account segment should be longer',
-                premium_name: 'This is a premium name which is not supported by this faucet Please enter a regular name containing least one dash, a number or no vowels'
+                account_should_start_with_a_letter:
+          'Each account segment should start with a letter',
+                account_format_error:
+          'Each account segment should have only letters, digits, or dashes',
+                account_one_dash_error:
+          'Each account segment should have only one dash in a row',
+                account_end_error:
+          'Each account segment should end with a letter or digit',
+                account_segment_should_be_longer:
+          'Each account segment should be longer',
+                premium_name:
+          'This is a premium name which is not supported by this faucet Please enter a regular name containing least one dash, a number or no vowels'
             },
             next: 'Next'
         },
@@ -79,14 +85,16 @@ const locale = {
             notice: 'Notice',
             error: {
                 password_not_equal: 'Password not equal',
-                account_has_been_registered: 'Account has bean registered by someone, please select another.',
+                account_has_been_registered:
+          'Account has bean registered by someone, please select another.',
                 account_create_failed: 'Account create failed, please retry'
             }
         },
         success: {
             title: 'Create Success',
             tip1: 'Wallet created',
-            tip2: 'Please do remember to backup your wallet private key, there is no way to find it back if you lost it.',
+            tip2:
+        'Please do remember to backup your wallet private key, there is no way to find it back if you lost it.',
             backup_wallet: 'Backup Now',
             detail: 'Open my wallet'
         }
@@ -107,12 +115,14 @@ const locale = {
             account_already_exist: 'Account already imported',
             account_not_found: 'Account not found',
             invalid_key: 'Incorrect key format',
-            no_reference_account: 'Import failed! No account for this active private key was found.'
+            no_reference_account:
+        'Import failed! No account for this active private key was found.'
         },
         success: {
             title: 'Import Success',
             tip1: 'Wallet imported',
-            tip2: 'Please do remember to backup your wallet private key, there is no way to find it back if you lost it.',
+            tip2:
+        'Please do remember to backup your wallet private key, there is no way to find it back if you lost it.',
             backup_wallet: 'Backup Now',
             detail: 'Open my wallet'
         }
@@ -126,7 +136,8 @@ const locale = {
     wallet_backup: {
         index: {
             title: 'Private key backup',
-            tip: 'When APP is deleted and used on another device, you need to import backed-up private key of the current wallet, or assets in the wallet could be lost permanently. Please make sure your wallet is backed up and backed-up info is kept in good care.',
+            tip:
+        'When APP is deleted and used on another device, you need to import backed-up private key of the current wallet, or assets in the wallet could be lost permanently. Please make sure your wallet is backed up and backed-up info is kept in good care.',
             label: {
                 account: 'Account',
                 asset: 'Asset(GXC)',
@@ -137,9 +148,12 @@ const locale = {
         },
         detail: {
             title: 'Private key backup',
-            tip: 'To make backup easier, your wallet account is encrypted with the following key of letters. Back up this key to retrieve your wallet.',
-            tip1: 'Copy or transcribe the key verbatim on paper, and keep it in good care.',
-            tip2: 'Anyone with knowledge of info on your key gains access to the assets in your wallet.',
+            tip:
+        'To make backup easier, your wallet account is encrypted with the following key of letters. Back up this key to retrieve your wallet.',
+            tip1:
+        'Copy or transcribe the key verbatim on paper, and keep it in good care.',
+            tip2:
+        'Anyone with knowledge of info on your key gains access to the assets in your wallet.',
             unlock: 'Unlock',
             copy: 'Copy Private Key',
             copied: 'Copied',
@@ -160,7 +174,8 @@ const locale = {
         title: 'Wallet delete',
         cancel: 'Cancel',
         ok: 'Ok',
-        tip_del: 'Confirm unlock and delete this wallet. This operation is irrevocable. Are you sure to delete this wallet?',
+        tip_del:
+      'Confirm unlock and delete this wallet. This operation is irrevocable. Are you sure to delete this wallet?',
         placeholder: {
             password: 'Please enter your password'
         },
@@ -184,12 +199,13 @@ const locale = {
     },
     disclaimer: {
         title: 'Disclaimer',
-        content: '<h4 class="text-center">Notice to Use and Disclaimer</h4>' +
-        '<p>GXC Wallet is a decentralized blockchain application. Please acquire a full understanding of the blockchain technology before use. Make sure you have the basic competence to use and manage decentralized wallet on a reasonable level.</p>' +
-        '<p>1. Once GXC Wallet account or password is lost, it is unable to retrieve. Please keep properly your account and password, and make sure to back up your private key to the wallet, which is the only credential to get back your wallet. GXChain is not responsible for the loss or theft of the wallet due to your failure to back up the private key, safekeep or properly use the wallet.</p>' +
-        '<p>2. If you obtain GXC Wallet app or any other application under the same name of this sofeware from any unauthorized third party, GXB will not vouch for its security. You will be responsible for the loss inflicted thereby. </p>' +
-        '<p>3. By transferring GXC via GXC wallet, you understand the IRRETRIEVABLE attribute of blockchain-based operation and will be responsible for irreversible loss due to your misoperation.</p>' +
-        '<p>4. You shall comply with relevant state laws, policies and regulations when trading on GXC Wallet.</p>',
+        content:
+      '<h4 class="text-center">Notice to Use and Disclaimer</h4>' +
+      '<p>GXC Wallet is a decentralized blockchain application. Please acquire a full understanding of the blockchain technology before use. Make sure you have the basic competence to use and manage decentralized wallet on a reasonable level.</p>' +
+      '<p>1. Once GXC Wallet account or password is lost, it is unable to retrieve. Please keep properly your account and password, and make sure to back up your private key to the wallet, which is the only credential to get back your wallet. GXChain is not responsible for the loss or theft of the wallet due to your failure to back up the private key, safekeep or properly use the wallet.</p>' +
+      '<p>2. If you obtain GXC Wallet app or any other application under the same name of this sofeware from any unauthorized third party, GXB will not vouch for its security. You will be responsible for the loss inflicted thereby. </p>' +
+      '<p>3. By transferring GXC via GXC wallet, you understand the IRRETRIEVABLE attribute of blockchain-based operation and will be responsible for irreversible loss due to your misoperation.</p>' +
+      '<p>4. You shall comply with relevant state laws, policies and regulations when trading on GXC Wallet.</p>',
         accept: 'I have read and accept'
     },
     unlock: {
@@ -222,8 +238,10 @@ const locale = {
         error: {
             amount: {
                 invalid: 'Invalid amount',
-                insufficient_balance: 'Insufficient balance, Please make sure your balance are more than amount and fee',
-                insufficient_diff_balance: 'Insufficient balance, Please make sure your balance are more than amount',
+                insufficient_balance:
+          'Insufficient balance, Please make sure your balance are more than amount and fee',
+                insufficient_diff_balance:
+          'Insufficient balance, Please make sure your balance are more than amount',
                 insufficient_diff_fee: 'Insufficient fee',
                 minimum: 'The minimum amount must not be less than 1'
             },
@@ -234,13 +252,20 @@ const locale = {
                 empty_account: 'Account name should not be empty',
                 account_should_be_longer: 'Account name be longer',
                 account_should_be_shorter: 'Account name be shorter',
-                account_should_start_with_a_letter: 'Each account segment should start with a letter',
-                account_format_error: 'Each account segment should have only letters, digits, or dashes',
-                account_one_dash_error: 'Each account segment should have only one dash in a row',
-                account_end_error: 'Each account segment should end with a letter or digit',
-                account_segment_should_be_longer: 'Each account segment should be longer',
-                premium_name: 'This is a premium name which is not supported by this faucet Please enter a regular name containing least one dash, a number or no vowels',
-                memo_signer_not_exist: 'Cannot encrypt memo,since memo private key not exist'
+                account_should_start_with_a_letter:
+          'Each account segment should start with a letter',
+                account_format_error:
+          'Each account segment should have only letters, digits, or dashes',
+                account_one_dash_error:
+          'Each account segment should have only one dash in a row',
+                account_end_error:
+          'Each account segment should end with a letter or digit',
+                account_segment_should_be_longer:
+          'Each account segment should be longer',
+                premium_name:
+          'This is a premium name which is not supported by this faucet Please enter a regular name containing least one dash, a number or no vowels',
+                memo_signer_not_exist:
+          'Cannot encrypt memo,since memo private key not exist'
             }
         },
         confirm: {
@@ -255,7 +280,8 @@ const locale = {
             tip2: 'has received your transfer',
             done: 'Done'
         },
-        memo_tip: 'Found that you entered the platform account, please be sure to fill in Memo'
+        memo_tip:
+      'Found that you entered the platform account, please be sure to fill in Memo'
     },
     trade_history: {
         title: 'Trade History',
@@ -286,7 +312,8 @@ const locale = {
         title: 'Loyalty Program',
         tip1: 'Grow with GXB',
         tip2: 'Benefit for value investors, extra bonus for long-run holders',
-        tip3: 'GXB\'s Loyalty Program is a benefit program designed for investors to lock up certain amount of GXC (GX Coin). During the lockup period, the capital is frozen, meanwhile investors are entitled to extra bonus. For example, lock up 10,000 GXC for 9 months; calculating by 6% annualized return,  you may get 450 GXC for bonus on the due date. GXC would like our investors to join the Loyalty Program and enjoy the long-term benefits brought by GXB\'s growth in the future.',
+        tip3:
+      'GXB\'s Loyalty Program is a benefit program designed for investors to lock up certain amount of GXC (GX Coin). During the lockup period, the capital is frozen, meanwhile investors are entitled to extra bonus. For example, lock up 10,000 GXC for 9 months; calculating by 6% annualized return,  you may get 450 GXC for bonus on the due date. GXC would like our investors to join the Loyalty Program and enjoy the long-term benefits brought by GXB\'s growth in the future.',
         banner: 'loyalty-program-banner-en.jpg',
         term: 'Lockup Term',
         bonus: 'Annualized Bonus',
@@ -302,12 +329,14 @@ const locale = {
         no_record: 'No record',
         locked_at: 'Locked At',
         locked_amount: 'Locked Amount(GXC)',
-        button_join: 'Earn <span class="asset">{bonus}</span>% by joining our Loyalty Program',
+        button_join:
+      'Earn <span class="asset">{bonus}</span>% by joining our Loyalty Program',
         placeholder: {
             amount: 'Amount to lock'
         },
         modal: {
-            message: 'The amount subscribed to the Loyalty Program will be locked up and unable to sell. This operation is irrevocable. Are you sure to join the program?',
+            message:
+        'The amount subscribed to the Loyalty Program will be locked up and unable to sell. This operation is irrevocable. Are you sure to join the program?',
             cancel: 'Cancel',
             confirm: 'Confirm',
             placeholder: 'Please enter your password'
@@ -324,7 +353,8 @@ const locale = {
         },
         success: {
             title: 'Success',
-            message: 'Congratulations,{amount} GXC were locked for join loyalty program'
+            message:
+        'Congratulations,{amount} GXC were locked for join loyalty program'
         },
         detail: {
             title: 'Program Details',
@@ -342,7 +372,8 @@ const locale = {
         index: {
             title: 'Node Voting',
             records: 'Voting record',
-            intro: 'The TrustNode is the producer of the block in GXChain. They validate transaction data and maintain network security. You can vote for the person you trust to become a public trust node. When you vote, the candidate you choose will receive the same number of votes you cast.',
+            intro:
+        'The TrustNode is the producer of the block in GXChain. They validate transaction data and maintain network security. You can vote for the person you trust to become a public trust node. When you vote, the candidate you choose will receive the same number of votes you cast.',
             proxy_tip: '*Voting rights are taken over by proxy voting account.',
             tips: '*updated every hour',
             name: 'TrustNode candidate',
@@ -352,7 +383,8 @@ const locale = {
             btn_update: 'Update'
         },
         proxy: {
-            intro: 'After setting up a proxy voting account, the proxy voting account will exercise voting power on your behalf.',
+            intro:
+        'After setting up a proxy voting account, the proxy voting account will exercise voting power on your behalf.',
             input_label: 'Account',
             input_placeholder: 'please enter proxy account',
             btn_submit: 'Save changes',
@@ -380,7 +412,8 @@ const locale = {
                 min: 'Support at least 2 nodes'
             },
             gxc: {
-                lack: 'The voting account GXC balance is insufficient, at least 0.1GXC is required.'
+                lack:
+          'The voting account GXC balance is insufficient, at least 0.1GXC is required.'
             }
         }
     },
@@ -501,10 +534,12 @@ const locale = {
                 data: 'Data on the chain',
                 wechat: 'WeChat information',
                 confirm_tip1: 'The system detected your ',
-                confirm_tip2: ', the blockchain has not been uploaded and the app can\'t get your information.',
+                confirm_tip2:
+          ', the blockchain has not been uploaded and the app can\'t get your information.',
                 confirm: 'To Upload',
                 datakey: {
-                    lost: 'The system detects that you have not generated a Data-Key or the Data-Key has been lost, and the application cannot obtain your information.',
+                    lost:
+            'The system detects that you have not generated a Data-Key or the Data-Key has been lost, and the application cannot obtain your information.',
                     confirm: 'Generate or retrieve Data-Key'
                 }
             },
@@ -522,13 +557,34 @@ const locale = {
         },
         maintenance: {
             title: 'Application maintenance',
-            tips: 'The app is currently under maintenance. Your assets within the app are not affected during maintenance. The official of BlockCity has instructed the application side to step up processing and resume operations as soon as possible. Please be patient.'
+            tips:
+        'The app is currently under maintenance. Your assets within the app are not affected during maintenance. The official of BlockCity has instructed the application side to step up processing and resume operations as soon as possible. Please be patient.'
         }
     },
     transactionConfirm: {
         transfer: 'Transfer',
         vote: 'Vote',
         signature: 'Signature'
+    },
+    staking: {
+        staking_claim: 'Claim staking',
+        staking_update: 'Update staking',
+        staking_max_count:
+      'The number of staking has reached the limit. Please change your account to staking',
+        staking_program: 'Days',
+        please_select_program: 'Please select terms',
+        staking_amount: 'Amount',
+        available_count: 'Available ',
+        fee: 'Fee',
+        confirm: 'Confirm',
+        cancel: 'Cancel',
+        please_input_amount: 'Please input Amount',
+        select_node: 'TrustNode',
+        please_select_node: 'Please select TrustNode',
+        nodeList: 'TrustNode',
+        staking_success: 'Create staking successfully',
+        staking_update_success: 'Update staking successfully',
+        staking_claim_success: 'Claim staking successfully'
     }
 };
 

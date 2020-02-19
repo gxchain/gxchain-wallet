@@ -33,7 +33,7 @@
                 </ul>
                 <ul>
                     <li>
-                        <router-link :to="link('/vote-index')" class="item-content">
+                        <router-link :to="link('/staking-index')" class="item-content">
                             <div class="item-media">
                                 <i class="gxicon gxicon-user-check"></i>
                             </div>

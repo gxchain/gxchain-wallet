@@ -28,6 +28,7 @@ import RouterTransition from '@/plugins/RouterTransition';
 import RealtimeQuotations from '@/components/RealtimeQuotations';
 import AddAssets from '@/components/AddAssets';
 import VoteIndex from '@/components/VoteIndex';
+import StakingIndex from '@/components/StakingIndex';
 import {set_item} from '@/services/CommonService';
 import i18n from '@/locales';
 
@@ -234,12 +235,20 @@ let router = new Router({
             component: VoteIndex
         },
         {
+            path: '/staking-index',
+            meta: {
+                title: 'staking投票'
+            },
+            name: 'StakingIndex',
+            component: StakingIndex
+        },
+        {
             path: '/contract/call',
             meta: {
                 title: '调用智能合约'
             },
             name: 'CallContract',
-            component: resolve => {
+            component: (resolve) => {
                 require(['@/components/contract/Controller'], resolve);
             }
         }

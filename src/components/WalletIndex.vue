@@ -74,7 +74,7 @@
                         </swiper-slide>
                         <div class="swiper-pagination" slot="pagination" v-show="wallets&&wallets.length>1"></div>
                     </swiper>
-                    <router-link :to="link('/vote-index')" class="link-vote-index">
+                    <router-link :to="link('/staking-index')" class="link-vote-index">
                         <img src='../assets/images/vote_icon.png'>
                     </router-link>
 

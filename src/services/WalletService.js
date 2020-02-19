@@ -1049,6 +1049,148 @@ const getArbitrarySignature = (account, data, pwd) => {
     });
 };
 
+/**
+ * staking create
+ * @returns {*}
+ */
+const stakingCreate = (accounts, fee_paying_asset = 'GXC', account, stakingForm, password, broadcast = false) => {
+    return new Promise((resolve, reject) => {
+        resolve(
+            Promise.all([
+                fetch_account(account),
+                get_objects(['2.0.0']),
+                get_asset(fee_paying_asset)
+            ]).then((results) => {
+                let acc = results[0];
+                let fee_asset = results[2][0];
+                if (!acc) {
+                    throw Error(`account_id ${account} not exist`);
+                }
+                if (!fee_asset) {
+                    throw Error(`asset ${fee_paying_asset} not exist`);
+                }
+
+                let tr = new TransactionBuilder();
+                tr.add_operation(
+                    tr.get_type_operation('staking_create', {
+                        fee: {
+                            amount: 0,
+                            asset_id: fee_asset.id
+                        },
+                        owner: acc.id,
+                        trust_node: accounts.id,
+                        amount: {
+                            amount: stakingForm.amount,
+                            asset_id: fee_asset.id
+                        },
+                        program_id: stakingForm.program.id,
+                        weight: stakingForm.program.weight,
+                        staking_days: stakingForm.program.staking_days
+                    })
+                );
+                return process_transaction(tr, account, password, broadcast);
+            })
+        );
+    });
+};
+/**
+ * staking create
+ * @returns {*}
+ */
+const stakingUpdate = (accounts, fee_paying_asset = 'GXC', account, staking_id, password, broadcast = false) => {
+    return new Promise((resolve, reject) => {
+        resolve(
+            Promise.all([
+                fetch_account(account),
+                get_objects(['2.0.0']),
+                get_asset(fee_paying_asset)
+            ]).then((results) => {
+                let acc = results[0];
+                let fee_asset = results[2][0];
+                if (!acc) {
+                    throw Error(`account_id ${account} not exist`);
+                }
+                if (!fee_asset) {
+                    throw Error(`asset ${fee_paying_asset} not exist`);
+                }
+                let tr = new TransactionBuilder();
+                tr.add_operation(
+                    tr.get_type_operation('staking_update', {
+                        fee: {
+                            amount: 0,
+                            asset_id: fee_asset.id
+                        },
+                        owner: acc.id,
+                        trust_node: accounts,
+                        staking_id: staking_id
+                    })
+                );
+
+                return process_transaction(tr, account, password, broadcast);
+            })
+        );
+    });
+};
+/**
+ * get staking object
+ * @param account_name
+ * @returns {bluebird}
+ */
+const get_staking_object = (id) => {
+    return Apis.instance().db_api().exec('get_staking_object', [id]);
+};
+/**
+ * get gxc staking fee
+ * @param account_name
+ * @returns {bluebird}
+ */
+const get_staking_fee = () => {
+    return Apis.instance().db_api().exec('get_required_fees', [[[80, {}]], '1.3.1']);
+};
+/**
+ * staking claim
+ * @returns {*}
+ */
+const stakingClaim = (
+    fee_paying_asset = 'GXC',
+    account,
+    staking_id,
+    password,
+    broadcast = false
+) => {
+    return new Promise((resolve, reject) => {
+        resolve(
+            Promise.all([
+                fetch_account(account),
+                get_objects(['2.0.0']),
+                get_asset(fee_paying_asset)
+            ]).then((results) => {
+                let acc = results[0];
+                let fee_asset = results[2][0];
+                if (!acc) {
+                    throw Error(`account_id ${account} not exist`);
+                }
+                if (!fee_asset) {
+                    throw Error(`asset ${fee_paying_asset} not exist`);
+                }
+                let tr = new TransactionBuilder();
+                tr.add_operation(
+                    tr.get_type_operation('staking_claim', {
+                        fee: {
+                            amount: 0,
+                            asset_id: fee_asset.id
+                        },
+                        owner: acc.id,
+                        staking_id: staking_id
+                    })
+                );
+
+                return process_transaction(tr, account, password, broadcast);
+            })
+        );
+    });
+};
+
 export {
     bak_wallet,
     get_objects,
@@ -1085,5 +1227,10 @@ export {
     simpleVote,
     get_nodes_detail,
     set_wallet_index_native,
-    getArbitrarySignature
+    getArbitrarySignature,
+    stakingCreate,
+    get_staking_object,
+    stakingUpdate,
+    stakingClaim,
+    get_staking_fee
 };
