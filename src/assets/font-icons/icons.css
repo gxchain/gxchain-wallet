@@ -1,12 +1,13 @@
 @font-face {
   font-family: 'gxb';
-  src:  url('fonts/gxb.eot?w9x793');
-  src:  url('fonts/gxb.eot?w9x793#iefix') format('embedded-opentype'),
-    url('fonts/gxb.ttf?w9x793') format('truetype'),
-    url('fonts/gxb.woff?w9x793') format('woff'),
-    url('fonts/gxb.svg?w9x793#gxb') format('svg');
+  src:  url('fonts/gxb.eot?c6tald');
+  src:  url('fonts/gxb.eot?c6tald#iefix') format('embedded-opentype'),
+    url('fonts/gxb.ttf?c6tald') format('truetype'),
+    url('fonts/gxb.woff?c6tald') format('woff'),
+    url('fonts/gxb.svg?c6tald#gxb') format('svg');
   font-weight: normal;
   font-style: normal;
+  font-display: block;
 }
 
 [class^="gxicon-"], [class*=" gxicon-"] {
@@ -34,6 +35,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.gxicon-loyalty:before {
+  content: "\e918";
+}
+.gxicon-staking:before {
+  content: "\e915";
+}
+.gxicon-my:before {
+  content: "\e916";
+}
+.gxicon-balance:before {
+  content: "\e917";
+}
 .gxicon-user-check:before {
   content: "\e975";
 }

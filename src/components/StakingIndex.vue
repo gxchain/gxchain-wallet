@@ -1,11 +1,7 @@
 <template>
     <div class="page-group">
         <div class="page" id="page-node-vote">
-            <header class="bar bar-nav">
-                <router-link class="icon icon-left pull-left" :to="link('/')" replace></router-link>
-                <h3 class="title">{{$t('node_vote.index.title')}}</h3>
-                
-            </header>
+            <wallet-tab></wallet-tab>
             <div class="content pull-to-refresh-content">
                 <div class="pull-to-refresh-layer">
                     <div class="preloader">
@@ -129,7 +125,7 @@
                     </gxb-tab-container>
                 </div>
             </div>
-            <nav class="bar bar-tab" v-show="tabIndex === 'tab-container1' && loaded">
+            <nav class="bar bar-tab bar-staking" v-show="tabIndex === 'tab-container1' && loaded">
                 <div class="tab-item tab-vote" v-if="!isProxyed" :class="{'disabled': !selected}" @click="showConfirm(1)">
                     <div class="tip1">{{$t('node_vote.index.btn_vote')}}</div>
                 </div>
@@ -168,6 +164,7 @@
     import StakingClaim from '@/components/sub/StakingClaim.vue';
     import filters from '@/filters';
     import find from 'lodash/find';
+    import WalletTab from './sub/WalletTab';
 
     export default {
         filters,
@@ -222,7 +219,8 @@
             VoteConfirm,
             StakingConfirm,
             StakingUpdate,
-            StakingClaim
+            StakingClaim,
+            WalletTab
         },
         mounted () {
             $.init();
@@ -270,8 +268,12 @@
                     get_objects(['2.0.0']).then((res) => {
                         let programSettings = find(res[0].parameters.extensions, (item) => item[0] == 11);
                         let max_staking_count_obj = find(res[0].parameters.extensions, (item) => item[0] == 12);
+                        let _programList = sortBy(programSettings[1].params, (item) => {
+                            return -parseInt(item[1].staking_days);
+                        });
+                        console.info(_programList);
                         if (programSettings) {
-                            this.programList = programSettings[1].params.map(param => {
+                            this.programList = _programList.map(param => {
                                 let staking_days = param[1].staking_days;
                                 return {
                                     id: param[0],
@@ -534,8 +536,24 @@
         font-size: .65rem;
         color: #6699ff;
     }
+    .pull-to-refresh-content.refreshing{
+        .pull-to-refresh-layer{
+            height: 2.2rem;
+        }
+       
+    }
+    .pull-to-refresh-layer{
+        height: 0;
+    }
+    .pull-to-refresh-layer{
+        height: 0;
+    }
+    
     .bar .button-nav.pull-right {
         margin-right: 0;
+    }
+    .bar-staking{
+        bottom: 2.5rem;
     }
     .page {
         background-color: #fff;

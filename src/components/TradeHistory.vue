@@ -2,7 +2,7 @@
     <div class="page" id="page-trade-history">
         <header class="bar bar-nav">
             <h3 class="title">{{$t('trade_history.title')}}</h3>
-            <router-link :to="link('/')" replace class="icon icon-left"></router-link>
+            <router-link :to="link('/my-index')" replace class="icon icon-left"></router-link>
             <a class="pull-right icon account-switch" v-if="wallets&&wallets.length>1">
                 {{$t('trade_history.switch')}}
                 <select @change="switchWallet">

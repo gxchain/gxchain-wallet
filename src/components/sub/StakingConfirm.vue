@@ -45,8 +45,13 @@
                     }
                     .list-block {
                         margin: 0;
-                        height: 8rem;
+                        min-height: 8rem;
                         overflow: auto;
+                        .item-input{
+                            input, select{
+                                padding:0;
+                            }
+                        }
                     }
                     .unlocked-wallet {
                         height: auto;
@@ -67,6 +72,9 @@
                                 padding: 0;
                             }
                         }
+                    }
+                    .gray-select{
+                        color: #dbdbd9;
                     }
                     .empty-placeholder {
                         margin-top: 1rem;
@@ -123,7 +131,6 @@
                         flex: 1;
                         height: 2rem;
                         line-height: 2rem;
-                        font-size: .16px;
                         text-align: center;
                     }
                     .btn:nth-child(2):after {
@@ -173,6 +180,7 @@
 <template>
     <Modal v-if="show" :class="skin">
         <div class="header" slot="header">
+            {{$t('staking.staking_create')}}
             <div class="closeBtn" @click="onCancel()"></div>
         </div>
         <div class="body" slot="body">
@@ -184,7 +192,7 @@
                                 <div class="item-inner">
                                     <div class="item-title label">{{$t('staking.staking_program')}}：</div>
                                     <div class="item-input">
-                                    <select v-model="currentProgram">
+                                    <select v-model="currentProgram" :class="{'gray-select':!currentProgram}">
                                         <option value='' selected="selected">{{$t('staking.please_select_program')}}</option>
                                         <option v-for="(item, index) in programList" :key="index" :value="item"  >{{item.text}}</option>
                                     </select>
@@ -197,7 +205,17 @@
                                 <div class="item-inner">
                                     <div class="item-title label">{{$t('staking.staking_amount')}}：</div>
                                     <div class="item-input">
-                                    <input type="text" v-model="amount" :placeholder="$t('staking.staking_amount')">
+                                    <input type="text" v-model="amount" maxlength="16" :placeholder="$t('staking.please_input_staking_amount')">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">{{$t('staking.staking_amount_weight')}}：</div>
+                                    <div class="item-input item-right-cont">
+                                        {{stakingamount}}
                                     </div>
                                 </div>
                             </div>
@@ -230,8 +248,8 @@
         <div class="footer" slot="footer">
             <div class="content-block nodelist-footer">
                 <div class="row">
-                    <div class="col-50"><a href="#" class="button " @click="onCancel()">{{$t('staking.cancel')}}</a></div>
-                    <div class="col-50"><a href="#" class="button  button-fill" @click="onStakingConfirm()">{{$t('staking.confirm')}}</a></div>
+                    <div class="col-50"><a href="#" class="button btn " @click="onCancel()">{{$t('staking.cancel')}}</a></div>
+                    <div class="col-50"><a href="#" class="button btn  button-fill" @click="onStakingConfirm()">{{$t('staking.confirm')}}</a></div>
                 </div>
             </div>
             
@@ -272,8 +290,16 @@
                     amount: 0
                 },
                 currentProgram: '',
-                amount: 0
+                amount: ''
             };
+        },
+        computed: {
+            stakingamount () {
+                if (!this.currentProgram || !this.amount) {
+                    return 0;
+                }
+                return this.accMult(this.amount, this.currentProgram.weight);
+            }
         },
         mounted () {
             this.userform.program = this.programList[0];
@@ -281,6 +307,20 @@
         methods: {
             onCancel () {
                 this.$emit('onCancel');
+            },
+            accMult (arg1, arg2) {
+                let m = 0;
+                let s1 = arg1.toString();
+                let s2 = arg2.toString();
+                try {
+                    m += s1.split('.')[1].length;
+                } catch (e) {
+                }
+                try {
+                    m += s2.split('.')[1].length;
+                } catch (e) {
+                }
+                return Number(s1.replace('.', '')) * Number(s2.replace('.', '')) / Math.pow(10, m);
             },
             onStakingConfirm () {
                 if (!this.currentProgram) {

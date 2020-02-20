@@ -21,7 +21,10 @@ const locale = {
     },
     tabs: {
         wallet: '钱包',
-        market: '行情'
+        market: '行情',
+        staking: '投票',
+        balance: '资产',
+        my: '我的'
     },
     left_panel: {
         import_wallet: '导入钱包',
@@ -541,12 +544,15 @@ const locale = {
         signature: '签名'
     },
     staking: {
+        staking_create: '创建投票',
         staking_claim: '取回投票',
         staking_update: '更改投票',
         staking_max_count: '投票次数已经达到上限，请更换账号投票',
         staking_program: '投票周期',
         please_select_program: '请选择投票周期',
+        please_input_staking_amount: '请输入投票数量',
         staking_amount: '投票数量',
+        staking_amount_weight: '票数',
         available_count: '可用量',
         fee: '手续费',
         confirm: '确认',
@@ -558,6 +564,9 @@ const locale = {
         staking_success: '提交投票成功',
         staking_update_success: '更改投票成功',
         staking_claim_success: '取回投票成功'
+    },
+    my: {
+        title: '我的'
     }
 };
 

@@ -21,7 +21,10 @@ const locale = {
     },
     tabs: {
         wallet: 'Wallet',
-        market: 'Market'
+        market: 'Market',
+        staking: 'Staking',
+        balance: 'Balance',
+        my: 'User'
     },
     left_panel: {
         import_wallet: 'Import Wallet',
@@ -567,13 +570,16 @@ const locale = {
         signature: 'Signature'
     },
     staking: {
+        staking_create: 'Create staking',
         staking_claim: 'Claim staking',
         staking_update: 'Update staking',
         staking_max_count:
       'The number of staking has reached the limit. Please change your account to staking',
         staking_program: 'Days',
         please_select_program: 'Please select terms',
+        please_input_staking_amount: 'Please input Staking amount',
         staking_amount: 'Amount',
+        staking_amount_weight: 'Votes',
         available_count: 'Available ',
         fee: 'Fee',
         confirm: 'Confirm',
@@ -585,6 +591,9 @@ const locale = {
         staking_success: 'Create staking successfully',
         staking_update_success: 'Update staking successfully',
         staking_claim_success: 'Claim staking successfully'
+    },
+    my: {
+        title: 'My'
     }
 };
 

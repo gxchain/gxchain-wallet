@@ -29,6 +29,7 @@ import RealtimeQuotations from '@/components/RealtimeQuotations';
 import AddAssets from '@/components/AddAssets';
 import VoteIndex from '@/components/VoteIndex';
 import StakingIndex from '@/components/StakingIndex';
+import UserIndex from '@/components/User.vue';
 import {set_item} from '@/services/CommonService';
 import i18n from '@/locales';
 
@@ -241,6 +242,14 @@ let router = new Router({
             },
             name: 'StakingIndex',
             component: StakingIndex
+        },
+        {
+            path: '/my-index',
+            meta: {
+                title: '我的'
+            },
+            name: 'MyIndex',
+            component: UserIndex
         },
         {
             path: '/contract/call',

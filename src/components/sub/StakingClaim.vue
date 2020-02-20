@@ -160,7 +160,6 @@
                         flex: 1;
                         height: 2rem;
                         line-height: 2rem;
-                        font-size: .16px;
                         text-align: center;
                     }
                     .btn:nth-child(2):after {
@@ -261,8 +260,8 @@
         <div class="footer" slot="footer">
             <div class="content-block nodelist-footer">
                 <div class="row">
-                    <div class="col-50"><a href="#" class="button" @click="onCancel()">{{$t('staking.cancel')}}</a></div>
-                    <div class="col-50"><a href="#" class="button button-fill " @click="onClaimStakingConfirm()">{{$t('staking.confirm')}}</a></div>
+                    <div class="col-50"><a href="#" class="button btn" @click="onCancel()">{{$t('staking.cancel')}}</a></div>
+                    <div class="col-50"><a href="#" class="button btn button-fill " @click="onClaimStakingConfirm()">{{$t('staking.confirm')}}</a></div>
                 </div>
             </div>
             

@@ -2,7 +2,6 @@
     <div class="page-group">
         <div class="page" id="page-wallet-index">
             <div ref="bar" class="bar bar-nav buttons-fixed" style="background: rgba(37, 40, 113, 0)">
-                <a href="javascript:;" class="icon gxicon gxicon-user pull-right" @click="openPanel"></a>
                 <a v-if="isNative && channel !== 'blockcity'" href="javascript:;" class="icon gxicon gxicon-scan pull-left" @click="openQRScaner">
                     <input ref="qrfile" @change="onFileUpload" v-if="!isNative" type="file" class="file-selector"/>
                 </a>

@@ -3,7 +3,7 @@
         <div class="page" id="page-wallet-create-step-1">
             <header class="bar bar-nav">
                 <h3 class="title">{{$t('wallet_create.step1.title')}}</h3>
-                <router-link :to="$route.query.from||link('/')" replace class="icon icon-left"></router-link>
+                <router-link :to="$route.query.from||link('/my-index')" replace class="icon icon-left"></router-link>
             </header>
             <div class="content">
                 <div class="list-block">

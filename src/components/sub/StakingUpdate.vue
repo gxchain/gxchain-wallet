@@ -65,6 +65,9 @@
                             .item-inner {
                                 min-height: 1.8rem;
                                 padding: 0;
+                                input, select{
+                                    padding:0;
+                                }
                             }
                         }
                     }
@@ -74,6 +77,9 @@
                     .gxicon-bind {
                         font-size: 4.5rem;
                         color: #d5d5d5;
+                    }
+                    .gray-select{
+                        color: #dbdbd9;
                     }
                     .item-right-cont{
                         text-align: left;
@@ -160,7 +166,6 @@
                         flex: 1;
                         height: 2rem;
                         line-height: 2rem;
-                        font-size: .16px;
                         text-align: center;
                     }
                     .btn:nth-child(2):after {
@@ -218,7 +223,7 @@
                                 <div class="item-inner">
                                     <div class="item-title label">{{$t('staking.select_node')}}：</div>
                                     <div class="item-input">
-                                        <select  v-model="currentSelectValue">
+                                        <select  v-model="currentSelectValue"  :class="{'gray-select':!currentSelectValue}">
                                              <option value='' selected="selected">{{$t('staking.please_select_node')}}</option>
                                             <option v-for="(item, index) in accounts" :key="index" :value="item.id"  >{{item.name}}</option>
                                         </select>
@@ -264,8 +269,8 @@
         <div class="footer" slot="footer">
             <div class="content-block nodelist-footer">
                 <div class="row">
-                    <div class="col-50"><a href="#" class="button" @click="onCancel()">{{$t('staking.cancel')}}</a></div>
-                    <div class="col-50"><a href="#" class="button button-fill " @click="onUpdateStakingConfirm()">{{$t('staking.confirm')}}</a></div>
+                    <div class="col-50"><a href="#" class="button btn" @click="onCancel()">{{$t('staking.cancel')}}</a></div>
+                    <div class="col-50"><a href="#" class="button btn button-fill " @click="onUpdateStakingConfirm()">{{$t('staking.confirm')}}</a></div>
                 </div>
             </div>
             

@@ -3,7 +3,7 @@
         <div class="page" id="page-language-setting">
             <header class="bar bar-nav">
                 <h3 class="title">{{$t('language_setting.title')}}</h3>
-                <router-link :to="link('/')" replace class="icon icon-left"></router-link>
+                <router-link :to="link('/my-index')" replace class="icon icon-left"></router-link>
             </header>
             <div class="content">
                 <div class="list-block">

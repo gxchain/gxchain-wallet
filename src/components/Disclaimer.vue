@@ -2,7 +2,7 @@
     <div class="page-group">
         <div class="page" id="page-disclaimer">
             <header class="bar bar-nav">
-                <router-link :to="link('/')" replace class="pull-left icon icon-left" v-if="canGoBack"></router-link>
+                <router-link :to="link('/my-index')" replace class="pull-left icon icon-left" v-if="canGoBack"></router-link>
                 <h3 class="title">{{$t('disclaimer.title')}}</h3>
                 <a @click="switchLanguage" class="pull-right icon">
                     <img width="25px" :src="imgFlag">
