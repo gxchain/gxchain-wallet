@@ -79,7 +79,7 @@
                                 <div class="gxb-checklist">
                                         <gxb-cell v-for="(item, index) in stakingList" :key="index">
                                           <label class="account-item gxb-checklist__label" slot="title">
-                                              <div class="account-item-left">
+                                              <div class="account-item-left account-history-item-left">
                                                   <div class="account-info">
                                                       <div class="account-name staking-name">投票给节点{{item.name}}</div>
                                                       <div class="account-time">{{new Date(new Date(item.create_date_time + 'Z').getTime()).format('yyyy-MM-dd hh:mm:ss')}}</div>
@@ -133,7 +133,7 @@
             
         </div>
         <password-confirm ref="unlock" @unlocking="unlocking"></password-confirm>
-        <staking-confirm ref="confirm1" @onCancel="onCancel()" @onStakingConfirm="onStakingConfirm" :programList="programList" :balance="currentBalance" :stakingFee="stakingFee" :show='showStakingConfirm' ></staking-confirm>
+        <staking-confirm ref="confirm1" @closeModal="onCancel" @onStakingConfirm="onStakingConfirm" :programList="programList" :balance="currentBalance" :stakingFee="stakingFee" :show='showStakingConfirm' ></staking-confirm>
         <staking-update ref="confirm2" @onCancel="onCancelUpdate()" @onUpdateStakingConfirm="onUpdateStakingConfirm" :accounts="accounts" :stakingInfo="stakingInfo"  :stakingFee="stakingFee" :show='showUpdateModel' ></staking-update>
         <staking-claim ref="confirm3" @onCancel="onCancelClaim()" @onClaimStakingConfirm="onClaimStakingConfirm"  :stakingInfo="stakingInfo" :show='showClaimModel'  :stakingFee="stakingFee"></staking-claim>
 
@@ -683,7 +683,6 @@
                 }
                 .account-info {
                     margin-left: .75rem;
-                    height: 30px;
                     display: flex;
                     flex-direction: column;
                     justify-content: space-between;
@@ -711,9 +710,9 @@
                     }
                 }
                 .staking-days{
-                    margin-left: .75rem;
-                    height: 30px;
+                    margin-right: .75rem;
                     display: flex;
+                    font-size: .6rem;
                     flex-direction: column;
                     justify-content: space-between;
                     align-items: flex-start;
@@ -722,9 +721,14 @@
             .account-item-center {
                 color: #17233d;
                 font-size: .6rem;
+                min-width: 2.5rem;
                 margin-right: .75rem;
                 text-align: right;
             }
+        }
+        .account-history-item-left{
+             justify-content: space-between !important;
+             align-items: center !important;
         }
     }
 

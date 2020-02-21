@@ -1137,7 +1137,7 @@ const stakingUpdate = (accounts, fee_paying_asset = 'GXC', account, staking_id, 
  * @returns {bluebird}
  */
 const get_staking_object = (id) => {
-    return Apis.instance().db_api().exec('get_staking_object', [id]);
+    return Apis.instance().db_api().exec('get_staking_objects', [id]);
 };
 /**
  * get gxc staking fee

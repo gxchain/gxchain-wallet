@@ -302,7 +302,7 @@
         },
         methods: {
             onCancel () {
-                this.$emit('onCancel');
+                this.$emit('closeModal');
             },
             accMult (arg1, arg2) {
                 let m = 0;
