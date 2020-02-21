@@ -101,21 +101,11 @@
 </template>
 
 <script>
-import {get_wallets} from '@/services/WalletService';
-import AccountImage from './sub/AccountImage.vue';
 import WalletTab from './sub/WalletTab';
 export default {
     name: 'My',
     components: {
-        WalletTab,
-        AccountImage
-    },
-    data () {
-        let wallets = get_wallets();
-        return {
-            wallets: wallets,
-            wallet: wallets.length > 0 ? wallets[0] : {}
-        };
+        WalletTab
     }
 };
 </script>

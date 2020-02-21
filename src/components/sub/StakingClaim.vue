@@ -80,7 +80,7 @@
                         color:#344961
                     }
                     .item-inner .label{
-                      text-align: right;
+                      text-align: left;
                       margin-right: 0.5rem;
                     }
                     .accounts {
@@ -142,18 +142,11 @@
                     flex-direction: row;
                     // border-top: 1px solid #484b53;
                     position: relative;
-                    &::before {
-                        display: block;
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        width: 100%;
-                        border-top: 1px solid #484b53;
-                        content: ' ';
-                    }
+                    border-top: 1px solid #ddd;
                     .nodelist-footer{
                       width: 80%;
                       margin: 1rem auto;
+                      padding: 0;
                     }
                     .btn {
                         position: relative;
@@ -203,13 +196,11 @@
     }
 </style>
 <template>
-    <Modal v-if="show" :class="skin">
+    <Modal v-if="show" :class="skin" @closeModal="onCancel">
         <div class="header" slot="header">
             {{$t('staking.staking_claim')}}
-            <div class="closeBtn" @click="onCancel()"></div>
         </div>
         <div class="body" slot="body">
-            <div class="cont">
               <div class="list-block">
                     <ul>
                        <li>
@@ -255,7 +246,6 @@
                     </ul>
                     
                 </div>
-            </div>
         </div>
         <div class="footer" slot="footer">
             <div class="content-block nodelist-footer">

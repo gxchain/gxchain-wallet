@@ -63,6 +63,9 @@
                         &::before {
                             height: 0;
                         }
+                        &::after {
+                            background-color: transparent;
+                        }
                         .item-content {
                             color: #6699ff;
                             padding-left: 0;
@@ -70,6 +73,9 @@
                             .item-inner {
                                 min-height: 1.8rem;
                                 padding: 0;
+                            }
+                            .label{
+                                text-align: left;
                             }
                         }
                     }
@@ -117,15 +123,7 @@
                     flex-direction: row;
                     // border-top: 1px solid #484b53;
                     position: relative;
-                    &::before {
-                        display: block;
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        width: 100%;
-                        border-top: 1px solid #484b53;
-                        content: ' ';
-                    }
+                    border-top: 1px solid #ddd;
                     .btn {
                         position: relative;
                         flex: 1;
@@ -153,6 +151,7 @@
                     .nodelist-footer{
                       width: 80%;
                       margin: 1rem auto;
+                      padding: 0;
                     }
                 }
             }
@@ -178,71 +177,68 @@
     }
 </style>
 <template>
-    <Modal v-if="show" :class="skin">
+    <Modal v-if="show" :class="skin" @closeModal="onCancel">
         <div class="header" slot="header">
             {{$t('staking.staking_create')}}
-            <div class="closeBtn" @click="onCancel()"></div>
         </div>
         <div class="body" slot="body">
-            <div class="cont">
-                <div class="list-block">
-                    <ul>
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <div class="item-title label">{{$t('staking.staking_program')}}：</div>
-                                    <div class="item-input">
-                                    <select v-model="currentProgram" :class="{'gray-select':!currentProgram}">
-                                        <option value='' selected="selected">{{$t('staking.please_select_program')}}</option>
-                                        <option v-for="(item, index) in programList" :key="index" :value="item"  >{{item.text}}</option>
-                                    </select>
-                                    </div>
+            <div class="list-block">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">{{$t('staking.staking_program')}}：</div>
+                                <div class="item-input">
+                                <select v-model="currentProgram" :class="{'gray-select':!currentProgram}">
+                                    <option value='' selected="selected">{{$t('staking.please_select_program')}}</option>
+                                    <option v-for="(item, index) in programList" :key="index" :value="item"  >{{item.text}}</option>
+                                </select>
                                 </div>
                             </div>
-                        </li>
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <div class="item-title label">{{$t('staking.staking_amount')}}：</div>
-                                    <div class="item-input">
-                                    <input type="text" v-model="amount" maxlength="16" :placeholder="$t('staking.please_input_staking_amount')">
-                                    </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">{{$t('staking.staking_amount')}}：</div>
+                                <div class="item-input">
+                                <input type="text" v-model="amount" maxlength="16" :placeholder="$t('staking.please_input_staking_amount')">
                                 </div>
                             </div>
-                        </li>
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <div class="item-title label">{{$t('staking.staking_amount_weight')}}：</div>
-                                    <div class="item-input item-right-cont">
-                                        {{stakingamount}}
-                                    </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">{{$t('staking.staking_amount_weight')}}：</div>
+                                <div class="item-input item-right-cont">
+                                    {{stakingamount}}
                                 </div>
                             </div>
-                        </li>
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <div class="item-title label">{{$t('staking.available_count')}}：</div>
-                                    <div class="item-input item-right-cont">
-                                        {{balance.amount/100000}} GXC
-                                    </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">{{$t('staking.available_count')}}：</div>
+                                <div class="item-input item-right-cont">
+                                    {{balance.amount/100000}} GXC
                                 </div>
                             </div>
-                        </li>
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <div class="item-title label">{{$t('staking.fee')}}：</div>
-                                    <div class="item-input item-right-cont">
-                                        {{stakingFee.amount/100000}} GXC
-                                    </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">{{$t('staking.fee')}}：</div>
+                                <div class="item-input item-right-cont">
+                                    {{stakingFee.amount/100000}} GXC
                                 </div>
                             </div>
-                        </li>
-                    </ul>
-                    
-                </div>
+                        </div>
+                    </li>
+                </ul>
+                
             </div>
         </div>
         <div class="footer" slot="footer">

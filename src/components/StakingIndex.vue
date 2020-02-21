@@ -271,7 +271,6 @@
                         let _programList = sortBy(programSettings[1].params, (item) => {
                             return -parseInt(item[1].staking_days);
                         });
-                        console.info(_programList);
                         if (programSettings) {
                             this.programList = _programList.map(param => {
                                 let staking_days = param[1].staking_days;
