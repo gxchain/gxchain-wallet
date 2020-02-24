@@ -580,7 +580,8 @@ const locale = {
         nodeList: 'TrustNode',
         staking_success: 'Create staking successfully',
         staking_update_success: 'Update staking successfully',
-        staking_claim_success: 'Claim staking successfully'
+        staking_claim_success: 'Claim staking successfully',
+        staking_for_node: 'Staking for TrustNode '
     },
     my: {
         title: 'My'

@@ -81,11 +81,16 @@
                                           <label class="account-item gxb-checklist__label" slot="title">
                                               <div class="account-item-left account-history-item-left">
                                                   <div class="account-info">
-                                                      <div class="account-name staking-name">投票给节点{{item.name}}</div>
+                                                      <div class="account-name staking-name">{{$t('staking.staking_for_node')}}{{item.name}}</div>
                                                       <div class="account-time">{{new Date(new Date(item.create_date_time + 'Z').getTime()).format('yyyy-MM-dd hh:mm:ss')}}</div>
                                                   </div>
                                                   <div class="staking-days">
-                                                    {{item.staking_days}} 天
+                                                    {{ item.staking_days < 30 ? $tc('loyalty_program.day', item.staking_days, {
+                                                            day: item.staking_days
+                                                        }) : $tc('loyalty_program.month', item.staking_days / 30, {
+                                                            month: item.staking_days / 30
+                                                        }) 
+                                                    }}
                                                   </div>
                                               </div>
                                               <div class="account-item-center">{{item.amount.amount/100000}} 

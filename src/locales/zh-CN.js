@@ -563,7 +563,8 @@ const locale = {
         nodeList: '节点',
         staking_success: '提交投票成功',
         staking_update_success: '更改投票成功',
-        staking_claim_success: '取回投票成功'
+        staking_claim_success: '取回投票成功',
+        staking_for_node: '投票给节点'
     },
     my: {
         title: '我的'
