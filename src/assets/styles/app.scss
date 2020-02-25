@@ -131,7 +131,7 @@
 .bar-tab {
   background: #f5f5f5;
   .tab-item {
-    color: $THEME_TINT_COLOR !important;
+    color: $THEME_TINT_COLOR;
     border-right: 1px solid #eee;
     &:last-of-type {
       border-right: none;
