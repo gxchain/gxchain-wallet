@@ -8,7 +8,7 @@
                 <a v-if="isNative && channel === 'blockcity'" href="javascript:;" @click="backToBlockCity" class="icon icon-left"></a>
             </div>
             <div ref="bg" id="bg"></div>
-            <wallet-tab v-if="channel !== 'blockcity'"></wallet-tab>
+            <wallet-tab></wallet-tab>
             <div class="content pull-to-refresh-content" ref="content">
                 <div class="row-top" ref="top" :class="{ios:$route.query.platform=='ios'}">
                     <div class="pull-to-refresh-layer">

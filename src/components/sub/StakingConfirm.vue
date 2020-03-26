@@ -276,6 +276,11 @@
             stakingFee: {
                 type: Object,
                 required: true
+            },
+            minStakingAmount: {
+                type: Number,
+                required: true,
+                default: 100000
             }
         },
         data () {
@@ -327,6 +332,11 @@
                     $.toast(this.$t('staking.please_input_amount'));
                     return;
                 }
+                if (this.amount * 100000 < this.minStakingAmount) {
+                    $.toast(this.$t('staking.please_input_min_amount', {amount: this.minStakingAmount / 100000}));
+                    return;
+                }
+
                 this.$emit('onStakingConfirm', this.currentProgram, this.amount);
             }
         },

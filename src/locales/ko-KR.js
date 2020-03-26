@@ -35,7 +35,8 @@ const locale = {
         history: '거래 내역',
         language: 'Language',
         about: 'GXChain소개',
-        disclaimer: '면책조항'
+        disclaimer: '면책조항',
+        Income_received: '수익 수령'
     },
     wallet_create: {
         index: {
@@ -360,40 +361,40 @@ const locale = {
     },
     node_vote: {
         tab: {
-            tab1: 'TrustNodes',
+            tab1: '트러스트 노드',
             tab2: 'Proxy Voting'
         },
         index: {
-            title: 'Node Voting',
-            records: 'Voting record',
+            title: '노드 투표',
+            records: '투표 기록',
             intro:
-        'The TrustNode is the producer of the block in GXChain. They validate transaction data and maintain network security. You can vote for the person you trust to become a public trust node. When you vote, the candidate you choose will receive the same number of votes you cast.',
+        '트러스트 노드는 GXChain에 블록 생성자입니다. 트러스트 노드가 거래 데이터를 검증하고 네트워크 안정을 유지합니다.  신뢰할 만한 노드에게 트러스트 노드가되도록 투표 할 수 있습니다. 투표하면 선택한 트러스트 노드 후보자가 투표 한 것과 같은 수의 투표를 얻게 됩니다.',
             proxy_tip: '*Voting rights are taken over by proxy voting account.',
-            tips: '*updated every hour',
-            name: 'TrustNode candidate',
-            no_record: 'No records',
-            vote_num: 'Vote Num',
-            btn_vote: 'Confirm',
-            btn_update: 'Update'
+            tips: '*투표수가  한시간마다 업데이트합니다',
+            name: '트러스트 노드 후보자',
+            no_record: '기록이 없음',
+            vote_num: '투표수',
+            btn_vote: '투표 제출',
+            btn_update: '투표 업데이트'
         },
         proxy: {
             intro:
         'After setting up a proxy voting account, the proxy voting account will exercise voting power on your behalf.',
             input_label: 'Account',
-            input_placeholder: 'please enter proxy account',
-            btn_submit: 'Save changes',
+            input_placeholder: '계정주소를 입력하세요',
+            btn_submit: '저정',
             btn_remove: 'Remove Proxy'
         },
         confirm: {
-            title: 'Confirm the vote',
-            title2: 'Update proxy account',
-            account: 'Account',
+            title: '투표 확인',
+            title2: '투표 계정 주소 변경',
+            account: '계정',
             proxy_account: 'Proxy account',
-            selected_node: 'Selected',
-            fee: 'Fee',
-            btn_confirm: 'Confirm',
-            success: 'Successful Vote',
-            success2: 'Successful Update'
+            selected_node: '선택한 노드',
+            fee: '수수료',
+            btn_confirm: '확인',
+            success: '투표 성공',
+            success2: '업데이터 성공'
         },
         error: {
             cannot_proxy_to_yourself: 'Cannot proxy to yourself'
@@ -487,104 +488,117 @@ const locale = {
         tip: '잔여액이 0보다 많을 때는 삭제할 수 없습니다 '
     },
     smart_contract: {
-        title: 'Smart Contract',
+        title: '스마트 계약',
         params: {
-            method_type: 'Method Type',
-            request_data: 'Request Data'
+            method_type: '함수 타입',
+            request_data: '데이터 요청'
         },
         tabs: {
-            detail: 'Detail',
-            data: 'Data'
+            detail: '상세',
+            data: '데이터'
         },
         btn: {
-            confirm: 'Confirm',
-            cancel: 'Cancel'
+            confirm: '확인',
+            cancel: '취소'
         }
     },
     pick_wallet: {
         title: {
-            step1: 'Choose a GXC Wallet account',
-            step2: 'Enter password to unlock',
-            no_wallet: 'No Wallet'
+            step1: '지엑스체인 지갑 계정 선택하기',
+            step2: '지갑 비밀번호를 입력하여 락 해제하기',
+            no_wallet: '지갑이 없음'
         },
-        empty_tip: 'No binding wallet, please go to the GXC Wallet to create',
+        empty_tip: '연동된 지갑이 없음. 지엑스체인 지갑을 생성하기',
         btn: {
-            confirm: 'Confirm',
-            next: 'Next'
+            confirm: '확인',
+            next: '다음'
         },
-        remember_pwd: 'remember password during app lifetime'
+        remember_pwd: 'app 생명 주기내에 비밀번호 기억하기'
     },
     oauth: {
         authorize: {
-            title: 'Authorization',
+            title: '수권하기',
             error: {
-                default: 'Please open in the BlockCity client',
-                response_type: 'response_type parameter is invalid.',
-                client_id: 'client_id parameter is invalid.',
-                redirect_uri: 'redirect_uri parameter is invalid.',
-                login_status: 'Get the user login status is abnormal.'
+                default: '댑 블록시티 안에 열리기',
+                response_type: 'response_type  매개 변수가 유효하지 않습니다',
+                client_id: 'client_id 매개 변수가 유효하지 않습니다.',
+                redirect_uri: 'redirect_uri 매개 변수가 유효하지 않습니다.',
+                login_status: '유저 등록 상태 회득 불가'
             },
             chain: {
-                data: 'Data on the chain',
-                wechat: 'WeChat information',
-                confirm_tip1: 'The system detected your ',
+                data: 'on-chain 데이터',
+                wechat: 'wechat 정보',
+                confirm_tip1: '고객님의 ',
                 confirm_tip2:
-          ', the blockchain has not been uploaded and the app can\'t get your information.',
-                confirm: 'To Upload',
+          ', chain에 업로드하지 않았으며 응용측에 해당 데이터가 검색하지 못합니다.',
+                confirm: '데이터 on-chain 하기',
                 datakey: {
                     lost:
-            'The system detects that you have not generated a Data-Key or the Data-Key has been lost, and the application cannot obtain your information.',
-                    confirm: 'Generate or retrieve Data-Key'
+            '고객님의 Date-Key 생성되지않거나 Date-Key가 분실된 상태라 응용측에 해당 데이터를 검색하지 못합니다.',
+                    confirm: 'Data-Key 생성 및 되찾기'
                 }
             },
-            current_app: 'This DApp',
-            confirm_tip1: 'You agree',
-            confirm_tip2: 'get the following permissions',
-            confirm_tip3: 'Confirm and agree',
-            confirm_tip4: '《User License Agreement》',
-            wallet_account: 'Get the name of the GXChain wallet account.',
-            wallet_pubkey: 'Get the PublicKey of the GXChain wallet account.',
+            current_app: '현재 응용',
+            confirm_tip1: '동의합니다.',
+            confirm_tip2: '하기 권한을 수권합니다.',
+            confirm_tip3: '수권 및 동의',
+            confirm_tip4: '《고객 수권 협의》',
+            wallet_account: 'GXChain 지갑 계정 명칭 획득.',
+            wallet_pubkey: 'GXChain 지갑 계정 퍼블릭 키 획득.',
             btn: {
-                confirm: 'Confirm',
-                cancel: 'Not yet'
+                confirm: '수권 확인',
+                cancel: '잠시후'
             }
         },
         maintenance: {
-            title: 'Application maintenance',
+            title: '시스템 점검 중',
             tips:
-        'The app is currently under maintenance. Your assets within the app are not affected during maintenance. The official of BlockCity has instructed the application side to step up processing and resume operations as soon as possible. Please be patient.'
+        '해당 응용이 점검 중입니다. 점검 시  응용 안에 자산이 영향을 받지 않습니다.'
         }
     },
     transactionConfirm: {
-        transfer: 'Transfer',
-        vote: 'Vote'
+        transfer: '이체',
+        vote: '투표',
+        signature: '사인'
     },
     staking: {
-        staking_create: 'Create staking',
-        staking_claim: 'Claim staking',
-        staking_update: 'Update staking',
+        staking_create: '투표하기',
+        staking_claim: '투표 취소',
+        staking_update: '투표 변경',
         staking_max_count:
-      'The number of staking has reached the limit. Please change your account to staking',
-        staking_program: 'Days',
-        please_select_program: 'Please select terms',
-        please_input_staking_amount: 'Please input Staking amount',
-        staking_amount: 'Amount',
-        staking_amount_weight: 'Votes',
-        available_count: 'Available ',
-        fee: 'Fee',
-        confirm: 'Confirm',
-        cancel: 'Cancel',
-        please_input_amount: 'Please input Amount',
-        select_node: 'TrustNode',
-        please_select_node: 'Please select TrustNode',
-        nodeList: 'TrustNode',
-        staking_success: 'Create staking successfully',
-        staking_update_success: 'Update staking successfully',
-        staking_claim_success: 'Claim staking successfully',
-        staking_for_node: 'Staking for TrustNode '
+      '투표 수가 상한에 도달했습니다. 투표하도록 계정을 변경하십시오',
+        staking_program: '투표 주기 ',
+        please_select_program: '투표 주기를 선택하세요',
+        please_input_staking_amount: '투표 수량을 입력하세요',
+        staking_amount: '투표 수량',
+        staking_amount_weight: '투표수',
+        available_count: '사용 가능 ',
+        fee: '수수료',
+        confirm: '확인',
+        cancel: '취소',
+        please_input_amount: '투표 수량을 입력하세요',
+        select_node: '노드 선택',
+        please_select_node: '노드 선택하기',
+        nodeList: '노드',
+        staking_success: '투표 제출 성공',
+        staking_update_success: '투표 변경 성공',
+        staking_claim_success: '투표 취소 성공',
+        staking_for_node: '노드에 투표하기 ',
+        Income_received: '수익 수령',
+        collect_immediately: '바로 수령',
+        collect_immediately_all: '모든 수익 수령해보기',
+        get_earned: '환불',
+        earned_coin_day: '기 완료된 스테이킹 시간',
+        required_coin_day: '스테이킹 필요한 시간',
+        remain_day: '락업 해제 될 때까지',
+        get_amount: '수령 가능한 수량',
+        coin_day: '코인 스테이킹 시간',
+        day: '일',
+        income_received_success: '수익 수령 성공',
+        please_input_min_amount: '투표 최소 수량 {amount} 개 GXC'
     },
     my: {
-        title: 'My'
+        title: '나의 '
     }
 };
 

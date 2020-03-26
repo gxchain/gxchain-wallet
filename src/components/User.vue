@@ -14,6 +14,20 @@
                 <div class="list-block">
                     <ul>
                         <li>
+                            <router-link :to="link('/income')" class="item-content item-link">
+                                <div class="item-media">
+                                    <i class="gxicon gxicon-profit"></i>
+                                </div>
+                                <div class="item-inner">
+                                    <div class="item-title">{{$t('left_panel.Income_received')}}</div>
+                                </div>
+                            </router-link>
+                        </li>
+                    </ul>
+                </div>
+                <div class="list-block">
+                    <ul>
+                        <li>
                             <router-link :to="link('/wallet-import')" class="item-content item-link">
                                 <div class="item-media">
                                     <i class="gxicon gxicon-import"></i>
