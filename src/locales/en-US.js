@@ -34,7 +34,8 @@ const locale = {
         history: 'History',
         language: 'Language',
         about: 'About',
-        disclaimer: 'Disclaimer'
+        disclaimer: 'Disclaimer',
+        Income_received: 'Income received'
     },
     wallet_create: {
         index: {
@@ -591,7 +592,19 @@ const locale = {
         staking_success: 'Create staking successfully',
         staking_update_success: 'Update staking successfully',
         staking_claim_success: 'Claim staking successfully',
-        staking_for_node: 'Staking for TrustNode '
+        staking_for_node: 'Staking for TrustNode ',
+        Income_received: 'Income received',
+        collect_immediately: 'Claim now',
+        collect_immediately_all: 'Try to claim all',
+        get_earned: 'Vesting balance amount',
+        earned_coin_day: 'Coin days earned',
+        required_coin_day: 'Coin days required',
+        remain_day: 'Days left of vesting period',
+        get_amount: 'Available to claim',
+        coin_day: 'coin days',
+        day: 'days',
+        income_received_success: 'Income received success',
+        please_input_min_amount: 'At least {amount}GXC is required'
     },
     my: {
         title: 'My'

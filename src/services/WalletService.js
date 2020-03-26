@@ -1191,6 +1191,67 @@ const stakingClaim = (
     });
 };
 
+/**
+ * get vesting balances
+ * @param account_name
+ * @returns {bluebird}
+ */
+const get_vesting_balances = (account_name) => {
+    return new Promise((resolve, reject) => {
+        resolve(fetch_account(account_name).then((account) => {
+            return Apis.instance().db_api().exec('get_vesting_balances', [account.id]).then(function (balances) {
+                return balances;
+            });
+        }));
+    });
+};
+
+/**
+ * staking claim
+ * @returns {*}
+ */
+const claimVestingBalance = (fee_paying_asset = 'GXC', account, cvb, password, forceAll = false, broadcast = false) => {
+    return new Promise((resolve, reject) => {
+        resolve(
+            Promise.all([
+                fetch_account(account),
+                get_objects(['2.0.0']),
+                get_asset(fee_paying_asset)
+            ]).then((results) => {
+                let balance = cvb.balance.amount;
+                let earned = cvb.policy[1].coin_seconds_earned;
+                let vestingPeriod = cvb.policy[1].vesting_seconds;
+                let availablePercent = forceAll ? 1 : earned / (vestingPeriod * balance);
+                let acc = results[0];
+                let fee_asset = results[2][0];
+                if (!acc) {
+                    throw Error(`account_id ${account} not exist`);
+                }
+                if (!fee_asset) {
+                    throw Error(`asset ${fee_paying_asset} not exist`);
+                }
+                let tr = new TransactionBuilder();
+                tr.add_operation(
+                    tr.get_type_operation('vesting_balance_withdraw', {
+                        fee: {
+                            amount: 0,
+                            asset_id: fee_asset.id
+                        },
+                        owner: acc.id,
+                        vesting_balance: cvb.id,
+                        amount: {
+                            amount: Math.floor(balance * availablePercent),
+                            asset_id: cvb.balance.asset_id
+                        }
+                    })
+                );
+
+                return process_transaction(tr, account, password, broadcast);
+            })
+        );
+    });
+};
+
 export {
     bak_wallet,
     get_objects,
@@ -1232,5 +1293,7 @@ export {
     get_staking_object,
     stakingUpdate,
     stakingClaim,
-    get_staking_fee
+    get_staking_fee,
+    get_vesting_balances,
+    claimVestingBalance
 };

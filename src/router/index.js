@@ -20,6 +20,7 @@ import TransferSuccess from '@/components/TransferSuccess';
 import Disclaimer from '@/components/Disclaimer';
 import LoyaltyProgram from '@/components/LoyaltyProgram';
 import LoyaltyProgramDetail from '@/components/LoyaltyProgramDetail';
+import Income from '@/components/Income';
 import store from '@/vuex/store';
 import connect from '@/common/connect';
 import cordovaLoader from '@/common/cordovaLoader';
@@ -250,6 +251,14 @@ let router = new Router({
             },
             name: 'MyIndex',
             component: UserIndex
+        },
+        {
+            path: '/income',
+            meta: {
+                title: '领取收益'
+            },
+            name: 'Income',
+            component: Income
         },
         {
             path: '/contract/call',

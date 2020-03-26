@@ -138,7 +138,7 @@
             
         </div>
         <password-confirm ref="unlock" @unlocking="unlocking"></password-confirm>
-        <staking-confirm ref="confirm1" @closeModal="onCancel" @onStakingConfirm="onStakingConfirm" :programList="programList" :balance="currentBalance" :stakingFee="stakingFee" :show='showStakingConfirm' ></staking-confirm>
+        <staking-confirm ref="confirm1" @closeModal="onCancel" @onStakingConfirm="onStakingConfirm" :programList="programList" :balance="currentBalance" :stakingFee="stakingFee" :minStakingAmount="min_staking_amount" :show='showStakingConfirm' ></staking-confirm>
         <staking-update ref="confirm2" @onCancel="onCancelUpdate()" @onUpdateStakingConfirm="onUpdateStakingConfirm" :accounts="accounts" :stakingInfo="stakingInfo"  :stakingFee="stakingFee" :show='showUpdateModel' ></staking-update>
         <staking-claim ref="confirm3" @onCancel="onCancelClaim()" @onClaimStakingConfirm="onClaimStakingConfirm"  :stakingInfo="stakingInfo" :show='showClaimModel'  :stakingFee="stakingFee"></staking-claim>
 
@@ -215,7 +215,8 @@
                 currentBalance: {},
                 stakingFee: {},
                 max_staking_count: 10,
-                currentType: ''
+                currentType: '',
+                min_staking_amount: 100000
             };
         },
         components: {
@@ -297,6 +298,7 @@
                         }
                         if (max_staking_count_obj) {
                             this.max_staking_count = max_staking_count_obj[1].max_staking_count;
+                            this.min_staking_amount = max_staking_count_obj[1].min_staking_amount;
                         }
                     });
                     this.fetch_account_balance();
@@ -492,7 +494,7 @@
                         this.$refs.unlock.unlocked();
                         this.showClaimModel = false;
                         $.toast(ex.message);
-                    }); ;
+                    });
                 }
             },
             onCancel () {

@@ -34,7 +34,8 @@ const locale = {
         history: '收发记录',
         language: 'Language',
         about: '关于我们',
-        disclaimer: '免责声明'
+        disclaimer: '免责声明',
+        Income_received: '领取收益'
     },
     wallet_create: {
         index: {
@@ -564,7 +565,19 @@ const locale = {
         staking_success: '提交投票成功',
         staking_update_success: '更改投票成功',
         staking_claim_success: '取回投票成功',
-        staking_for_node: '投票给节点'
+        staking_for_node: '投票给节点',
+        Income_received: '领取收益',
+        collect_immediately: '立即领取',
+        collect_immediately_all: '尝试领取所有',
+        get_earned: '返现',
+        earned_coin_day: '已完成的币天',
+        required_coin_day: '要求的的币天',
+        remain_day: '剩余解冻天数',
+        get_amount: '可领取数量',
+        coin_day: '币天',
+        day: '天',
+        income_received_success: '领取收益成功',
+        please_input_min_amount: '至少需要投票 {amount} 个GXC'
     },
     my: {
         title: '我的'

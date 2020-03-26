@@ -1,3 +1,5 @@
+var numeral = require('numeral');
+
 let methods = {};
 let methodID = 0;
 
@@ -19,7 +21,7 @@ export default {
                 }
             }
         };
-        params = $.extend(params || {}, {_mId: mId});
+        params = $.extend(params || {}, { _mId: mId });
         var url = `${schema}://${method}?${$.param(params)}`;
         var iFrame;
         iFrame = document.createElement('iframe');
@@ -45,7 +47,7 @@ export default {
                 }
             }
         };
-        params = $.extend(params || {}, {_mId: mId});
+        params = $.extend(params || {}, { _mId: mId });
         var url = `${schema}://${method}?'${$.param(params)}'`;
         var iFrame;
         iFrame = document.createElement('iframe');
@@ -67,7 +69,7 @@ export default {
     },
     query2Obj: function (query) {
         var url = query || location.search;
-        var result = url.match(new RegExp('[\?\&][^\?\&]+=[^\?\&]+', 'g')) || [];
+        var result = url.match(new RegExp('[?&][^?&]+=[^?&]+', 'g')) || [];
         var obj = {};
         for (var i = 0; i < result.length; i++) {
             result[i] = result[i].substring(1);
@@ -78,6 +80,71 @@ export default {
             obj[splits[0]] = splits[1];
         }
         return obj;
+    },
+    format_number: function (number, decimals, trailing_zeros = true) {
+        if (
+            isNaN(number) ||
+      !isFinite(number) ||
+      number === undefined ||
+      number === null
+        ) {
+            return '';
+        }
+        let zeros = '.';
+        for (var i = 0; i < decimals; i++) {
+            zeros += '0';
+        }
+        let num = numeral(number).format('0,0' + zeros);
+        if (num.indexOf('.') > 0 && !trailing_zeros) {
+            return num.replace(/0+$/, '').replace(/\.$/, '');
+        }
+        return num;
+    },
+    accDiv (arg1, arg2) {
+        let t1 = 0;
+        let t2 = 0;
+        let r1;
+        let r2;
+        try {
+            t1 = arg1.toString().split('.')[1].length;
+        } catch (e) {}
+        try {
+            t2 = arg2.toString().split('.')[1].length;
+        } catch (e) {}
+        r1 = Number(arg1.toString().replace('.', ''));
+        r2 = Number(arg2.toString().replace('.', ''));
+        return (r1 / r2) * Math.pow(10, t2 - t1);
+    },
+    accMult (arg1, arg2) {
+        let m = 0;
+        let s1 = arg1.toString();
+        let s2 = arg2.toString();
+        try {
+            m += s1.split('.')[1].length;
+        } catch (e) {}
+        try {
+            m += s2.split('.')[1].length;
+        } catch (e) {}
+        return (
+            (Number(s1.replace('.', '')) * Number(s2.replace('.', ''))) /
+      Math.pow(10, m)
+        );
+    },
+    accSub (arg1, arg2) {
+        let r1, r2, m, n;
+        try {
+            r1 = arg1.toString().split('.')[1].length;
+        } catch (e) {
+            r1 = 0;
+        }
+        try {
+            r2 = arg2.toString().split('.')[1].length;
+        } catch (e) {
+            r2 = 0;
+        }
+        m = Math.pow(10, Math.max(r1, r2));
+        n = r1 >= r2 ? r1 : r2;
+        return ((arg1 * m - arg2 * m) / m).toFixed(n);
     }
 };
 
