@@ -23,9 +23,9 @@ const locale = {
     tabs: {
         wallet: '지갑',
         market: '시세',
-        staking: 'Staking',
-        balance: 'Balance',
-        my: 'User'
+        staking: '투표',
+        balance: '자산',
+        my: '나의'
     },
     left_panel: {
         import_wallet: '지갑 임포트',
