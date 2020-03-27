@@ -15,7 +15,8 @@ const locale = {
         show_loyalty_program: 'NORMAL',
         join_loyalty_program: '충성계획 참여 ',
         loyalty_program_icon: 'loyalty-program-btn-zh.png',
-        account_is_address: '지갑주소 즉 송금 주소'
+        account_is_address: '지갑주소 즉 송금 주소',
+        staking: '투표'
     },
     market: {
         title: '시세'
@@ -596,7 +597,8 @@ const locale = {
         day: '일',
         income_received_success: '수익 수령 성공',
         please_input_min_amount: '투표 최소 수량 {amount} 개 GXC',
-        title: '투표'
+        title: '투표',
+        node_rate: '커미션 비율'
     },
     my: {
         title: '나의 '

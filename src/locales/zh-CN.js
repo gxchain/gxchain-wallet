@@ -14,7 +14,8 @@ const locale = {
         copied: '已复制',
         join_loyalty_program: '参与忠诚者计划',
         loyalty_program_icon: 'loyalty-program-btn-zh.png',
-        account_is_address: '账户名即转账地址'
+        account_is_address: '账户名即转账地址',
+        staking: '质押'
     },
     market: {
         title: '行情'
@@ -578,7 +579,8 @@ const locale = {
         day: '天',
         income_received_success: '领取收益成功',
         please_input_min_amount: '至少需要投票 {amount} 个GXC',
-        title: '投票'
+        title: '投票',
+        node_rate: '分红比例'
     },
     my: {
         title: '我的'

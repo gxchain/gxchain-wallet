@@ -252,7 +252,6 @@ const set_wallets = (wallets) => {
         localStorage.setItem(`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(wallets));
         try {
             set_wallet_native(wallets);
-            set_wallet_index(wallets.length - 1);
         } catch (ex) {
             reject(ex);
         } finally {
@@ -1252,6 +1251,18 @@ const claimVestingBalance = (fee_paying_asset = 'GXC', account, cvb, password, f
     });
 };
 
+/**
+ * get staking percent
+ * @param {*} symbol
+ */
+const get_staking_percent = () => {
+    return new Promise((resolve, reject) => {
+        resolve(Vue.http.get(`${process.env.staking_sum}/statistics/gxchain/staking/sum`).then((resp) => {
+            return resp;
+        }));
+    });
+};
+
 export {
     bak_wallet,
     get_objects,
@@ -1295,5 +1306,6 @@ export {
     stakingClaim,
     get_staking_fee,
     get_vesting_balances,
-    claimVestingBalance
+    claimVestingBalance,
+    get_staking_percent
 };

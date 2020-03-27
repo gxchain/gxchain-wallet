@@ -102,11 +102,11 @@
                                 <div class="item-inner">
                                     <div class="symbol">
                                         <account-image :account="balance.symbol" :size="15"></account-image>
-                                        <div>&nbsp;&nbsp;{{balance.symbol}}</div>
+                                        <div>&nbsp;&nbsp;{{balance.symbol}} </div>
                                     </div>
                                     <div class="price">
                                         <div class="digital">
-                                            {{balance.amount | number(balance.precision)}}
+                                            {{balance.amount | number(balance.precision)}} <span v-if="balance.asset_id == '1.3.1'&&stakingAmount" class="stakingAmount">({{$t('index.staking')}}: {{stakingAmount}}GXC)</span>
                                         </div>
                                         <small v-if="balance.value != 0">
                                             ≈&nbsp;{{$t('index.unit')}}{{balance.value | number(2)}}
@@ -132,7 +132,7 @@
     import WalletTab from './sub/WalletTab';
 
     import {
-        fetch_account_balances, fetch_reference_accounts, get_assets_by_ids, get_wallet_index, get_wallets,
+        fetch_account_balances, fetch_account, get_staking_object, fetch_reference_accounts, get_assets_by_ids, get_wallet_index, get_wallets,
         set_wallet_index
     } from '@/services/WalletService';
     import {get_market_asset_price} from '@/services/MarketService';
@@ -168,7 +168,8 @@
                     }
                 },
                 isAssetHidden: '',
-                channel: ''
+                channel: '',
+                stakingAmount: 0
             };
         },
         watch: {
@@ -198,6 +199,16 @@
                     let assetMap = {};
                     let priceMap = {};
                     wallet.totalValue = '-';
+                    fetch_account(wallet.account).then(result => {
+                        get_staking_object(result.id).then(res => {
+                            let stakingList = res;
+                            let amount = 0;
+                            for (let i = 0; i < stakingList.length; i++) {
+                                amount += stakingList[i].amount.amount;
+                            }
+                            this.stakingAmount = amount / 100000;
+                        });
+                    });
                     fetch_account_balances(wallet.account).then(function (balances) {
                         if (!balances) {
                             return;
@@ -656,6 +667,10 @@
                         small {
                             color: #888
                         }
+                    }
+                    .stakingAmount{
+                        font-size: .6rem;
+
                     }
                 }
             }

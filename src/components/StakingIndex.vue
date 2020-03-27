@@ -28,6 +28,14 @@
                             <div class="content-block tips">
                                 <p>{{$t('node_vote.index.intro')}}</p>
                                 <p class="proxy-tip" v-if="isProxyed">{{$t('node_vote.index.proxy_tip')}}</p>
+                                <div>
+                                    <div class="processWrap">
+                                        <div class="inner" :style="{width:  votepercent+'%' }">{{votepercent | number(2)}}%</div>
+                                        <div class="inner-right">
+                                            {{ voteAmount | number(2) }} / 5,000,000 GXC
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="content-block-title">
                                 <div class="left">{{$t('node_vote.index.name')}}</div>
@@ -49,7 +57,11 @@
                                                     <div class="account-url">{{option.nodeName}}</div>
                                                 </div>
                                             </div>
-                                            <div class="account-item-center">{{$t('node_vote.index.vote_num')}}: {{parseInt(option.total_votes / 100000)}}</div>
+                                            <div>
+                                                <div class="account-item-center">{{$t('node_vote.index.vote_num')}}: {{parseInt(option.total_votes / 100000)}}</div>
+                                                <div class="account-item-center account-commision">{{$t('staking.node_rate')}}: {{parseInt(option.commission_rate / 10)}}%</div>
+                                            </div>
+                                            
                                             <div class="account-item-right" v-if="!isProxyed">
                                                 <div class="gxb-checkbox is-right">
                                                     <input class="gxb-checkbox__input"
@@ -219,7 +231,9 @@
                 stakingFee: {},
                 max_staking_count: 10,
                 currentType: '',
-                min_staking_amount: 100000
+                min_staking_amount: 100000,
+                votepercent: '0',
+                voteAmount: '0'
             };
         },
         components: {
@@ -274,6 +288,7 @@
                     get_trust_nodes(),
                     get_nodes_detail()
                 ]).then(results => {
+                    // this.votepercent = results[3].totalAmount;
                     get_objects(['2.0.0']).then((res) => {
                         let programSettings = find(res[0].parameters.extensions, (item) => item[0] == 11);
                         let max_staking_count_obj = find(res[0].parameters.extensions, (item) => item[0] == 12);
@@ -304,6 +319,7 @@
                             this.min_staking_amount = max_staking_count_obj[1].min_staking_amount;
                         }
                     });
+                    this.get_staking_percent();
                     this.fetch_account_balance();
                     this.get_staking_fee();
                     get_staking_object(results[0].id).then(res => {
@@ -387,6 +403,12 @@
                         $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
                     }, 500);
                 });
+            },
+            get_staking_percent () {
+                this.$http.get(`${process.env.staking_sum}/statistics/gxchain/staking/sum`).then(resp => {
+                    this.votepercent = Math.min(resp.data.totalAmount / 5000000, 1) * 100;
+                    this.voteAmount = resp.data.totalAmount;
+                }).catch(ex => { console.error(ex) });
             },
             fetch_account_balance () {
                 fetch_account_balance(this.currentWallet.account).then(res => {
@@ -741,6 +763,13 @@
                 margin-right: .75rem;
                 text-align: right;
             }
+            .account-commision{
+                color: #6699ff;
+                font-size: .5rem;
+                line-height: 150%;
+                height: 13px;
+                max-width: 8rem;
+            }
         }
         .account-history-item-left{
              justify-content: space-between !important;
@@ -782,5 +811,20 @@
     }
     .tab-vote.disabled, .tab-modify.disabled {
         background-color: #c8c9cb;
+    }
+    .processWrap{
+        height: 1rem;
+        background-color: #ccc;
+        .inner {
+            display: inline-block;
+            text-align: right;
+            padding-right: .2rem;
+            height: 100%;
+            color: #fff;
+            background-color: #6699ff;
+        }
+        .inner-right{
+            text-align: right;
+        }
     }
 </style>

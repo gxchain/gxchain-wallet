@@ -14,7 +14,8 @@ const locale = {
         copied: 'Copied',
         join_loyalty_program: 'Loyalty Program',
         loyalty_program_icon: 'loyalty-program-btn-en.png',
-        account_is_address: 'Account name is your address'
+        account_is_address: 'Account name is your address',
+        staking: 'Staking'
     },
     market: {
         title: 'Market'
@@ -605,7 +606,8 @@ const locale = {
         day: 'days',
         income_received_success: 'Income received success',
         please_input_min_amount: 'At least {amount}GXC is required',
-        title: 'Staking'
+        title: 'Staking',
+        node_rate: 'Commission rate'
     },
     my: {
         title: 'My'
