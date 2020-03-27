@@ -49,6 +49,17 @@
                         </li>
                     </ul>
                   </div>
+                  <p class="no-reocrd text-center" v-if="vestList.length==0&&loaded">
+                        <span class="icon icon-edit"></span>
+                        {{$t('node_vote.index.no_record')}}
+                    </p>
+                    <div class="line-scale-pulse-out" v-if="!loaded">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
                 </div>
                 
             </div>
@@ -70,6 +81,7 @@ export default {
     data () {
         let wallets = get_wallets();
         return {
+            loaded: false,
             vestList: [],
             currentWallet: wallets[get_wallet_index()],
             secondsPerDay: 60 * 60 * 24,
@@ -87,6 +99,7 @@ export default {
         loadData () {
             get_vesting_balances(this.currentWallet.account).then(res => {
                 this.vestList = res;
+                this.loaded = true;
             });
         },
         getEarned (vb) {
@@ -179,6 +192,16 @@ export default {
       border-radius: 1.25rem;
     }
 }
+.line-scale-pulse-out {
+        margin-top: 2.5rem;
+        text-align: center;
+    }
+    .line-scale-pulse-out > div {
+        background: #6699ff;
+        width: 2px;
+        height: 18px;
+
+    }
 .btn-wrap {
   margin: 0;
   padding: .75rem;

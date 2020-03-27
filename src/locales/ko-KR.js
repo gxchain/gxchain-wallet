@@ -595,7 +595,8 @@ const locale = {
         coin_day: '코인 스테이킹 시간',
         day: '일',
         income_received_success: '수익 수령 성공',
-        please_input_min_amount: '투표 최소 수량 {amount} 개 GXC'
+        please_input_min_amount: '투표 최소 수량 {amount} 개 GXC',
+        title: '투표'
     },
     my: {
         title: '나의 '

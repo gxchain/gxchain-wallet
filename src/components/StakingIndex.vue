@@ -1,6 +1,9 @@
 <template>
     <div class="page-group">
         <div class="page" id="page-node-vote">
+            <header class="bar bar-nav">
+                <h3 class="title">{{$t('staking.title')}}</h3>
+            </header>
             <wallet-tab></wallet-tab>
             <div class="content pull-to-refresh-content">
                 <div class="pull-to-refresh-layer">
@@ -456,10 +459,16 @@
                         $.toast(this.$t('staking.staking_update_success'));
                     }).catch(ex => {
                         console.error(ex);
+                        let message = '';
+                        if (ex.message.indexOf('Insufficient Balance') > -1 || ex.message.indexOf('account balance not enough') > -1) {
+                            message = this.$t('transfer.error.amount.insufficient_balance');
+                        } else {
+                            message = ex.message;
+                        }
                         this.submitting = false;
                         this.showUpdateModel = false;
                         this.$refs.unlock.unlocked();
-                        $.toast(ex.message);
+                        $.toast(message);
                     });
                 }
                 if (this.currentType == 1) {
@@ -475,9 +484,15 @@
                         $.toast(this.$t('staking.staking_success'));
                     }).catch(ex => {
                         console.error(ex);
+                        let message = '';
+                        if (ex.message.indexOf('Insufficient Balance') > -1 || ex.message.indexOf('account balance not enough') > -1) {
+                            message = this.$t('transfer.error.amount.insufficient_balance');
+                        } else {
+                            message = ex.message;
+                        }
                         this.submitting = false;
                         this.$refs.unlock.unlocked();
-                        $.toast(ex.message);
+                        $.toast(message);
                     });
                 }
                 if (this.currentType == 3) {
@@ -490,10 +505,16 @@
                         this.loadData();
                     }).catch(ex => {
                         console.error(ex);
+                        let message = '';
+                        if (ex.message.indexOf('Insufficient Balance') > -1 || ex.message.indexOf('account balance not enough') > -1) {
+                            message = this.$t('transfer.error.amount.insufficient_balance');
+                        } else {
+                            message = ex.message;
+                        }
                         this.submitting = false;
                         this.$refs.unlock.unlocked();
                         this.showClaimModel = false;
-                        $.toast(ex.message);
+                        $.toast(message);
                     });
                 }
             },
@@ -541,18 +562,6 @@
     .pull-right {
         font-size: .65rem;
         color: #6699ff;
-    }
-    .pull-to-refresh-content.refreshing{
-        .pull-to-refresh-layer{
-            height: 2.2rem;
-        }
-       
-    }
-    .pull-to-refresh-layer{
-        height: 0;
-    }
-    .pull-to-refresh-layer{
-        height: 0;
     }
     
     .bar .button-nav.pull-right {

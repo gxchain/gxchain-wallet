@@ -577,7 +577,8 @@ const locale = {
         coin_day: '币天',
         day: '天',
         income_received_success: '领取收益成功',
-        please_input_min_amount: '至少需要投票 {amount} 个GXC'
+        please_input_min_amount: '至少需要投票 {amount} 个GXC',
+        title: '投票'
     },
     my: {
         title: '我的'
