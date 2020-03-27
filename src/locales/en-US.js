@@ -604,7 +604,8 @@ const locale = {
         coin_day: 'coin days',
         day: 'days',
         income_received_success: 'Income received success',
-        please_input_min_amount: 'At least {amount}GXC is required'
+        please_input_min_amount: 'At least {amount}GXC is required',
+        title: 'Staking'
     },
     my: {
         title: 'My'
