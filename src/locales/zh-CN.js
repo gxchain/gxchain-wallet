@@ -361,8 +361,10 @@ const locale = {
             name: '公信节点候选人',
             no_record: '暂无记录',
             vote_num: '票数',
+            vote_num_weight: '新票数',
             btn_vote: '提交投票',
-            btn_update: '更新投票'
+            btn_update: '更新投票',
+            view_new_vote: '查看老票数'
         },
         proxy: {
             intro: '设置了代理投票账户之后，代理投票账户将代表你行使投票权力。',

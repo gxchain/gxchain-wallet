@@ -24,7 +24,9 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="tip-info text-center">
+                    {{$t('trade_history.currentAccount', {account: currentWallet.account})}}
+                </div>
                 <div class="tab-nav">
                     <div :class="tabIndex === 'tab-container1' ? 'tab-nav-item active' : 'tab-nav-item'" @click="tabIndex = 'tab-container1'">{{$t('node_vote.tab.tab1')}}</div>
                     <div :class="tabIndex === 'tab-container2' ? 'tab-nav-item active' : 'tab-nav-item'" @click="tabIndex = 'tab-container2'">{{$t('node_vote.index.records')}}</div>
@@ -46,7 +48,7 @@
                             </div>
                             <div class="content-block-title">
                                 <div class="left">{{$t('node_vote.index.name')}}</div>
-                                <div class="right">{{$t('node_vote.index.tips')}}</div>
+                                <div class="right">{{$t('node_vote.index.tips')}} <span v-if="staking_mode_on">(<label>{{$t('node_vote.index.view_new_vote')}}<input type="checkbox" v-model="showOldVotes" /></label>)</span></div>
                             </div>
                             <div class="list-block accounts" v-if="accounts.length>0&&loaded">
                                 <div class="gxb-checklist">
@@ -65,7 +67,7 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <div class="account-item-center">{{$t('node_vote.index.vote_num')}}: {{parseInt(option.total_votes / 100000)}}</div>
+                                                <div class="account-item-center"><span v-show="showOldVotes" class="oldVotes">{{$t('node_vote.index.vote_num')}}: {{parseInt(option.total_votes / 100000)}}/</span><span>{{$t('node_vote.index.vote_num_weight')}}: {{parseInt(option.total_vote_weights / 100000)}}</span></div>
                                                 <div class="account-item-center account-commision">{{$t('staking.node_rate')}}: {{parseInt(option.commission_rate / 10)}}%</div>
                                             </div>
                                             
@@ -243,7 +245,9 @@
                 min_staking_amount: 100000,
                 votepercent: '0',
                 voteAmount: '0',
-                currentWalletIndex: get_wallet_index()
+                currentWalletIndex: get_wallet_index(),
+                showOldVotes: false,
+                staking_mode_on: false
             };
         },
         components: {
@@ -298,7 +302,6 @@
                     get_trust_nodes(),
                     get_nodes_detail()
                 ]).then(results => {
-                    // this.votepercent = results[3].totalAmount;
                     get_objects(['2.0.0']).then((res) => {
                         let programSettings = find(res[0].parameters.extensions, (item) => item[0] == 11);
                         let max_staking_count_obj = find(res[0].parameters.extensions, (item) => item[0] == 12);
@@ -327,6 +330,7 @@
                         if (max_staking_count_obj) {
                             this.max_staking_count = max_staking_count_obj[1].max_staking_count;
                             this.min_staking_amount = max_staking_count_obj[1].min_staking_amount;
+                            this.staking_mode_on = max_staking_count_obj[1].staking_mode_on;
                         }
                     });
                     this.get_staking_percent();
@@ -384,9 +388,11 @@
                             }
                             return !tmp;
                         });
-                        // 票数排序，票数相同vote_id越早的靠前
+                        // 票数排序，佣金比例降序，得票数升序
                         this.accounts = sortBy(accounts, (item) => {
-                            return -parseInt(item.total_votes);
+                            return -parseInt(item.commission_rate);
+                        }, (item) => {
+                            return parseInt(item.total_vote_weights);
                         }, (item) => {
                             return parseInt(item.vote_id.split(':')[1]);
                         });
@@ -424,6 +430,11 @@
                 let index = e.target.value;
                 set_wallet_index(index);
                 this.currentWalletIndex = index;
+                this.currentWallet = this.wallets[this.currentWalletIndex];
+                this.loadData();
+            },
+            switchVoteType () {
+                this.showOldVotes = !this.showOldVotes;
             },
             fetch_account_balance () {
                 fetch_account_balance(this.currentWallet.account).then(res => {
@@ -638,6 +649,9 @@
         width: 2px;
         height: 18px;
 
+    }
+    .oldVotes{
+        color: #999;
     }
 
     .tab-nav {
