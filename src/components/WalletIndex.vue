@@ -175,6 +175,7 @@
         watch: {
             currentWalletIndex () {
                 this.loadBalances(this.currentWallet);
+                this.getStakingAmount();
             }
         },
 
@@ -188,6 +189,7 @@
                     this.wallets.forEach((wallet) => {
                         this.loadBalances(wallet);
                     });
+                    this.getStakingAmount();
                 }
                 setTimeout(() => {
                     $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
@@ -199,16 +201,6 @@
                     let assetMap = {};
                     let priceMap = {};
                     wallet.totalValue = '-';
-                    fetch_account(wallet.account).then(result => {
-                        get_staking_object(result.id).then(res => {
-                            let stakingList = res;
-                            let amount = 0;
-                            for (let i = 0; i < stakingList.length; i++) {
-                                amount += stakingList[i].amount.amount;
-                            }
-                            this.stakingAmount = amount / 100000;
-                        });
-                    });
                     fetch_account_balances(wallet.account).then(function (balances) {
                         if (!balances) {
                             return;
@@ -310,6 +302,19 @@
                         console.error(ex);
                     });
                 }
+            },
+            getStakingAmount () {
+                let currentWallet = this.currentWallet.account;
+                fetch_account(currentWallet).then(result => {
+                    get_staking_object(result.id).then(res => {
+                        let stakingList = res;
+                        let amount = 0;
+                        for (let i = 0; i < stakingList.length; i++) {
+                            amount = util.accAdd(amount * 1, stakingList[i].amount.amount * 1);
+                        }
+                        this.stakingAmount = util.accDiv(amount, 100000);
+                    });
+                });
             },
             getMarketCap (wallet) {
                 let balance = Number(wallet.balance);
