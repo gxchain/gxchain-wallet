@@ -384,8 +384,10 @@ const locale = {
             name: 'TrustNode candidate',
             no_record: 'No records',
             vote_num: 'Vote Num',
+            vote_num_weight: 'New Votes',
             btn_vote: 'Confirm',
-            btn_update: 'Update'
+            btn_update: 'Update',
+            view_new_vote: 'View old votes'
         },
         proxy: {
             intro:
