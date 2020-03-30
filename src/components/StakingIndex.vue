@@ -3,6 +3,13 @@
         <div class="page" id="page-node-vote">
             <header class="bar bar-nav">
                 <h3 class="title">{{$t('staking.title')}}</h3>
+                <a class="pull-right icon account-switch" v-if="wallets&&wallets.length>1">
+                {{$t('trade_history.switch')}}
+                    <select @change="switchWallet">
+                        <option v-for="(wallet,i) in wallets" :key="i" :value="i" :selected="i==currentWalletIndex">{{wallet.account}}
+                        </option>
+                    </select>
+                </a>
             </header>
             <wallet-tab></wallet-tab>
             <div class="content pull-to-refresh-content">
@@ -173,7 +180,8 @@
         stakingUpdate,
         stakingClaim,
         fetch_account_balance,
-        get_staking_fee
+        get_staking_fee,
+        set_wallet_index
     } from '@/services/WalletService';
     import sortBy from 'lodash/sortBy';
     import AccountImage from '@/components/sub/AccountImage.vue';
@@ -193,6 +201,7 @@
             return {
                 loaded: false,
                 isFirst: true,
+                wallets: get_wallets(),
                 selected: false,
                 submitting: false,
                 tabIndex: 'tab-container1',
@@ -233,7 +242,8 @@
                 currentType: '',
                 min_staking_amount: 100000,
                 votepercent: '0',
-                voteAmount: '0'
+                voteAmount: '0',
+                currentWalletIndex: get_wallet_index()
             };
         },
         components: {
@@ -410,6 +420,11 @@
                     this.voteAmount = resp.data.totalAmount;
                 }).catch(ex => { console.error(ex) });
             },
+            switchWallet (e) {
+                let index = e.target.value;
+                set_wallet_index(index);
+                this.currentWalletIndex = index;
+            },
             fetch_account_balance () {
                 fetch_account_balance(this.currentWallet.account).then(res => {
                     this.currentBalance = res;
@@ -581,6 +596,17 @@
     };
 </script>
 <style lang="scss" scoped>
+    .account-switch {
+        font-size: .75rem;
+        select {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            opacity: 0;
+            width: 100%;
+        }
+    }
     .pull-right {
         font-size: .65rem;
         color: #6699ff;
