@@ -375,8 +375,10 @@ const locale = {
             name: '트러스트 노드 후보자',
             no_record: '기록이 없음',
             vote_num: '투표수',
+            vote_num_weight: '새 티켓',
             btn_vote: '투표 제출',
-            btn_update: '투표 업데이트'
+            btn_update: '투표 업데이트',
+            view_new_vote: '살펴보다 액면 가격.'
         },
         proxy: {
             intro:
