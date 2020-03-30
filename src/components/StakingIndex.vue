@@ -48,7 +48,7 @@
                             </div>
                             <div class="content-block-title">
                                 <div class="left">{{$t('node_vote.index.name')}}</div>
-                                <div class="right">{{$t('node_vote.index.tips')}} <span v-if="staking_mode_on">(<label>{{$t('node_vote.index.view_new_vote')}}<input type="checkbox" v-model="showOldVotes" /></label>)</span></div>
+                                <div class="right">{{$t('node_vote.index.tips')}} <span v-if="!staking_mode_on">(<label>{{$t('node_vote.index.view_new_vote')}}<input type="checkbox" v-model="showOldVotes" /></label>)</span></div>
                             </div>
                             <div class="list-block accounts" v-if="accounts.length>0&&loaded">
                                 <div class="gxb-checklist">
