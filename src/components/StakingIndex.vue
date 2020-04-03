@@ -426,7 +426,7 @@
                     if (!item) {
                         return true;
                     } else {
-                        return (new Date().getTime() - new Date(item.create_date_time).getTime()) < item.staking_days * 24 * 60 * 60 * 1000;
+                        return (new Date().getTime() - new Date(item.create_date_time + 'Z').getTime()) < item.staking_days * 24 * 60 * 60 * 1000;
                     }
                 } else {
                     return (!this.currentStakingValue) || (this.currentStakingValue && this.currentStakingValue.is_valid);
@@ -438,7 +438,7 @@
                     if (!item) {
                         return true;
                     } else {
-                        return (new Date().getTime() - new Date(item.create_date_time).getTime()) >= item.staking_days * 24 * 60 * 60 * 1000;
+                        return (new Date().getTime() - new Date(item.create_date_time + 'Z').getTime()) >= item.staking_days * 24 * 60 * 60 * 1000;
                     }
                 } else {
                     return (!this.currentStakingValue) || (this.currentStakingValue && !this.currentStakingValue.is_valid);
@@ -580,6 +580,8 @@
                         let message = '';
                         if (ex.message.indexOf('Insufficient Balance') > -1 || ex.message.indexOf('account balance not enough') > -1) {
                             message = this.$t('transfer.error.amount.insufficient_balance');
+                        } else if (ex.message.indexOf('claim timepoint has not arrived yet') > -1) {
+                            message = this.$t('transfer.error.claim.not_arrived');
                         } else {
                             message = ex.message;
                         }

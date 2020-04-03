@@ -271,6 +271,9 @@ const locale = {
           'This is a premium name which is not supported by this faucet Please enter a regular name containing least one dash, a number or no vowels',
                 memo_signer_not_exist:
           'Cannot encrypt memo,since memo private key not exist'
+            },
+            claim: {
+                not_arrived: 'Claim timepoint has not arrived yet'
             }
         },
         confirm: {

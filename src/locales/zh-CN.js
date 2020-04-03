@@ -251,6 +251,9 @@ const locale = {
                 premium_name:
           '你使用的是高级账户名,请选择其他名字，包含至少一个横杠、数字或者不含元音字母',
                 memo_signer_not_exist: '备注私钥不存在，无法添加备注'
+            },
+            claim: {
+                not_arrived: '取回投票时间未到'
             }
         },
         confirm: {
