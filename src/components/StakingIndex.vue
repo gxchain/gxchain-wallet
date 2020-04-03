@@ -146,8 +146,8 @@
                             </div>
                             <div class="content-block">
                                 <div class="row">
-                                    <div class="col-50"><a href="#" class="button button-big button-fill " :class="{'disabled':!currentStakingValue||currentStakingValue&&currentStakingValue.is_valid}" @click="staking_claim">{{$t('staking.staking_claim')}}</a></div>
-                                    <div class="col-50"><a href="#" class="button button-big button-fill "  :class="{'disabled':!currentStakingValue||currentStakingValue&&!currentStakingValue.is_valid}"  @click="onUpdateStaking">{{$t('staking.staking_update')}}</a></div>
+                                    <div class="col-50"><a href="#" class="button button-big button-fill " :class="{'disabled':isStakingValid(currentStakingValue)}" @click="staking_claim">{{$t('staking.staking_claim')}}</a></div>
+                                    <div class="col-50"><a href="#" class="button button-big button-fill "  :class="{'disabled':isStakingUpdateValid(currentStakingValue)}"  @click="onUpdateStaking">{{$t('staking.staking_update')}}</a></div>
                                 </div>
                             </div>
                         </gxb-tab-container-item>
@@ -420,6 +420,22 @@
                     }, 500);
                 });
             },
+            isStakingValid (item) {
+                if (!this.staking_mode_on) {
+                    // staking is valid
+                    return (new Date().getTime() - new Date(item.create_date_time).getTime()) < item.staking_days * 24 * 60 * 60 * 1000;
+                } else {
+                    return (!this.currentStakingValue) || (this.currentStakingValue && this.currentStakingValue.is_valid);
+                }
+            },
+            isStakingUpdateValid (item) {
+                if (!this.staking_mode_on) {
+                    // staking is valid
+                    return (new Date().getTime() - new Date(item.create_date_time).getTime()) >= item.staking_days * 24 * 60 * 60 * 1000;
+                } else {
+                    return (!this.currentStakingValue) || (this.currentStakingValue && !this.currentStakingValue.is_valid);
+                }
+            },
             get_staking_percent () {
                 this.$http.get(`${process.env.staking_sum}/statistics/gxchain/staking/sum`).then(resp => {
                     this.votepercent = Math.min(resp.data.totalAmount / 5000000, 1) * 100;
@@ -577,7 +593,7 @@
                 this.unlock(1);
             },
             onUpdateStaking () {
-                if (!this.currentStakingValue || (this.currentStakingValue && !this.currentStakingValue.is_valid)) {
+                if (this.isStakingUpdateValid(this.currentStakingValue)) {
                     return;
                 }
                 this.currentType = 2;
@@ -591,7 +607,7 @@
                 this.$refs.unlock.show();
             },
             staking_claim () {
-                if (!this.currentStakingValue || (this.currentStakingValue && this.currentStakingValue.is_valid)) {
+                if (this.isStakingValid(this.currentStakingValue)) {
                     return;
                 }
                 this.showClaimModel = true;
