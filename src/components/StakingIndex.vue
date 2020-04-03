@@ -423,7 +423,11 @@
             isStakingValid (item) {
                 if (!this.staking_mode_on) {
                     // staking is valid
-                    return (new Date().getTime() - new Date(item.create_date_time).getTime()) < item.staking_days * 24 * 60 * 60 * 1000;
+                    if (!item) {
+                        return true;
+                    } else {
+                        return (new Date().getTime() - new Date(item.create_date_time).getTime()) < item.staking_days * 24 * 60 * 60 * 1000;
+                    }
                 } else {
                     return (!this.currentStakingValue) || (this.currentStakingValue && this.currentStakingValue.is_valid);
                 }
@@ -431,7 +435,11 @@
             isStakingUpdateValid (item) {
                 if (!this.staking_mode_on) {
                     // staking is valid
-                    return (new Date().getTime() - new Date(item.create_date_time).getTime()) >= item.staking_days * 24 * 60 * 60 * 1000;
+                    if (!item) {
+                        return true;
+                    } else {
+                        return (new Date().getTime() - new Date(item.create_date_time).getTime()) >= item.staking_days * 24 * 60 * 60 * 1000;
+                    }
                 } else {
                     return (!this.currentStakingValue) || (this.currentStakingValue && !this.currentStakingValue.is_valid);
                 }
