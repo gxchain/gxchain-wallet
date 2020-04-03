@@ -247,6 +247,9 @@ const locale = {
                 insufficient_diff_fee: '수수료 잔액이 부족합니다.',
                 minimum: '최소 수량은 1보다 커야 합니다.'
             },
+            claim: {
+                not_arrived: '클 레 임 타임 포인트 가 아직 도착 하지 않 았 다.'
+            },
             account: {
                 cannot_send_to_yourself: '자기에게 송금 불가능합니다',
                 from_account_not_exist: '송금하는 주소가 존재하지 않습니다',
