@@ -115,7 +115,7 @@ export default {
             if (vb.policy[0] == 1) {
                 let vestingPeriod = vb.policy[1].vesting_seconds;
                 let res = util.accDiv(util.accMult(vb.balance.amount, vestingPeriod), this.secondsPerDay) / 100000;
-                return util.format_number(res, 0);
+                return util.format_number(res, 0) || 0;
             } else {
                 return 0;
             }

@@ -37,18 +37,10 @@
                             <div class="content-block tips">
                                 <p>{{$t('node_vote.index.intro')}}</p>
                                 <p class="proxy-tip" v-if="isProxyed">{{$t('node_vote.index.proxy_tip')}}</p>
-                                <div>
-                                    <div class="processWrap">
-                                        <div class="inner" :style="{width:  votepercent+'%' }">{{votepercent | number(2)}}%</div>
-                                        <div class="inner-right">
-                                            {{ voteAmount | number(2) }} / 5,000,000 GXC
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                             <div class="content-block-title">
                                 <div class="left">{{$t('node_vote.index.name')}}</div>
-                                <div class="right">{{$t('node_vote.index.tips')}} <span v-if="!staking_mode_on">(<label>{{$t('node_vote.index.view_new_vote')}}<input type="checkbox" v-model="showOldVotes" /></label>)</span></div>
+                                <div class="right">{{$t('node_vote.index.tips')}} </div>
                             </div>
                             <div class="list-block accounts" v-if="accounts.length>0&&loaded">
                                 <div class="gxb-checklist">
@@ -67,7 +59,7 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <div class="account-item-center"><span v-show="showOldVotes" class="oldVotes">{{$t('node_vote.index.vote_num')}}: {{parseInt(option.total_votes / 100000)}}/</span><span>{{$t('node_vote.index.vote_num_weight')}}: {{parseInt(option.total_vote_weights / 100000)}}</span></div>
+                                                <div class="account-item-center"><span>{{$t('node_vote.index.vote_num_weight')}}: {{parseInt(option.total_vote_weights / 100000)}}</span></div>
                                                 <div class="account-item-center account-commision">{{$t('staking.node_rate')}}: {{parseInt(option.commission_rate / 10)}}%</div>
                                             </div>
                                             
@@ -243,8 +235,6 @@
                 max_staking_count: 10,
                 currentType: '',
                 min_staking_amount: 100000,
-                votepercent: '0',
-                voteAmount: '0',
                 currentWalletIndex: get_wallet_index(),
                 showOldVotes: false,
                 staking_mode_on: false
@@ -333,7 +323,6 @@
                             this.staking_mode_on = max_staking_count_obj[1].staking_mode_on;
                         }
                     });
-                    this.get_staking_percent();
                     this.fetch_account_balance();
                     this.get_staking_fee();
                     get_staking_object(results[0].id).then(res => {
@@ -421,34 +410,10 @@
                 });
             },
             isStakingValid (item) {
-                if (!this.staking_mode_on) {
-                    // staking is valid
-                    if (!item) {
-                        return true;
-                    } else {
-                        return (new Date().getTime() - new Date(item.create_date_time + 'Z').getTime()) < item.staking_days * 24 * 60 * 60 * 1000;
-                    }
-                } else {
-                    return (!this.currentStakingValue) || (this.currentStakingValue && this.currentStakingValue.is_valid);
-                }
+                return (!this.currentStakingValue) || (this.currentStakingValue && this.currentStakingValue.is_valid);
             },
             isStakingUpdateValid (item) {
-                if (!this.staking_mode_on) {
-                    // staking is valid
-                    if (!item) {
-                        return true;
-                    } else {
-                        return (new Date().getTime() - new Date(item.create_date_time + 'Z').getTime()) >= item.staking_days * 24 * 60 * 60 * 1000;
-                    }
-                } else {
-                    return (!this.currentStakingValue) || (this.currentStakingValue && !this.currentStakingValue.is_valid);
-                }
-            },
-            get_staking_percent () {
-                this.$http.get(`${process.env.staking_sum}/statistics/gxchain/staking/sum`).then(resp => {
-                    this.votepercent = Math.min(resp.data.totalAmount / 5000000, 1) * 100;
-                    this.voteAmount = resp.data.totalAmount;
-                }).catch(ex => { console.error(ex) });
+                return (!this.currentStakingValue) || (this.currentStakingValue && !this.currentStakingValue.is_valid);
             },
             switchWallet (e) {
                 let index = e.target.value;
