@@ -585,7 +585,10 @@ const locale = {
         income_received_success: '领取收益成功',
         please_input_min_amount: '至少需要投票 {amount} 个GXC',
         title: '投票',
-        node_rate: '分红比例'
+        node_rate: '分红比例',
+        error: {
+            insufficient_balance: '手续费不足'
+        }
     },
     my: {
         title: '我的'

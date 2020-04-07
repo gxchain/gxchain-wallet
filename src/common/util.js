@@ -82,12 +82,7 @@ export default {
         return obj;
     },
     format_number: function (number, decimals, trailing_zeros = true) {
-        if (
-            isNaN(number) ||
-      !isFinite(number) ||
-      number === undefined ||
-      number === null
-        ) {
+        if (isNaN(number) || !isFinite(number) || number === undefined || number === null) {
             return '';
         }
         let zeros = '.';
