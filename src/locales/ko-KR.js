@@ -603,7 +603,10 @@ const locale = {
         income_received_success: '수익 수령 성공',
         please_input_min_amount: '투표 최소 수량 {amount} 개 GXC',
         title: '투표',
-        node_rate: '커미션 비율'
+        node_rate: '커미션 비율',
+        error: {
+            insufficient_balance: '수수료 가 부족 하 다'
+        }
     },
     my: {
         title: '나의 '

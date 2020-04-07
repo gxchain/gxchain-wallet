@@ -7,7 +7,7 @@
             </header>
             <div class="content">
                 <div class="center-content">
-                  <div class="list-block" v-for="(item, index) in vestList" :key="index">
+                  <div class="list-block" v-for="(item, index) in vestList" :key="index" v-if="item.balance.amount">
                     <ul>
                       <li class="item-content">
                             <div class="item-inner">
@@ -105,8 +105,13 @@ export default {
         getEarned (vb) {
             if (vb.policy[0] == 1) {
                 let earned = vb.policy[1].coin_seconds_earned;
-                let res = util.accDiv(earned, this.secondsPerDay) / 100000;
-                return util.format_number(res, 0);
+                let earnedAmount = util.accDiv(earned, this.secondsPerDay);
+                if (earnedAmount >= 1) {
+                    let res = earnedAmount / 100000;
+                    return util.format_number(res, 0) || 0;
+                } else {
+                    return 0;
+                }
             } else {
                 return 0;
             }
@@ -114,8 +119,13 @@ export default {
         getRequired (vb) {
             if (vb.policy[0] == 1) {
                 let vestingPeriod = vb.policy[1].vesting_seconds;
-                let res = util.accDiv(util.accMult(vb.balance.amount, vestingPeriod), this.secondsPerDay) / 100000;
-                return util.format_number(res, 0) || 0;
+                let requiredAmount = util.accDiv(util.accMult(vb.balance.amount, vestingPeriod), this.secondsPerDay);
+                if (requiredAmount >= 1) {
+                    let res = requiredAmount / 100000;
+                    return util.format_number(res, 0) || 0;
+                } else {
+                    return 0;
+                }
             } else {
                 return 0;
             }
@@ -123,8 +133,8 @@ export default {
         getRemain (vb) {
             if (vb.policy[0] == 1) {
                 let earned = vb.policy[1].coin_seconds_earned;
-                if (!earned) {
-                    return 0;
+                if (earned == 0) {
+                    return '0.00';
                 }
                 let vestingPeriod = vb.policy[1].vesting_seconds;
                 let availablePercent = vestingPeriod === 0 ? 1 : util.accDiv(earned, util.accMult(vb.balance.amount, vestingPeriod));
@@ -138,7 +148,7 @@ export default {
             let earned = vb.policy[1].coin_seconds_earned;
             let vestingPeriod = vb.policy[1].vesting_seconds;
             let availablePercent = vestingPeriod === 0 ? 1 : util.accDiv(earned, util.accMult(vb.balance.amount, vestingPeriod));
-            if (!earned) {
+            if (earned == 0) {
                 return 0;
             }
             return util.format_number(availablePercent * 100, 2) + '% / ' + Math.round(availablePercent * vb.balance.amount / 100000 * 100000, 5) / 100000;
@@ -170,9 +180,15 @@ export default {
                 this.loadData();
             }).catch(ex => {
                 console.error(ex);
+                let message = '';
+                if (ex.message.indexOf('Insufficient Balance') > -1 || ex.message.indexOf('account balance not enough') > -1) {
+                    message = this.$t('transfer.error.amount.insufficient_balance');
+                } else {
+                    message = ex.message;
+                }
                 this.submitting = false;
                 this.$refs.unlock.unlocked();
-                $.toast(ex.message);
+                $.toast(message);
             });
         }
     }

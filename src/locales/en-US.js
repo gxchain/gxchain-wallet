@@ -612,7 +612,10 @@ const locale = {
         income_received_success: 'Income received success',
         please_input_min_amount: 'At least {amount}GXC is required',
         title: 'Staking',
-        node_rate: 'Commission rate'
+        node_rate: 'Commission rate',
+        error: {
+            insufficient_balance: 'Insufficient service charge'
+        }
     },
     my: {
         title: 'My'
