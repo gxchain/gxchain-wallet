@@ -182,7 +182,7 @@ export default {
                 console.error(ex);
                 let message = '';
                 if (ex.message.indexOf('Insufficient Balance') > -1 || ex.message.indexOf('account balance not enough') > -1) {
-                    message = this.$t('transfer.error.amount.insufficient_balance');
+                    message = this.$t('staking.error.insufficient_balance');
                 } else {
                     message = ex.message;
                 }
