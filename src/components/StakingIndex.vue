@@ -42,6 +42,12 @@
                                 <div class="left">{{$t('node_vote.index.name')}}</div>
                                 <div class="right">{{$t('node_vote.index.tips')}} </div>
                             </div>
+                            <div class=" content-title-order">
+                                <div class="right">
+                                    <span @click="sortByOrder(accounts, 0)" class="order-left" :class="{active:currentOrderBy==0}"><i class="gxicon gxicon-arrows-down-line"></i>{{$t('staking.node_rate')}}</span>
+                                    <span @click="sortByOrder(accounts, 1)" :class="{active:currentOrderBy==1}"><i class="gxicon gxicon-arrows-down-line"></i>{{$t('node_vote.index.vote_num')}}</span>
+                                </div>
+                            </div>
                             <div class="list-block accounts" v-if="accounts.length>0&&loaded">
                                 <div class="gxb-checklist">
                                     <gxb-cell v-for="(option, index) in accounts" :key="index">
@@ -237,7 +243,8 @@
                 min_staking_amount: 100000,
                 currentWalletIndex: get_wallet_index(),
                 showOldVotes: false,
-                staking_mode_on: false
+                staking_mode_on: false,
+                currentOrderBy: 0
             };
         },
         components: {
@@ -377,14 +384,7 @@
                             }
                             return !tmp;
                         });
-                        // 票数排序，佣金比例降序，得票数升序
-                        this.accounts = sortBy(accounts, (item) => {
-                            return -parseInt(item.commission_rate);
-                        }, (item) => {
-                            return parseInt(item.total_vote_weights);
-                        }, (item) => {
-                            return parseInt(item.vote_id.split(':')[1]);
-                        });
+                        this.sortByOrder(accounts, this.currentOrderBy);
                     }
                     let nodeInfoList = results[2] || [];
                     for (let i = 0; i < this.accounts.length; i++) {
@@ -408,6 +408,26 @@
                         $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
                     }, 500);
                 });
+            },
+            sortByOrder (accounts, orderby) {
+                this.currentOrderBy = orderby;
+                if (orderby == 0) {
+                    // 票数排序，佣金比例降序，得票数升序
+                    this.accounts = sortBy(accounts, (item) => {
+                        return -parseInt(item.commission_rate);
+                    }, (item) => {
+                        return parseInt(item.total_vote_weights);
+                    }, (item) => {
+                        return parseInt(item.vote_id.split(':')[1]);
+                    });
+                } else {
+                    // 票数排序
+                    this.accounts = sortBy(accounts, (item) => {
+                        return -parseInt(item.total_vote_weights);
+                    }, (item) => {
+                        return parseInt(item.vote_id.split(':')[1]);
+                    });
+                }
             },
             isStakingValid (item) {
                 return (!this.currentStakingValue) || (this.currentStakingValue && this.currentStakingValue.is_valid);
@@ -713,6 +733,26 @@
             color: #6699ff;
             font-weight: bold;
         }
+    }
+    .content-title-order {
+        text-align: right;
+        font-size: .6rem;
+        margin: .75rem .75rem .5rem;
+        .right{
+            color: #6d6d72;
+            .order-left{
+                padding-right: .5rem;
+            }
+            .gxicon{
+                display: none;
+            }
+            .active {
+                .gxicon{
+                    display: inline;
+                }
+                color: #6699ff;
+            }
+        }   
     }
 
     .list-block {
