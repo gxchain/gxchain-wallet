@@ -1,6 +1,6 @@
 <template>
   <div class="page-group">
-        <div class="page" id="page-about">
+        <div class="page" id="page-income">
             <header class="bar bar-nav">
                 <h3 class="title">{{$t('staking.Income_received')}}</h3>
                 <router-link :to="link('/my-index')" replace class="icon icon-left"></router-link>
@@ -49,7 +49,7 @@
                         </li>
                     </ul>
                   </div>
-                  <p class="no-reocrd text-center" v-if="vestList.length==0&&loaded">
+                  <p class="no-reocrd text-center" v-if="vestList.length==0&&loaded||emptyList">
                         <span class="icon icon-edit"></span>
                         {{$t('node_vote.index.no_record')}}
                     </p>
@@ -88,7 +88,8 @@ export default {
             claimAll: false,
             password: '',
             submitting: false,
-            currentVest: ''
+            currentVest: '',
+            emptyList: true
         };
     },
     mounted () {
@@ -99,6 +100,14 @@ export default {
         loadData () {
             get_vesting_balances(this.currentWallet.account).then(res => {
                 this.vestList = res;
+                for (var i = 0; i < res.length; i++) {
+                    if (res[i].balance.amount > 0) {
+                        this.emptyList = false;
+                        break;
+                    } else {
+                        this.emptyList = true;
+                    }
+                }
                 this.loaded = true;
             });
         },
@@ -196,6 +205,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.pull-right {
+    font-size: .65rem;
+    color: #6699ff;
+}
+
+.bar .button-nav.pull-right {
+    margin-right: 0;
+}
+.bar-staking{
+    bottom: 2.5rem;
+}
+.page {
+    background-color: #fff;
+}
+
+.content {
+    padding-bottom: 2.5rem;
+}
+.native-ios-x .content {
+    padding-bottom: 3.7rem;
+}
 .list-block {
     margin: .6rem 0;
     font-size: .65rem;
