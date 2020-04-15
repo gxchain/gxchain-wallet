@@ -606,6 +606,11 @@ const locale = {
         node_rate: '커미션 비율',
         error: {
             insufficient_balance: '수수료 가 부족 하 다'
+        },
+        income: {
+            amount: '금액',
+            confirmTitle: '거래 를 확인 하 세 요.',
+            tips: '해빙 계좌 잔액 을 추출 하 다.'
         }
     },
     my: {

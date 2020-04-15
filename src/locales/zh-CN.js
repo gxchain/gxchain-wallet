@@ -588,6 +588,11 @@ const locale = {
         node_rate: '分红比例',
         error: {
             insufficient_balance: '手续费不足'
+        },
+        income: {
+            amount: '金额',
+            confirmTitle: '请确认交易',
+            tips: '提取解冻账户余额'
         }
     },
     my: {
