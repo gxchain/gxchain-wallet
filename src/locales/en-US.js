@@ -615,6 +615,11 @@ const locale = {
         node_rate: 'Commission rate',
         error: {
             insufficient_balance: 'Insufficient service charge'
+        },
+        income: {
+            amount: 'Amount',
+            confirmTitle: 'Please confirm the transaction',
+            tips: 'WITHDRAW VESTING BALANCE'
         }
     },
     my: {

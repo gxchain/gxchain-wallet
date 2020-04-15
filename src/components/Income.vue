@@ -65,18 +65,21 @@
             </div>
         </div>
         <password-confirm ref="unlock" @unlocking="unlocking"></password-confirm>
+        <income-confirm ref="confirm"  :account="currentWallet.account" :pwd="password" :incomeAmount="incomeAmount" :fee="fee"  @confirm="confirmIncome"></income-confirm>
     </div>
 </template>
 
 <script>
-import { get_wallets, get_wallet_index, get_vesting_balances, claimVestingBalance } from '@/services/WalletService';
+import { get_wallets, get_wallet_index, get_vesting_balances, claimVestingBalance, get_assets_by_ids } from '@/services/WalletService';
 import util from '@/common/util';
 import PasswordConfirm from '@/components/sub/PasswordConfirm.vue';
+import IncomeConfirm from '@/components/sub/IncomeConfirm.vue';
 import filters from '@/filters';
 export default {
     filters,
     components: {
-        PasswordConfirm
+        PasswordConfirm,
+        IncomeConfirm
     },
     data () {
         let wallets = get_wallets();
@@ -89,7 +92,12 @@ export default {
             password: '',
             submitting: false,
             currentVest: '',
-            emptyList: true
+            emptyList: true,
+            incomeAmount: 0,
+            fee: {
+                amount: 0,
+                symbol: 'GXC'
+            }
         };
     },
     mounted () {
@@ -162,6 +170,15 @@ export default {
             }
             return util.format_number(availablePercent * 100, 2) + '% / ' + Math.round(availablePercent * vb.balance.amount / 100000 * 100000, 5) / 100000;
         },
+        getAvailableCoinAmount (vb) {
+            let earned = vb.policy[1].coin_seconds_earned;
+            let vestingPeriod = vb.policy[1].vesting_seconds;
+            let availablePercent = vestingPeriod === 0 ? 1 : util.accDiv(earned, util.accMult(vb.balance.amount, vestingPeriod));
+            if (earned == 0) {
+                return 0;
+            }
+            return Math.round(availablePercent * vb.balance.amount / 100000 * 100000, 5) / 100000;
+        },
         claim (item, flag) {
             if (this.submitting) {
                 return;
@@ -178,12 +195,39 @@ export default {
             }
             this.password = pwd;
             this.submitting = true;
-            if (this.claimAll == 'claim') {
-
-            }
-            claimVestingBalance('GXC', this.currentWallet.account, this.currentVest, this.password, this.claimAll, true).then(res => {
+            claimVestingBalance('GXC', this.currentWallet.account, this.currentVest, this.password, this.claimAll, false).then(res => {
                 this.submitting = false;
                 this.$refs.unlock.unlocked();
+                this.fee = res.operations[0][1].fee;
+                return Promise.all([
+                    get_assets_by_ids([this.fee.asset_id])
+                ]);
+            }).then(results => {
+                this.fee.symbol = results[0][0].symbol;
+                this.fee.amount = this.fee.amount / Math.pow(10, results[0][0].precision);
+                this.incomeAmount = this.claimAll ? this.currentVest.balance.amount / 100000 : this.getAvailableCoinAmount(this.currentVest);
+                this.$refs.confirm.show();
+            }).catch(ex => {
+                console.error(ex);
+                let message = '';
+                if (ex.message.indexOf('Insufficient Balance') > -1 || ex.message.indexOf('account balance not enough') > -1) {
+                    message = this.$t('staking.error.insufficient_balance');
+                } else {
+                    message = ex.message;
+                }
+                this.submitting = false;
+                this.$refs.unlock.unlocked();
+                $.toast(message);
+            });
+        },
+        confirmIncome () {
+            if (this.submitting) {
+                return;
+            }
+            this.submitting = true;
+            claimVestingBalance('GXC', this.currentWallet.account, this.currentVest, this.password, this.claimAll, true).then(res => {
+                this.submitting = false;
+                this.$refs.confirm.cancel();
                 this.claimAll = '';
                 $.toast(this.$t('staking.income_received_success'));
                 this.loadData();
@@ -196,7 +240,6 @@ export default {
                     message = ex.message;
                 }
                 this.submitting = false;
-                this.$refs.unlock.unlocked();
                 $.toast(message);
             });
         }
