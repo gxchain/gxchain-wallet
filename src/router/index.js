@@ -331,7 +331,8 @@ router.beforeEach((to, from, next) => {
     $.closeModal();
     store.commit('setIsNative', {isNative: isNative});
 
-    if (to.query.platform == 'ios' && !compare_version(to.query.version, '2.2.4')) {
+    var deviceInfo = JSON.parse(localStorage.getItem('deviceInfo') || '{}');
+    if (to.query.platform == 'ios' && !compare_version(deviceInfo.version, '2.2.4')) {
         goNext();
     } else {
         cordovaLoader.load(platform).then(function () {
