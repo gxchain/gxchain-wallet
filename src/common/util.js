@@ -158,7 +158,7 @@ export default {
         return (arg1 * m + arg2 * m) / m;
     },
     callNativeForWebView (successFunction, failFunction, service, action, args, params) {
-        var blockcityVersion = JSON.parse(localStorage.getItem('blockcityVersion') || '1.0.0');
+        var blockcityVersion = localStorage.getItem('blockcityVersion');
         let query = this.query2Obj(location.hash);
 
         if (query.platform == 'ios' && !compare_version(blockcityVersion, '2.2.4')) {
