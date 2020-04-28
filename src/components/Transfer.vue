@@ -288,7 +288,7 @@
             openQRScaner () {
                 let self = this;
                 if (this.isNative) {
-                    cordova.exec(function (result) {// eslint-disable-line
+                    util.callNativeForWebView(function (result) {// eslint-disable-line
                         if (result.indexOf('qr://transfer') > -1) {
                             let query = util.query2Obj(result.replace('qr://transfer', ''));
                             self.account = query.to || '';

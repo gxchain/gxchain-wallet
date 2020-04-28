@@ -1,3 +1,4 @@
+import { compare_version } from '../services/CommonService';
 var numeral = require('numeral');
 
 let methods = {};
@@ -155,6 +156,17 @@ export default {
         }
         m = Math.pow(10, Math.max(r1, r2));
         return (arg1 * m + arg2 * m) / m;
+    },
+    callNativeForWebView (successFunction, failFunction, service, action, args, params) {
+        var deviceInfo = JSON.parse(localStorage.getItem('deviceInfo') || '{}');
+        if (deviceInfo.platform == 'ios' && !compare_version(deviceInfo.version, '2.2.4')) {
+            if (service == 'Share') {
+                action = 'share';
+            }
+            this.callNative(action, params, successFunction);
+        } else {
+        cordova.exec(successFunction, failFunction, service, action, args); // eslint-disable-line
+        }
     }
 };
 

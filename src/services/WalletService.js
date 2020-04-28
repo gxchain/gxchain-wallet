@@ -191,12 +191,12 @@ const set_wallet_index_native = (index) => {
         if (query.platform === 'ios') {
             pluginName = 'KV';
         }
-        cordova.exec(function () { //eslint-disable-line
+        util.callNativeForWebView(function () { //eslint-disable-line
             console.log('wallet index have been save to native storage successfully');
             resolve();
         }, function () {
             reject(new Error('cordova exec failed'));
-        }, pluginName, 'set', [`gxb_wallet_index_${chain_id}`, index]);
+        }, pluginName, 'set', [`gxb_wallet_index_${chain_id}`, index], {key: `gxb_wallet_index_${chain_id}`, value: index});
     });
 };
 
@@ -212,12 +212,12 @@ const set_wallet_native = (wallets) => {
         if (query.platform === 'ios') {
             pluginName = 'KV';
         }
-        cordova.exec(function () { //eslint-disable-line
+        util.callNativeForWebView(function () { //eslint-disable-line
             console.log('wallets have been save to native storage successfully');
             resolve();
         }, function () {
             reject(new Error('cordova exec failed'));
-        }, pluginName, 'set', [`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(wallets)]);
+        }, pluginName, 'set', [`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, JSON.stringify(wallets)], {key: `gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`, value: JSON.stringify(wallets)});
     });
 };
 
@@ -232,14 +232,14 @@ const get_wallet_native = () => {
         if (query.platform === 'ios') {
             pluginName = 'KV';
         }
-        cordova.exec(function (result) { //eslint-disable-line
+        util.callNativeForWebView(function (result) { //eslint-disable-line
             console.log('wallets from native storage:', result);
             let wallets_str = ((result && typeof result === 'string') ? result : '[]') || '[]';
             let wallets = result instanceof Array ? result : JSON.parse(wallets_str);
             resolve(wallets);
         }, function () {
             reject(new Error('cordova exec failed'));
-        }, pluginName, 'get', [`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`]);
+        }, pluginName, 'get', [`gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`], {key: `gxb_wallets_${Apis.instance().chain_id || process.env.chain_id}`});
     });
 };
 

@@ -330,7 +330,7 @@
             openQRScaner () {
                 let self = this;
                 if (this.isNative) {
-                    cordova.exec(function (result) {// eslint-disable-line
+                    util.callNativeForWebView(function (result) {// eslint-disable-line
                         let query = {
                             to: result
                         };
@@ -364,7 +364,7 @@
             },
             backToBlockCity () {
                 if (this.isNative) {
-                    cordova.exec(null, null, 'Controller', 'pop', []); //eslint-disable-line
+                    util.callNativeForWebView(null, null, 'Controller', 'pop', []); //eslint-disable-line
                 }
             }
         },
@@ -396,7 +396,7 @@
                         this.loadWallets();
                     }
                 };
-                cordova.exec(null, null, 'statusBar', 'styleLightContent', []);// eslint-disable-line
+                util.callNativeForWebView(null, null, 'statusBar', 'styleLightContent', []);// eslint-disable-line
             }
             $(this.$el).on('refresh', '.pull-to-refresh-content', (e) => {
                 this.loadWallets();

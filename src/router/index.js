@@ -31,7 +31,7 @@ import AddAssets from '@/components/AddAssets';
 import VoteIndex from '@/components/VoteIndex';
 import StakingIndex from '@/components/StakingIndex';
 import UserIndex from '@/components/User.vue';
-import {set_item} from '@/services/CommonService';
+import { set_item, compare_version } from '@/services/CommonService';
 import i18n from '@/locales';
 
 RouterTransition.use(store, Router, {
@@ -330,9 +330,14 @@ router.beforeEach((to, from, next) => {
     $.closePanel();
     $.closeModal();
     store.commit('setIsNative', {isNative: isNative});
-    cordovaLoader.load(platform).then(function () {
+
+    if (to.query.platform == 'ios' && !compare_version(to.query.version, '2.2.4')) {
         goNext();
-    });
+    } else {
+        cordovaLoader.load(platform).then(function () {
+            goNext();
+        });
+    }
 });
 
 export default router;

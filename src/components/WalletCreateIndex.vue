@@ -43,6 +43,7 @@
     import {
         set_item
     } from '@/services/CommonService';
+    import util from '@/common/util';
 
     export default {
         data () {
@@ -68,7 +69,7 @@
             },
             backToBlockCity () {
                 if (this.isNative) {
-                    cordova.exec(null, null, 'Controller', 'pop', []); //eslint-disable-line
+                    util.callNativeForWebView(null, null, 'Controller', 'pop', []); //eslint-disable-line
                 }
             }
         },
