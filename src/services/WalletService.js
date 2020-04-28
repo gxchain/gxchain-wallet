@@ -10,7 +10,7 @@ import Vue from 'vue';
 import i18n from '@/locales';
 import find from 'lodash/find';
 import util from '@/common/util';
-import {accMult} from './CommonService';
+import { accMult, compare_version } from './CommonService';
 import {serializeCallData} from 'gxbjs/dist/tx_serializer';
 
 /**
@@ -235,6 +235,10 @@ const get_wallet_native = () => {
         util.callNativeForWebView(function (result) { //eslint-disable-line
             console.log('wallets from native storage:', result);
             let wallets_str = ((result && typeof result === 'string') ? result : '[]') || '[]';
+            var blockcityVersion = localStorage.getItem('blockcityVersion');
+            if (query.platform == 'ios' && !compare_version(blockcityVersion, '2.2.4')) {
+                wallets_str = decodeURIComponent(wallets_str);
+            }
             let wallets = result instanceof Array ? result : JSON.parse(wallets_str);
             resolve(wallets);
         }, function () {
