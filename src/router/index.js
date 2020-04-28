@@ -297,6 +297,11 @@ router.beforeEach((to, from, next) => {
     if (version) {
         localStorage.setItem('version', version);
     }
+    let blockcityVersion = from.query.blockcityVersion || to.query.blockcityVersion || '1.0.0';
+    if (blockcityVersion) {
+        localStorage.setItem('blockcityVersion', blockcityVersion);
+    }
+
     const goNext = () => {
         connect(() => {
             bak_wallet();
@@ -331,8 +336,7 @@ router.beforeEach((to, from, next) => {
     $.closeModal();
     store.commit('setIsNative', {isNative: isNative});
 
-    var deviceInfo = JSON.parse(localStorage.getItem('deviceInfo') || '{}');
-    if (to.query.platform == 'ios' && !compare_version(deviceInfo.version, '2.2.4')) {
+    if (to.query.platform == 'ios' && !compare_version(blockcityVersion, '2.2.4')) {
         goNext();
     } else {
         cordovaLoader.load(platform).then(function () {

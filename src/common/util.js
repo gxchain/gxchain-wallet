@@ -158,8 +158,10 @@ export default {
         return (arg1 * m + arg2 * m) / m;
     },
     callNativeForWebView (successFunction, failFunction, service, action, args, params) {
-        var deviceInfo = JSON.parse(localStorage.getItem('deviceInfo') || '{}');
-        if (deviceInfo.platform == 'ios' && !compare_version(deviceInfo.version, '2.2.4')) {
+        var blockcityVersion = JSON.parse(localStorage.getItem('blockcityVersion') || '1.0.0');
+        let query = this.query2Obj(location.hash);
+
+        if (query.platform == 'ios' && !compare_version(blockcityVersion, '2.2.4')) {
             if (service == 'Share') {
                 action = 'share';
             }
