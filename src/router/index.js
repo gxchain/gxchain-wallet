@@ -339,7 +339,8 @@ router.beforeEach((to, from, next) => {
     function isIphoneX () {
         return (
             /iphone/gi.test(navigator.userAgent) &&
-          (screen.height == 812 && screen.width == 375)
+          ((screen.height == 812 && screen.width == 375) ||
+            (screen.height == 896 && screen.width == 414))
         );
     }
 
