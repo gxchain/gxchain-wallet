@@ -363,7 +363,9 @@
                 });
             },
             backToBlockCity () {
+                console.log(this.isNative);
                 if (this.isNative) {
+                    console.log('backToBlockCity');
                     util.callNativeForWebView(null, null, 'Controller', 'pop', []); //eslint-disable-line
                 }
             }

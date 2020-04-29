@@ -35,6 +35,7 @@ export default {
         // 发起请求后这个 iFrame 就没用了，所以把它从 dom 上移除掉
         iFrame.parentNode.removeChild(iFrame);
         iFrame = null;
+        console.log(url);
     },
     callBridgeForContract: function (schema, method, params, callback) {
         var mId = methodID++;
