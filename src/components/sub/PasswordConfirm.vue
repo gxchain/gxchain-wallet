@@ -13,7 +13,7 @@
                             <li class="item-content">
                                 <div class="item-inner">
                                     <div class="item-input">
-                                        <input ref="password" v-model="password" type="password" :placeholder="$t('transfer.confirm.enter_password')">
+                                        <input ref="password" @blur="handleInput" v-model="password" type="password" :placeholder="$t('transfer.confirm.enter_password')">
                                     </div>
                                 </div>
                             </li>
@@ -52,6 +52,10 @@
             }
         },
         methods: {
+            handleInput () {
+                const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
+                window.scrollTo(0, Math.max(scrollHeight - 1, 0));
+            },
             show () {
                 this.password = '';
                 this.submitting = false;
