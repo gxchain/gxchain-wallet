@@ -90,7 +90,7 @@
         position: fixed !important;
         max-height: 8rem;
         bottom: 0;
-        top: initial;
+        top: initial !important;
         background: #fff;
         transition-duration: .2s;
     }
