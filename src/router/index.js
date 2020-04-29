@@ -336,7 +336,24 @@ router.beforeEach((to, from, next) => {
     $.closeModal();
     store.commit('setIsNative', {isNative: isNative});
 
+    function isIphoneX () {
+        return (
+            /iphone/gi.test(navigator.userAgent) &&
+        (screen.height == 812 && screen.width == 375)
+        );
+    }
+
     if (to.query.platform == 'ios' && !compare_version(blockcityVersion, '2.2.4')) {
+        if (to.query.platform == 'ios') {
+            $('html').addClass('native-ios');
+        } else {
+            $('html').removeClass('native-ios');
+        }
+        if (isIphoneX()) {
+            $('html').addClass('native-ios-x');
+        } else {
+            $('html').removeClass('native-ios-x');
+        }
         goNext();
     } else {
         cordovaLoader.load(platform).then(function () {
