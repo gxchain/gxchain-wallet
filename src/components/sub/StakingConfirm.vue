@@ -177,7 +177,7 @@
     }
 </style>
 <template>
-    <Modal v-if="show" :class="skin" @closeModal="onCancel">
+    <Modal v-if="show" :class="skin">
         <div class="header" slot="header">
             {{$t('staking.staking_create')}}
         </div>

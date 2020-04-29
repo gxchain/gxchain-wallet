@@ -86,6 +86,10 @@
         }
     }
 
+    .popup-overlay {
+        z-index: 10200;
+    }
+
     .popup-transfer-confirm {
         position: fixed !important;
         max-height: 8rem;
