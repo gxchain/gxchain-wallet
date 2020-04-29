@@ -202,7 +202,7 @@
                             <div class="item-inner">
                                 <div class="item-title label">{{$t('staking.staking_amount')}}：</div>
                                 <div class="item-input">
-                                <input type="text" v-model="amount" maxlength="16" :placeholder="$t('staking.please_input_staking_amount')">
+                                <input type="text" @blur="handleInput" v-model="amount" maxlength="16" :placeholder="$t('staking.please_input_staking_amount')">
                                 </div>
                             </div>
                         </div>
@@ -306,6 +306,10 @@
             this.userform.program = this.programList[0];
         },
         methods: {
+            handleInput () {
+                const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
+                window.scrollTo(0, Math.max(scrollHeight - 1, 0));
+            },
             onCancel () {
                 this.$emit('closeModal');
             },

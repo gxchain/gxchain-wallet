@@ -74,6 +74,19 @@
         }
     };
 </script>
+<style lang="scss">
+@media all and (max-width: 629px),(max-height: 629px) {
+    html.with-statusbar-overlay .popup {
+        height: -webkit-calc(100% - 1rem);
+        height: calc(100% - 1rem);
+        top:1rem
+    }
+
+    html.with-statusbar-overlay .popup-overlay {
+        z-index:10200
+    }
+}
+</style>
 <style lang="scss" scoped>
     .bar.bar-nav {
         background: transparent;
@@ -84,10 +97,6 @@
         .icon {
             color: #3d3d3b;
         }
-    }
-
-    .popup-overlay {
-        z-index: 10200;
     }
 
     .popup-transfer-confirm {
