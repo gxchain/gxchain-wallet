@@ -1,3 +1,4 @@
+import { compare_version } from '../services/CommonService';
 var numeral = require('numeral');
 
 let methods = {};
@@ -34,6 +35,7 @@ export default {
         // 发起请求后这个 iFrame 就没用了，所以把它从 dom 上移除掉
         iFrame.parentNode.removeChild(iFrame);
         iFrame = null;
+        console.log(url);
     },
     callBridgeForContract: function (schema, method, params, callback) {
         var mId = methodID++;
@@ -155,6 +157,19 @@ export default {
         }
         m = Math.pow(10, Math.max(r1, r2));
         return (arg1 * m + arg2 * m) / m;
+    },
+    callNativeForWebView (successFunction, failFunction, service, action, args, params) {
+        var blockcityVersion = localStorage.getItem('blockcityVersion');
+        let query = this.query2Obj(location.hash);
+
+        if (query.platform == 'ios' && !compare_version(blockcityVersion, '2.2.4')) {
+            if (service == 'Share') {
+                action = 'share';
+            }
+            this.callNative(action, params, successFunction);
+        } else {
+        cordova.exec(successFunction, failFunction, service, action, args); // eslint-disable-line
+        }
     }
 };
 

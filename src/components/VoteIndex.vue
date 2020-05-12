@@ -137,6 +137,7 @@
     import PasswordConfirm from '@/components/sub/PasswordConfirm.vue';
     import VoteConfirm from '@/components/sub/VoteConfirm.vue';
     import filters from '@/filters';
+    import util from '@/common/util';
 
     export default {
         filters,
@@ -396,7 +397,7 @@
             goVoteHistory () {
                 let self = this;
                 let url = 'https://block.gxb.io/#/account/' + this.currentWallet.account;
-                cordova.exec(null, null, "Controller", "push", ['url', url, self.$t('node_vote.index.records')]); // eslint-disable-line
+                util.callNativeForWebView(null, null, "Controller", "push", ['url', url, self.$t('node_vote.index.records')], {url: url, title: self.$t('node_vote.index.records'), hideNav: 0}); // eslint-disable-line
             },
             onAccountChange () {
                 this.validateAccount();

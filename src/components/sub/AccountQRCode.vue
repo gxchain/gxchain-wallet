@@ -30,6 +30,7 @@
         mapGetters
     } from 'vuex';
     import qrcode from './QRCode.vue';
+    import util from '@/common/util';
 
     export default {
         props: {
@@ -48,13 +49,13 @@
                 $.popup(this.$el);
             },
             copyAccount () {
-                cordova.exec(() => { // eslint-disable-line
+                util.callNativeForWebView(() => { // eslint-disable-line
                     this.accountCopied = true;
                     setTimeout(() => {
                         this.accountCopied = false;
                         $.closeModal();
                     }, 1000);
-                }, null, 'ClipBoard', 'copy', [this.account]);
+                }, null, 'ClipBoard', 'copy', [this.account], {content: this.account});
             },
             limitLength () {
                 if (!/^\d+(\.\d{0,5})?$/.test(this.amount)) {

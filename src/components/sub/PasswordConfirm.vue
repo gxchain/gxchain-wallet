@@ -13,7 +13,7 @@
                             <li class="item-content">
                                 <div class="item-inner">
                                     <div class="item-input">
-                                        <input ref="password" v-model="password" type="password" :placeholder="$t('transfer.confirm.enter_password')">
+                                        <input ref="password" @blur="handleInput" v-model="password" type="password" :placeholder="$t('transfer.confirm.enter_password')">
                                     </div>
                                 </div>
                             </li>
@@ -52,6 +52,10 @@
             }
         },
         methods: {
+            handleInput () {
+                const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
+                window.scrollTo(0, Math.max(scrollHeight - 1, 0));
+            },
             show () {
                 this.password = '';
                 this.submitting = false;
@@ -74,6 +78,19 @@
         }
     };
 </script>
+<style lang="scss">
+@media all and (max-width: 629px),(max-height: 629px) {
+    html.with-statusbar-overlay .popup {
+        height: -webkit-calc(100% - 1rem);
+        height: calc(100% - 1rem);
+        top:1rem
+    }
+
+    html.with-statusbar-overlay .popup-overlay {
+        z-index:10200
+    }
+}
+</style>
 <style lang="scss" scoped>
     .bar.bar-nav {
         background: transparent;
@@ -90,7 +107,7 @@
         position: fixed !important;
         max-height: 8rem;
         bottom: 0;
-        top: initial;
+        top: initial !important;
         background: #fff;
         transition-duration: .2s;
     }

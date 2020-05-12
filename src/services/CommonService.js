@@ -25,11 +25,11 @@ export const get_item_native = (key) => {
         if (query.platform === 'ios') {
             pluginName = 'KV';
         }
-        cordova.exec(function (result) { //eslint-disable-line
+        util.callNativeForWebView(function (result) { //eslint-disable-line
             resolve(result);
         }, function () {
             reject(new Error('cordova exec failed'));
-        }, pluginName, 'get', [key]);
+        }, pluginName, 'get', [key], {key: key});
     });
 };
 
@@ -40,11 +40,11 @@ export const set_item_native = (key, value) => {
         if (query.platform === 'ios') {
             pluginName = 'KV';
         }
-        cordova.exec(function (result) { //eslint-disable-line
+        util.callNativeForWebView(function (result) { //eslint-disable-line
             resolve(result);
         }, function () {
             reject(new Error('cordova exec failed'));
-        }, pluginName, 'set', [key, value]);
+        }, pluginName, 'set', [key, value], {key: key, value: value});
     });
 };
 
@@ -78,4 +78,10 @@ export const accSub = (arg1, arg2) => {
     m = Math.pow(10, Math.max(r1, r2));
     n = (r1 >= r2) ? r1 : r2;
     return ((arg1 * m - arg2 * m) / m).toFixed(n);
+};
+
+export const compare_version = (localVersion = '', serverVersion = '') => {
+    let v1 = localVersion.split('.');
+    let v2 = serverVersion.split('.');
+    return v1[0] * 1000000 + v1[1] * 1000 + parseInt(v1[2]) < v2[0] * 1000000 + v2[1] * 1000 + parseInt(v2[2]);
 };

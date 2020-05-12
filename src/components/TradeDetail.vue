@@ -81,6 +81,7 @@
 <script>
     import PasswordConfirm from './sub/PasswordConfirm.vue';
     import AccountImage from './sub/AccountImage.vue';
+    import util from '@/common/util';
     import filters from '@/filters';
     import {
         fetch_account, fetch_block, get_assets_by_ids, get_objects, get_wallet_index, get_wallets,
@@ -126,11 +127,11 @@
                         {
                             text: self.$t('trade.modal.copy'),
                             onClick: function () {
-                                cordova.exec(() => {// eslint-disable-line
+                                util.callNativeForWebView(() => {// eslint-disable-line
                                     setTimeout(() => {
                                         $.toast(self.$t('trade.modal.copy_success'));
                                     }, 1000);
-                                }, null, 'ClipBoard', 'copy', [self.txid]);
+                                }, null, 'ClipBoard', 'copy', [self.txid], {content: self.txid});
                             }
                         }
                     ]

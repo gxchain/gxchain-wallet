@@ -31,7 +31,7 @@ import AddAssets from '@/components/AddAssets';
 import VoteIndex from '@/components/VoteIndex';
 import StakingIndex from '@/components/StakingIndex';
 import UserIndex from '@/components/User.vue';
-import {set_item} from '@/services/CommonService';
+import { set_item, compare_version } from '@/services/CommonService';
 import i18n from '@/locales';
 
 RouterTransition.use(store, Router, {
@@ -297,6 +297,11 @@ router.beforeEach((to, from, next) => {
     if (version) {
         localStorage.setItem('version', version);
     }
+    let blockcityVersion = from.query.blockcityVersion || to.query.blockcityVersion;
+    if (blockcityVersion) {
+        localStorage.setItem('blockcityVersion', blockcityVersion);
+    }
+
     const goNext = () => {
         connect(() => {
             bak_wallet();
@@ -330,9 +335,32 @@ router.beforeEach((to, from, next) => {
     $.closePanel();
     $.closeModal();
     store.commit('setIsNative', {isNative: isNative});
-    cordovaLoader.load(platform).then(function () {
+
+    function isIphoneX () {
+        return (
+            /iphone/gi.test(navigator.userAgent) &&
+          ((screen.height == 812 && screen.width == 375) ||
+            (screen.height == 896 && screen.width == 414))
+        );
+    }
+
+    if (to.query.platform == 'ios' && !compare_version(blockcityVersion, '2.2.4')) {
+        if (to.query.platform == 'ios') {
+            $('html').addClass('native-ios');
+        } else {
+            $('html').removeClass('native-ios');
+        }
+        if (isIphoneX()) {
+            $('html').addClass('native-ios-x');
+        } else {
+            $('html').removeClass('native-ios-x');
+        }
         goNext();
-    });
+    } else {
+        cordovaLoader.load(platform).then(function () {
+            goNext();
+        });
+    }
 });
 
 export default router;

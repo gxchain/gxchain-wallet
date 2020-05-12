@@ -48,6 +48,7 @@
         update_wallet
     } from '@/services/WalletService';
     import PasswordConfirm from './sub/PasswordConfirm.vue';
+    import util from '@/common/util';
 
     export default {
         data () {
@@ -84,12 +85,12 @@
                 });
             },
             copyKey () {
-                cordova.exec(() => {// eslint-disable-line
+                util.callNativeForWebView(() => {// eslint-disable-line
                     this.keyCopied = true;
                     setTimeout(() => {
                         this.keyCopied = false;
                     }, 1000);
-                }, null, 'ClipBoard', 'copy', [this.wifKey]);
+                }, null, 'ClipBoard', 'copy', [this.wifKey], {content: this.wifKey});
             },
             confirm (returnURL) {
                 let self = this;
