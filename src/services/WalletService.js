@@ -236,7 +236,7 @@ const get_wallet_native = () => {
             console.log('wallets from native storage:', result);
             let wallets_str = ((result && typeof result === 'string') ? result : '[]') || '[]';
             var blockcityVersion = localStorage.getItem('blockcityVersion');
-            if (query.platform == 'ios' && !compare_version(blockcityVersion, '2.2.4')) {
+            if (query.platform == 'ios' && blockcityVersion && !compare_version(blockcityVersion, '2.2.4')) {
                 wallets_str = decodeURIComponent(wallets_str);
             }
             let wallets = result instanceof Array ? result : JSON.parse(wallets_str);
