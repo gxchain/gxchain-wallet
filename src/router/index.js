@@ -297,7 +297,7 @@ router.beforeEach((to, from, next) => {
     if (version) {
         localStorage.setItem('version', version);
     }
-    let blockcityVersion = from.query.blockcityVersion || to.query.blockcityVersion;
+    let blockcityVersion = from.query.blockcityVersion || to.query.blockcityVersion || '1.0.0';
     if (blockcityVersion) {
         localStorage.setItem('blockcityVersion', blockcityVersion);
     }
@@ -344,7 +344,7 @@ router.beforeEach((to, from, next) => {
         );
     }
 
-    if (to.query.platform == 'ios' && blockcityVersion && !compare_version(blockcityVersion, '2.2.4')) {
+    if (to.query.platform == 'ios' && !compare_version(blockcityVersion, '2.2.4')) {
         if (to.query.platform == 'ios') {
             $('html').addClass('native-ios');
         } else {
