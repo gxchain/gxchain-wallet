@@ -344,7 +344,7 @@ router.beforeEach((to, from, next) => {
         );
     }
 
-    if (to.query.platform == 'ios' && !compare_version(blockcityVersion, '2.2.4')) {
+    if (to.query.platform == 'ios' && blockcityVersion && !compare_version(blockcityVersion, '2.2.4')) {
         if (to.query.platform == 'ios') {
             $('html').addClass('native-ios');
         } else {

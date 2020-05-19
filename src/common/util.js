@@ -162,7 +162,7 @@ export default {
         var blockcityVersion = localStorage.getItem('blockcityVersion');
         let query = this.query2Obj(location.hash);
 
-        if (query.platform == 'ios' && !compare_version(blockcityVersion, '2.2.4')) {
+        if (query.platform == 'ios' && blockcityVersion && !compare_version(blockcityVersion, '2.2.4')) {
             if (service == 'Share') {
                 action = 'share';
             }
