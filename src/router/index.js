@@ -297,7 +297,7 @@ router.beforeEach((to, from, next) => {
     if (version) {
         localStorage.setItem('version', version);
     }
-    let blockcityVersion = from.query.blockcityVersion || to.query.blockcityVersion || '1.0.0';
+    let blockcityVersion = from.query.blockcityVersion || to.query.blockcityVersion;
     if (blockcityVersion) {
         localStorage.setItem('blockcityVersion', blockcityVersion);
     }
