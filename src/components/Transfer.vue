@@ -279,9 +279,9 @@
                     if (!/[a-z0-9]$/.test(label)) {
                         return 'account_end_error';
                     }
-                    if (!(label.length >= 3)) {
-                        return 'account_segment_should_be_longer';
-                    }
+                    // if (!(label.length >= 3)) {
+                    //     return 'account_segment_should_be_longer';
+                    // }
                 }
                 return null;
             },
