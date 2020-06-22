@@ -377,6 +377,10 @@
                                     tmp = true;
                                     break;
                                 }
+                                if (item.is_valid === false || item.is_banned === true) {
+                                    tmp = true;
+                                    break;
+                                }
                                 if (item.name === nodes[i]) {
                                     tmp = true;
                                     break;
