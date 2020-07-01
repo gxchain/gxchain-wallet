@@ -850,9 +850,12 @@ const get_trust_nodes = () => {
             for (let i = 0; i < nodes.length; i++) {
                 Promise.all([
                     Apis.instance().db_api().exec('get_witness_by_account', [nodes[i]]),
-                    Apis.instance().db_api().exec('get_committee_member_by_account', [nodes[i]])
+                    Apis.instance().db_api().exec('get_committee_member_by_account', [nodes[i]]),
+                    Apis.instance().db_api().exec('get_full_accounts', [[nodes[i]], false])
                 ]).then(results => {
                     let account = results[0];
+                    let _acc = results[2][0];
+                    account.margin = _acc[1] && _acc[1].pledge_balances && _acc[1].pledge_balances.length > 0 ? _acc[1].pledge_balances[0].amount.amount : 0;
                     account.vote_ids = [account.vote_id, results[1].vote_id];
                     Apis.instance().db_api().exec('get_objects', [[account.witness_account]]).then(res => {
                         account.name = res[0].name;

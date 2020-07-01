@@ -354,6 +354,17 @@
                                 'kairos',
                                 'sakura',
                                 'taffy',
+                                'init0',
+                                'init1',
+                                'init2',
+                                'init3',
+                                'init4',
+                                'init5',
+                                'init6',
+                                'init7',
+                                'init8',
+                                'init9',
+                                'init10',
                                 'miner1',
                                 'miner2',
                                 'miner3',
@@ -369,7 +380,8 @@
                                 'dennis1',
                                 'david12',
                                 'marks-lee',
-                                'robin-green'
+                                'robin-green',
+                                'coinget-bp'
                             ];
                             let tmp = false;
                             for (let i = 0; i < nodes.length; i++) {
@@ -385,11 +397,16 @@
                                     tmp = true;
                                     break;
                                 }
+                                if (item.margin === 0) {
+                                    tmp = true;
+                                    break;
+                                }
                             }
                             return !tmp;
                         });
                         this.sortByOrder(accounts, this.currentOrderBy);
                     }
+
                     let nodeInfoList = results[2] || [];
                     for (let i = 0; i < this.accounts.length; i++) {
                         for (let j = 0; j < nodeInfoList.length; j++) {
