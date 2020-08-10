@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'gxb';
-  src:  url('fonts/gxb.eot?6b3lf0');
-  src:  url('fonts/gxb.eot?6b3lf0#iefix') format('embedded-opentype'),
-    url('fonts/gxb.ttf?6b3lf0') format('truetype'),
-    url('fonts/gxb.woff?6b3lf0') format('woff'),
-    url('fonts/gxb.svg?6b3lf0#gxb') format('svg');
+  src:  url('fonts/gxb.eot?fqbwiu');
+  src:  url('fonts/gxb.eot?fqbwiu#iefix') format('embedded-opentype'),
+    url('fonts/gxb.ttf?fqbwiu') format('truetype'),
+    url('fonts/gxb.woff?fqbwiu') format('woff'),
+    url('fonts/gxb.svg?fqbwiu#gxb') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -13,7 +13,7 @@
 [class^="gxicon-"], [class*=" gxicon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'gxb' !important;
-  speak: none;
+  speak: never;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -35,6 +35,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.gxicon-proposal3:before {
+  content: "\e91f";
+}
+.gxicon-cancel:before {
+  content: "\e91c";
+}
+.gxicon-success1:before {
+  content: "\e91d";
+}
 .gxicon-proposal:before {
   content: "\e91a";
 }

@@ -624,6 +624,35 @@ const locale = {
     },
     my: {
         title: 'My'
+    },
+    proposals: {
+        title: '提案',
+        fees: '手续费',
+        'item-title': '信息',
+        status: '状态',
+        operator: '操作',
+        'expired-date': '过期时间',
+        please_select_account: '请选择账户',
+        update_proposals: '更新提案',
+        payee_account: '付费账户',
+        active_approvals_to_add: '要添加的活跃权限许可',
+        active_approvals_to_remove: '要移除的活跃权限许可',
+        owner_approvals_to_add: '要添加的账户权限许可',
+        owner_approvals_to_remove: '要移除的账户权限许可',
+        key_approvals_to_add: '要添加的公钥许可',
+        key_approvals_to_remove: '要移除的公钥许可',
+        update_proposals_success: '更新提案成功',
+        committee_member_update_global_parameters: '{account}更新理事会全局参数',
+        transfer: '从账户{from}发送{amount}到{to}',
+        add_approval: '添加审批',
+        remove_approval: '删除审批',
+        approval_to_add: '批准添加',
+        approval_to_remove: '批准删除',
+        approval_btn: '批准',
+        reject: '否决',
+        approval_view: '查看',
+        viewProposal: '查看信息',
+        createProposal: '创建提案'
     }
 };
 

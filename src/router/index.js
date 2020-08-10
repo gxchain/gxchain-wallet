@@ -261,6 +261,16 @@ let router = new Router({
             component: Income
         },
         {
+            path: '/proposals',
+            meta: {
+                title: '提案'
+            },
+            name: 'proposals',
+            component: (resolve) => {
+                require(['@/components/Proposals'], resolve);
+            }
+        },
+        {
             path: '/contract/call',
             meta: {
                 title: '调用智能合约'

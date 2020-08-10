@@ -21,6 +21,7 @@
     "loaders.css": "^0.1.2",
     "lodash": "^4.17.15",
     "numeral": "^2.0.4",
+    "prismjs": "^1.21.0",
     "qr.js": "0.0.0",
     "scriptloader": "^1.1.2",
     "vue": "^2.4.2",

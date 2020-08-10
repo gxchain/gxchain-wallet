@@ -1270,6 +1270,60 @@ const get_staking_percent = () => {
     });
 };
 
+/**
+ * proposalAction
+ * @returns {*}
+ */
+const proposalAction = (
+    fee_paying_asset = 'GXC',
+    account,
+    proposalObject,
+    password,
+    broadcast = false
+) => {
+    return new Promise((resolve, reject) => {
+        resolve(
+            Promise.all([
+                fetch_account(account),
+                get_objects(['2.0.0']),
+                get_asset(fee_paying_asset)
+            ]).then((results) => {
+                let acc = results[0];
+                let fee_asset = results[2][0];
+                if (!acc) {
+                    throw Error(`account_id ${account} not exist`);
+                }
+                if (!fee_asset) {
+                    throw Error(`asset ${fee_paying_asset} not exist`);
+                }
+                let proposal = {
+                    fee_paying_account: '', // proposalObject.payee,
+                    proposal: '', // proposalObject.id,
+                    active_approvals_to_add: [],
+                    active_approvals_to_remove: [],
+                    owner_approvals_to_add: [],
+                    owner_approvals_to_remove: [],
+                    key_approvals_to_add: [],
+                    key_approvals_to_remove: [],
+                    fee: {
+                        amount: 0,
+                        asset_id: '1.3.1'
+                    }
+                };
+                let tr = new TransactionBuilder();
+                tr.add_operation(
+                    tr.get_type_operation(
+                        'proposal_update',
+                        Object.assign(proposal, proposalObject)
+                    )
+                );
+
+                return process_transaction(tr, account, password, broadcast);
+            })
+        );
+    });
+};
+
 export {
     bak_wallet,
     get_objects,
@@ -1314,5 +1368,6 @@ export {
     get_staking_fee,
     get_vesting_balances,
     claimVestingBalance,
-    get_staking_percent
+    get_staking_percent,
+    proposalAction
 };

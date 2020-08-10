@@ -170,6 +170,9 @@ export default {
         } else {
         cordova.exec(successFunction, failFunction, service, action, args); // eslint-disable-line
         }
+    },
+    get_percentage (a, b) {
+        return Math.round((a / b) * 100);
     }
 };
 

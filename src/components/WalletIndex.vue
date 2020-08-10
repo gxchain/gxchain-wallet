@@ -62,12 +62,22 @@
                                             <span class="digit balance">{{currentWallet.totalValue !== undefined ? currentWallet.totalValue : '-' | number(2)}}</span>
                                         </div>
                                     </div>
-                                    <div class="asset-button" @click="goAddAssets">
-                                        <!-- <router-link :to="link('/add-assets')" href="javascript:;">
-                                            <img src="../assets/images/asset_btn.png">
-                                        </router-link> -->
-                                        <img src="../assets/images/asset_btn.png">
+                                    <div>
+                                        
                                     </div>
+                                    <div class="asset-button">
+                                        <div class="index-proposals" v-if="!emptyProposalList" @click="goProposal">
+                                            <i class="gxicon gxicon-proposal3" ></i>
+                                            <span class="red-dot"></span>
+                                        </div>
+                                        <div @click="goAddAssets">
+                                            <!-- <router-link :to="link('/add-assets')" href="javascript:;">
+                                                <img src="../assets/images/asset_btn.png">
+                                            </router-link> -->
+                                            <img src="../assets/images/asset_btn.png">
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </swiper-slide>
@@ -133,7 +143,7 @@
 
     import {
         fetch_account_balances, fetch_account, get_staking_object, fetch_reference_accounts, get_assets_by_ids, get_wallet_index, get_wallets,
-        set_wallet_index
+        set_wallet_index, fetch_full_account
     } from '@/services/WalletService';
     import {get_market_asset_price} from '@/services/MarketService';
     import filters from '@/filters';
@@ -169,13 +179,15 @@
                 },
                 isAssetHidden: '',
                 channel: '',
-                stakingAmount: 0
+                stakingAmount: 0,
+                emptyProposalList: true
             };
         },
         watch: {
             currentWalletIndex () {
                 this.loadBalances(this.currentWallet);
                 this.getStakingAmount();
+                this.getProposalInfo();
             }
         },
 
@@ -190,6 +202,7 @@
                         this.loadBalances(wallet);
                     });
                     this.getStakingAmount();
+                    this.getProposalInfo();
                 }
                 setTimeout(() => {
                     $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
@@ -303,6 +316,36 @@
                     });
                 }
             },
+            async getProposalObject () {
+                let committee = await fetch_full_account('committee-account').then(res => {
+                    return res[0];
+                });
+                return committee;
+            },
+            getProposalInfo () {
+                fetch_full_account(this.currentWallet.account).then(res => {
+                    this.emptyProposalList = true;
+                    if (res[0][1].proposals.length > 0) {
+                        this.emptyProposalList = false;
+                    } else {
+                        this.getProposalObject().then(account => {
+                            let committeeAccount = account[1].account.active.account_auths;
+                            let flag = false;
+                            for (let i = 0; i < committeeAccount.length; i++) {
+                                if (committeeAccount[i][0] == res[0][1].account.id) {
+                                    flag = true;
+                                    break;
+                                }
+                            }
+                            if (flag) {
+                                if (account[1].proposals.length > 0) {
+                                    this.emptyProposalList = false;
+                                }
+                            }
+                        });
+                    }
+                });
+            },
             getStakingAmount () {
                 let currentWallet = this.currentWallet.account;
                 fetch_account(currentWallet).then(result => {
@@ -360,6 +403,14 @@
                 };
                 this.$router.push({
                     path: this.link('/add-assets', query)
+                });
+            },
+            goProposal () {
+                let query = {
+                    from: this.$route.fullPath
+                };
+                this.$router.push({
+                    path: this.link('/proposals', query)
                 });
             },
             backToBlockCity () {
@@ -568,8 +619,23 @@
                 img {
                     width: 1.4rem;
                 }
+                .index-proposals {
+                    padding-right: 1rem;
+                    .red-dot {
+                        position: relative;
+                        display: inline-block;
+                        top: -20px;
+                        border-radius: 2px;
+                        width: 4px;
+                        height: 4px;
+                        background: #ff6e35;
+                    }
+                }
+                .gxicon-proposal3 {
+                    font-size: 1.2rem;
+                }
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
                 justify-content: flex-end;
             }
             small {
