@@ -454,7 +454,13 @@ export default {
     }
 };
 </script>
-
+<style lang="scss">
+@media all and (max-width: 629px),(max-height: 629px) {
+    html.with-statusbar-overlay .popup.popup-vote-confirm {
+        top:initial
+    }
+}
+</style>
 <style lang="scss" scoped>
 .pull-right {
     font-size: .65rem;
