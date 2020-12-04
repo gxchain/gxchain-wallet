@@ -19,7 +19,7 @@
                 </div>
                 <div class="list-block">
                     <div class="card-content">
-                      <video controls=""  name="media" id="video_wrap">
+                      <video controls=""  name="media" id="video_wrap" autoplay>
                           <source src="https://static.gxchain.org/gxchain/video/video.mp4" id="video_src" type="video/mp4">
                       </video>
                       <div class="nftContent">
