@@ -83,7 +83,7 @@
             },
             onConfirm () {
                 if (!this.account) {
-                    $.toast('请输入账号');
+                    $.toast(this.$t('nft.please_input_account'));
                     return;
                 }
                 this.$emit('onConfirm', this.account);
