@@ -15,7 +15,12 @@ const locale = {
         join_loyalty_program: '参与忠诚者计划',
         loyalty_program_icon: 'loyalty-program-btn-zh.png',
         account_is_address: '账户名即转账地址',
-        staking: '质押'
+        staking: '质押',
+        assets: '资产',
+        collection: '收藏'
+    },
+    nft: {
+        send: '发送'
     },
     market: {
         title: '行情'

@@ -93,34 +93,66 @@
                         <span class="item-text">{{$t('index.receive')}}</span>
                     </a>
                 </div>
-                <!--assets-->
-                <div class="table-assets" v-if="currentWallet">
-                    <div class="list-block media-list">
-                        <ul>
-                            <li v-for="balance in currentWallet.balances" class="item-content item-asset"
-                                :key="balance.symbol">
-                                <div class="item-inner">
-                                    <div class="symbol">
-                                        <account-image :account="balance.symbol" :size="15"></account-image>
-                                        <div>&nbsp;&nbsp;{{balance.symbol}} </div>
-                                    </div>
-                                    <div class="price">
-                                        <div class="digital">
-                                            {{balance.amount | number(balance.precision)}} <span v-if="balance.asset_id == '1.3.1'&&stakingAmount" class="stakingAmount">({{$t('index.staking')}}: {{stakingAmount}}GXC)</span>
-                                        </div>
-                                        <small v-if="balance.value != 0">
-                                            ≈&nbsp;{{$t('index.unit')}}{{balance.value | number(2)}}
-                                        </small>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="tab-nav index-tab">
+                    <div :class="tabIndex === 'tab-container1' ? 'tab-nav-item active' : 'tab-nav-item'" @click="tabIndex = 'tab-container1'">{{$t('index.assets')}}</div>
+                    <div :class="tabIndex === 'tab-container2' ? 'tab-nav-item active' : 'tab-nav-item'" @click="tabIndex = 'tab-container2'">{{$t('index.collection')}}</div>
                 </div>
+                <div class="tab-container">
+                    <gxb-tab-container v-model="tabIndex">
+                        <gxb-tab-container-item id="tab-container1">
+                            <!--assets-->
+                            <div class="table-assets" v-if="currentWallet">
+                                <div class="list-block media-list">
+                                    <ul>
+                                        <li v-for="balance in currentWallet.balances" class="item-content item-asset"
+                                            :key="balance.symbol">
+                                            <div class="item-inner">
+                                                <div class="symbol">
+                                                    <account-image :account="balance.symbol" :size="15"></account-image>
+                                                    <div>&nbsp;&nbsp;{{balance.symbol}} </div>
+                                                </div>
+                                                <div class="price">
+                                                    <div class="digital">
+                                                        {{balance.amount | number(balance.precision)}} <span v-if="balance.asset_id == '1.3.1'&&stakingAmount" class="stakingAmount">({{$t('index.staking')}}: {{stakingAmount}}GXC)</span>
+                                                    </div>
+                                                    <small v-if="balance.value != 0">
+                                                        ≈&nbsp;{{$t('index.unit')}}{{balance.value | number(2)}}
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </gxb-tab-container-item>
+                        <gxb-tab-container-item id="tab-container2">
+                            <div class="table-assets" v-if="accountNFT.length>0">
+                                <div class="list-block media-list">
+                                    <ul>
+                                        <li v-for="item in accountNFT" class="item-content item-asset"
+                                            :key="item.symbol">
+                                            <div class="item-inner" @click="showNFTInfo(item)">
+                                                <div class="symbol">
+                                                    <img src="https://static.gxb.io/gxs/symbols/gxs.png" width="30" height="30">
+                                                    <div>&nbsp;&nbsp;#{{item.tokenid}} </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div v-else class="no-reocrd table-assets">
+                                {{$t('node_vote.index.no_record')}}
+                            </div>
+                        </gxb-tab-container-item>
+                    </gxb-tab-container>
+                </div>
+                
             </div>
         </div>
         <left-panel ref="panel"></left-panel>
         <account-q-r-code ref="qrcode" :account="this.currentWallet.account"></account-q-r-code>
+        <account-nft-info ref="nftInfo" :account="this.currentWallet.account" :nftinfo="currentNft" ></account-nft-info>
     </div>
 </template>
 <script>
@@ -128,17 +160,19 @@
     import AccountImage from './sub/AccountImage.vue';
     import LeftPanel from './sub/LeftPanel.vue';
     import AccountQRCode from './sub/AccountQRCode.vue';
+    import AccountNftInfo from './sub/AccountNftInfo.vue';
     import util from '@/common/util';
     import WalletTab from './sub/WalletTab';
 
     import {
         fetch_account_balances, fetch_account, get_staking_object, fetch_reference_accounts, get_assets_by_ids, get_wallet_index, get_wallets,
-        set_wallet_index
+        set_wallet_index, get_contract_table
     } from '@/services/WalletService';
     import {get_market_asset_price} from '@/services/MarketService';
     import filters from '@/filters';
     import some from 'lodash/some';
     import unionBy from 'lodash/unionBy';
+    import find from 'lodash/find';
     export default {
         filters,
         data () {
@@ -169,17 +203,44 @@
                 },
                 isAssetHidden: '',
                 channel: '',
-                stakingAmount: 0
+                stakingAmount: 0,
+                tabIndex: 'tab-container1',
+                nftBalance: [{'asset_id': '1.3.1', 'amount': 1052.16472, 'precision': 5, 'value': 2413.77, 'symbol': 'GXC', 'status': true}],
+                accountNFT: [],
+                showNft: false,
+                currentNft: {}
             };
         },
         watch: {
             currentWalletIndex () {
                 this.loadBalances(this.currentWallet);
                 this.getStakingAmount();
+                this.getNFTList();
             }
         },
 
         methods: {
+            showNFTInfo (item) {
+                this.showNft = true;
+                this.currentNft = item;
+                this.$refs.nftInfo.show();
+            },
+            async getNFTList () {
+                Promise.all([
+                    get_contract_table(process.env.nftContract, 'account'),
+                    get_contract_table(process.env.nftContract, 'token')
+                ]).then((result) => {
+                    let NFTAccount = result[0] && result[0].rows;
+                    let NFTToken = result[1] && result[1].rows;
+                    let _walletId = String(this.currentAccountId).split('.')[2];
+                    let tokenId = find(NFTAccount, (item) => item.owner == _walletId);
+                    this.accountNFT = [];
+                    tokenId.tokenids.forEach((id) => {
+                        let obj = find(NFTToken, (item) => item.tokenid == id);
+                        this.accountNFT.push(obj);
+                    });
+                });
+            },
             loadWallets () {
                 if (this.wallets.length == 0) {
                     this.$router.replace({
@@ -190,6 +251,7 @@
                         this.loadBalances(wallet);
                     });
                     this.getStakingAmount();
+                    this.getNFTList();
                 }
                 setTimeout(() => {
                     $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
@@ -306,6 +368,8 @@
             getStakingAmount () {
                 let currentWallet = this.currentWallet.account;
                 fetch_account(currentWallet).then(result => {
+                    console.log(result);
+                    this.currentAccountId = result.id;
                     get_staking_object(result.id).then(res => {
                         let stakingList = res;
                         let amount = 0;
@@ -381,6 +445,7 @@
             fetch_reference_accounts(this.wallets.filter(wallet => {
                 return !wallet.partial;
             }).map(wallet => {
+                console.log(wallet);
                 return wallet.account;
             })).then((wallets) => {
                 if (wallets.length > this.wallets.length) {
@@ -468,7 +533,8 @@
             AccountImage,
             LeftPanel,
             AccountQRCode,
-            WalletTab
+            WalletTab,
+            AccountNftInfo
         }
     };
 </script>
@@ -590,6 +656,7 @@
         background: #fff;
         position: relative;
         z-index: 1;
+        border-bottom: .2rem solid #e7e7e7;
         .item {
             display: flex;
             flex: 2;
@@ -644,13 +711,13 @@
             height: 100%;
         }
     }
-
+    .index-tab {
+    }
     .table-assets {
         position: relative;
         height: 25rem;
         background: #fff;
         .list-block {
-            border-top: .2rem solid #e7e7e7;
             background: #e7e7e7;
             margin-top: 0;
             margin-bottom: 0;
@@ -680,5 +747,37 @@
                 }
             }
         }
+    }
+    .tab-nav {
+        background-color: #fff;
+        position: relative;
+        height: 2rem;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        .tab-nav-item {
+            flex: 1;
+            height: 2rem;
+            line-height: 2rem;
+            text-align: center;
+            font-size: .65rem;
+            border-bottom: 1px solid #f2f2f2;
+        }
+        .tab-nav-item.active {
+            color: #6699ff;
+            font-weight: bold;
+            border-bottom: 1px solid #6699ff;
+        }
+    }
+    .tab-container{
+        background-color: #fff;
+    }
+    .no-reocrd {
+        margin: 1.5rem 0;
+        font-size: .7rem;
+        color: #80848f;
+        text-align: center;
     }
 </style>
