@@ -16,7 +16,15 @@ const locale = {
         join_loyalty_program: '충성계획 참여 ',
         loyalty_program_icon: 'loyalty-program-btn-zh.png',
         account_is_address: '지갑주소 즉 송금 주소',
-        staking: '투표'
+        staking: '투표',
+        assets: 'Assets',
+        collection: 'Collection'
+    },
+    nft: {
+        send: 'Send',
+        please_input_account: 'Please Input Account',
+        view_info: 'View Detail',
+        confirm_send: 'Confirm'
     },
     market: {
         title: '시세'

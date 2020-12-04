@@ -15,7 +15,15 @@ const locale = {
         join_loyalty_program: 'Loyalty Program',
         loyalty_program_icon: 'loyalty-program-btn-en.png',
         account_is_address: 'Account name is your address',
-        staking: 'Staking'
+        staking: 'Staking',
+        assets: 'Assets',
+        collection: 'Collection'
+    },
+    nft: {
+        send: 'Send',
+        please_input_account: 'Please Input Account',
+        view_info: 'View Detail',
+        confirm_send: 'Confirm'
     },
     market: {
         title: 'Market'
