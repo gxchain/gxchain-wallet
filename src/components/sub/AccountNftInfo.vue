@@ -19,18 +19,24 @@
                 </div>
                 <div class="list-block">
                     <div class="card-content">
-                      <video controls=""  name="media" id="video_wrap" autoplay>
-                          <source src="https://static.gxchain.org/gxchain/video/video.mp4" id="video_src" type="video/mp4">
-                      </video>
-                      <div class="nftContent">
-                          <div class="nft-title">
-                              G.BRUCE
-                          </div>
-                          <div>#{{nftinfo.tokenid}}</div>
-                          <div>
-                              简介：信小宝是一款公信宝的吉祥物
-                          </div>
-                      </div>
+                        <div class="row">
+                            <div class="col-33">
+                                <div class="nftContent">
+                                    <div class="nft-title">
+                                        G.BRUCE
+                                    </div>
+                                    <div>#{{nftinfo.tokenid}}</div>
+                                    <div>
+                                        简介：信小宝是一款公信宝的吉祥物
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-66">
+                                <video muted controls=controls webkit-playsinline='true'  playsinline='true'  name="media" id="video_wrap" autoplay>
+                                    <source src="https://static.gxchain.org/gxchain/video/video.mp4" id="video_src" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="button-block content-block ">
@@ -196,18 +202,21 @@
     }
     .card-content {
         text-align: center;
+        padding-right:20px;
     }
     .nftInfoContent{
         background: #fff;
     }
     .nftContent{
         text-align: left;
-        padding: 10px 22px;
+        padding: 10px 0 0 20px;
         font-size: .65rem;
-        border-bottom: #eee solid 1px;
         .nft-title{
             font-size: .75rem;
             font-weight: bold;
         }
+    }
+    #video_wrap{
+        width: 100%;
     }
 </style>
