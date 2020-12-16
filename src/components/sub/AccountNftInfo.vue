@@ -19,22 +19,16 @@
                 </div>
                 <div class="list-block">
                     <div class="card-content">
-                        <div class="row">
-                            <div class="col-33">
-                                <div class="nftContent">
-                                    <div class="nft-title">
-                                        G.BRUCE
-                                    </div>
-                                    <div>#{{nftinfo.tokenid}}</div>
-                                    <div>
-                                        简介：信小宝是一款公信宝的吉祥物
-                                    </div>
-                                </div>
+                        <video muted controls=controls webkit-playsinline='true' playsinline='true'  name="media" id="video_wrap" autoplay>
+                            <source src="https://static.gxchain.org/gxchain/video/video.mp4" id="video_src" type="video/mp4">
+                        </video>
+                        <div class="nftContent">
+                            <div class="nft-title">
+                                G.BRUCE
                             </div>
-                            <div class="col-66">
-                                <video muted controls=controls webkit-playsinline='true'  playsinline='true'  name="media" id="video_wrap" autoplay>
-                                    <source src="https://static.gxchain.org/gxchain/video/video.mp4" id="video_src" type="video/mp4">
-                                </video>
+                            <div>#{{nftinfo.tokenid}}</div>
+                            <div>
+                                简介：信小宝是一款公信宝的吉祥物信小宝是一款公信宝的吉祥物信小宝是一款公信宝的吉祥物
                             </div>
                         </div>
                     </div>
@@ -202,7 +196,7 @@
     }
     .card-content {
         text-align: center;
-        padding-right:20px;
+        padding: 0 20px;
     }
     .nftInfoContent{
         background: #fff;
@@ -218,5 +212,6 @@
     }
     #video_wrap{
         width: 100%;
+        text-align: center;
     }
 </style>
