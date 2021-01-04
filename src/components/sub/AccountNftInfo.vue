@@ -19,16 +19,17 @@
                 </div>
                 <div class="list-block">
                     <div class="card-content">
-                        <video muted controls=controls webkit-playsinline='true' playsinline='true'  name="media" id="video_wrap" autoplay>
+                        <video v-if="false" muted controls=controls webkit-playsinline='true' playsinline='true'  name="media" id="video_wrap" autoplay>
                             <source src="https://static.gxchain.org/gxchain/video/video.mp4" id="video_src" type="video/mp4">
                         </video>
+                        <img class="nftImg" :src="nftinfo.tokenlink">
                         <div class="nftContent">
                             <div class="nft-title">
-                                G.BRUCE
+                                {{nftinfo.tokenname}}
                             </div>
                             <div>#{{nftinfo.tokenid}}</div>
                             <div>
-                                简介：信小宝是一款公信宝的吉祥物信小宝是一款公信宝的吉祥物信小宝是一款公信宝的吉祥物
+                                简介：{{nftinfo.tokendes}}
                             </div>
                         </div>
                     </div>
@@ -200,6 +201,9 @@
     }
     .nftInfoContent{
         background: #fff;
+    }
+    .nftImg{
+        width: 100%;
     }
     .nftContent{
         text-align: left;
