@@ -19,9 +19,6 @@
                 </div>
                 <div class="list-block">
                     <div class="card-content">
-                        <video v-if="false" muted controls=controls webkit-playsinline='true' playsinline='true'  name="media" id="video_wrap" autoplay>
-                            <source src="https://static.gxchain.org/gxchain/video/video.mp4" id="video_src" type="video/mp4">
-                        </video>
                         <img class="nftImg" :src="nftinfo.tokenlink">
                         <div class="nftContent">
                             <div class="nft-title">
@@ -29,7 +26,7 @@
                             </div>
                             <div>#{{nftinfo.tokenid}}</div>
                             <div>
-                                简介：{{nftinfo.tokendes}}
+                                {{$t('nft.details')}}{{nftinfo.tokendes}}
                             </div>
                         </div>
                     </div>

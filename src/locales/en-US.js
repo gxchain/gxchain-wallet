@@ -23,7 +23,8 @@ const locale = {
         send: 'Send',
         please_input_account: 'Please Input Account',
         view_info: 'View Detail',
-        confirm_send: 'Confirm'
+        confirm_send: 'Confirm',
+        details: 'Detail: '
     },
     market: {
         title: 'Market'

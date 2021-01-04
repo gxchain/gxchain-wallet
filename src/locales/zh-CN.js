@@ -23,7 +23,8 @@ const locale = {
         send: '发送',
         please_input_account: '请输入账号',
         view_info: '查看信息',
-        confirm_send: '确认发送'
+        confirm_send: '确认发送',
+        details: '简介：'
     },
     market: {
         title: '行情'

@@ -136,6 +136,13 @@
                                                     <img src="https://static.gxb.io/gxs/symbols/gxs.png" width="30" height="30">
                                                     <div>&nbsp;&nbsp;#{{item.tokenid}} </div>
                                                 </div>
+                                                <div class="price">
+                                                    <div class="digital">
+                                                        <small>
+                                                        {{item.tokenname}}
+                                                        </small>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </li>
                                     </ul>
