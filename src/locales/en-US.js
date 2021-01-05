@@ -24,7 +24,8 @@ const locale = {
         please_input_account: 'Please Input Account',
         view_info: 'View Detail',
         confirm_send: 'Confirm',
-        details: 'Detail: '
+        details: 'Detail: ',
+        total: 'Total: '
     },
     market: {
         title: 'Market'

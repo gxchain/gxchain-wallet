@@ -24,8 +24,9 @@
                             <div class="nft-title">
                                 {{nftinfo.tokenname}}
                             </div>
-                            <div>#{{nftinfo.tokenid}}</div>
-                            <div>
+                            <div class="nft-id">#{{nftinfo.tokenid}}</div>
+                            <div class="nft-des">{{$t('nft.total')}}{{nftinfo.total}}</div>
+                            <div class="nft-des">
                                 {{$t('nft.details')}}{{nftinfo.tokendes}}
                             </div>
                         </div>
@@ -201,6 +202,13 @@
     }
     .nftImg{
         width: 100%;
+    }
+    .nft-id {
+        font-weight: bold;
+    }
+    .nft-des {
+        font-size: .6rem;
+        color: #888;
     }
     .nftContent{
         text-align: left;
