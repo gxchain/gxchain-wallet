@@ -133,7 +133,7 @@
                                             :key="item.symbol">
                                             <div class="item-inner" @click="showNFTInfo(item)">
                                                 <div class="symbol">
-                                                    <img src="https://static.gxb.io/gxs/symbols/gxs.png" width="30" height="30">
+                                                    <img :src="item.tokenlink" width="30" height="30">
                                                     <div>&nbsp;&nbsp;#{{item.tokenid}} </div>
                                                 </div>
                                                 <div class="price">
