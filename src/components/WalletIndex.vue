@@ -459,7 +459,6 @@
             fetch_reference_accounts(this.wallets.filter(wallet => {
                 return !wallet.partial;
             }).map(wallet => {
-                console.log(wallet);
                 return wallet.account;
             })).then((wallets) => {
                 if (wallets.length > this.wallets.length) {

@@ -96,7 +96,6 @@
             if (this.accountNFT.length === 0) {
                 this.getAccount();
             } else {
-                console.log(this.accountNFT);
                 this.nftinfo = find(this.accountNFT, (item) => item.tokenid == id);
             }
         },
