@@ -26,8 +26,8 @@
         <div class="footer" slot="footer">
             <div class="content-block nodelist-footer">
                 <div class="row">
-                    <div class="col-50"><a href="#" class="button btn " @click="onCancel()">{{$t('staking.cancel')}}</a></div>
-                    <div class="col-50"><a href="#" class="button btn  button-fill" @click="onConfirm()">{{$t('staking.confirm')}}</a></div>
+                    <div class="col-50"><a href="javascript:;" class="button btn " @click="onCancel()">{{$t('staking.cancel')}}</a></div>
+                    <div class="col-50"><a href="javascript:;" class="button btn  button-fill" @click="onConfirm()">{{$t('staking.confirm')}}</a></div>
                 </div>
             </div>
             
@@ -86,7 +86,7 @@
                     $.toast(this.$t('nft.please_input_account'));
                     return;
                 }
-                this.$emit('onConfirm', this.account);
+                this.$emit('onTransferConfirm', this.account);
             },
             onAccountChange () {
                 this.validateAccount();

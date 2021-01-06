@@ -31,6 +31,8 @@ import AddAssets from '@/components/AddAssets';
 import VoteIndex from '@/components/VoteIndex';
 import StakingIndex from '@/components/StakingIndex';
 import UserIndex from '@/components/User.vue';
+import NftInfo from '@/components/NftInfo.vue';
+import TransferNftSuccess from '@/components/TransferNftSuccess.vue';
 import { set_item, compare_version } from '@/services/CommonService';
 import i18n from '@/locales';
 
@@ -269,6 +271,22 @@ let router = new Router({
             component: (resolve) => {
                 require(['@/components/contract/Controller'], resolve);
             }
+        },
+        {
+            path: '/nftInfo/:id',
+            meta: {
+                title: 'NFT信息'
+            },
+            name: 'NFTInfo',
+            component: NftInfo
+        },
+        {
+            path: '/transferNftSuccess',
+            meta: {
+                title: '发送成功'
+            },
+            name: 'transferNftSuccess',
+            component: TransferNftSuccess
         }
     ]
 });

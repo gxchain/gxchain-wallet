@@ -25,7 +25,8 @@ const locale = {
         view_info: 'View Detail',
         confirm_send: 'Confirm',
         details: 'Detail: ',
-        total: 'Total: '
+        total: 'Total: ',
+        successful: 'Send successful'
     },
     market: {
         title: 'Market'

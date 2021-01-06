@@ -25,7 +25,8 @@ const locale = {
         view_info: '查看信息',
         confirm_send: '确认发送',
         details: '简介：',
-        total: '总量：'
+        total: '总量：',
+        successful: '发送成功'
     },
     market: {
         title: '行情'

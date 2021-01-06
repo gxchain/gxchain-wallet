@@ -5,8 +5,8 @@
             <a href="javascript:;" class="pull-right icon icon-close close-popup">&times;</a>
         </div>
         <div class="content">
-          <div class="text-center">
-                #{{param.tokenid}}
+            <div class="text-center">
+                {{param.tokenname}}
             </div>
             <div class="list-block">
                 <ul>
@@ -16,6 +16,7 @@
                             <div class="item-after">
                                 <account-image :account="to" :size='14'></account-image>
                                 <span class="account-name">{{to}}</span>
+
                             </div>
                         </div>
                     </li>

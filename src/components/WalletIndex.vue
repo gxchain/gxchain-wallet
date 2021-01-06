@@ -180,6 +180,9 @@
     import some from 'lodash/some';
     import unionBy from 'lodash/unionBy';
     import find from 'lodash/find';
+    import {
+        mapActions
+    } from 'vuex';
     export default {
         filters,
         data () {
@@ -227,10 +230,16 @@
         },
 
         methods: {
+            ...mapActions({
+                setAccountNft: 'setAccountNft'
+            }),
             showNFTInfo (item) {
-                this.showNft = true;
-                this.currentNft = item;
-                this.$refs.nftInfo.show();
+                let query = {
+                    from: this.$route.fullPath
+                };
+                this.$router.push({
+                    path: this.link(`/nftInfo/${item.tokenid}`, query)
+                });
             },
             async getNFTList () {
                 Promise.all([
@@ -246,6 +255,7 @@
                         let obj = find(NFTToken, (item) => item.tokenid == id);
                         this.accountNFT.push(obj);
                     });
+                    this.setAccountNft({accountNFT: this.accountNFT});
                 });
             },
             loadWallets () {

@@ -6,7 +6,8 @@ Vue.use(Vuex);
 const state = {
     loading: true,
     isNative: false,
-    symbolsMap: {}
+    symbolsMap: {},
+    accountNFT: []
 };
 
 const mutations = {
@@ -18,6 +19,9 @@ const mutations = {
     },
     setSymbolsMap (state, payload) {
         state.symbolsMap = payload.symbolsMap;
+    },
+    setAccountNft (state, payload) {
+        state.accountNFT = payload.accountNFT;
     }
 };
 
@@ -30,13 +34,17 @@ const actions = {
     },
     setSymbolsMap ({commit}, payload) {
         commit('setSymbolsMap', payload);
+    },
+    setAccountNft ({commit}, payload) {
+        commit('setAccountNft', payload);
     }
 };
 
 const getters = {
     loading: state => state.loading,
     isNative: state => state.isNative,
-    symbolsMap: state => state.symbolsMap
+    symbolsMap: state => state.symbolsMap,
+    accountNFT: state => state.accountNFT
 };
 
 export default new Vuex.Store({
