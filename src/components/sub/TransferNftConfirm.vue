@@ -145,7 +145,7 @@
     .popup-transfer-confirm {
         max-height: 19.5rem;
         bottom: 0;
-        top: initial;
+        top: initial !important;
         background: #fff;
         transition-duration: .2s;
     }

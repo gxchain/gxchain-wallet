@@ -25,7 +25,6 @@
                                 {{nftinfo.tokenname}}
                             </div>
                             <div class="nft-id">#{{nftinfo.tokenid}}</div>
-                            <div class="nft-des">{{$t('nft.total')}}{{nftinfo.total}}</div>
                             <div class="nft-des">
                                 {{$t('nft.details')}}{{nftinfo.tokendes}}
                             </div>

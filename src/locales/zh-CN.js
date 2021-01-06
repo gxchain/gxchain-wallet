@@ -17,7 +17,7 @@ const locale = {
         account_is_address: '账户名即转账地址',
         staking: '质押',
         assets: '资产',
-        collection: '收藏'
+        collection: 'NFT'
     },
     nft: {
         send: '发送',

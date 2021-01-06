@@ -17,7 +17,7 @@ const locale = {
         account_is_address: 'Account name is your address',
         staking: 'Staking',
         assets: 'Assets',
-        collection: 'Collection'
+        collection: 'NFT'
     },
     nft: {
         send: 'Send',

@@ -18,7 +18,7 @@ const locale = {
         account_is_address: '지갑주소 즉 송금 주소',
         staking: '투표',
         assets: 'Assets',
-        collection: 'Collection'
+        collection: 'NFT'
     },
     nft: {
         send: 'Send',
