@@ -159,7 +159,6 @@
         </div>
         <left-panel ref="panel"></left-panel>
         <account-q-r-code ref="qrcode" :account="this.currentWallet.account"></account-q-r-code>
-        <account-nft-info ref="nftInfo" :account="this.currentWallet.account" :nftinfo="currentNft" ></account-nft-info>
     </div>
 </template>
 <script>
@@ -167,7 +166,6 @@
     import AccountImage from './sub/AccountImage.vue';
     import LeftPanel from './sub/LeftPanel.vue';
     import AccountQRCode from './sub/AccountQRCode.vue';
-    import AccountNftInfo from './sub/AccountNftInfo.vue';
     import util from '@/common/util';
     import WalletTab from './sub/WalletTab';
 
@@ -385,7 +383,6 @@
             getStakingAmount () {
                 let currentWallet = this.currentWallet.account;
                 fetch_account(currentWallet).then(result => {
-                    console.log(result);
                     this.currentAccountId = result.id;
                     get_staking_object(result.id).then(res => {
                         let stakingList = res;
@@ -550,8 +547,7 @@
             AccountImage,
             LeftPanel,
             AccountQRCode,
-            WalletTab,
-            AccountNftInfo
+            WalletTab
         }
     };
 </script>

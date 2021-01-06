@@ -11,7 +11,7 @@ module.exports = (function () {
                 chain_id: '"c2af30ef9340ff81fd61654295e98a1ff04b23189748f86727d0b26b40bb0ff4"',
                 network: '"Test Network"',
                 staking_sum:  '"https://testnet.wallet.gxchain.org"',
-                nftContract: '"bjnnft2"'
+                nftContract: '"bjnnft3"'
             };
         } else {
             if (process.env.prod == 3) {
@@ -24,7 +24,7 @@ module.exports = (function () {
                     chain_id: '"c2af30ef9340ff81fd61654295e98a1ff04b23189748f86727d0b26b40bb0ff4"',
                     network: '"Test Network"',
                     staking_sum:  '"https://testnet.wallet.gxchain.org"',
-                    nftContract: '"bjnnft2"'
+                    nftContract: '"bjnnft3"'
                 };
             } else {
                 return {
@@ -45,7 +45,7 @@ module.exports = (function () {
                   chain_id: '"4f7d07969c446f8342033acb3ab2ae5044cbe0fde93db02de75bd17fa8fd84b8"',
                   network: '"Main Network"',
                   staking_sum: '"https://wallet.gxb.io"',
-                  nftContract: '"bjnnft2"'
+                  nftContract: '"bjnnft3"'
                 };
             }
         }
@@ -60,7 +60,7 @@ module.exports = (function () {
           chain_id: '"c2af30ef9340ff81fd61654295e98a1ff04b23189748f86727d0b26b40bb0ff4"',
           network: '"Test Network"',
           staking_sum:  '"https://testnet.wallet.gxchain.org"',
-          nftContract: '"bjnnft2"'
+          nftContract: '"bjnnft3"'
         };
     }
 })();

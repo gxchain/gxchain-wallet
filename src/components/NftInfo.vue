@@ -176,11 +176,14 @@
                 }).catch(ex => {
                     $.hideIndicator();
                     console.error(ex);
-                    let message = (ex.message && ex.message.replace(/\'/g, '')) || '';
-                    if (message.split('gxb-crypto').length > 1) {
-                        message = message.split('gxb-crypto')[0];
-                        message = message.substring(0, message.length - 1);
+                    let message = '';
+                    if (ex.message.indexOf('Insufficient Balance') > -1 || ex.message.indexOf('account balance not enough') > -1) {
+                        message = this.$t('transfer.error.amount.insufficient_balance');
+                    } else {
+                        message = ex.message;
                     }
+                    this.$refs.unlock.unlocked();
+                    $.toast(message);
                 });
             }
         },
