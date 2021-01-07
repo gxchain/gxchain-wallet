@@ -19,14 +19,14 @@
                 </div>
                 <div class="list-block">
                     <div class="card-content">
-                        <img class="nftImg" :src="nftinfo.tokenlink">
+                        <img class="nftImg" :src="nftinfo.link">
                         <div class="nftContent">
                             <div class="nft-title">
-                                {{nftinfo.tokenname}}
+                                {{nftinfo.name}}
                             </div>
-                            <div class="nft-id">#{{nftinfo.tokenid}}</div>
+                            <div class="nft-id">#{{nftinfo.id}}</div>
                             <div class="nft-des">
-                                {{$t('nft.details')}}{{nftinfo.tokendes}}
+                                {{$t('nft.details')}}{{handleShowDes(nftinfo.extra).description}}
                             </div>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
             if (this.accountNFT.length === 0) {
                 this.getAccount();
             } else {
-                this.nftinfo = find(this.accountNFT, (item) => item.tokenid == id);
+                this.nftinfo = find(this.accountNFT, (item) => item.id == id);
             }
         },
         methods: {
@@ -108,6 +108,13 @@
             },
             onSubmit () {
                 this.showTransfer = true;
+            },
+            handleShowDes (str) {
+                if (str) {
+                    return JSON.parse(str);
+                } else {
+                    return {};
+                }
             },
             async getAccount () {
                 let currentWallet = this.currentWallet.account;
@@ -126,12 +133,12 @@
                     let _walletId = String(this.currentAccountId).split('.')[2];
                     let tokenId = find(NFTAccount, (item) => item.owner == _walletId);
                     let accountNFT = [];
-                    tokenId.tokenids.forEach((id) => {
-                        let obj = find(NFTToken, (item) => item.tokenid == id);
+                    tokenId.ids.forEach((id) => {
+                        let obj = find(NFTToken, (item) => item.id == id);
                         accountNFT.push(obj);
                     });
                     this.setAccountNft({accountNFT: accountNFT});
-                    this.nftinfo = find(this.accountNFT, (item) => item.tokenid == this.$route.params.id);
+                    this.nftinfo = find(this.accountNFT, (item) => item.id == this.$route.params.id);
                 });
             },
             async onConfirm (account) {
@@ -160,7 +167,7 @@
                 }
                 this.password = pwd;
                 let _id = String(this.toAccount.id).split('.')[2];
-                this.param = {'tokenid': this.nftinfo.tokenid, to: _id, 'tokenname': this.nftinfo.tokenname};
+                this.param = {'id': this.nftinfo.id, 'to': _id, 'name': this.nftinfo.name};
 
                 call_contract(this.currentWallet.account, process.env.nftContract, 'transfer', this.param, 0, pwd, false).then(res => {
                     let op = res && res.operations && res.operations[0];

@@ -129,17 +129,17 @@
                             <div class="table-assets" v-if="accountNFT.length>0">
                                 <div class="list-block media-list">
                                     <ul>
-                                        <li v-for="item in accountNFT" class="item-content item-asset"
-                                            :key="item.symbol">
+                                        <li v-for="(item, index) in accountNFT" class="item-content item-asset"
+                                            :key="index">
                                             <div class="item-inner" @click="showNFTInfo(item)">
                                                 <div class="symbol">
-                                                    <img :src="item.tokenlink" width="30" height="30">
-                                                    <div>&nbsp;&nbsp;#{{item.tokenid}} </div>
+                                                    <img :src="item.link" width="30" height="30">
+                                                    <div>&nbsp;&nbsp;#{{item.id}} </div>
                                                 </div>
                                                 <div class="price">
                                                     <div class="digital">
                                                         <small>
-                                                        {{item.tokenname}}
+                                                        {{item.name}}
                                                         </small>
                                                     </div>
                                                 </div>
@@ -236,7 +236,7 @@
                     from: this.$route.fullPath
                 };
                 this.$router.push({
-                    path: this.link(`/nftInfo/${item.tokenid}`, query)
+                    path: this.link(`/nftInfo/${item.id}`, query)
                 });
             },
             async getNFTList () {
@@ -249,8 +249,8 @@
                     let _walletId = String(this.currentAccountId).split('.')[2];
                     let tokenId = find(NFTAccount, (item) => item.owner == _walletId);
                     this.accountNFT = [];
-                    tokenId.tokenids.forEach((id) => {
-                        let obj = find(NFTToken, (item) => item.tokenid == id);
+                    tokenId.ids.forEach((id) => {
+                        let obj = find(NFTToken, (item) => item.id == id);
                         this.accountNFT.push(obj);
                     });
                     this.setAccountNft({accountNFT: this.accountNFT});

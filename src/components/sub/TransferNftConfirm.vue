@@ -6,7 +6,7 @@
         </div>
         <div class="content">
             <div class="text-center">
-                {{param.tokenname}}
+                {{param.name}}
             </div>
             <div class="list-block">
                 <ul>
