@@ -249,10 +249,12 @@
                     let _walletId = String(this.currentAccountId).split('.')[2];
                     let tokenId = find(NFTAccount, (item) => item.owner == _walletId);
                     this.accountNFT = [];
-                    tokenId.ids.forEach((id) => {
-                        let obj = find(NFTToken, (item) => item.id == id);
-                        this.accountNFT.push(obj);
-                    });
+                    if (tokenId) {
+                        tokenId.ids.forEach((id) => {
+                            let obj = find(NFTToken, (item) => item.id == id);
+                            this.accountNFT.push(obj);
+                        });
+                    }
                     this.setAccountNft({accountNFT: this.accountNFT});
                 });
             },
