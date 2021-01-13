@@ -45,7 +45,7 @@ module.exports = (function () {
                   chain_id: '"4f7d07969c446f8342033acb3ab2ae5044cbe0fde93db02de75bd17fa8fd84b8"',
                   network: '"Main Network"',
                   staking_sum: '"https://wallet.gxb.io"',
-                  nftContract: '"testnft"'
+                  nftContract: '"gxc-nft"'
                 };
             }
         }
