@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div class="list-block">
-                    <div class="card-content">
+                    <div class="card-content" v-if="nftinfo">
                         <img class="nftImg" :src="nftinfo.link">
                         <div class="nftContent">
                             <div class="nft-title">
@@ -82,8 +82,7 @@
                 toAccount: '',
                 param: {},
                 fee: {},
-                nftinfo: {},
-                currentAccountId: ''
+                nftinfo: {}
             };
         },
         computed: {
@@ -94,7 +93,7 @@
         mounted () {
             let id = this.$route.params.id;
             if (this.accountNFT.length === 0) {
-                this.getAccount();
+                this.getNFTInfo();
             } else {
                 this.nftinfo = find(this.accountNFT, (item) => item.id == id);
             }
@@ -116,30 +115,10 @@
                     return {};
                 }
             },
-            async getAccount () {
-                let currentWallet = this.currentWallet.account;
-                fetch_account(currentWallet).then(result => {
-                    this.currentAccountId = result.id;
-                    this.getNFTList();
-                });
-            },
-            async getNFTList () {
-                Promise.all([
-                    get_contract_table(process.env.nftContract, 'account'),
-                    get_contract_table(process.env.nftContract, 'token')
-                ]).then((result) => {
-                    let NFTAccount = result[0] && result[0].rows;
-                    let NFTToken = result[1] && result[1].rows;
-                    let _walletId = String(this.currentAccountId).split('.')[2];
-                    let tokenId = find(NFTAccount, (item) => item.owner == _walletId);
-                    let accountNFT = [];
-                    tokenId.ids.forEach((id) => {
-                        let obj = find(NFTToken, (item) => item.id == id);
-                        accountNFT.push(obj);
-                    });
-                    this.setAccountNft({accountNFT: accountNFT});
-                    this.nftinfo = find(this.accountNFT, (item) => item.id == this.$route.params.id);
-                });
+            async getNFTInfo () {
+                let _id = this.$route.params.id;
+                let _token = await get_contract_table(process.env.nftContract, 'token', _id, _id + 1);
+                this.nftinfo = _token.rows[0];
             },
             async onConfirm (account) {
                 this.to = account;

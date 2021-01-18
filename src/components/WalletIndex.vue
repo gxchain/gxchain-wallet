@@ -177,7 +177,6 @@
     import filters from '@/filters';
     import some from 'lodash/some';
     import unionBy from 'lodash/unionBy';
-    import find from 'lodash/find';
     import {
         mapActions
     } from 'vuex';
@@ -240,23 +239,17 @@
                 });
             },
             async getNFTList () {
-                Promise.all([
-                    get_contract_table(process.env.nftContract, 'account'),
-                    get_contract_table(process.env.nftContract, 'token')
-                ]).then((result) => {
-                    let NFTAccount = result[0] && result[0].rows;
-                    let NFTToken = result[1] && result[1].rows;
-                    let _walletId = String(this.currentAccountId).split('.')[2];
-                    let tokenId = find(NFTAccount, (item) => item.owner == _walletId);
-                    this.accountNFT = [];
-                    if (tokenId) {
-                        tokenId.ids.forEach((id) => {
-                            let obj = find(NFTToken, (item) => item.id == id);
-                            this.accountNFT.push(obj);
-                        });
-                    }
-                    this.setAccountNft({accountNFT: this.accountNFT});
+                this.accountNFT = [];
+                let currentAccountId = await fetch_account(this.currentWallet.account);
+                let _walletId = String(currentAccountId.id).split('.')[2];
+                let _walletId_up = Number(_walletId) + 1;
+                let _accountInfo = await get_contract_table(process.env.nftContract, 'account', _walletId, _walletId_up);
+                let NFTAccountIds = _accountInfo && _accountInfo.rows[0].ids;
+                NFTAccountIds.forEach(async (item) => {
+                    let _token = await get_contract_table(process.env.nftContract, 'token', item, item + 1);
+                    this.accountNFT.push(_token.rows[0]);
                 });
+                this.setAccountNft({accountNFT: this.accountNFT});
             },
             loadWallets () {
                 if (this.wallets.length == 0) {
