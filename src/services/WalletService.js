@@ -1274,7 +1274,7 @@ const get_staking_percent = () => {
  * get Table Info
  * @param {*} contract name
  */
-const get_contract_table = (contractName, tableName, lower_bound, upper_bound, reverse = true, limit = 100) => {
+const get_contract_table = (contractName, tableName, lower_bound = 0, upper_bound = -1, reverse = true, limit = 100) => {
     return Apis.instance().db_api().exec('get_table_rows_ex', [contractName, tableName, {
         lower_bound,
         upper_bound,
