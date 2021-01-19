@@ -245,11 +245,14 @@
                 let _walletId_up = Number(_walletId) + 1;
                 let _accountInfo = await get_contract_table(process.env.nftContract, 'account', _walletId, _walletId_up);
                 let NFTAccountIds = _accountInfo && _accountInfo.rows[0].ids;
-                NFTAccountIds.forEach(async (item) => {
-                    let _token = await get_contract_table(process.env.nftContract, 'token', item, item + 1);
-                    this.accountNFT.push(_token.rows[0]);
+                let NFTAccountIdsMap = NFTAccountIds.map(item => get_contract_table(process.env.nftContract, 'token', item, item + 1));
+                Promise.all(NFTAccountIdsMap).then((res) => {
+                    this.accountNFT = res.map(item => item.rows[0]);
+                    this.setAccountNft({accountNFT: this.accountNFT});
+                }).catch(ex => {
+                    console.error(ex);
+                    $.toast(ex.message);
                 });
-                this.setAccountNft({accountNFT: this.accountNFT});
             },
             loadWallets () {
                 if (this.wallets.length == 0) {
