@@ -123,8 +123,12 @@
             async onConfirm (account) {
                 this.to = account;
                 this.toAccount = await fetch_account(account);
-                this.showTransfer = false;
-                this.$refs.unlock.show();
+                if (this.toAccount) {
+                    this.showTransfer = false;
+                    this.$refs.unlock.show();
+                } else {
+                    $.toast(this.$t('transfer.error.account.to_account_not_exist'));
+                }
             },
             onCancel () {
                 this.showTransfer = false;
