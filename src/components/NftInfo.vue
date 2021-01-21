@@ -121,8 +121,8 @@
                 this.nftinfo = _token.rows[0];
             },
             async onConfirm (account) {
-                this.to = account;
-                this.toAccount = await fetch_account(account);
+                this.to = account.trim();
+                this.toAccount = await fetch_account(this.to);
                 if (this.toAccount) {
                     this.showTransfer = false;
                     this.$refs.unlock.show();
