@@ -743,6 +743,9 @@
     }
     .list-block.nft-list{
         margin:0 auto;
+        .item-inner {
+            display: flex;
+        }
     }
     .table-assets {
         position: relative;

@@ -24,6 +24,7 @@ const locale = {
         send: 'Send',
         please_input_account: 'Please Input Account',
         view_info: 'View Detail',
+        nft_list: 'NFT List',
         confirm_send: 'Confirm',
         details: 'Detail: ',
         total: 'Total: ',

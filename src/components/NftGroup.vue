@@ -1,6 +1,10 @@
 <template>
     <div class="page-group">
         <div class="page" id="page-wallet-index">
+            <header class="bar bar-nav">
+                <h3 class="title">{{$t('nft.nft_list')}}</h3>
+                <router-link :to="link('/')" replace class="icon icon-left"></router-link>
+            </header>
             <div ref="bg" id="bg"></div>
             <div class="content pull-to-refresh-content" ref="content">
                 <div class="tab-container">
@@ -38,7 +42,7 @@
     </div>
 </template>
 <script>
-    import {swiper, swiperSlide} from 'vue-awesome-swiper';
+    // import {swiper, swiperSlide} from 'vue-awesome-swiper';
     import AccountImage from './sub/AccountImage.vue';
     import LeftPanel from './sub/LeftPanel.vue';
     import AccountQRCode from './sub/AccountQRCode.vue';
@@ -108,7 +112,8 @@
             }),
             showNFTInfo (item) {
                 let query = {
-                    from: this.$route.fullPath
+                    from: this.$route.fullPath,
+                    type: this.type
                 };
                 this.$router.push({
                     path: this.link(`/nftInfo/${item.id}`, query)
@@ -383,7 +388,7 @@
                 };
                 let timer = setTimeout(end, 1000);
             });
-            this.swiper.update();
+            // this.swiper.update();
         },
         computed: {
             showLoyaltyProgram () {
@@ -412,14 +417,14 @@
                     });
                     return best_price;
                 }
-            },
-            swiper () {
-                return this.$refs.mySwiper.swiper;
             }
+            // swiper () {
+            //     return this.$refs.mySwiper.swiper;
+            // }
         },
         components: {
-            swiper,
-            swiperSlide,
+            // swiper,
+            // swiperSlide,
             AccountImage,
             LeftPanel,
             AccountQRCode,
@@ -445,7 +450,7 @@
 
     #page-wallet-index {
         .content {
-            top: 0;
+            top: 2.2rem;
             -webkit-overflow-scrolling: auto;
         }
     }

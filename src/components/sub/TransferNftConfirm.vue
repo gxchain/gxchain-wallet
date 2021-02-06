@@ -85,6 +85,10 @@
             },
             param: {
                 type: Object
+            },
+            contract: {
+                type: String,
+                default: process.env.nftContract
             }
         },
         methods: {
@@ -100,7 +104,7 @@
                     return;
                 }
                 this.submitting = true;
-                call_contract(this.account, process.env.nftContract, 'transfer', this.param, 0, this.pwd, true).then(res => {
+                call_contract(this.account, this.contract, 'transfer', this.param, 0, this.pwd, true).then(res => {
                     console.log(res);
                     $.closeModal($(this.$el));
                     this.$emit('closeConfirmModal');
