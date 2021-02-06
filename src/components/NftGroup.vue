@@ -1,171 +1,36 @@
 <template>
     <div class="page-group">
         <div class="page" id="page-wallet-index">
-            <div ref="bar" class="bar bar-nav buttons-fixed" style="background: rgba(37, 40, 113, 0)">
-                <a v-if="isNative && channel !== 'blockcity'" href="javascript:;" class="icon gxicon gxicon-scan pull-left" @click="openQRScaner">
-                    <input ref="qrfile" @change="onFileUpload" v-if="!isNative" type="file" class="file-selector"/>
-                </a>
-                <a v-if="isNative && channel === 'blockcity'" href="javascript:;" @click="backToBlockCity" class="icon icon-left"></a>
-            </div>
             <div ref="bg" id="bg"></div>
-            <wallet-tab></wallet-tab>
             <div class="content pull-to-refresh-content" ref="content">
-                <div class="row-top" ref="top" :class="{ios:$route.query.platform=='ios'}">
-                    <div class="pull-to-refresh-layer">
-                        <div class="preloader">
-                            <div class="line-scale">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="loading" v-if="wallets.length==0">
-                        <div class="line-scale">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                        </div>
-                    </div>
-                    <!--wallets-->
-                    <swiper :options="swiperOption" :not-next-tick="true" ref="mySwiper" v-show="wallets.length>0">
-                        <swiper-slide v-for="wallet in wallets" :key="wallet.name">
-                            <div class="wallet-info">
-                                <div class="text-center">
-                                    <account-image :account="wallet.account" :size="30"></account-image>
-                                    <div>
-                                        <a @click="openQRCodeModal" href="javascript:;" class="link-qrcode">{{wallet.account}}&nbsp;
-                                            <small class="icon icon-code"></small>
-                                        </a>
-                                    </div>
-                                    <p class="bak-tip">
-                                        <router-link :to="linkBackup(wallet.account)" class="btn-backup"
-                                                     :class="{visible:!wallet.backup_date}" href="javascript:;">
-                                            <small>{{$t('index.backup_wallet')}}&nbsp;
-                                                <span class="red-dot"></span>
-                                                <span class="icon icon-right"></span>
-                                            </small>
-                                        </router-link>
-                                    </p>
-                                </div>
-                                <div class="row-balance">
-                                    <div>
-                                        <div>
-                                            <small>{{$t('index.value')}}</small>
-                                        </div>
-                                        <div>
-                                            <small>≈</small>
-                                            <span class="digit balance">{{currentWallet.totalValue !== undefined ? currentWallet.totalValue : '-' | number(2)}}</span>
-                                        </div>
-                                    </div>
-                                    <div class="asset-button" @click="goAddAssets">
-                                        <!-- <router-link :to="link('/add-assets')" href="javascript:;">
-                                            <img src="../assets/images/asset_btn.png">
-                                        </router-link> -->
-                                        <img src="../assets/images/asset_btn.png">
-                                    </div>
-                                </div>
-                            </div>
-                        </swiper-slide>
-                        <div class="swiper-pagination" slot="pagination" v-show="wallets&&wallets.length>1"></div>
-                    </swiper>
-                    <router-link :to="link('/staking-index')" class="link-vote-index">
-                        <img src='../assets/images/vote_icon.png'>
-                    </router-link>
-
-                    <router-link :to="link('/loyalty-program')" class="link-loyalty-program" v-if="showLoyaltyProgram">
-                        <img :src="`static/${$t('index.loyalty_program_icon')}`">
-                    </router-link>
-                </div>
-                <!--function entries-->
-                <div class="row-operation">
-                    <router-link :to="link('/transfer')" class="item" href="javascript:;">
-                        <span class="gxicon x2 gxicon-transfer"></span>
-                        <span class="item-text">{{$t('index.transfer')}}</span>
-                    </router-link>
-                    <div class="sep"></div>
-                    <a @click="openQRCodeModal" class="item" href="javascript:;">
-                        <span class="gxicon x2 gxicon-collect"></span>
-                        <span class="item-text">{{$t('index.receive')}}</span>
-                    </a>
-                </div>
-                <div class="tab-nav index-tab">
-                    <div :class="tabIndex === 'tab-container1' ? 'tab-nav-item active' : 'tab-nav-item'" @click="tabIndex = 'tab-container1'">{{$t('index.assets')}}</div>
-                    <div :class="tabIndex === 'tab-container2' ? 'tab-nav-item active' : 'tab-nav-item'" @click="tabIndex = 'tab-container2'">{{$t('index.collection')}}</div>
-                </div>
                 <div class="tab-container">
-                    <gxb-tab-container v-model="tabIndex">
-                        <gxb-tab-container-item id="tab-container1">
-                            <!--assets-->
-                            <div class="table-assets" v-if="currentWallet">
-                                <div class="list-block media-list">
-                                    <ul>
-                                        <li v-for="balance in currentWallet.balances" class="item-content item-asset"
-                                            :key="balance.symbol">
-                                            <div class="item-inner">
-                                                <div class="symbol">
-                                                    <account-image :account="balance.symbol" :size="15"></account-image>
-                                                    <div>&nbsp;&nbsp;{{balance.symbol}} </div>
-                                                </div>
-                                                <div class="price">
-                                                    <div class="digital">
-                                                        {{balance.amount | number(balance.precision)}} <span v-if="balance.asset_id == '1.3.1'&&stakingAmount" class="stakingAmount">({{$t('index.staking')}}: {{stakingAmount}}GXC)</span>
-                                                    </div>
-                                                    <small v-if="balance.value != 0">
-                                                        ≈&nbsp;{{$t('index.unit')}}{{balance.value | number(2)}}
-                                                    </small>
-                                                </div>
+                    <div class="table-assets" v-if="accountNFT.length>0">
+                        <div class="list-block media-list">
+                            <ul>
+                                <li v-for="(item, index) in accountNFT" class="item-content item-asset"
+                                    :key="index">
+                                    <div class="item-inner" @click="showNFTInfo(item)">
+                                        <div class="symbol">
+                                            <img :src="item.link" width="30" height="30">
+                                            <div>&nbsp;&nbsp;#{{item.id}} </div>
+                                        </div>
+                                        <div class="price">
+                                            <div class="digital">
+                                                <small>
+                                                    {{item.name}}
+                                                </small>
                                             </div>
-                                        </li>
-                                    </ul>
-                                </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div v-else class="no-reocrd table-assets">
+                        {{$t('node_vote.index.no_record')}}
                             </div>
-                        </gxb-tab-container-item>
-                        <gxb-tab-container-item id="tab-container2">
-                           <!-- <div class="table-assets" v-if="accountNFT.length>0">-->
-                                <div class="list-block media-list nft-list">
-                                        <ul>
-                                            <li  class="item-content item-asset">
-                                                <div class="item-inner" @click="showNFTGroup(1)">
-                                                    <div class="symbol">
-                                                        <img src="https://static.gxb.io/gxs/symbols/gxs.png" width="30" height="30">
-                                                    </div>
-                                                    <div class="price">
-                                                        <div class="digital">
-                                                            <small>
-                                                                GXC官方系列
-                                                            </small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li  class="item-content item-asset">
-                                                <div class="item-inner" @click="showNFTGroup(2)">
-                                                    <div class="symbol">
-                                                        <img src="https://static.gxb.io/dapp/blockcity/nodevote/61.png" width="30" height="30">
-                                                    </div>
-                                                    <div class="price">
-                                                        <div class="digital">
-                                                            <small>
-                                                                FLY定制系列
-                                                            </small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                    </ul>
-                                </div>
-                  <!--          <div v-else class="no-reocrd table-assets">
-                                {{$t('node_vote.index.no_record')}}
-                            </div>-->
-                        </gxb-tab-container-item>
-                    </gxb-tab-container>
                 </div>
-                
+
             </div>
         </div>
         <left-panel ref="panel"></left-panel>
@@ -249,20 +114,15 @@
                     path: this.link(`/nftInfo/${item.id}`, query)
                 });
             },
-            showNFTGroup (item) {
-                this.$router.push({
-                    path: this.link(`/nftGroup/${item}`)
-                });
-            },
             async getNFTList () {
                 this.accountNFT = [];
                 let currentAccountId = await fetch_account(this.currentWallet.account);
                 let _walletId = String(currentAccountId.id).split('.')[2];
                 let _walletId_up = Number(_walletId) + 1;
-                let _accountInfo = await get_contract_table('gxc-nft', 'account', _walletId, _walletId_up);
+                let _accountInfo = await get_contract_table(this.type, 'account', _walletId, _walletId_up);
                 let NFTAccountIds = _accountInfo && _accountInfo.rows[0] && _accountInfo.rows[0].ids;
                 if (NFTAccountIds && NFTAccountIds.length > 0) {
-                    let NFTAccountIdsMap = NFTAccountIds.map(item => get_contract_table(process.env.nftContract, 'token', item, item + 1));
+                    let NFTAccountIdsMap = NFTAccountIds.map(item => get_contract_table(this.type, 'token', item, item + 1));
                     Promise.all(NFTAccountIdsMap).then((res) => {
                         this.accountNFT = res.map(item => item.rows[0]);
                         this.setAccountNft({accountNFT: this.accountNFT});
@@ -470,6 +330,7 @@
             if (this.$route.query.channel) {
                 this.channel = this.$route.query.channel;
             }
+            this.type = ['gxc-nft', 'fly-nft'][this.$route.params.id - 1];
             $.init();
             this.loadWallets();
             fetch_reference_accounts(this.wallets.filter(wallet => {
@@ -740,9 +601,6 @@
         }
     }
     .index-tab {
-    }
-    .list-block.nft-list{
-        margin:0 auto;
     }
     .table-assets {
         position: relative;
