@@ -22,7 +22,7 @@ module.exports = (function() {
             network: '"Main Network"',
             staking_sum: '"https://wallet.gxb.io"',
             nftContract: '"gxc-nft"',
-            flyContract: '"fly-nft"'
+            flyContract: '"gxc-fly-nft"'
         }
     };
     return merge(prodEnv, {
