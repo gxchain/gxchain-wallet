@@ -3,7 +3,7 @@
         <div class="page" id="page-transfer">
             <header class="bar bar-nav">
                 <h3 class="title">{{$t('nft.view_info')}}</h3>
-                <router-link :to="link('/')" replace class="icon icon-left"></router-link>
+                <router-link :to="link(`/nftGroup/${type}`)" replace class="icon icon-left"></router-link>
             </header>
             <div class="content pull-to-refresh-content nftInfoContent">
                 <div class="pull-to-refresh-layer">

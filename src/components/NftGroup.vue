@@ -5,7 +5,6 @@
                 <h3 class="title">{{$t('nft.nft_list')}}</h3>
                 <router-link :to="link('/')" replace class="icon icon-left"></router-link>
             </header>
-            <div ref="bg" id="bg"></div>
             <div class="content pull-to-refresh-content" ref="content">
                 <div class="tab-container">
                     <div class="table-assets" v-if="accountNFT.length>0">
@@ -34,36 +33,21 @@
                         {{$t('node_vote.index.no_record')}}
                             </div>
                 </div>
-
             </div>
         </div>
-        <left-panel ref="panel"></left-panel>
-        <account-q-r-code ref="qrcode" :account="this.currentWallet.account"></account-q-r-code>
     </div>
 </template>
 <script>
-    // import {swiper, swiperSlide} from 'vue-awesome-swiper';
-    import AccountImage from './sub/AccountImage.vue';
-    import LeftPanel from './sub/LeftPanel.vue';
-    import AccountQRCode from './sub/AccountQRCode.vue';
-    import util from '@/common/util';
-    import WalletTab from './sub/WalletTab';
-
     import {
-        fetch_account_balances, fetch_account, get_staking_object, fetch_reference_accounts, get_assets_by_ids, get_wallet_index, get_wallets,
-        set_wallet_index, get_contract_table
+        fetch_account,
+        get_contract_table,
+        get_wallets,
+        get_wallet_index
     } from '@/services/WalletService';
-    import {get_market_asset_price} from '@/services/MarketService';
     import filters from '@/filters';
-    import some from 'lodash/some';
-    import unionBy from 'lodash/unionBy';
-    import {
-        mapActions
-    } from 'vuex';
     export default {
         filters,
         data () {
-            let self = this;
             let wallets = get_wallets();
             wallets = wallets.map((w) => {
                 w.balances = [];
@@ -71,48 +55,13 @@
             });
             let wallet_index = get_wallet_index();
             return {
-                accountCopied: false,
-                wallets: wallets,
-                currentWalletIndex: wallet_index,
-                swiperOption: {
-                    pagination: '.swiper-pagination',
-                    autoplay: false,
-                    keyboardControl: true,
-                    paginationClickable: true,
-                    initialSlide: wallet_index,
-                    onSlideChangeEnd: function (s) {
-                        let wallets = get_wallets();
-                        let wallet = wallets[s.activeIndex];
-                        self.isAssetHidden = wallet.isAssetHidden;
-                        set_wallet_index(s.activeIndex);
-                        self.currentWalletIndex = s.activeIndex;
-                    }
-                },
-                isAssetHidden: '',
-                channel: '',
-                stakingAmount: 0,
-                tabIndex: 'tab-container1',
-                nftBalance: [{'asset_id': '1.3.1', 'amount': 1052.16472, 'precision': 5, 'value': 2413.77, 'symbol': 'GXC', 'status': true}],
                 accountNFT: [],
-                showNft: false,
-                currentNft: {}
+                currentWallet: wallets[wallet_index]
             };
         },
-        watch: {
-            currentWalletIndex () {
-                this.loadBalances(this.currentWallet);
-                this.getStakingAmount();
-                this.getNFTList();
-            }
-        },
-
         methods: {
-            ...mapActions({
-                setAccountNft: 'setAccountNft'
-            }),
             showNFTInfo (item) {
                 let query = {
-                    from: this.$route.fullPath,
                     type: this.type
                 };
                 this.$router.push({
@@ -130,305 +79,20 @@
                     let NFTAccountIdsMap = NFTAccountIds.map(item => get_contract_table(this.type, 'token', item, item + 1));
                     Promise.all(NFTAccountIdsMap).then((res) => {
                         this.accountNFT = res.map(item => item.rows[0]);
-                        this.setAccountNft({accountNFT: this.accountNFT});
                     }).catch(ex => {
                         console.error(ex);
                         $.toast(ex.message);
                     });
                 }
-            },
-            loadWallets () {
-                if (this.wallets.length == 0) {
-                    this.$router.replace({
-                        path: this.link('/wallet-create')
-                    });
-                } else {
-                    this.wallets.forEach((wallet) => {
-                        this.loadBalances(wallet);
-                    });
-                    this.getStakingAmount();
-                    this.getNFTList();
-                }
-                setTimeout(() => {
-                    $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
-                }, 500);
-            },
-            loadBalances (wallet) {
-                if (wallet.account) {
-                    let wallet_balances;
-                    let assetMap = {};
-                    let priceMap = {};
-                    wallet.totalValue = '-';
-                    fetch_account_balances(wallet.account).then(function (balances) {
-                        if (!balances) {
-                            return;
-                        }
-                        wallet_balances = balances;
-                        let asset_ids = wallet_balances.map(b => {
-                            return b.asset_id;
-                        });
-                        return get_assets_by_ids(asset_ids);
-                    }).then(assets => {
-                        let priceSymbol = '';
-                        assets.forEach(asset => {
-                            assetMap[asset.id] = asset;
-                            priceSymbol += asset.symbol + ',';
-                        });
-                        priceSymbol = priceSymbol.substring(0, priceSymbol.length - 1);
-                        wallet.balances = wallet_balances.map(b => {
-                            return {
-                                asset_id: b.asset_id,
-                                amount: b.amount / Math.pow(10, assetMap[b.asset_id].precision),
-                                precision: assetMap[b.asset_id].precision,
-                                symbol: assetMap[b.asset_id].symbol,
-                                value: 0
-                            };
-                        });
-                        return get_market_asset_price(priceSymbol);
-                    }).then(prices => {
-                        wallet.totalValue = 0;
-                        prices.forEach(price => {
-                            priceMap[price.symbol] = price;
-                        });
-                        wallet.balances = wallet_balances.map(b => {
-                            let assetValue = priceMap[assetMap[b.asset_id].symbol] ? b.amount / Math.pow(10, assetMap[b.asset_id].precision) * priceMap[assetMap[b.asset_id].symbol].price : 0;
-                            wallet.totalValue += assetValue;
-                            return {
-                                asset_id: b.asset_id,
-                                amount: b.amount / Math.pow(10, assetMap[b.asset_id].precision),
-                                precision: assetMap[b.asset_id].precision,
-                                symbol: assetMap[b.asset_id].symbol,
-                                value: assetValue
-                            };
-                        });
-                        return wallet.balances;
-                    }).then((balances) => {
-                        let wallet_balances = balances.map(b => {
-                            return {
-                                asset_id: b.asset_id,
-                                amount: b.amount,
-                                precision: b.precision,
-                                value: b.value,
-                                symbol: b.symbol,
-                                status: true
-                            };
-                        });
-                        // 将当前钱包账号已有资产存入localStorage
-                        let assetsArray = localStorage.getItem('assets_array');
-                        if (!assetsArray) {
-                            assetsArray = [];
-                        } else {
-                            assetsArray = JSON.parse(assetsArray);
-                        }
-                        let asset = {
-                            account: wallet.account,
-                            list: wallet_balances.filter((item) => {
-                                return item.symbol != 'GXS' && item.symbol != 'GXC';
-                            })
-                        };
-                        let alreadyExist = some(assetsArray, (item) => {
-                            return item.account == wallet.account;
-                        });
-
-                        if (alreadyExist) {
-                            assetsArray = assetsArray.map((item) => {
-                                if (item.account == wallet.account) {
-                                    item.list.forEach((i) => {
-                                        wallet_balances = wallet_balances.map(b => {
-                                            if (i.symbol == b.symbol) {
-                                                b.status = i.status;
-                                            }
-                                            return b;
-                                        });
-                                    });
-                                    let list = unionBy(wallet_balances, item.list, 'symbol');
-                                    wallet.balances = list.filter((item) => {
-                                        return item.status == true;
-                                    });
-                                    item.list = list.filter((item) => {
-                                        return item.symbol != 'GXS' && item.symbol != 'GXC';
-                                    });
-                                }
-                                return item;
-                            });
-                        } else {
-                            wallet.balances = wallet_balances;
-                            assetsArray.push(asset);
-                        }
-                        localStorage.setItem('assets_array', JSON.stringify(assetsArray));
-                    }).catch(ex => {
-                        console.error(ex);
-                    });
-                }
-            },
-            getStakingAmount () {
-                let currentWallet = this.currentWallet.account;
-                fetch_account(currentWallet).then(result => {
-                    this.currentAccountId = result.id;
-                    get_staking_object(result.id).then(res => {
-                        let stakingList = res;
-                        let amount = 0;
-                        for (let i = 0; i < stakingList.length; i++) {
-                            amount = util.accAdd(amount * 1, stakingList[i].amount.amount * 1);
-                        }
-                        this.stakingAmount = util.accDiv(amount, 100000);
-                    });
-                });
-            },
-            getMarketCap (wallet) {
-                let balance = Number(wallet.balance);
-                let price = this.price;
-                if (!isNaN(balance) && price != '-') {
-                    return wallet.balance * this.price;
-                }
-                return '-';
-            },
-            openPanel () {
-                this.$refs.panel.open();
-            },
-            openQRScaner () {
-                let self = this;
-                if (this.isNative) {
-                    util.callNativeForWebView(function (result) {// eslint-disable-line
-                        let query = {
-                            to: result
-                        };
-                        if (result.indexOf('qr://transfer') == 0) {
-                            query = util.query2Obj(result.replace('qr://transfer', ''));
-                        }
-                        self.$router.push({
-                            path: self.link('/transfer', query)
-                        });
-                    }, null, 'QRCode', 'scan', []);
-                }
-            },
-            linkBackup (account) {
-                let query = {
-                    account: this.currentWallet.account,
-                    from: this.$route.fullPath
-                };
-                return this.link('/wallet-backup-detail', query);
-            },
-            openQRCodeModal () {
-                this.$refs.qrcode.show();
-            },
-            goAddAssets () {
-                let query = {
-                    account: this.currentWallet.account,
-                    from: this.$route.fullPath
-                };
-                this.$router.push({
-                    path: this.link('/add-assets', query)
-                });
-            },
-            backToBlockCity () {
-                if (this.isNative) {
-                    util.callNativeForWebView(null, null, 'Controller', 'pop', []); //eslint-disable-line
-                }
             }
-        },
-        destroyed () {
-            $.allowPanelOpen = true;
-            $(this.$el).off('refresh');
         },
         mounted () {
             if (this.$route.query.channel) {
                 this.channel = this.$route.query.channel;
             }
-            this.type = ['gxc-nft', 'fly-nft'][this.$route.params.id - 1];
+            this.type = this.$route.params.id;
             $.init();
-            this.loadWallets();
-            fetch_reference_accounts(this.wallets.filter(wallet => {
-                return !wallet.partial;
-            }).map(wallet => {
-                return wallet.account;
-            })).then((wallets) => {
-                if (wallets.length > this.wallets.length) {
-                    location.reload();
-                }
-            }).catch(ex => {
-                console.error(ex);
-            });
-            this.isAssetHidden = this.currentWallet.isAssetHidden;
-            if (this.isNative) {
-                window.webview = {
-                    reload: () => {
-                        this.loadWallets();
-                    }
-                };
-                util.callNativeForWebView(null, null, 'statusBar', 'styleLightContent', []);// eslint-disable-line
-            }
-            $(this.$el).on('refresh', '.pull-to-refresh-content', (e) => {
-                this.loadWallets();
-            });
-            $(this.$refs.content).on('scroll', () => {
-                let offset = $(this.$el).find('.row-top').offset().top;
-                if (offset < -20) {
-                    let percent = Math.min((-40 - offset) / 40, 1);
-                    $(this.$refs.bar).css({
-                        background: `rgba(37, 40, 113, ${percent})`
-                    });
-                } else {
-                    $(this.$refs.bar).css({
-                        background: 'rgba(37, 40, 113, 0)'
-                    });
-                }
-            }).on('touchmove', (e) => {
-                $(this.$refs.bg).css({
-                    height: Math.max($(this.$refs.top).height() + $(this.$refs.top).offset().top, $(
-                        this.$refs.top).height()),
-                    transition: 'none',
-                    webkitTransition: 'none'
-                });
-                return true;
-            }).on('touchend', () => {
-                const end = () => {
-                    $(this.$refs.bg).attr('style', '');
-                    clearTimeout(timer);
-                };
-                let timer = setTimeout(end, 1000);
-            });
-            // this.swiper.update();
-        },
-        computed: {
-            showLoyaltyProgram () {
-                return localStorage.getItem('version') != '1.2.0';
-            },
-            qrcode () {
-                return `qr://transfer?account=${this.currentWallet.account}`;
-            },
-            currentWallet () {
-                if (this.wallets.length > 0) {
-                    return this.wallets[this.currentWalletIndex];
-                }
-                return {};
-            },
-            price () {
-                if (!this.exchanges || this.exchanges.length == 0) {
-                    return '-';
-                } else {
-                    let best_price = 0;
-                    this.exchanges.forEach((exchange) => {
-                        if (this.$i18n.locale == 'zh-CN') {
-                            best_price = Math.max(Number(exchange.price_rmb), best_price);
-                        } else {
-                            best_price = Math.max(Number(exchange.price_dollar), best_price);
-                        }
-                    });
-                    return best_price;
-                }
-            }
-            // swiper () {
-            //     return this.$refs.mySwiper.swiper;
-            // }
-        },
-        components: {
-            // swiper,
-            // swiperSlide,
-            AccountImage,
-            LeftPanel,
-            AccountQRCode,
-            WalletTab
+            this.getNFTList();
         }
     };
 </script>
@@ -451,6 +115,7 @@
     #page-wallet-index {
         .content {
             top: 2.2rem;
+            background-color: #fff;
             -webkit-overflow-scrolling: auto;
         }
     }

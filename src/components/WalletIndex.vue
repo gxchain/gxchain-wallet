@@ -249,7 +249,8 @@
                     path: this.link(`/nftInfo/${item.id}`, query)
                 });
             },
-            showNFTGroup (item) {
+            showNFTGroup (index) {
+                const item = [process.env.nftContract, process.env.flyContract][index - 1];
                 this.$router.push({
                     path: this.link(`/nftGroup/${item}`)
                 });
@@ -259,7 +260,7 @@
                 let currentAccountId = await fetch_account(this.currentWallet.account);
                 let _walletId = String(currentAccountId.id).split('.')[2];
                 let _walletId_up = Number(_walletId) + 1;
-                let _accountInfo = await get_contract_table('gxc-nft', 'account', _walletId, _walletId_up);
+                let _accountInfo = await get_contract_table(process.env.nftContract, 'account', _walletId, _walletId_up);
                 let NFTAccountIds = _accountInfo && _accountInfo.rows[0] && _accountInfo.rows[0].ids;
                 if (NFTAccountIds && NFTAccountIds.length > 0) {
                     let NFTAccountIdsMap = NFTAccountIds.map(item => get_contract_table(process.env.nftContract, 'token', item, item + 1));
