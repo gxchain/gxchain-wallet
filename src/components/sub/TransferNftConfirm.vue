@@ -88,7 +88,7 @@
             },
             contract: {
                 type: String,
-                default: process.env.nftContract
+                default: ''
             }
         },
         methods: {
@@ -122,6 +122,9 @@
                     console.error(ex);
                 });
             }
+        },
+        mounted () {
+            this.contract = this.$route.query.type;
         },
         components: {
             AccountImage

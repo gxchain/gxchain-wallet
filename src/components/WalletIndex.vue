@@ -165,7 +165,7 @@
                         </gxb-tab-container-item>
                     </gxb-tab-container>
                 </div>
-                
+
             </div>
         </div>
         <left-panel ref="panel"></left-panel>
@@ -182,7 +182,7 @@
 
     import {
         fetch_account_balances, fetch_account, get_staking_object, fetch_reference_accounts, get_assets_by_ids, get_wallet_index, get_wallets,
-        set_wallet_index, get_contract_table
+        set_wallet_index
     } from '@/services/WalletService';
     import {get_market_asset_price} from '@/services/MarketService';
     import filters from '@/filters';
@@ -233,7 +233,6 @@
             currentWalletIndex () {
                 this.loadBalances(this.currentWallet);
                 this.getStakingAmount();
-                this.getNFTList();
             }
         },
 
@@ -255,24 +254,6 @@
                     path: this.link(`/nftGroup/${item}`)
                 });
             },
-            async getNFTList () {
-                this.accountNFT = [];
-                let currentAccountId = await fetch_account(this.currentWallet.account);
-                let _walletId = String(currentAccountId.id).split('.')[2];
-                let _walletId_up = Number(_walletId) + 1;
-                let _accountInfo = await get_contract_table(process.env.nftContract, 'account', _walletId, _walletId_up);
-                let NFTAccountIds = _accountInfo && _accountInfo.rows[0] && _accountInfo.rows[0].ids;
-                if (NFTAccountIds && NFTAccountIds.length > 0) {
-                    let NFTAccountIdsMap = NFTAccountIds.map(item => get_contract_table(process.env.nftContract, 'token', item, item + 1));
-                    Promise.all(NFTAccountIdsMap).then((res) => {
-                        this.accountNFT = res.map(item => item.rows[0]);
-                        this.setAccountNft({accountNFT: this.accountNFT});
-                    }).catch(ex => {
-                        console.error(ex);
-                        $.toast(ex.message);
-                    });
-                }
-            },
             loadWallets () {
                 if (this.wallets.length == 0) {
                     this.$router.replace({
@@ -283,7 +264,6 @@
                         this.loadBalances(wallet);
                     });
                     this.getStakingAmount();
-                    this.getNFTList();
                 }
                 setTimeout(() => {
                     $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));

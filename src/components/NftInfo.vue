@@ -83,7 +83,7 @@
                 param: {},
                 fee: {},
                 nftinfo: {},
-                type: process.env.nftContract
+                type: ''
             };
         },
         computed: {
@@ -118,7 +118,7 @@
                 }
             },
             async getNFTInfo () {
-                let _id = this.$route.params.id;
+                let _id = parseInt(this.$route.params.id);
                 let _token = await get_contract_table(this.type, 'token', _id, _id + 1);
                 this.nftinfo = _token.rows[0];
             },
