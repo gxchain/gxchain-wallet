@@ -146,7 +146,7 @@
                                             <li  class="item-content item-asset">
                                                 <div class="item-inner" @click="showNFTGroup(2)">
                                                     <div class="symbol">
-                                                        <img src="https://static.gxb.io/dapp/blockcity/nodevote/61.png" width="30" height="30">
+                                                        <img src="http://static.gxcfly.top/images/logogxc-fly-logo.png"  width="32" height="32">
                                                     </div>
                                                     <div class="price">
                                                         <div class="digital">
