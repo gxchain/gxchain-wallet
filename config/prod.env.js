@@ -12,7 +12,7 @@ module.exports = (function () {
                 network: '"Test Network"',
                 staking_sum:  '"https://testnet.wallet.gxchain.org"',
                 nftContract: '"testnft"',
-                flyContract: '"fly-nft"'
+                flyContract: '"gxc-fly-nft"'
             };
         } else {
             if (process.env.prod == 3) {
@@ -26,7 +26,7 @@ module.exports = (function () {
                     network: '"Test Network"',
                     staking_sum:  '"https://testnet.wallet.gxchain.org"',
                     nftContract: '"testnft"',
-                    flyContract: '"fly-nft"'
+                    flyContract: '"gxc-fly-nft"'
                 };
             } else {
                 return {
@@ -63,7 +63,8 @@ module.exports = (function () {
           chain_id: '"c2af30ef9340ff81fd61654295e98a1ff04b23189748f86727d0b26b40bb0ff4"',
           network: '"Test Network"',
           staking_sum:  '"https://testnet.wallet.gxchain.org"',
-          nftContract: '"testnft"'
+          nftContract: '"testnft"',
+          flyContract: '"gxc-fly-nft"'
         };
     }
 })();
