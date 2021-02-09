@@ -339,4 +339,10 @@
         color: #80848f;
         text-align: center;
     }
+    .native-ios-x .no-reocrd {
+        margin: 3rem 0;
+        font-size: .7rem;
+        color: #80848f;
+        text-align: center;
+    }
 </style>
