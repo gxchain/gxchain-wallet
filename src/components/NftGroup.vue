@@ -345,4 +345,11 @@
         color: #80848f;
         text-align: center;
     }
+    .native-ios-x #page-wallet-index {
+        .content {
+            top: 4.5rem;
+            background-color: #fff;
+            -webkit-overflow-scrolling: auto;
+        }
+    }
 </style>
