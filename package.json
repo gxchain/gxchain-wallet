@@ -6,11 +6,13 @@
   "private": true,
   "scripts": {
     "start": "node build/dev-server.js",
+    "start-pro": "requestEnv=1 node build/dev-server.js",
     "build": "node build/build.js",
     "build:sandbox": "prod=3 node build/build.js",
     "build:yfb": "prod=1 node build/build.js",
     "build:prod": "prod=1 node build/build.js",
-    "lint": "eslint --ext .js,.vue src"
+    "lint": "eslint --ext .js,.vue src",
+    "fix": "eslint --fix --ext .js,.vue src"
   },
   "dependencies": {
     "gxb-ui": "^1.1.20",
@@ -19,7 +21,7 @@
     "jdenticon": "^1.7.2",
     "js-sha256": "^0.6.0",
     "loaders.css": "^0.1.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.20",
     "numeral": "^2.0.4",
     "qr.js": "0.0.0",
     "scriptloader": "^1.1.2",

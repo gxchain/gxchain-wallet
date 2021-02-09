@@ -3,7 +3,7 @@
         <div class="page" id="page-transfer">
             <header class="bar bar-nav">
                 <h3 class="title">{{$t('nft.view_info')}}</h3>
-                <router-link :to="link('/')" replace class="icon icon-left"></router-link>
+                <router-link :to="link(`/nftGroup/${type}`)" replace class="icon icon-left"></router-link>
             </header>
             <div class="content pull-to-refresh-content nftInfoContent">
                 <div class="pull-to-refresh-layer">
@@ -38,9 +38,9 @@
                 </div>
             </div>
         </div>
-        <transfer-nft :currentaccount="this.currentWallet.account" :nftinfo="nftinfo" ref="confirm1" @closeModal="onCancel" @onTransferConfirm="onConfirm" :show='showTransfer' ></transfer-nft>
+        <transfer-nft :currentaccount="this.currentWallet.account" :nftinfo="nftinfo" ref="confirm1" @closeModal="onCancel" @onTransferConfirm="onConfirm" :show='showTransfer'></transfer-nft>
         <password-confirm ref="unlock" @unlocking="unlocking"></password-confirm>
-        <transfer-nft-confirm ref="confirm" :account="this.currentWallet.account" :pwd="password" :to="to" :param="param" :fee="fee" @closeConfirmModal="closeConfirmModal" ></transfer-nft-confirm>
+        <transfer-nft-confirm ref="confirm" :account="this.currentWallet.account" :pwd="password" :to="to" :param="param" :fee="fee" @closeConfirmModal="closeConfirmModal" :contract="type"></transfer-nft-confirm>
     </div>
 </template>
 <script>
@@ -82,7 +82,8 @@
                 toAccount: '',
                 param: {},
                 fee: {},
-                nftinfo: {}
+                nftinfo: {},
+                type: ''
             };
         },
         computed: {
@@ -92,6 +93,7 @@
         },
         mounted () {
             let id = this.$route.params.id;
+            this.type = this.$route.query.type;
             if (this.accountNFT.length === 0) {
                 this.getNFTInfo();
             } else {
@@ -116,8 +118,8 @@
                 }
             },
             async getNFTInfo () {
-                let _id = this.$route.params.id;
-                let _token = await get_contract_table(process.env.nftContract, 'token', _id, _id + 1);
+                let _id = parseInt(this.$route.params.id);
+                let _token = await get_contract_table(this.type, 'token', _id, _id + 1);
                 this.nftinfo = _token.rows[0];
             },
             async onConfirm (account) {
@@ -152,7 +154,7 @@
                 let _id = String(this.toAccount.id).split('.')[2];
                 this.param = {'id': this.nftinfo.id, 'to': _id, 'name': this.nftinfo.name};
 
-                call_contract(this.currentWallet.account, process.env.nftContract, 'transfer', this.param, 0, pwd, false).then(res => {
+                call_contract(this.currentWallet.account, this.type, 'transfer', this.param, 0, pwd, false).then(res => {
                     let op = res && res.operations && res.operations[0];
                     this.fee = op[1].fee;
                     return get_assets_by_ids([this.fee.asset_id || '1.3.1']);

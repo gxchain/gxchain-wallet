@@ -32,6 +32,7 @@ import VoteIndex from '@/components/VoteIndex';
 import StakingIndex from '@/components/StakingIndex';
 import UserIndex from '@/components/User.vue';
 import NftInfo from '@/components/NftInfo.vue';
+import NftGroup from '@/components/NftGroup.vue';
 import TransferNftSuccess from '@/components/TransferNftSuccess.vue';
 import { set_item, compare_version } from '@/services/CommonService';
 import i18n from '@/locales';
@@ -279,6 +280,14 @@ let router = new Router({
             },
             name: 'NFTInfo',
             component: NftInfo
+        },
+        {
+            path: '/nftGroup/:id',
+            meta: {
+                title: 'NFT系列'
+            },
+            name: 'NftGroup',
+            component: NftGroup
         },
         {
             path: '/transferNftSuccess',

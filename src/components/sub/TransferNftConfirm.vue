@@ -85,6 +85,10 @@
             },
             param: {
                 type: Object
+            },
+            contract: {
+                type: String,
+                default: ''
             }
         },
         methods: {
@@ -100,7 +104,7 @@
                     return;
                 }
                 this.submitting = true;
-                call_contract(this.account, process.env.nftContract, 'transfer', this.param, 0, this.pwd, true).then(res => {
+                call_contract(this.account, this.contract, 'transfer', this.param, 0, this.pwd, true).then(res => {
                     console.log(res);
                     $.closeModal($(this.$el));
                     this.$emit('closeConfirmModal');
@@ -118,6 +122,9 @@
                     console.error(ex);
                 });
             }
+        },
+        mounted () {
+            this.contract = this.$route.query.type;
         },
         components: {
             AccountImage

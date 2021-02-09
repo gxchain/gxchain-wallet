@@ -126,35 +126,46 @@
                             </div>
                         </gxb-tab-container-item>
                         <gxb-tab-container-item id="tab-container2">
-                            <div class="table-assets" v-if="accountNFT.length>0">
-                                <div class="list-block media-list">
-                                    <ul>
-                                        <li v-for="(item, index) in accountNFT" class="item-content item-asset"
-                                            :key="index">
-                                            <div class="item-inner" @click="showNFTInfo(item)">
-                                                <div class="symbol">
-                                                    <img :src="item.link" width="30" height="30">
-                                                    <div>&nbsp;&nbsp;#{{item.id}} </div>
-                                                </div>
-                                                <div class="price">
-                                                    <div class="digital">
-                                                        <small>
-                                                        {{item.name}}
-                                                        </small>
+                           <!-- <div class="table-assets" v-if="accountNFT.length>0">-->
+                                <div class="list-block media-list nft-list">
+                                        <ul>
+                                            <li  class="item-content item-asset">
+                                                <div class="item-inner" @click="showNFTGroup(1)">
+                                                    <div class="symbol">
+                                                        <img src="https://static.gxb.io/gxs/symbols/gxs.png" width="30" height="30">
+                                                    </div>
+                                                    <div class="price">
+                                                        <div class="digital">
+                                                            <small>
+                                                                GXC官方系列
+                                                            </small>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </li>
+                                            </li>
+                                            <li  class="item-content item-asset">
+                                                <div class="item-inner" @click="showNFTGroup(2)">
+                                                    <div class="symbol">
+                                                        <img src="http://static.gxcfly.top/images/logogxc-fly-logo.png"  width="32" height="32">
+                                                    </div>
+                                                    <div class="price">
+                                                        <div class="digital">
+                                                            <small>
+                                                                FLY定制系列
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
                                     </ul>
                                 </div>
-                            </div>
-                            <div v-else class="no-reocrd table-assets">
+                  <!--          <div v-else class="no-reocrd table-assets">
                                 {{$t('node_vote.index.no_record')}}
-                            </div>
+                            </div>-->
                         </gxb-tab-container-item>
                     </gxb-tab-container>
                 </div>
-                
+
             </div>
         </div>
         <left-panel ref="panel"></left-panel>
@@ -171,7 +182,7 @@
 
     import {
         fetch_account_balances, fetch_account, get_staking_object, fetch_reference_accounts, get_assets_by_ids, get_wallet_index, get_wallets,
-        set_wallet_index, get_contract_table
+        set_wallet_index
     } from '@/services/WalletService';
     import {get_market_asset_price} from '@/services/MarketService';
     import filters from '@/filters';
@@ -222,7 +233,6 @@
             currentWalletIndex () {
                 this.loadBalances(this.currentWallet);
                 this.getStakingAmount();
-                this.getNFTList();
             }
         },
 
@@ -238,23 +248,11 @@
                     path: this.link(`/nftInfo/${item.id}`, query)
                 });
             },
-            async getNFTList () {
-                this.accountNFT = [];
-                let currentAccountId = await fetch_account(this.currentWallet.account);
-                let _walletId = String(currentAccountId.id).split('.')[2];
-                let _walletId_up = Number(_walletId) + 1;
-                let _accountInfo = await get_contract_table(process.env.nftContract, 'account', _walletId, _walletId_up);
-                let NFTAccountIds = _accountInfo && _accountInfo.rows[0] && _accountInfo.rows[0].ids;
-                if (NFTAccountIds && NFTAccountIds.length > 0) {
-                    let NFTAccountIdsMap = NFTAccountIds.map(item => get_contract_table(process.env.nftContract, 'token', item, item + 1));
-                    Promise.all(NFTAccountIdsMap).then((res) => {
-                        this.accountNFT = res.map(item => item.rows[0]);
-                        this.setAccountNft({accountNFT: this.accountNFT});
-                    }).catch(ex => {
-                        console.error(ex);
-                        $.toast(ex.message);
-                    });
-                }
+            showNFTGroup (index) {
+                const item = [process.env.nftContract, process.env.flyContract][index - 1];
+                this.$router.push({
+                    path: this.link(`/nftGroup/${item}`)
+                });
             },
             loadWallets () {
                 if (this.wallets.length == 0) {
@@ -266,7 +264,6 @@
                         this.loadBalances(wallet);
                     });
                     this.getStakingAmount();
-                    this.getNFTList();
                 }
                 setTimeout(() => {
                     $.pullToRefreshDone($(this.$el).find('.pull-to-refresh-content'));
@@ -724,6 +721,12 @@
         }
     }
     .index-tab {
+    }
+    .list-block.nft-list{
+        margin:0 auto;
+        .item-inner {
+            display: flex;
+        }
     }
     .table-assets {
         position: relative;
