@@ -171,6 +171,20 @@
                                                     </div>
                                                 </div>
                                             </li>
+                                            <li  class="item-content item-asset">
+                                                <div class="item-inner" @click="showNFTGroup(4)">
+                                                    <div class="symbol">
+                                                        <img src="https://static.gxb.io/dapp/blockcity/nodevote/53.png"  width="32" height="32">
+                                                    </div>
+                                                    <div class="price">
+                                                        <div class="digital">
+                                                            <small>
+                                                                GXChainTop系列
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
                                     </ul>
                                 </div>
                   <!--          <div v-else class="no-reocrd table-assets">
@@ -263,7 +277,7 @@
                 });
             },
             showNFTGroup (index) {
-                const item = [process.env.nftContract, process.env.flyContract, process.env.moonContract][index - 1];
+                const item = [process.env.nftContract, process.env.flyContract, process.env.moonContract, process.env.gxtContract][index - 1];
                 this.$router.push({
                     path: this.link(`/nftGroup/${item}`)
                 });
