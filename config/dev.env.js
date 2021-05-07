@@ -23,7 +23,8 @@ module.exports = (function() {
             staking_sum: '"https://wallet.gxb.io"',
             nftContract: '"gxc-nft"',
             flyContract: '"gxc-fly-nft"',
-            moonContract: '"gxc-moon-nft"'
+            moonContract: '"gxc-moon-nft"',
+            gxtContract: '"gxc-gxt-nft"'
         }
     };
     return merge(prodEnv, {
@@ -37,6 +38,7 @@ module.exports = (function() {
         staking_sum: '"https://testnet.wallet.gxchain.org"',
         nftContract: '"testnft"',
         flyContract: '"gxc-fly-nft"',
-        moonContract: '"gxc-moon-nft"'
+        moonContract: '"gxc-moon-nft"',
+        gxtContract: '"test-nft-contract-nnn-1"'
     });
 })();

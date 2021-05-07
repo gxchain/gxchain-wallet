@@ -13,7 +13,8 @@ module.exports = (function () {
                 staking_sum:  '"https://testnet.wallet.gxchain.org"',
                 nftContract: '"testnft"',
                 flyContract: '"gxc-fly-nft"',
-                moonContract: '"gxc-moon-nft"'
+                moonContract: '"gxc-moon-nft"',
+                gxtContract: '"test-nft-contract-nnn-1"'
             };
         } else {
             if (process.env.prod == 3) {
@@ -28,7 +29,8 @@ module.exports = (function () {
                     staking_sum:  '"https://testnet.wallet.gxchain.org"',
                     nftContract: '"testnft"',
                     flyContract: '"gxc-fly-nft"',
-                    moonContract: '"gxc-moon-nft"'
+                    moonContract: '"gxc-moon-nft"',
+                    gxtContract: '"test-nft-contract-nnn-1"'
                 };
             } else {
                 return {
@@ -51,7 +53,8 @@ module.exports = (function () {
                   staking_sum: '"https://wallet.gxb.io"',
                   nftContract: '"gxc-nft"',
                   flyContract: '"gxc-fly-nft"',
-                  moonContract: '"gxc-moon-nft"'
+                  moonContract: '"gxc-moon-nft"',
+                  gxtContract: '"gxc-gxt-nft"'
                 };
             }
         }
@@ -68,7 +71,8 @@ module.exports = (function () {
           staking_sum:  '"https://testnet.wallet.gxchain.org"',
           nftContract: '"testnft"',
           flyContract: '"gxc-fly-nft"',
-          moonContract: '"gxc-moon-nft"'
+          moonContract: '"gxc-moon-nft"',
+          gxtContract: '"test-nft-contract-nnn-1"'
         };
     }
 })();
