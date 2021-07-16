@@ -129,62 +129,20 @@
                            <!-- <div class="table-assets" v-if="accountNFT.length>0">-->
                                 <div class="list-block media-list nft-list">
                                         <ul>
-                                            <li  class="item-content item-asset">
-                                                <div class="item-inner" @click="showNFTGroup(1)">
+                                            <li v-for="(item, index) in nftList" :key="index" class="item-content item-asset">
+                                                <div class="item-inner" @click="showNFTGroup(index)">
                                                     <div class="symbol">
-                                                        <img src="https://static.gxb.io/gxs/symbols/gxs.png" width="30" height="30">
+                                                        <img :src=item.img width="30" height="30">
                                                     </div>
                                                     <div class="price">
                                                         <div class="digital">
                                                             <small>
-                                                                GXC官方系列
+                                                                {{item.nftName}}
                                                             </small>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </li>
-                                            <li  class="item-content item-asset">
-                                                <div class="item-inner" @click="showNFTGroup(2)">
-                                                    <div class="symbol">
-                                                        <img src="http://static.gxcfly.top/images/logogxc-fly-logo.png"  width="32" height="32">
-                                                    </div>
-                                                    <div class="price">
-                                                        <div class="digital">
-                                                            <small>
-                                                                FLY定制系列
-                                                            </small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li  class="item-content item-asset">
-                                                <div class="item-inner" @click="showNFTGroup(3)">
-                                                    <div class="symbol">
-                                                        <img src="https://static.gxb.io/dapp/blockcity/nodevote/20.png"  width="32" height="32">
-                                                    </div>
-                                                    <div class="price">
-                                                        <div class="digital">
-                                                            <small>
-                                                                MOON自由创作系列
-                                                            </small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li  class="item-content item-asset">
-                                                <div class="item-inner" @click="showNFTGroup(4)">
-                                                    <div class="symbol">
-                                                        <img src="https://static.gxb.io/dapp/blockcity/nodevote/53.png"  width="32" height="32">
-                                                    </div>
-                                                    <div class="price">
-                                                        <div class="digital">
-                                                            <small>
-                                                                GXChainTop系列
-                                                            </small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
+                                            </li> 
                                     </ul>
                                 </div>
                   <!--          <div v-else class="no-reocrd table-assets">
@@ -209,7 +167,7 @@
     import WalletTab from './sub/WalletTab';
 
     import {
-        fetch_account_balances, fetch_account, get_staking_object, fetch_reference_accounts, get_assets_by_ids, get_wallet_index, get_wallets,
+        fetch_account_balances, fetch_account, get_nft_list, get_staking_object, fetch_reference_accounts, get_assets_by_ids, get_wallet_index, get_wallets,
         set_wallet_index
     } from '@/services/WalletService';
     import {get_market_asset_price} from '@/services/MarketService';
@@ -253,6 +211,7 @@
                 tabIndex: 'tab-container1',
                 nftBalance: [{'asset_id': '1.3.1', 'amount': 1052.16472, 'precision': 5, 'value': 2413.77, 'symbol': 'GXC', 'status': true}],
                 accountNFT: [],
+                nftList: [],
                 showNft: false,
                 currentNft: {}
             };
@@ -417,6 +376,9 @@
                         }
                         this.stakingAmount = util.accDiv(amount, 100000);
                     });
+                });
+                get_nft_list().then(res => {
+                    this.nftList = res;
                 });
             },
             getMarketCap (wallet) {

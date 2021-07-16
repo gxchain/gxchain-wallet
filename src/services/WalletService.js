@@ -1285,6 +1285,12 @@ const get_contract_table = (contractName, tableName, lower_bound = 0, upper_boun
     });
 };
 
+const get_nft_list = () => {
+    return Vue.http.get('https://www.gxchain.org/api/getNftList').then(resp => {
+        return resp.data.list || [];
+    });
+};
+
 export {
     bak_wallet,
     get_objects,
@@ -1330,5 +1336,6 @@ export {
     get_vesting_balances,
     claimVestingBalance,
     get_staking_percent,
-    get_contract_table
+    get_contract_table,
+    get_nft_list
 };
