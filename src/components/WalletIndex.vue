@@ -130,7 +130,7 @@
                                 <div class="list-block media-list nft-list">
                                         <ul>
                                             <li v-for="(item, index) in nftList" :key="index" class="item-content item-asset">
-                                                <div class="item-inner" @click="showNFTGroup(index)">
+                                                <div class="item-inner" @click="showNFTGroup(item)">
                                                     <div class="symbol">
                                                         <img :src=item.img width="30" height="30">
                                                     </div>
@@ -235,10 +235,14 @@
                     path: this.link(`/nftInfo/${item.id}`, query)
                 });
             },
-            showNFTGroup (index) {
-                const item = [process.env.nftContract, process.env.flyContract, process.env.moonContract, process.env.gxtContract][index - 1];
+            showNFTGroup (item) {
+                let contractName = item.devContract;
+                if (process.env.NODE_ENV == 'production' && process.env.prod == 1) {
+                    contractName = item.prodContract;
+                }
+                // const item = [process.env.nftContract, process.env.flyContract, process.env.moonContract, process.env.gxtContract][index - 1];
                 this.$router.push({
-                    path: this.link(`/nftGroup/${item}`)
+                    path: this.link(`/nftGroup/${contractName}`)
                 });
             },
             loadWallets () {
