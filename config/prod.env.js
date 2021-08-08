@@ -3,6 +3,7 @@ module.exports = (function () {
     if (!!process.env.prod) {
         if (process.env.prod == 2) {
             return {
+                ENV:'"test"',
                 NODE_ENV: '"production"',
                 __HOST__: '"https://mwallet.gxb.io/#"',
                 __SERVICE__: '"https://walletgateway.gxb.io"',
@@ -19,6 +20,7 @@ module.exports = (function () {
         } else {
             if (process.env.prod == 3) {
                 return {
+                    ENV:'"sand"',
                     NODE_ENV: '"production"',
                     __HOST__: '"https://sandbox.mwallet.gxb.io/#"',
                     __SERVICE__: '"https://sandbox.blockcity.gxb.io/api"',
@@ -34,6 +36,7 @@ module.exports = (function () {
                 };
             } else {
                 return {
+                  ENV:'"prod"',
                   NODE_ENV: '"production"',
                   __HOST__: '"https://mwallet.gxb.io/#"',
                   __SERVICE__: '"https://walletgateway.gxb.io"',
@@ -61,6 +64,7 @@ module.exports = (function () {
     }
     else {
         return {
+          ENV:'"test"',
           NODE_ENV: '"production"',
           __HOST__: '"http://mwallet.dev.gxchain.cn/#"',
           __SERVICE__: '"http://dev.gxchain.cn/gateway"',

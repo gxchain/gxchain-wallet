@@ -237,7 +237,7 @@
             },
             showNFTGroup (item) {
                 let contractName = item.devContract;
-                if (process.env.NODE_ENV == 'production' && process.env.prod == 1) {
+                if (process.env.NODE_ENV == 'production' && process.env.ENV == 'prod') {
                     contractName = item.prodContract;
                 }
                 // const item = [process.env.nftContract, process.env.flyContract, process.env.moonContract, process.env.gxtContract][index - 1];
