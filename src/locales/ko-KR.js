@@ -627,6 +627,25 @@ const locale = {
     },
     my: {
         title: '나의 '
+    },
+    proposal: {
+        vote: '투표',
+        vote_number: '투표 수',
+        active: '활동적인',
+        result: '현재 결과',
+        report: '보고서 다운로드',
+        support: '동의하십니까?',
+        no_support: '동의하지 않는 것이 확실합니까?',
+        vote_success: '투표 성공',
+        vote_fail: '투표 실패',
+        yes: '확인하다',
+        expand: '나머지 확장',
+        change_support: '동의로 변경하시겠습니까?',
+        change_noSupport: '동의하지 않음으로 변경하시겠습니까?',
+        totalVote: '총 투표수',
+        totalUserVote: '유권자 수',
+        agree: '동의하다',
+        disagree: '동의하지 않는다'
     }
 };
 

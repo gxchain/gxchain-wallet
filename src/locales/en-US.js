@@ -636,6 +636,25 @@ const locale = {
     },
     my: {
         title: 'My'
+    },
+    proposal: {
+        vote: 'Vote',
+        vote_number: 'Number of votes',
+        active: 'active',
+        result: 'Current result',
+        report: 'Download report',
+        support: 'Are you sure you agree?',
+        no_support: ' Are you sure you disagree?',
+        vote_success: 'Successful voting',
+        vote_fail: 'Voting failed',
+        yes: 'Confirm',
+        expand: 'Expand the remainder',
+        change_support: 'Are you sure to change to agree?',
+        change_noSupport: 'Are you sure to change to disagree?',
+        totalVote: 'Total votes',
+        totalUserVote: 'Number of voters',
+        agree: 'Yes',
+        disagree: 'No'
     }
 };
 

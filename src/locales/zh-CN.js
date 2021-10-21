@@ -609,6 +609,25 @@ const locale = {
     },
     my: {
         title: '我的'
+    },
+    proposal: {
+        vote: '投票',
+        vote_number: '投票数',
+        active: '活跃',
+        result: '当前结果',
+        report: '下载报告',
+        support: '确定同意吗？',
+        yes: '确认',
+        no_support: ' 确定不同意吗？',
+        vote_success: '投票成功',
+        vote_fail: '投票失败',
+        expand: '展开剩余部分',
+        change_support: '确定更改为同意吗',
+        change_noSupport: '确定更改为不同意吗？',
+        totalVote: '投票总数',
+        totalUserVote: '投票人数',
+        agree: '同意',
+        disagree: '不同意'
     }
 };
 
