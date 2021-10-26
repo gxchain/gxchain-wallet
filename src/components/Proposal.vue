@@ -16,7 +16,7 @@
        <div class="block-item">
           <h3>IP-82: Move yUSD funds to yDAI Vault</h3>
           <div class="share-active">
-            <div class="active">{{$t('proposal.active')}}</div> 
+            <div :class="!this.canVote ? 'active' : 'disActive'">{{$t('proposal.active')}}</div> 
           </div>
           <p>
             Yam Finance YIP-82: Move yUSD funds to yDAI Vault 活跃 Yearn's yUSD
@@ -98,7 +98,7 @@
           </ul>
         </div>
       </div>
-      <div class="section-right">
+      <div class="section-right" v-show="voteResultShow">
         <div class="right-fomat">
           <div style="display:flex;align-items:center">
             <div class="inforText">{{ $t("proposal.totalVote") }}</div>
@@ -163,7 +163,8 @@ import {
     get_wallets,
     get_nodes_votes,
     set_wallet_index,
-    get_vote_statistics
+    get_vote_statistics,
+    get_vote_state
 } from '@/services/WalletService';
 import AccountImage from '@/components/sub/AccountImage.vue';
 import Modal from '@/components/sub/Modal.vue';
@@ -195,6 +196,8 @@ export default {
                 voteUserTrue: 22,
                 voteUserFalse: 6
             },
+            canVote: true,
+            voteResultShow: true,
             contractName: process.env.contractName
         };
     },
@@ -207,6 +210,13 @@ export default {
     },
     mounted: function () {
         this.send();
+        this.voteEnds();
+        // 判断投票是否结束
+        if (this.canVote) {
+            this.voteResultShow = false;
+        } else {
+            this.voteResultShow = true;
+        }
     },
     methods: {
         send () {
@@ -214,6 +224,8 @@ export default {
                 this.detailList = res.result;
                 console.log('detailList', this.detailList);
             });
+        },
+        voteEnds () {
             get_vote_statistics().then(res => {
                 this.number.totalVote = res.data.statistics.totalVoteGXCNumber;
                 this.number.voteNumberTrue = (res.data.statistics.totalVoteGXCNumberTrue / this.number.totalVote * 100);
@@ -221,6 +233,10 @@ export default {
                 this.user.totalUserVote = res.data.statistics.voteUserNumber;
                 this.user.voteUserTrue = (res.data.statistics.voteUserNumberTrue / this.user.totalUserVote * 100);
                 this.user.voteUserFalse = (res.data.statistics.voteUserNumberFalse / this.user.totalUserVote * 100);
+            });
+            get_vote_state().then(res => {
+                this.canVote = res.canVote;
+                console.log('canVote', res);
             });
         },
         // 是否投票
@@ -237,7 +253,6 @@ export default {
             for (var i = 0; i < this.detailList.length; i++) {
                 if (this.currentWallet.account === this.detailList[i].userName) {
                     this.flag = true;
-                    console.log(this.flag);
                     return;
                 }
             }
@@ -316,7 +331,7 @@ export default {
     }
   .content {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 1.2rem 6%;
     background-color: rgb(235,235,242);
     .section-left {
@@ -336,6 +351,12 @@ export default {
         justify-content: space-between;
         .active {
           background-color: rgb(255, 126, 29);
+          padding: 1px 8px;
+          border-radius: 16px;
+          color: #fff;
+        }
+        .disActive {
+          background-color: rgb(188, 189, 193);
           padding: 1px 8px;
           border-radius: 16px;
           color: #fff;
@@ -433,7 +454,7 @@ export default {
             border-radius: 20px;
             margin-bottom: 12px;
             margin-left:10%;
-            background-color:rgb(178, 181, 205);
+            background-color:rgb(188, 189, 193);
           }
           .no-disabled{
             text-align: center;

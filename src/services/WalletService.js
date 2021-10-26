@@ -1286,12 +1286,17 @@ const get_contract_table = (contractName, tableName, lower_bound = 0, upper_boun
 };
 
 const get_nodes_votes = () => {
-    return Vue.http.get('/proposal/api/voter').then(resp => {
+    return Vue.http.get(`${process.env.pro_service}/proposal/api/voter`).then(resp => {
         return resp.data || [];
     });
 };
 const get_vote_statistics = () => {
-    return Vue.http.get('/proposal/api/statistics').then(resp => {
+    return Vue.http.get(`${process.env.pro_service}/proposal/api/statistics`).then(resp => {
+        return resp.data || [];
+    });
+};
+const get_vote_state = () => {
+    return Vue.http.get(`${process.env.pro_service}/proposal/api/state`).then(resp => {
         return resp.data || [];
     });
 };
@@ -1343,5 +1348,6 @@ export {
     get_staking_percent,
     get_contract_table,
     get_nodes_votes,
-    get_vote_statistics
+    get_vote_statistics,
+    get_vote_state
 };
