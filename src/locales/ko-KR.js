@@ -645,7 +645,9 @@ const locale = {
         totalVote: '총 투표수',
         totalUserVote: '유권자 수',
         agree: '동의하다',
-        disagree: '동의하지 않는다'
+        disagree: '동의하지 않는다',
+        cast_agree: '동의에 투표하셨습니다~',
+        cast_disagree: '당신은 이미 반대표를 던졌습니다~'
     }
 };
 

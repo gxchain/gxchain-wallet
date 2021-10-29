@@ -16,7 +16,7 @@
        <div class="block-item">
           <h3>IP-82: Move yUSD funds to yDAI Vault</h3>
           <div class="share-active">
-            <div :class="!this.canVote ? 'active' : 'disActive'">{{$t('proposal.active')}}</div> 
+            <div :class="this.canVote ? 'active' : 'disActive'">{{$t('proposal.active')}}</div> 
           </div>
           <p>
             Yam Finance YIP-82: Move yUSD funds to yDAI Vault 活跃 Yearn's yUSD
@@ -185,6 +185,8 @@ export default {
             disabled: true,
             index: 0,
             detailList: [],
+            resultFalseList: [],
+            resultTrueList: [],
             flag: false,
             number: {
                 totalVote: 90,
@@ -209,23 +211,16 @@ export default {
         PasswordConfirm
     },
     mounted: function () {
-        this.send();
-        this.voteEnds();
+        this.getVoter();
+        this.getVoteEnds();
+        this.timer = setInterval(() => {
+            this.getVoter();
+        }, 3000);
         // 判断投票是否结束
         if (this.canVote) {
             this.voteResultShow = false;
         } else {
             this.voteResultShow = true;
-        }
-    },
-    methods: {
-        send () {
-            get_nodes_votes().then(res => {
-                this.detailList = res.result;
-                console.log('detailList', this.detailList);
-            });
-        },
-        voteEnds () {
             get_vote_statistics().then(res => {
                 this.number.totalVote = res.data.statistics.totalVoteGXCNumber;
                 this.number.voteNumberTrue = (res.data.statistics.totalVoteGXCNumberTrue / this.number.totalVote * 100);
@@ -234,9 +229,19 @@ export default {
                 this.user.voteUserTrue = (res.data.statistics.voteUserNumberTrue / this.user.totalUserVote * 100);
                 this.user.voteUserFalse = (res.data.statistics.voteUserNumberFalse / this.user.totalUserVote * 100);
             });
+        }
+    },
+    methods: {
+        getVoter () {
+            get_nodes_votes().then(res => {
+                this.detailList = res.result;
+                this.resultFalseList = res.resultFalse;
+                this.resultTrueList = res.resultTrue;
+            });
+        },
+        getVoteEnds () {
             get_vote_state().then(res => {
                 this.canVote = res.canVote;
-                console.log('canVote', res);
             });
         },
         // 是否投票
@@ -245,10 +250,31 @@ export default {
             this.index = i;
         },
         votes () {
+            let flagTrue = false;
+            let flagFalse = false;
             if (this.index === 1) {
-                this.supportShow = !this.supportShow;
+                for (var j = 0; j < this.resultTrueList.length; j++) {
+                    if (this.currentWallet.account === this.resultTrueList[j].userName) {
+                        flagTrue = true;
+                    }
+                }
+                if (!flagTrue) {
+                    this.supportShow = !this.supportShow;
+                } else {
+                    $.toast(this.$t('proposal.cast_agree'));
+                }
             } else {
-                this.noSupportShow = !this.noSupportShow;
+                for (var k = 0; k < this.resultFalseList.length; k++) {
+                    if (this.currentWallet.account === this.resultFalseList[k].userName) {
+                        flagFalse = true;
+                        console.log('flagFalse', flagFalse);
+                    }
+                }
+                if (!flagFalse) {
+                    this.noSupportShow = !this.noSupportShow;
+                } else {
+                    $.toast(this.$t('proposal.cast_disagree'));
+                }
             }
             for (var i = 0; i < this.detailList.length; i++) {
                 if (this.currentWallet.account === this.detailList[i].userName) {
@@ -263,7 +289,6 @@ export default {
             set_wallet_index(index);
             this.currentWalletIndex = index;
             this.currentWallet = this.wallets[this.currentWalletIndex];
-            // this.loadData();
         },
         onCancel () {
             this.supportShow = false;
@@ -280,7 +305,7 @@ export default {
                     $.closeModal($(this.$el));
                     $.toast(this.$t('proposal.vote_success'));
                     this.$refs.unlock.unlocked();
-                    this.send();
+                    this.getVoter();
                 }).catch(ex => {
                     console.error(ex);
                     $.toast(this.$t('proposal.vote_fail'));
@@ -292,7 +317,7 @@ export default {
                     $.closeModal($(this.$el));
                     $.toast(this.$t('proposal.vote_success'));
                     this.$refs.unlock.unlocked();
-                    this.send();
+                    this.getVoter();
                 }).catch(ex => {
                     console.error(ex);
                     $.toast(this.$t('proposal.vote_fail'));
@@ -433,6 +458,7 @@ export default {
             border-radius: 20px;
             margin-bottom: 16px;
             margin-left:10%;
+            background-color: #ecf5ff;
           }
           .notuse{
             text-align: center;

@@ -654,7 +654,9 @@ const locale = {
         totalVote: 'Total votes',
         totalUserVote: 'Number of voters',
         agree: 'Yes',
-        disagree: 'No'
+        disagree: 'No',
+        cast_agree: 'You have voted to agree~',
+        cast_disagree: 'You have already voted to disagree~'
     }
 };
 

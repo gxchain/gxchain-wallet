@@ -627,7 +627,9 @@ const locale = {
         totalVote: '投票总数',
         totalUserVote: '投票人数',
         agree: '同意',
-        disagree: '不同意'
+        disagree: '不同意',
+        cast_agree: '您已投过同意了～',
+        cast_disagree: '您已投过不同意了～'
     }
 };
 
