@@ -633,6 +633,7 @@ const locale = {
         vote_number: '투표 수',
         active: '활동적인',
         result: '현재 결과',
+        information: '정보',
         report: '보고서 다운로드',
         support: '동의하십니까?',
         no_support: '동의하지 않는 것이 확실합니까?',
@@ -647,7 +648,10 @@ const locale = {
         agree: '동의하다',
         disagree: '동의하지 않는다',
         cast_agree: '동의에 투표하셨습니다~',
-        cast_disagree: '당신은 이미 반대표를 던졌습니다~'
+        cast_disagree: '당신은 이미 반대표를 던졌습니다~',
+        start_date: '시작일',
+        end_date: '오픈 종료일',
+        dint: '결과는 최종 통계에 따릅니다'
     }
 };
 

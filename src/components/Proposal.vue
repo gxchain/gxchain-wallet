@@ -81,7 +81,10 @@
           </div>
         </div>
         <div class="vote-number">
-          <div class="numberText">{{$t('proposal.vote_number')}}</div>
+          <div class="header-number">
+            <div class="numberText">{{ $t("proposal.vote_number") }}</div>
+            <div class="totalVote">{{this.number.totalVote}}</div>
+          </div>
           <ul>
             <li v-for="(item, index) in detailList" :key="index">
               <div class="vote-head">
@@ -101,8 +104,29 @@
       <div class="section-right" v-show="voteResultShow">
         <div class="right-fomat">
           <div style="display:flex;align-items:center">
-            <div class="inforText">{{ $t("proposal.totalVote") }}</div>
-            <div class="totalVote">{{this.number.totalVote}}</div>
+            <div class="inforText">{{$t('proposal.information')}}</div>
+          </div>
+           <div style="padding-bottom:1.5rem">
+             <div class="information">
+            <div>{{$t('proposal.start_date')}}</div>
+            <div>2021-09-29</div>
+          </div>
+          <div class="information">
+            <div>{{$t('proposal.end_date')}}</div>
+            <div>2021-09-29</div>
+          </div>
+           </div>
+        </div>
+        <div class="right-fomat">
+          <div class="result-header">
+            <div class="header-left">
+              <div class="inforText">{{ $t("proposal.totalVote") }}</div>
+              <div class="totalVote">{{this.number.totalVote}}</div>
+            </div>
+            <div class="to-dint">
+               <div class="dint">{{$t('proposal.dint')}}</div>
+               <button class="hint">?</button>
+            </div>
           </div>
           <div class="result">
             <div class="result-content">
@@ -126,9 +150,15 @@
           </div>
         </div>
         <div class="right-fomat">
-          <div style="display:flex;align-items:center">
-            <div class="inforText">{{ $t("proposal.totalUserVote") }}</div>
-            <div class="totalVote">{{this.user.totalUserVote}}</div>
+           <div class="result-header">
+            <div class="header-left">
+               <div class="inforText">{{ $t("proposal.totalUserVote") }}</div>
+               <div class="totalVote">{{this.user.totalUserVote}}</div>
+            </div>
+            <div class="to-dint">
+               <div class="dint">{{$t('proposal.dint')}}</div>
+               <button class="hint">?</button>
+            </div>
           </div>
           <div class="result">
             <div class="result-content">
@@ -189,14 +219,14 @@ export default {
             resultTrueList: [],
             flag: false,
             number: {
-                totalVote: 90,
-                voteNumberTrue: 16,
-                voteNumberFalse: 49
+                totalVote: 1,
+                voteNumberTrue: 0,
+                voteNumberFalse: 0
             },
             user: {
-                totalUserVote: 40,
-                voteUserTrue: 22,
-                voteUserFalse: 6
+                totalUserVote: 1,
+                voteUserTrue: 0,
+                voteUserFalse: 0
             },
             canVote: true,
             voteResultShow: true,
@@ -217,10 +247,7 @@ export default {
             this.getVoter();
         }, 3000);
         // 判断投票是否结束
-        if (this.canVote) {
-            this.voteResultShow = false;
-        } else {
-            this.voteResultShow = true;
+        if (!this.canVote) {
             get_vote_statistics().then(res => {
                 this.number.totalVote = res.data.statistics.totalVoteGXCNumber;
                 this.number.voteNumberTrue = (res.data.statistics.totalVoteGXCNumberTrue / this.number.totalVote * 100);
@@ -500,13 +527,24 @@ export default {
         background-color: #fff;
         border-radius: 10px;
         padding: 0 1rem;
-        overflow-y: scroll;
-        overflow-x: hidden;
-        max-height: 32rem;
+        .header-number{
+          display: flex;
+          align-items: center;
+          .totalVote{
+            background-color: rgb(123, 166, 255);
+            color: #FFF;
+            padding:0 10px;
+            border-radius: 30px;
+            margin-top: 10px;
+          }
+        }
         .numberText {
-          padding: 0.8rem 2%;
+          padding: 1.2rem 2% 0.6rem 2%;
         }
         ul {
+          overflow-y: scroll;
+          overflow-x: hidden;
+          max-height: 32rem;
           li {
             list-style: none;
             padding: 0.8rem 2%;
@@ -579,62 +617,72 @@ export default {
           border-radius: 4px;
       }
       }
-      
-      .inforText {
-        padding: 0.6rem 3%;
-      }
-      .totalVote{
-        background-color: rgb(123, 166, 255);
-        color: #FFF;
-        padding:0 6px;
-        border-radius: 30px;
-      }
       .right-fomat {
         padding: 0 1rem;
         background-color: #fff;
         border-radius: 10px;
         margin-bottom: 1.2rem;
-        .download {
-          text-align: center;
-          width: 80%;
-          border: 1px rgb(123, 166, 255) solid;
-          border-radius: 24px;
-          color: rgb(123, 166, 255);
-          background-color: #fff;
-          padding: 4px;
-          margin-top: 1.2rem;
-          margin-left: 10%;
+        .inforText {
+          margin-top:1.2rem;
+          font-weight: 500;
+          margin-right: 10px;
+        }
+        .totalVote{
+          background-color: rgb(123, 166, 255);
+          color: #FFF;
+          padding:0 10px;
+          border-radius: 30px;
+          margin-top:1.2rem;
         }
       }
-      .information {
-        padding: 1rem 2%;
-        .item-right {
+      .result-header{
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding-bottom: 0.2rem;
-        }
-        .right-right {
+          .header-left{
+            display:flex;
+            align-items:center;
+            // width:72%
+          }
+          .to-dint:hover .dint{
+            visibility: visible;
+          }
+          .to-dint{
+            position: relative;
+            display: flex;
+            flex-direction: column;
+          }
+          .dint{
+            visibility: hidden;
+            position: absolute;
+            font-size: 12px;
+            right: 0;
+            bottom: 1.6rem;
+            background-color: rgba(0,0,0,.8);
+            width: 7.2rem;
+            padding:10px 20px;
+            border-radius: 6px;
+            color: #FFF;
+          }
+          .hint{
+           width: 30px;
+           height: 30px;
+           font-size: 18px;
+           border-radius: 15px;
+           border:1px rgb(208, 201, 202) solid;
+           margin-top: 1.2rem;
+          }
+      }
+      .information {
           display: flex;
-          align-items: center;
-        }
-        .headImg {
-          width: 1rem;
-          height: 1rem;
-          border-radius: 0.5rem;
-          cursor: pointer;
-        }
+          justify-content: space-between;
+          margin-top:1rem;
       }
       .result {
         padding-bottom: 1.2rem;
         .result-content {
-          margin-top: 1.2rem;
+          margin-top: 0.8rem;
         }
-      }
-      .quorom {
-        padding: 1.2rem 4%;
-        display: flex;
-        align-items: center;
       }
     }
   }

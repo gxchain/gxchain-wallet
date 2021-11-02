@@ -641,6 +641,7 @@ const locale = {
         vote: 'Vote',
         vote_number: 'Number of votes',
         active: 'active',
+        information: 'Information',
         result: 'Current result',
         report: 'Download report',
         support: 'Are you sure you agree?',
@@ -656,7 +657,10 @@ const locale = {
         agree: 'Yes',
         disagree: 'No',
         cast_agree: 'You have voted to agree~',
-        cast_disagree: 'You have already voted to disagree~'
+        cast_disagree: 'You have already voted to disagree~',
+        start_date: 'Start date',
+        end_date: 'End date',
+        dint: 'The results are subject to the final statistics'
     }
 };
 

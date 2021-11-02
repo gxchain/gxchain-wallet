@@ -614,6 +614,7 @@ const locale = {
         vote: '投票',
         vote_number: '投票数',
         active: '活跃',
+        information: '信息',
         result: '当前结果',
         report: '下载报告',
         support: '确定同意吗？',
@@ -629,7 +630,10 @@ const locale = {
         agree: '同意',
         disagree: '不同意',
         cast_agree: '您已投过同意了～',
-        cast_disagree: '您已投过不同意了～'
+        cast_disagree: '您已投过不同意了～',
+        start_date: '开始日期',
+        end_date: '结束日期',
+        dint: '结果以最终统计数据为准'
     }
 };
 
