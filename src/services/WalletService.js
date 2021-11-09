@@ -1300,6 +1300,11 @@ const get_vote_state = () => {
         return resp.data || [];
     });
 };
+const get_vote_date = () => {
+    return Vue.http.get(`${process.env.pro_service}/proposal/api/date`).then(resp => {
+        return resp.data || [];
+    });
+};
 
 export {
     bak_wallet,
@@ -1349,5 +1354,6 @@ export {
     get_contract_table,
     get_nodes_votes,
     get_vote_statistics,
-    get_vote_state
+    get_vote_state,
+    get_vote_date
 };
