@@ -80,8 +80,8 @@
                   <div>{{new Date(new Date(item.createdAt).getTime()).format('yyyy-MM-dd hh:mm:ss')}}</div>
               </div>
               <div class="agree-vote">
-                <div v-if="item.votingstate">{{$t('proposal.agree')}}</div>
-                <div v-else>{{$t('proposal.disagree')}}</div>
+                <div v-if="item.votingstate" style="color:#2CDFC0">{{$t('proposal.agree')}}</div>
+                <div v-else style="color:#FE898A">{{$t('proposal.disagree')}}</div>
               </div>
             </li>
           </ul>
@@ -116,7 +116,7 @@
           </div>
           <div class="result">
             <div class="result-content">
-              <div>{{$t('proposal.agree')}}</div>
+              <div style="color:#2CDFC0">{{$t('proposal.agree')}}</div>
               <div class="progress">
                 <div class="clip-background">
                     <div class='clip' :style="{width:this.number.voteNumberTrue+'%'}"></div>
@@ -125,7 +125,7 @@
               </div>
             </div>
             <div class="result-content">
-              <div>{{$t('proposal.disagree')}}</div>
+              <div style="color:#FE898A">{{$t('proposal.disagree')}}</div>
               <div class="progress">
                 <div class="clip-background">
                     <div class='clip' :style="{width:this.number.voteNumberFalse+'%'}"></div>
@@ -148,7 +148,7 @@
           </div>
           <div class="result">
             <div class="result-content">
-              <div>{{$t('proposal.agree')}}</div>
+              <div style="color:#2CDFC0">{{$t('proposal.agree')}}</div>
               <div class="progress">
                 <div class="clip-background">
                     <div class='clip' :style="{width:this.user.voteUserTrue+'%'}"></div>
@@ -157,7 +157,7 @@
               </div>
             </div>
             <div class="result-content">
-              <div>{{$t('proposal.disagree')}}</div>
+              <div style="color:#FE898A">{{$t('proposal.disagree')}}</div>
               <div class="progress">
                 <div class="clip-background">
                     <div class='clip' :style="{width:this.user.voteUserFalse+'%'}"></div>
@@ -631,7 +631,7 @@ export default {
     .section-right {
       width: 30%;
       .progress{
-        padding: 0 4%;
+        // padding: 0 4%;
         display: flex;
         align-items: center;
       }
