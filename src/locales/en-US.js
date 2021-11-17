@@ -660,7 +660,8 @@ const locale = {
         cast_disagree: 'You have already voted to disagree~',
         start_date: 'Start date',
         end_date: 'End date',
-        dint: 'The results are subject to the final statistics'
+        dint: 'The results are subject to the final statistics',
+        expend_more: 'Click to expand more'
     }
 };
 

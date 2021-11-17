@@ -1285,8 +1285,12 @@ const get_contract_table = (contractName, tableName, lower_bound = 0, upper_boun
     });
 };
 
-const get_nodes_votes = () => {
-    return Vue.http.get(`${process.env.pro_service}/proposal/api/voter`).then(resp => {
+const get_nodes_votes = (limit) => {
+    return Vue.http.get(`${process.env.pro_service}/proposal/api/voter`, {
+        params: {
+            limit
+        }
+    }).then(resp => {
         return resp.data || [];
     });
 };
@@ -1305,7 +1309,20 @@ const get_vote_date = () => {
         return resp.data || [];
     });
 };
-
+const get_voter_sum = () => {
+    return Vue.http.get(`${process.env.pro_service}/proposal/api/voter_sum`).then(resp => {
+        return resp.data || [];
+    });
+};
+const get_voter_findone = (name) => {
+    return Vue.http.get(`${process.env.pro_service}/proposal/api/findone`, {
+        params: {
+            name
+        }
+    }).then(resp => {
+        return resp.data || [];
+    });
+};
 export {
     bak_wallet,
     get_objects,
@@ -1355,5 +1372,7 @@ export {
     get_nodes_votes,
     get_vote_statistics,
     get_vote_state,
-    get_vote_date
+    get_vote_date,
+    get_voter_sum,
+    get_voter_findone
 };

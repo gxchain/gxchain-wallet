@@ -43,6 +43,6 @@ module.exports = (function() {
         flyContract: '"gxc-fly-nft"',
         moonContract: '"gxc-moon-nft"',
         gxtContract: '"test-nft-contract-nnn-1"',
-        contractName: '"bjnvoting"'
+        contractName: '"votingtest"'
     });
 })();

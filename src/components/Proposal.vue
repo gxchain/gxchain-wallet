@@ -1,38 +1,98 @@
 <template>
-  <div class="home">
-      <header class="bar bar-nav">
-            <h3 class="title">Proposal</h3>
-            <router-link :to="$route.query.from||link('/my-index')" replace class="icon icon-left"></router-link>
-            <a class="pull-right icon account-switch" v-if="wallets&&wallets.length>1">
-                {{$t('trade_history.switch')}}
-                    <select @change="switchWallet">
-                        <option v-for="(wallet,i) in wallets" :key="i" :value="i" :selected="i==currentWalletIndex">{{wallet.account}}
-                        </option>
-                    </select>
-                </a>
-        </header>
-   <div class="content">
+  <div class="home" id="page-wallet-index">
+    <header class="bar bar-nav">
+      <h3 class="title">Proposal</h3>
+      <router-link :to="$route.query.from||link('/my-index')" replace class="icon icon-left"></router-link>
+      <a class="pull-right icon account-switch" v-if="wallets&&wallets.length>1">
+        {{$t('trade_history.switch')}}
+          <select @change="switchWallet">
+              <option v-for="(wallet,i) in wallets" :key="i" :value="i" :selected="i==currentWalletIndex">{{wallet.account}}</option>
+          </select>
+      </a>
+    </header>
+    <div class="content" ref="content-view">
       <div class="section-left">
        <div class="block-item">
-          <h3>IP-82: Move yUSD funds to yDAI Vault</h3>
+          <h2>{{ $t("proposal_content.name") }}</h2>
           <div class="share-active">
             <div :class="this.canVote ? 'active' : 'disActive'">{{$t('proposal.active')}}</div> 
           </div>
-          <p>
-             REI Network链上治理模块，是未来REI Network链上用户以及团队治理的核心。任何持币者
-            都可通过Governance治理功能发起提案并向全社区公示。同时任何持有REI的用户都可对提案
-            进行投票，最终按照票数更多的结果去执行相关治理方案。REI Network 将会打造一条更自治、
-            更高效的新型公链。
-          </p>
+          <h4>[{{ $t("proposal_content.background.title") }}]</h4>
+          <p>{{ $t("proposal_content.background.stage1") }}</p>
+          <p>{{ $t("proposal_content.background.stage2") }}</p>
+          <h4>[{{ $t("proposal_content.substance.content1.title") }}]</h4>
+          <h5>{{ $t("proposal_content.substance.content1.change_name") }}</h5>
+          <p>{{ $t("proposal_content.substance.content1.stage1") }}</p>
+          <p>{{ $t("proposal_content.substance.content1.stage2") }}</p>
+          <h5>{{ $t("proposal_content.substance.content1.rei_mean") }}</h5>
+          <p>{{ $t("proposal_content.substance.content1.stage3") }}</p>
+          <p>{{ $t("proposal_content.substance.content1.stage4") }}</p>
+          <h4>[{{ $t("proposal_content.substance.content2.title") }}]</h4>
+          <p>{{ $t("proposal_content.substance.content2.stage1") }}</p>
+          <p>{{ $t("proposal_content.substance.content2.stage2") }}</p>
+          <p>{{ $t("proposal_content.substance.content2.stage3") }}</p>
+          <h4>{{ $t("proposal_content.substance.content2.steps1") }}</h4>
+          <p>{{ $t("proposal_content.substance.content2.split") }}</p>
+          <h4>{{ $t("proposal_content.substance.content2.steps2") }}</h4>
+          <p>{{ $t("proposal_content.substance.content2.upgrade") }}</p>
+          <h4>{{ $t("proposal_content.substance.content2.steps3") }}</h4>
+          <p>{{ $t("proposal_content.substance.content2.govern") }}</p>
+          <h4>{{ $t("proposal_content.substance.content2.steps4") }}</h4>
+          <h5>{{ $t("proposal_content.substance.content2.total") }}</h5>
+          <ul class="four-step">
+            <li>{{ $t("proposal_content.substance.content2.port1") }}</li>
+            <li>
+              {{ $t("proposal_content.substance.content2.port2") }}
+              <ul>
+                <li>{{ $t("proposal_content.substance.content2.spread1") }}</li>
+                <li>{{ $t("proposal_content.substance.content2.spread2") }}</li>
+                <li>{{ $t("proposal_content.substance.content2.spread3") }}</li>
+              </ul>
+            </li>
+          </ul>
+          <img class="image" src="@/assets/images/image.png" alt="">
+          <h4>{{ $t("proposal_content.substance.content2.steps5") }}</h4>
+          <p>{{ $t("proposal_content.substance.content2.detailed") }}</p>
+          <div class="div-content">{{ $t("proposal_content.substance.content2.plan1") }}
+            <div>{{ $t("proposal_content.substance.content2.consult") }}</div>
+          </div>
+          <div class="div-content">{{ $t("proposal_content.substance.content2.plan2") }}
+            <div>{{ $t("proposal_content.substance.content2.deposit") }}</div>
+            <div>{{ $t("proposal_content.substance.content2.term_a") }}</div>
+            <div>{{ $t("proposal_content.substance.content2.term_b") }}</div>
+          </div>
+          <div class="div-content">{{ $t("proposal_content.substance.content2.plan3") }}
+            <div>{{ $t("proposal_content.substance.content2.campaign") }}</div>
+          </div>
+          <h4>{{ $t("proposal_content.substance.content2.steps6") }}</h4>
+          <p>{{ $t("proposal_content.substance.content2.rei_gxc") }}</p>
+          <h4>[{{ $t("proposal_content.substance.content3.title") }}]</h4>
+          <h5>{{ $t("proposal_content.substance.content3.construct.head") }}</h5>
+          <p>{{ $t("proposal_content.substance.content3.construct.stage1") }}</p>
+          <p>{{ $t("proposal_content.substance.content3.construct.stage2") }}</p>
+          <p>{{ $t("proposal_content.substance.content3.construct.stage3") }}</p>
+          <p>{{ $t("proposal_content.substance.content3.construct.stage4") }}</p>
+          <h4>{{ $t("proposal_content.substance.content3.worth.head") }}</h4>
+          <p>{{ $t("proposal_content.substance.content3.worth.stage1") }}</p>
+          <p>{{ $t("proposal_content.substance.content3.worth.stage2") }}</p>
+          <p>{{ $t("proposal_content.substance.content3.worth.stage3") }}</p>
+          <p>{{ $t("proposal_content.substance.content3.worth.stage4") }}</p>
+          <h4>{{ $t("proposal_content.substance.content3.extra.head") }}</h4>
+          <p>{{ $t("proposal_content.substance.content3.extra.stage1") }}</p>
+          <p>{{ $t("proposal_content.substance.content3.extra.stage2") }}</p>
+          <p>{{ $t("proposal_content.substance.content3.extra.stage3") }}</p>
+          <p>{{ $t("proposal_content.substance.content3.extra.stage4") }}</p>
+          <h5>{{ $t("proposal_content.substance.content3.reality") }}</h5>
+          <p>{{$t("proposal_content.substance.content3.stage_end") }}</p>
+          <h5>{{ $t("proposal_content.substance.content3.ending") }}</h5>
        </div>
-        <div class="vote">
+        <div class="vote" v-if="this.canVote">
           <div class="voteText">
             <div>{{$t('proposal.vote')}}</div>
           </div>
            <Modal v-if="supportShow">
               <div class="header" slot="header">{{$t('proposal.vote')}}</div>
-              <div class="body" slot="body" v-if="!this.flag">{{$t('proposal.support')}}</div>
-              <div class="body" slot="body" v-else>{{$t('proposal.change_support')}}</div>
+              <div class="body" slot="body">{{$t('proposal.support')}}</div>
               <div class="footer" slot="footer">
                 <div class="content-block nodelist-footer">
                     <div class="row">
@@ -44,8 +104,7 @@
           </Modal>
           <Modal v-if="noSupportShow">
               <div class="header" slot="header">{{$t('proposal.vote')}}</div>
-              <div class="body" slot="body" v-if="!this.flag">{{$t('proposal.no_support')}}</div>
-              <div class="body" slot="body" v-else>{{$t('proposal.change_noSupport')}}</div>
+              <div class="body" slot="body">{{$t('proposal.no_support')}}</div>
               <div class="footer" slot="footer">
                 <div class="content-block nodelist-footer">
                     <div class="row">
@@ -69,25 +128,28 @@
           </div>
           <ul>
             <li v-for="(item, index) in detailList" :key="index">
-              <div class="vote-head">
-                <div class="account-avatar">
+              <div class="detail" v-if="index<moreSteps">
+                <div class="vote-head">
+                  <div class="account-avatar">
                     <account-image class="sm-img" :account="item.userName" :size="15"></account-image>
+                  </div>
+                  <div> {{ item.userName }}</div>
                 </div>
-                <div> {{ item.userName }}</div>
-              </div>
-              <div class="createdAt">
+                <div class="createdAt">
                   <div>{{(item.voteGXCNumberHourly/1e5).toLocaleString(undefined,{maximumFractionDigits: 5})}} GXC</div>
                   <div>{{new Date(new Date(item.createdAt).getTime()).format('yyyy-MM-dd hh:mm:ss')}}</div>
-              </div>
-              <div class="agree-vote">
-                <div v-if="item.votingstate" style="color:#2CDFC0">{{$t('proposal.agree')}}</div>
-                <div v-else style="color:#FE898A">{{$t('proposal.disagree')}}</div>
+                </div>
+                <div class="agree-vote">
+                  <div v-if="item.votingstate" style="color:#2CDFC0">{{$t('proposal.agree')}}</div>
+                  <div v-else style="color:#FE898A">{{$t('proposal.disagree')}}</div>
+                </div>
               </div>
             </li>
+            <button class="expendMore" @click="expendMore()" v-if="this.resultSum>this.moreSteps">{{$t("proposal.expend_more")}}</button>
           </ul>
         </div>
       </div>
-      <div class="section-right" v-show="voteResultShow">
+      <div class="section-right">
         <div class="right-fomat">
           <div style="display:flex;align-items:center">
             <div class="inforText">{{$t('proposal.information')}}</div>
@@ -181,7 +243,9 @@ import {
     set_wallet_index,
     get_vote_statistics,
     get_vote_state,
-    get_vote_date
+    get_vote_date,
+    get_voter_sum,
+    get_voter_findone
 } from '@/services/WalletService';
 import AccountImage from '@/components/sub/AccountImage.vue';
 import Modal from '@/components/sub/Modal.vue';
@@ -194,7 +258,6 @@ export default {
         return {
             brandFold: true,
             isVoteDetail: false,
-            current: 0,
             wallets: get_wallets(),
             currentWallet: wallets[get_wallet_index()],
             currentWalletIndex: get_wallet_index(),
@@ -203,8 +266,6 @@ export default {
             disabled: true,
             index: 0,
             detailList: [],
-            resultFalseList: [],
-            resultTrueList: [],
             flag: false,
             number: {
                 totalVote: 0,
@@ -217,10 +278,13 @@ export default {
                 voteUserFalse: 0
             },
             canVote: true,
-            voteResultShow: true,
             contractName: process.env.contractName,
             stopTime: '',
-            startTime: ''
+            startTime: '',
+            resultSum: 0,
+            moreSteps: 10,
+            votingstate: 0,
+            limit: 0
         };
     },
     computed: {
@@ -236,6 +300,7 @@ export default {
         this.getStartTime();
         this.timer = setInterval(() => {
             this.getVoter();
+            this.getNoStopVote();
         }, 3000);
         // 判断投票是否结束
         if (!this.canVote) {
@@ -251,13 +316,16 @@ export default {
         } else {
             this.getNoStopVote();
         }
+        // 获取是否投过同意或者不同意
+        get_voter_findone(this.currentWallet.account).then(res => {
+            this.votingstate = res.votingstate;
+        });
     },
     methods: {
         getVoter () {
             get_nodes_votes().then(res => {
                 this.detailList = res.result;
-                this.resultFalseList = res.resultFalse;
-                this.resultTrueList = res.resultTrue;
+                this.resultSum = res.resultsSum;
             });
         },
         getVoteEnds () {
@@ -274,61 +342,41 @@ export default {
         },
         // 未关闭投票前获取投票信息
         getNoStopVote () {
-            get_nodes_votes().then(res => {
-                for (var i = 0; i < this.detailList.length; i++) {
-                    this.number.totalVote += this.detailList[i].voteGXCNumberHourly;
-                }
-                let TrueVote = 0;
-                for (var j = 0; j < this.resultTrueList.length; j++) {
-                    TrueVote += this.resultTrueList[j].voteGXCNumberHourly;
-                    this.number.voteNumberTrue = Number.parseFloat(TrueVote / this.number.totalVote * 100).toFixed(5);
-                }
-                let FalseVote = 0;
-                for (var k = 0; k < this.resultFalseList.length; k++) {
-                    FalseVote += this.resultFalseList[k].voteGXCNumberHourly;
-                    this.number.voteNumberFalse = Number.parseFloat(FalseVote / this.number.totalVote * 100).toFixed(5);
-                }
-                this.user.totalUserVote = this.detailList.length;
-                this.user.voteUserTrue = Number.parseFloat(this.resultTrueList.length / this.user.totalUserVote * 100).toFixed(2); // 投true总人数
-                this.user.voteUserFalse = Number.parseFloat(this.resultFalseList.length / this.user.totalUserVote * 100).toFixed(2); // 投false总人数
+            get_voter_sum().then(res => {
+                this.number.totalVote = res.voterGXCSum;
+                this.number.voteNumberTrue = (res.voterGXCTrueSum / this.number.totalVote * 100).toFixed(5);
+                this.number.voteNumberFalse = Number.parseFloat(res.voterGXCFalseSum / this.number.totalVote * 100).toFixed(5);
+                this.user.totalUserVote = res.voterNum;
+                this.user.voteUserTrue = Number.parseFloat(res.voterTrueNum / this.user.totalUserVote * 100).toFixed(2); // 投true总人数
+                this.user.voteUserFalse = Number.parseFloat(res.voterFalseNum / this.user.totalUserVote * 100).toFixed(2); // 投false总人数
             });
         },
         // 是否投票
         select (i) {
             this.disabled = false;
             this.index = i;
+            get_voter_findone(this.currentWallet.account).then(res => {
+                this.votingstate = res.votingstate;
+            });
+        },
+        expendMore () {
+            this.moreSteps += 20;
+            get_nodes_votes(this.limit).then(res => {
+                this.limit = this.moreSteps;
+            });
         },
         votes () {
-            let flagTrue = false;
-            let flagFalse = false;
             if (this.index === 1) {
-                for (var j = 0; j < this.resultTrueList.length; j++) {
-                    if (this.currentWallet.account === this.resultTrueList[j].userName) {
-                        flagTrue = true;
-                    }
-                }
-                if (!flagTrue) {
+                if (this.votingstate != true) {
                     this.supportShow = !this.supportShow;
                 } else {
                     $.toast(this.$t('proposal.cast_agree'));
                 }
             } else {
-                for (var k = 0; k < this.resultFalseList.length; k++) {
-                    if (this.currentWallet.account === this.resultFalseList[k].userName) {
-                        flagFalse = true;
-                        console.log('flagFalse', flagFalse);
-                    }
-                }
-                if (!flagFalse) {
+                if (this.votingstate != false) {
                     this.noSupportShow = !this.noSupportShow;
                 } else {
                     $.toast(this.$t('proposal.cast_disagree'));
-                }
-            }
-            for (var i = 0; i < this.detailList.length; i++) {
-                if (this.currentWallet.account === this.detailList[i].userName) {
-                    this.flag = true;
-                    return;
                 }
             }
         },
@@ -338,6 +386,9 @@ export default {
             set_wallet_index(index);
             this.currentWalletIndex = index;
             this.currentWallet = this.wallets[this.currentWalletIndex];
+            get_voter_findone(this.currentWallet.account).then(res => {
+                this.votingstate = res.votingstate;
+            });
         },
         onCancel () {
             this.supportShow = false;
@@ -350,7 +401,6 @@ export default {
         unlocking (pwd) {
             if (this.supportShow) {
                 call_contract(this.currentWallet.account, this.contractName, 'vote', {approve: true}, 0, pwd, true).then(res => {
-                    console.log(res);
                     $.closeModal($(this.$el));
                     $.toast(this.$t('proposal.vote_success'));
                     this.$refs.unlock.unlocked();
@@ -362,7 +412,6 @@ export default {
                 });
             } else {
                 call_contract(this.currentWallet.account, this.contractName, 'vote', {approve: false}, 0, pwd, true).then(res => {
-                    console.log(res);
                     $.closeModal($(this.$el));
                     $.toast(this.$t('proposal.vote_success'));
                     this.$refs.unlock.unlocked();
@@ -375,6 +424,8 @@ export default {
             }
             this.supportShow = false;
             this.noSupportShow = false;
+            this.index = 0;
+            this.disabled = true;
         }
     }
 };
@@ -405,19 +456,53 @@ export default {
     }
   .content {
     display: flex;
-    justify-content: space-around;
     padding: 1.2rem 4%;
     background-color: rgb(235,235,242);
     .section-left {
       width: 66%;
       margin-bottom: 1.2rem;
-      .block-item{
+      margin-right: 1rem;
+      .block-item {
         background-color: #FFF;
         padding:1rem;
         border-radius: 10px;
-        h3{
+        p {
+          margin-top: 20px;
+          font-size: 14px;
+          line-height: 28px;
+        }
+        .div-content {
+          margin-top: 20px;
+          font-size: 14px;
+          line-height: 28px;
+          div {
+            padding:0 20px;
+          }
+        }
+        h4 {
+          margin-top: 20px;
+        }
+        h5 {
+          margin-top: 16px;
+        }
+        h2 {
           border-bottom: 1px rgb(163, 166, 196) dashed;
-          padding-bottom: 1.2rem;
+          padding-bottom:1.6rem;
+          padding-top:1.2rem;
+        }
+        .image{
+          width: 100%;
+        }
+        .four-step{
+          padding:10px 20px;
+          font-size: 14px;
+          line-height: 28px;
+          ul{
+            padding:0 20px;
+            li{
+              list-style-type: circle;
+            }
+          }
         }
         .share-active {
         margin-top: 1rem;
@@ -436,9 +521,6 @@ export default {
           color: #fff;
         }
       }
-        p {
-          margin-top: 1.2rem;
-        }
       }
       .vote {
         padding: 0.8rem 1rem 1.6rem 1rem;
@@ -569,10 +651,12 @@ export default {
           max-height: 32rem;
           li {
             list-style: none;
-            padding: 0.8rem 2%;
-            border-bottom: 1px rgb(231, 231, 231) solid;
-            display: flex;
-            justify-content: space-between;
+            .detail{
+              padding:1rem 2% 0.6rem 2%;
+              border-bottom: 1px rgb(178, 181, 205) solid;
+              display: flex;
+              justify-content: space-between;
+            }
             .vote-head {
               display: flex;
               align-items: center;
@@ -592,6 +676,14 @@ export default {
               width: 2.8rem;
               text-align: right;
             }
+          }
+          .expendMore{
+            width: 100%;
+            text-align: center;
+            border: none;
+            padding: 20px 0;
+            color: rgb(123, 166, 255);
+            background-color: #fff;
           }
         }
         .unfold-hide {
@@ -653,6 +745,7 @@ export default {
         background-color: #fff;
         border-radius: 10px;
         margin-bottom: 1.2rem;
+        font-size: 16px;
         .inforText {
           margin-top:1.2rem;
           font-weight: 500;
@@ -716,6 +809,18 @@ export default {
         }
       }
     }
+  }
+}
+// #page-wallet-index {
+//   .content-view {
+//     top: 2.2rem;
+//     -webkit-overflow-scrolling: auto;
+//   }
+// }
+.native-ios-x #page-wallet-index {
+  .content{
+    top: 4.5rem;
+    -webkit-overflow-scrolling: auto;
   }
 }
 @media screen and (max-width: 1050px) {
