@@ -9,8 +9,11 @@
               <option v-for="(wallet,i) in wallets" :key="i" :value="i" :selected="i==currentWalletIndex">{{wallet.account}}</option>
           </select>
       </a>
+      <div class="tip-info text-center">
+        {{$t('trade_history.currentAccount', {account: this.currentWallet.account})}}
+      </div>
     </header>
-    <div class="content" ref="content-view">
+    <div class="content">
       <div class="section-left">
        <div class="block-item">
           <h2>{{ $t("proposal_content.name") }}</h2>
@@ -300,22 +303,7 @@ export default {
         this.getStartTime();
         this.timer = setInterval(() => {
             this.getVoter();
-            this.getNoStopVote();
         }, 3000);
-        // 判断投票是否结束
-        if (!this.canVote) {
-            // 关闭投票后获取投票信息
-            get_vote_statistics().then(res => {
-                this.number.totalVote = res.statistics.totalVoteGXCNumber;
-                this.number.voteNumberTrue = (res.statistics.totalVoteGXCNumberTrue / this.number.totalVote * 100);
-                this.number.voteNumberFalse = (res.statistics.totalVoteGXCNumberFalse / this.number.totalVote * 100);
-                this.user.totalUserVote = res.statistics.voteUserNumber;
-                this.user.voteUserTrue = (res.statistics.voteUserNumberTrue / this.user.totalUserVote * 100);
-                this.user.voteUserFalse = (res.statistics.voteUserNumberFalse / this.user.totalUserVote * 100);
-            });
-        } else {
-            this.getNoStopVote();
-        }
         // 获取是否投过同意或者不同意
         get_voter_findone(this.currentWallet.account).then(res => {
             this.votingstate = res.votingstate;
@@ -331,7 +319,27 @@ export default {
         getVoteEnds () {
             get_vote_state().then(res => {
                 this.canVote = res.canVote;
+                this.getVoteResult();
             });
+        },
+        // 请求投票结果
+        getVoteResult () {
+            if (!this.canVote) {
+            // 关闭投票后
+                get_vote_statistics().then(res => {
+                    this.number.totalVote = res.statistics.totalVoteGXCNumber;
+                    this.number.voteNumberTrue = (res.statistics.totalVoteGXCNumberTrue / this.number.totalVote * 100);
+                    this.number.voteNumberFalse = (res.statistics.totalVoteGXCNumberFalse / this.number.totalVote * 100);
+                    this.user.totalUserVote = res.statistics.voteUserNumber;
+                    this.user.voteUserTrue = (res.statistics.voteUserNumberTrue / this.user.totalUserVote * 100);
+                    this.user.voteUserFalse = (res.statistics.voteUserNumberFalse / this.user.totalUserVote * 100);
+                });
+            } else {
+                this.getNoStopVote();
+                this.timer = setInterval(() => {
+                    this.getNoStopVote();
+                }, 3000);
+            }
         },
         // 投票开始和结束的时间
         getStartTime () {
@@ -389,6 +397,8 @@ export default {
             get_voter_findone(this.currentWallet.account).then(res => {
                 this.votingstate = res.votingstate;
             });
+            this.index = 0;
+            this.disabled = true;
         },
         onCancel () {
             this.supportShow = false;
@@ -454,10 +464,17 @@ export default {
             width: 100%;
         }
     }
+    .tip-info{
+      font-size: 16px !important;
+    }
+    .text-center{
+      padding: 8px;
+    }
   .content {
     display: flex;
     padding: 1.2rem 4%;
     background-color: rgb(235,235,242);
+    margin-top: 1.2rem;
     .section-left {
       width: 66%;
       margin-bottom: 1.2rem;
