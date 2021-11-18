@@ -26,7 +26,7 @@ module.exports = (function() {
             flyContract: '"gxc-fly-nft"',
             moonContract: '"gxc-moon-nft"',
             gxtContract: '"gxc-gxt-nft"',
-            contractName: '"bjnvoting"'
+            contractName: '"votingtest"'
         }
     };
     return merge(prodEnv, {

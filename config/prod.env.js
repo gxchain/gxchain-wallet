@@ -14,7 +14,8 @@ module.exports = (function () {
                 nftContract: '"testnft"',
                 flyContract: '"gxc-fly-nft"',
                 moonContract: '"gxc-moon-nft"',
-                gxtContract: '"test-nft-contract-nnn-1"'
+                gxtContract: '"test-nft-contract-nnn-1"',
+                contractName: '"votingtest"'
             };
         } else {
             if (process.env.prod == 3) {
@@ -30,7 +31,8 @@ module.exports = (function () {
                     nftContract: '"testnft"',
                     flyContract: '"gxc-fly-nft"',
                     moonContract: '"gxc-moon-nft"',
-                    gxtContract: '"test-nft-contract-nnn-1"'
+                    gxtContract: '"test-nft-contract-nnn-1"',
+                    contractName: '"votingtest"'
                 };
             } else {
                 return {
@@ -54,7 +56,8 @@ module.exports = (function () {
                   nftContract: '"gxc-nft"',
                   flyContract: '"gxc-fly-nft"',
                   moonContract: '"gxc-moon-nft"',
-                  gxtContract: '"gxc-gxt-nft"'
+                  gxtContract: '"gxc-gxt-nft"',
+                  contractName: '"votingtest"'
                 };
             }
         }
@@ -72,7 +75,8 @@ module.exports = (function () {
           nftContract: '"testnft"',
           flyContract: '"gxc-fly-nft"',
           moonContract: '"gxc-moon-nft"',
-          gxtContract: '"test-nft-contract-nnn-1"'
+          gxtContract: '"test-nft-contract-nnn-1"',
+          contractName: '"votingtest"'
         };
     }
 })();
