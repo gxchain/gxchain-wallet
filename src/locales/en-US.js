@@ -661,7 +661,8 @@ const locale = {
         start_date: 'Start date',
         end_date: 'End date',
         dint: 'The results are subject to the final statistics',
-        expend_more: 'Click to expand more'
+        expend_more: 'Click to expand more',
+        tips: 'Tip: Participating in voting will not lock GXC, we will count all the addresses participating in the voting at the snapshot height, and the GXC of the account balance and the GXC of the node voting Stake will be counted.'
     }
 };
 

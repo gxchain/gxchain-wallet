@@ -123,6 +123,7 @@
             <button @click="select(2)" :class="index ==2?'use':'notuse'" >{{$t('proposal.disagree')}}</button>
             <button :disabled="disabled" :class="disabled?'disabled-button':'no-disabled'" @click="votes()">{{$t('proposal.yes')}}</button>
           </div>
+          <div class="vote-rules">{{ $t("proposal.tips") }}</div>
         </div>
         <div class="vote-number">
           <div class="header-number">
@@ -544,6 +545,12 @@ export default {
         margin-top: 1.2rem;
         background-color: #fff;
         border-radius: 6px;
+        .vote-rules{
+            font-size: 12px;
+            color:rgb(188, 189, 193);
+            text-align: center;
+            margin-top: 14px;
+          }
         .voteText {
           display: flex;
           justify-content: space-between;
