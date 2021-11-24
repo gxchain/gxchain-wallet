@@ -454,6 +454,9 @@ export default {
 }
 .home {
     font-size: 0.8rem;
+    .bar-nav .icon{
+      width:2.5rem !important;
+    }
     .account-switch {
         font-size: .75rem;
         select {

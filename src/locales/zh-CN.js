@@ -616,7 +616,6 @@ const locale = {
         active: '活跃',
         information: '信息',
         result: '当前结果',
-        report: '下载报告',
         support: '确定同意吗？',
         yes: '确认',
         no_support: ' 确定不同意吗？',
@@ -637,7 +636,7 @@ const locale = {
         tips: '提示：参与投票不会锁定GXC，我们会在快照高度对所有参与投票的地址进行统计，账户余额的GXC和节点投票Stake的GXC都会计算在内。'
     },
     proposal_content: {
-        name: '从 GXChain2.0 到 REI Network 的治理提案 11.15',
+        name: '从 GXChain2.0 到 REI Network 的治理提案',
         background: {
             title: '议案背景',
             stage1: '2017年 GXChain（公信链）主网上线，旨在打造可信数据的价值网络，在短短 4 年时间内 GXChain（公信链）不仅获得了国内外资本以及市场的认可，也获得了包括中国银联在内的数十家企业的大力支持，达成了合作关系。',
@@ -654,7 +653,7 @@ const locale = {
                 stage4: 'REI Network 是经过团队层层筛选后确定的名字，它带有浓厚的使命感，它是 GXChain 的历史初心带着对未来新的愿景的化身。改名也并不是目的，而是希望以一个全新的面貌去面对未知的挑战，它代表着我们改革的决心和未来，REI 会带着我们的期望再次向前。'
             },
             content2: {
-                title: '其二 : 经济模型更改',
+                title: '其二 : 经济模型更改：代币拆分和生态基金',
                 stage1: '现有的 GXC 是基于 GXChain 发行的核心资产，而如果本提案通过，我们将正式启动 REI Network 主网，同时 GXC 也将通过跨链的方式映射到 REI Network 的主网中。',
                 stage2: 'REI Network 主网是一个全新的系统，将兼容以太坊 EVM，并对支持企业和开发者更为友好。通过底层代码的优化，同时兼以其前身 GXChain 4 年的公链模式和用户建设的探索，而建立的符合当前区块链以及公链板块发展实际需求，且轻量而免费的应用级新型公链。',
                 stage3: '新型的 REI Network 公链未来生态发展的规模很可能会超出了之前的预期，对核心资产的需求以及实际使用会随之大大增加。新的公链需要更多的新鲜血液，保证 REI Network 的发展和推广。REI Network  对于当前的行业热点和对于 DeFi，GameFi，NFTs 等板块都有着良好的解决方案，一定程度上会成为接下来行业竞争的热点和焦点，因此 GXChain 基金会为了 REI Network 能更好的在未来可以预见的区块链行业生态中抓住更好的机会，将实行如下计划——',
@@ -685,7 +684,7 @@ const locale = {
                 rei_gxc: '在本提案通过之后，REI 和 GXC 之间的代币兑换机制，会在智能合约中每24小时会处理一次代币的兑换，在该时间段内集中处理 REI-GXC 主链代币之间的兑换，该功能作为基础性的兑换功能，会在较长的一段时间内保留其存在。'
             },
             content3: {
-                title: '在新的经济模型下，REI Network 的未来路线',
+                title: '其三：在新的经济模型下，REI Network 的未来路线',
                 construct: {
                     head: '团队持币为“0”，回馈生态建设',
                     stage1: '公链发展的护城河是其生态的繁荣，而开发者是公链生态发展的基础，公链生态的发展需要开发者们的簇拥和支持。因此我们需要吸引更多的开发者加入生态中，来壮大公链本身。与很多的 ETH 杀手不同，REI Network 将通过高性能、免费、轻量的特点去承接 ETH 溢出的商业价值，后续 REI Network 会接入 EVM，从多方面出发形成专属于 REI Network 的生态链。',
