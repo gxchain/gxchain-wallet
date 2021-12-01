@@ -655,7 +655,7 @@ const locale = {
         tips: '주의: 투표에 참여한 GXC가 락업되지 않습니다. 스냅샷 높이에서 투표에 참여하는 모든 주소가 통계될 것이며 계정 잔액의 있는 GXC와 노드 투표에 stake한 GXC가 모두 계산될 겁니다.'
     },
     proposal_content: {
-        name: 'Governance Proposal: From GXChain 2.0 to REI Network',
+        name: '#Governance Proposal: From GXChain 2.0 to REI Network',
         background: {
             title: 'Background',
             stage1: 'GXChain mainnet was launched in 2017, aiming to build a data Internet of value. In just four years, GXChain has not only gained recognition from the top capitals as well as the market but also gained strong support from dozens of enterprises, including UnionPay, to reach a cooperative relationship.',
@@ -689,6 +689,7 @@ const locale = {
                 spread1: '150 million incentive developers',
                 spread2: '5 million for marketing promoting',
                 spread3: '5 million selected nodes mining rewards',
+                image: require('../assets/images/imageEN.png'),
                 steps5: 'TrustNodes migration solution of GXChain 1.0 to GXChain 2.0 (REI)',
                 detailed: 'The TrustNode of GXChain 1.0 was originated from the initial election starting in 2018, is  a sign that the GXChain community has strong vitality and self-organization capabilities. In several iterations period since then, the TrustNode have proven to complete the stage of protecting the underlying security and stability of the public chain, so we will still continue the supernode election model on the REI Network in the future, with the specific implementation plan as follows：',
                 plan1: '1) Coin swap between REI and GXC the core assets',
@@ -730,6 +731,20 @@ const locale = {
                 ending: 'In the crypto world of the future, make friends with REI Network and make friends with time.'
             }
         }
+    },
+    vote_rules: {
+        title: 'REI (GXC) Community Governance Proposal (Voting Rules)',
+        statistics: 'Statistics Rules',
+        details: 'In order to allow users to vote and make proposals, GXC community governance will count users` votes in two ways',
+        balance: '1. The GXC wallet balance.',
+        locked_position: '2. The number of locked GXC vote ',
+        rules: 'Rules for Voting',
+        first_rules: '1. The GXC used by the user for voting does not need to be locked during the voting period and can be disposed of by the user at will.',
+        second_rules: '2. The voting period is 120 hours and ends according to the corresponding block height. Before the snapshot, the user can change the number of GXC in the address, i.e. the number of votes to be voted on, and also the voting options.',
+        third_rules: '3. When initiating a vote, GXCs from a single address can only be voted for one option in the proposal.',
+        conditions: 'Conditions For the Adoption of Proposal',
+        first_conditions: '1. The total number of votes cast for each proposal must reach 2% of the total number of GXC (2 million GXC) to be considered a valid proposal, and if the total number of votes cast is less than 2% at the end of the voting period, the proposal will fail.',
+        second_conditions: '2. for proposals, the "Yes" option must receive more than 50% of the votes cast to be considered valid, otherwise, the proposal fails.'
     }
 };
 

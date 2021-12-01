@@ -53,7 +53,7 @@
               </ul>
             </li>
           </ul>
-          <img class="image" src="@/assets/images/image.png" alt="">
+          <img class="image" :src='this.$t("proposal_content.substance.content2.image")' alt="">
           <h4>{{ $t("proposal_content.substance.content2.steps5") }}</h4>
           <p>{{ $t("proposal_content.substance.content2.detailed") }}</p>
           <div class="div-content">{{ $t("proposal_content.substance.content2.plan1") }}
@@ -231,6 +231,24 @@
                 <div>{{this.user.voteUserFalse}}%</div>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="right-fomat">
+          <div class="result-header">
+              <div class="inforText">{{$t("vote_rules.title")}}</div>
+          </div>
+          <div class="result">
+            <h5>{{$t("vote_rules.statistics")}}</h5>
+            <p>{{$t("vote_rules.details")}}</p>
+            <p>{{$t("vote_rules.balance")}}</p>
+            <p>{{$t("vote_rules.locked_position")}}</p>
+            <h5>{{$t("vote_rules.rules")}}</h5>
+            <p>{{$t("vote_rules.first_rules")}}</p>
+            <p>{{$t("vote_rules.second_rules")}}</p>
+            <p>{{$t("vote_rules.third_rules")}}</p>
+            <h5>{{$t("vote_rules.conditions")}}</h5>
+            <p>{{$t("vote_rules.first_conditions")}}</p>
+            <p>{{$t("vote_rules.second_conditions")}}</p>
           </div>
         </div>
       </div>
@@ -773,6 +791,14 @@ export default {
         border-radius: 10px;
         margin-bottom: 1.2rem;
         font-size: 16px;
+        p{
+          margin-top: 6px;
+          font-size: 13px;
+          line-height: 28px;
+        }
+        h5{
+          margin-top: 20px;
+        }
         .inforText {
           margin-top:1.2rem;
           font-weight: 500;

@@ -670,6 +670,7 @@ const locale = {
                 spread1: '1.5 亿 激励开发者',
                 spread2: '0.5 亿 市场推广',
                 spread3: '0.5 亿 节点奖励',
+                image: require('../assets/images/image.png'),
                 steps5: '5. GXChain1.0 到 GXChain2.0（REI）的节点迁移方案',
                 detailed: '基于 GXChain1.0 的公信节点，是发轫于2018年开始的初次选举，是来自于GXChain社区的自治，也是GXChain社区有强大生命力和自组织能力的表现。事实证明在此后的若干个周期和迭代中，公信节点都完成了保护公链底层安全和稳定的阶段性任务，因此未来我们在 REI Network 上依然会延续超级节点的竞选模式，具体的执行方案大致如下：',
                 plan1: '1) 开放 REI-GXC 主链代币之间的兑换',
@@ -711,6 +712,20 @@ const locale = {
                 ending: '在未来加密世界，和 REI Network 做朋友，和时间做朋友。'
             }
         }
+    },
+    vote_rules: {
+        title: 'REI (GXC) 社区治理方案（投票规则)',
+        statistics: '票源统计',
+        details: '为了让参与投票的用户能够进行投票和提案，GXC 社区治理将从两方面来统计用户的票数',
+        balance: '1、GXC Wallet 钱包余额；',
+        locked_position: '2、GXC 投票锁仓数量。',
+        rules: '投票规则',
+        first_rules: '1、用户用于投票的 GXC 在投票期间无需锁定，可由用户任意处置；',
+        second_rules: '2、投票时间为 120 个小时，根据对应的区块高度来结束投票，快照之前用户可以更改地址内的 GXC 数量即投票的票数，也可以更改投票选项。',
+        third_rules: '3、发起投票时，单一地址的 GXC 仅可投给提案中的一个选项。',
+        conditions: '提案通过条件',
+        first_conditions: '1、每个提案的投票总票数必须达到 GXC 总量的s）才能算有效提案，在投票期结束后，如果投票总数额少于 2%，则该提案失败；',
+        second_conditions: '2、对于提案，「同意」选项的得票数必须大于 50%才算有效，否则提案失败；'
     }
 };
 
