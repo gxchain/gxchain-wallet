@@ -8,7 +8,7 @@ module.exports = (function () {
                 __SERVICE__: '"https://walletgateway.gxb.io"',
                 witnesses: JSON.stringify(["wss://testnet.gxchain.org"]),
                 faucet_addr: '"https://testnet.faucet.gxchain.org"',
-                pro_service:"'https://testnet2.gxchain.org'",
+                pro_service:"'https://proposalapi.gxchain.org'",
                 chain_id: '"c2af30ef9340ff81fd61654295e98a1ff04b23189748f86727d0b26b40bb0ff4"',
                 network: '"Test Network"',
                 staking_sum:  '"https://testnet.wallet.gxchain.org"',
@@ -16,7 +16,7 @@ module.exports = (function () {
                 flyContract: '"gxc-fly-nft"',
                 moonContract: '"gxc-moon-nft"',
                 gxtContract: '"test-nft-contract-nnn-1"',
-                contractName: '"votingtest"'
+                contractName: '"gxc-proposal"'
             };
         } else {
             if (process.env.prod == 3) {
@@ -26,7 +26,7 @@ module.exports = (function () {
                     __SERVICE__: '"https://sandbox.blockcity.gxb.io/api"',
                     witnesses: JSON.stringify(["wss://testnet.gxchain.org"]),
                     faucet_addr: '"https://testnet.faucet.gxchain.org"',
-                    pro_service:"'https://testnet2.gxchain.org'",
+                    pro_service:"'https://proposalapi.gxchain.org'",
                     chain_id: '"c2af30ef9340ff81fd61654295e98a1ff04b23189748f86727d0b26b40bb0ff4"',
                     network: '"Test Network"',
                     staking_sum:  '"https://testnet.wallet.gxchain.org"',
@@ -34,7 +34,7 @@ module.exports = (function () {
                     flyContract: '"gxc-fly-nft"',
                     moonContract: '"gxc-moon-nft"',
                     gxtContract: '"test-nft-contract-nnn-1"',
-                    contractName: '"votingtest"'
+                    contractName: '"gxc-proposal"'
                 };
             } else {
                 return {
@@ -52,7 +52,7 @@ module.exports = (function () {
                     'wss://node17.gxb.io'
                   ]),
                   faucet_addr: '"https://opengateway.gxb.io"',
-                  pro_service:"'https://testnet2.gxchain.org'",
+                  pro_service:"'https://proposalapi.gxchain.org'",
                   chain_id: '"4f7d07969c446f8342033acb3ab2ae5044cbe0fde93db02de75bd17fa8fd84b8"',
                   network: '"Main Network"',
                   staking_sum: '"https://wallet.gxb.io"',
@@ -60,7 +60,7 @@ module.exports = (function () {
                   flyContract: '"gxc-fly-nft"',
                   moonContract: '"gxc-moon-nft"',
                   gxtContract: '"gxc-gxt-nft"',
-                  contractName: '"votingtest"'
+                  contractName: '"gxc-proposal"'
                 };
             }
         }
@@ -72,7 +72,7 @@ module.exports = (function () {
           __SERVICE__: '"http://dev.gxchain.cn/gateway"',
           witnesses: JSON.stringify(['wss://testnet.gxchain.org']),
           faucet_addr: '"https://testnet.faucet.gxchain.org"',
-          pro_service:"'https://testnet2.gxchain.org'",
+          pro_service:"'https://proposalapi.gxchain.org'",
           chain_id: '"c2af30ef9340ff81fd61654295e98a1ff04b23189748f86727d0b26b40bb0ff4"',
           network: '"Test Network"',
           staking_sum:  '"https://testnet.wallet.gxchain.org"',
@@ -80,7 +80,7 @@ module.exports = (function () {
           flyContract: '"gxc-fly-nft"',
           moonContract: '"gxc-moon-nft"',
           gxtContract: '"test-nft-contract-nnn-1"',
-          contractName: '"votingtest"'
+          contractName: '"gxc-proposal"'
         };
     }
 })();

@@ -1286,7 +1286,7 @@ const get_contract_table = (contractName, tableName, lower_bound = 0, upper_boun
 };
 
 const get_nodes_votes = (limit) => {
-    return Vue.http.get(`${process.env.pro_service}/proposal/api/voter`, {
+    return Vue.http.get(`${process.env.pro_service}/api/voter`, {
         params: {
             limit
         }
@@ -1295,27 +1295,27 @@ const get_nodes_votes = (limit) => {
     });
 };
 const get_vote_statistics = () => {
-    return Vue.http.get(`${process.env.pro_service}/proposal/api/statistics`).then(resp => {
+    return Vue.http.get(`${process.env.pro_service}/api/statistics`).then(resp => {
         return resp.data || [];
     });
 };
 const get_vote_state = () => {
-    return Vue.http.get(`${process.env.pro_service}/proposal/api/state`).then(resp => {
+    return Vue.http.get(`${process.env.pro_service}/api/state`).then(resp => {
         return resp.data || [];
     });
 };
 const get_vote_date = () => {
-    return Vue.http.get(`${process.env.pro_service}/proposal/api/date`).then(resp => {
+    return Vue.http.get(`${process.env.pro_service}/api/date`).then(resp => {
         return resp.data || [];
     });
 };
 const get_voter_sum = () => {
-    return Vue.http.get(`${process.env.pro_service}/proposal/api/voter_sum`).then(resp => {
+    return Vue.http.get(`${process.env.pro_service}/api/voter_sum`).then(resp => {
         return resp.data || [];
     });
 };
 const get_voter_findone = (name) => {
-    return Vue.http.get(`${process.env.pro_service}/proposal/api/findone`, {
+    return Vue.http.get(`${process.env.pro_service}/api/findone`, {
         params: {
             name
         }
