@@ -167,6 +167,14 @@
             <div>{{$t('proposal.end_date')}}</div>
             <div>{{new Date(new Date(this.stopTime).getTime()).format('yyyy-MM-dd hh:mm:ss')}}</div>
           </div>
+          <div class="information">
+            <div>{{$t("proposal.start_block")}}</div>
+            <div>46486793</div>
+          </div>
+          <div class="information">
+            <div>{{$t("proposal.end_block")}}</div>
+            <div>46630793</div>
+          </div>
            </div>
         </div>
         <div class="right-fomat">
@@ -187,7 +195,8 @@
                 <div class="clip-background">
                     <div class='clip' :style="{width:this.number.voteNumberTrue+'%'}"></div>
                 </div>
-                <div style="width:78px">{{this.number.voteNumberTrue}}%</div>
+                <div style="width:78px" v-if='this.user.totalUserVote !== 0'>{{this.number.voteNumberTrue}}%</div>
+                <div style="width:78px" v-else>0%</div>
               </div>
             </div>
             <div class="result-content">
@@ -196,7 +205,8 @@
                 <div class="clip-background">
                     <div class='clip' :style="{width:this.number.voteNumberFalse+'%'}"></div>
                 </div>
-                <div style="width:78px">{{this.number.voteNumberFalse}}%</div>
+                <div style="width:78px" v-if='this.user.totalUserVote !== 0'>{{this.number.voteNumberFalse}}%</div>
+                <div style="width:78px" v-else>0%</div>
               </div>
             </div>
           </div>
@@ -219,7 +229,8 @@
                 <div class="clip-background">
                     <div class='clip' :style="{width:this.user.voteUserTrue+'%'}"></div>
                 </div>
-                <div>{{this.user.voteUserTrue}}%</div>
+                <div v-if='this.user.totalUserVote !== 0'>{{this.user.voteUserTrue}}%</div>
+                <div style="width:78px" v-else>0%</div>
               </div>
             </div>
             <div class="result-content">
@@ -228,7 +239,8 @@
                 <div class="clip-background">
                     <div class='clip' :style="{width:this.user.voteUserFalse+'%'}"></div>
                 </div>
-                <div>{{this.user.voteUserFalse}}%</div>
+                <div v-if='this.user.totalUserVote !== 0'>{{this.user.voteUserFalse}}%</div>
+                <div style="width:78px" v-else>0%</div>
               </div>
             </div>
           </div>
@@ -265,7 +277,6 @@ import {
     set_wallet_index,
     get_vote_statistics,
     get_vote_state,
-    get_vote_date,
     get_voter_sum,
     get_voter_findone
 } from '@/services/WalletService';
@@ -301,8 +312,8 @@ export default {
             },
             canVote: true,
             contractName: process.env.contractName,
-            startTime: '2021-12-02 03:12:00',
-            stopTime: '2021-12-07 12:00:00',
+            startTime: '2021-12-02 20:00:00',
+            stopTime: '2021-12-07 20:00:00',
             resultSum: 0,
             moreSteps: 10,
             votingstate: 0,
@@ -319,7 +330,7 @@ export default {
     mounted: function () {
         this.getVoter();
         this.getVoteEnds();
-        this.getStartTime();
+        // this.getStartTime();
         this.timer = setInterval(() => {
             this.getVoter();
         }, 3000);
@@ -361,12 +372,12 @@ export default {
             }
         },
         // 投票开始和结束的时间
-        getStartTime () {
-            get_vote_date().then(res => {
-                this.stopTime = res.stopTime;
-                this.startTime = res.startTime;
-            });
-        },
+        // getStartTime () {
+        //     get_vote_date().then(res => {
+        //         this.stopTime = res.stopTime;
+        //         this.startTime = res.startTime;
+        //     });
+        // },
         // 未关闭投票前获取投票信息
         getNoStopVote () {
             get_voter_sum().then(res => {

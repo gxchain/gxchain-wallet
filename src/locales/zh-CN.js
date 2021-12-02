@@ -632,6 +632,8 @@ const locale = {
         cast_disagree: '您已投过不同意了～',
         start_date: '开始日期',
         end_date: '结束日期',
+        start_block: '开始区块',
+        end_block: '结束区块',
         dint: '结果以最终统计数据为准',
         tips: '提示：参与投票不会锁定GXC，我们会在快照高度对所有参与投票的地址进行统计，账户余额的GXC和节点投票Stake的GXC都会计算在内。'
     },
@@ -716,7 +718,7 @@ const locale = {
     vote_rules: {
         title: 'REI (GXC) 社区治理方案（投票规则)',
         statistics: '票源统计',
-        details: '为了让参与投票的用户能够进行投票和提案，GXC 社区治理将从两方面来统计用户的票数',
+        details: '为了让参与投票的用户能够进行投票和提案，GXC 社区治理将从两方面来统计用户的票数。',
         balance: '1、GXC Wallet 钱包余额；',
         locked_position: '2、GXC 投票锁仓数量。',
         rules: '投票规则',
@@ -724,7 +726,7 @@ const locale = {
         second_rules: '2、投票时间为 120 个小时，根据对应的区块高度来结束投票，快照之前用户可以更改地址内的 GXC 数量即投票的票数，也可以更改投票选项。',
         third_rules: '3、发起投票时，单一地址的 GXC 仅可投给提案中的一个选项。',
         conditions: '提案通过条件',
-        first_conditions: '1、每个提案的投票总票数必须达到 GXC 总量的s）才能算有效提案，在投票期结束后，如果投票总数额少于 2%，则该提案失败；',
+        first_conditions: '1、该提案的投票总票数必须达到 GXC 流通总量的 10%，即 750 万枚，才能算有效提案，在投票期结束后，如果投票总数额少于该数字，该提案则为无效议案。',
         second_conditions: '2、对于提案，「同意」选项的得票数必须大于 50%才算有效，否则提案失败；'
     }
 };

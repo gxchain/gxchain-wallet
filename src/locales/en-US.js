@@ -660,6 +660,8 @@ const locale = {
         cast_disagree: 'You have already voted to disagree~',
         start_date: 'Start date',
         end_date: 'End date',
+        start_block: 'Start block',
+        end_block: 'End block',
         dint: 'The results are subject to the final statistics',
         expend_more: 'Click to expand more',
         tips: 'Tip: Participating in voting will not lock GXC, we will count all the addresses participating in the voting at the snapshot height, and the GXC of the account balance and the GXC of the node voting Stake will be counted.'
@@ -746,16 +748,16 @@ const locale = {
     vote_rules: {
         title: 'REI (GXC) Community Governance Proposal (Voting Rules)',
         statistics: 'Statistics Rules',
-        details: 'In order to allow users to vote and make proposals, GXC community governance will count users` votes in two ways',
-        balance: '1. The GXC wallet balance.',
-        locked_position: '2. The number of locked GXC vote ',
+        details: 'In order to make all the users who own GXCs in the wallet, GXC community governance will count users` GXCs for voting in two ways,',
+        balance: '1. The GXC of balance in the wallet',
+        locked_position: '2. The GXC in staking ',
         rules: 'Rules for Voting',
-        first_rules: '1. The GXC used by the user for voting does not need to be locked during the voting period and can be disposed of by the user at will.',
+        first_rules: '1. The GXCs used for voting needn`t to be locked during the voting period, which could be transferred, but once the GXCs were not be owned by the original address, the vote cast will be invalidated.',
         second_rules: '2. The voting period is 120 hours and ends according to the corresponding block height. Before the snapshot, the user can change the number of GXC in the address, i.e. the number of votes to be voted on, and also the voting options.',
-        third_rules: '3. When initiating a vote, GXCs from a single address can only be voted for one option in the proposal.',
+        third_rules: '3. When initiating a vote, GXCs from a single address can only be voted for one option for the proposal.',
         conditions: 'Conditions For the Adoption of Proposal',
-        first_conditions: '1. The total number of votes cast for each proposal must reach 2% of the total number of GXC (2 million GXC) to be considered a valid proposal, and if the total number of votes cast is less than 2% at the end of the voting period, the proposal will fail.',
-        second_conditions: '2. for proposals, the "Yes" option must receive more than 50% of the votes cast to be considered valid, otherwise, the proposal fails.'
+        first_conditions: '1. The total number of votes for each proposal must reach 10% of the circulating supply GXC (7.5 million GXCs) to be considered a valid proposal, and if the turnout was less than 10%, the proposal will be invalidated.',
+        second_conditions: '2. The option for approving must receive more than 50% of the total votes, otherwise, the proposal will be failed.'
     }
 };
 
