@@ -23,6 +23,16 @@
                                 </div>
                             </router-link>
                         </li>
+                        <li>
+                            <router-link :to="link('/proposal')" class="item-content item-link">
+                                <div class="item-media">
+                                    <i class="gxicon gxicon-proposal"></i>
+                                </div>
+                                <div class="item-inner">
+                                    <div class="item-title">Proposal</div>
+                                </div>
+                            </router-link>
+                        </li>
                     </ul>
                 </div>
                 <div class="list-block">

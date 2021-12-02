@@ -1291,6 +1291,44 @@ const get_nft_list = () => {
     });
 };
 
+const get_nodes_votes = (limit) => {
+    return Vue.http.get(`${process.env.pro_service}/api/voter`, {
+        params: {
+            limit
+        }
+    }).then(resp => {
+        return resp.data || [];
+    });
+};
+const get_vote_statistics = () => {
+    return Vue.http.get(`${process.env.pro_service}/api/statistics`).then(resp => {
+        return resp.data || [];
+    });
+};
+const get_vote_state = () => {
+    return Vue.http.get(`${process.env.pro_service}/api/state`).then(resp => {
+        return resp.data || [];
+    });
+};
+const get_vote_date = () => {
+    return Vue.http.get(`${process.env.pro_service}/api/date`).then(resp => {
+        return resp.data || [];
+    });
+};
+const get_voter_sum = () => {
+    return Vue.http.get(`${process.env.pro_service}/api/voter_sum`).then(resp => {
+        return resp.data || [];
+    });
+};
+const get_voter_findone = (name) => {
+    return Vue.http.get(`${process.env.pro_service}/api/findone`, {
+        params: {
+            name
+        }
+    }).then(resp => {
+        return resp.data || [];
+    });
+};
 export {
     bak_wallet,
     get_objects,
@@ -1337,5 +1375,11 @@ export {
     claimVestingBalance,
     get_staking_percent,
     get_contract_table,
-    get_nft_list
+    get_nft_list,
+    get_nodes_votes,
+    get_vote_statistics,
+    get_vote_state,
+    get_vote_date,
+    get_voter_sum,
+    get_voter_findone
 };

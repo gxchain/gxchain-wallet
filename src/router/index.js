@@ -33,6 +33,7 @@ import StakingIndex from '@/components/StakingIndex';
 import UserIndex from '@/components/User.vue';
 import NftInfo from '@/components/NftInfo.vue';
 import NftGroup from '@/components/NftGroup.vue';
+import Proposal from '@/components/Proposal.vue';
 import TransferNftSuccess from '@/components/TransferNftSuccess.vue';
 import { set_item, compare_version } from '@/services/CommonService';
 import i18n from '@/locales';
@@ -296,6 +297,14 @@ let router = new Router({
             },
             name: 'transferNftSuccess',
             component: TransferNftSuccess
+        },
+        {
+            path: '/proposal',
+            meta: {
+                title: 'Proposal'
+            },
+            name: 'Proposal',
+            component: Proposal
         }
     ]
 });
