@@ -341,7 +341,8 @@ export default {
     },
     methods: {
         getVoter () {
-            get_nodes_votes().then(res => {
+            get_nodes_votes(this.limit).then(res => {
+                this.limit = this.moreSteps;
                 this.detailList = res.result;
                 this.resultSum = res.resultsSum;
             });
@@ -401,6 +402,7 @@ export default {
             this.moreSteps += 20;
             get_nodes_votes(this.limit).then(res => {
                 this.limit = this.moreSteps;
+                this.resultSum = res.resultsSum;
             });
         },
         votes () {
@@ -702,9 +704,6 @@ export default {
           padding: 1.2rem 2% 0.6rem 2%;
         }
         ul {
-          overflow-y: scroll;
-          overflow-x: hidden;
-          max-height: 32rem;
           li {
             list-style: none;
             .detail{
