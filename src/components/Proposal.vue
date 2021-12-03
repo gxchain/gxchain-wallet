@@ -161,11 +161,11 @@
            <div style="padding-bottom:1.5rem">
              <div class="information">
             <div>{{$t('proposal.start_date')}}</div>
-            <div>{{new Date(new Date(this.startTime).getTime()).format('yyyy-MM-dd hh:mm:ss')}}</div>
+            <div>{{this.startTime}}</div>
           </div>
           <div class="information">
             <div>{{$t('proposal.end_date')}}</div>
-            <div>{{new Date(new Date(this.stopTime).getTime()).format('yyyy-MM-dd hh:mm:ss')}}</div>
+            <div>{{this.stopTime}}</div>
           </div>
           <div class="information">
             <div>{{$t("proposal.start_block")}}</div>
