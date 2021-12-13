@@ -161,11 +161,11 @@
            <div style="padding-bottom:1.5rem">
              <div class="information">
             <div>{{$t('proposal.start_date')}}</div>
-            <div>{{new Date(new Date(this.startTime).getTime()).format('yyyy-MM-dd hh:mm:ss')}}</div>
+            <div>{{this.startTime}}</div>
           </div>
           <div class="information">
             <div>{{$t('proposal.end_date')}}</div>
-            <div>{{new Date(new Date(this.stopTime).getTime()).format('yyyy-MM-dd hh:mm:ss')}}</div>
+            <div>{{this.stopTime}}</div>
           </div>
           <div class="information">
             <div>{{$t("proposal.start_block")}}</div>
@@ -359,11 +359,11 @@ export default {
             // 关闭投票后
                 get_vote_statistics().then(res => {
                     this.number.totalVote = res.statistics.totalVoteGXCNumber;
-                    this.number.voteNumberTrue = (res.statistics.totalVoteGXCNumberTrue / this.number.totalVote * 100);
-                    this.number.voteNumberFalse = (res.statistics.totalVoteGXCNumberFalse / this.number.totalVote * 100);
+                    this.number.voteNumberTrue = (res.statistics.totalVoteGXCNumberTrue / this.number.totalVote * 100).toFixed(5);
+                    this.number.voteNumberFalse = (res.statistics.totalVoteGXCNumberFalse / this.number.totalVote * 100).toFixed(5);
                     this.user.totalUserVote = res.statistics.voteUserNumber;
-                    this.user.voteUserTrue = (res.statistics.voteUserNumberTrue / this.user.totalUserVote * 100);
-                    this.user.voteUserFalse = (res.statistics.voteUserNumberFalse / this.user.totalUserVote * 100);
+                    this.user.voteUserTrue = (res.statistics.voteUserNumberTrue / this.user.totalUserVote * 100).toFixed(2);
+                    this.user.voteUserFalse = (res.statistics.voteUserNumberFalse / this.user.totalUserVote * 100).toFixed(2);
                 });
             } else {
                 this.getNoStopVote();
