@@ -599,7 +599,8 @@ const locale = {
         title: '投票',
         node_rate: '分红比例',
         error: {
-            insufficient_balance: '手续费不足'
+            insufficient_balance: '手续费不足',
+            notavailable: 'GXChain1.0上的Staking已经停止使用了，请到REI Network上Staking吧'
         },
         income: {
             amount: '金额',

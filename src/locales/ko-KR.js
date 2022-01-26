@@ -617,7 +617,8 @@ const locale = {
         title: '투표',
         node_rate: '커미션 비율',
         error: {
-            insufficient_balance: '수수료 가 부족 하 다'
+            insufficient_balance: '수수료 가 부족 하 다',
+            notavailable: '더 이상 GXChain1.0에 스테이킹을 할 수 없습니다. REI 네트워크에 스테이킹하세요.'
         },
         income: {
             amount: '금액',

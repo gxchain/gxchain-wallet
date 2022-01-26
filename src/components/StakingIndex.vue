@@ -565,6 +565,8 @@
                         let message = '';
                         if (ex.message.indexOf('Insufficient Balance') > -1 || ex.message.indexOf('account balance not enough') > -1) {
                             message = this.$t('transfer.error.amount.insufficient_balance');
+                        } else if (ex.message.indexOf('Staking on GXChain1.0 is not available anymore') > -1) {
+                            message = this.$t('staking.error.notavailable');
                         } else {
                             message = ex.message;
                         }

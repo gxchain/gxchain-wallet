@@ -626,7 +626,8 @@ const locale = {
         title: 'Staking',
         node_rate: 'Commission rate',
         error: {
-            insufficient_balance: 'Insufficient service charge'
+            insufficient_balance: 'Insufficient service charge',
+            notavailable: 'Staking on GXChain1.0 is not available anymore, please stake on REI Network'
         },
         income: {
             amount: 'Amount',
